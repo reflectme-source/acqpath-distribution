@@ -1,0 +1,7 @@
+{
+  "name": "acqpath-distribution-review-tools",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Isolated docs uploader and offline JSON Schema validator; no core dependencies",
+  "devDependencies": { "ajv": "8.20.0", "wrangler": "4.131.0" }
+}

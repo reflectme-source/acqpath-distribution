@@ -1,0 +1,543 @@
+{
+  "schema": "acqpath.bazaar-public-contract.v1",
+  "reviewedAt": "2026-09-10",
+  "status": "IMPLEMENTED_NOT_DEPLOYED",
+  "architecture": "A_ADDITIVE_HTTP_ADAPTER",
+  "appliedToCore": true,
+  "coreCommit": "11c420277f53eddf07120795201307a073335320",
+  "productionDeployed": false,
+  "productionEndpointActive": false,
+  "testnetOrigin": null,
+  "testnetDeployment": "AWAITING_ACCOUNT_AUTHORIZATION",
+  "indexing": "UNVERIFIED",
+  "walletSigningPerformed": false,
+  "settlementPerformed": false,
+  "resource": {
+    "url": "https://api.getacqpath.com/v1/rights/preflight",
+    "mimeType": "application/json",
+    "serviceName": "AcqPath Rights Preflight",
+    "tags": [
+      "AI usage rights",
+      "RSL",
+      "RAG ingestion",
+      "training declarations",
+      "indexing search"
+    ],
+    "description": "Signed observed RSL declarations for AI input/RAG, training and indexing/search. Reviewed origins only. Diagnostics before ingestion or crawling; crawl is not a paid purpose. UNKNOWN is not permission or legal clearance. Requires acqpath-request-binding nonce support; generic random-nonce clients cannot buy."
+  },
+  "method": "POST",
+  "inputSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "resource",
+      "purpose",
+      "max_total_micro"
+    ],
+    "properties": {
+      "resource": {
+        "type": "string",
+        "format": "uri",
+        "maxLength": 2048,
+        "description": "HTTPS resource on an explicitly reviewed origin; no query, fragment, credentials, IP literal, encoded slash or redirect."
+      },
+      "purpose": {
+        "type": "string",
+        "enum": [
+          "ai-input",
+          "ai-train",
+          "ai-index",
+          "search"
+        ]
+      },
+      "user_class": {
+        "type": "string",
+        "enum": [
+          "commercial",
+          "non-commercial",
+          "education",
+          "government",
+          "personal"
+        ],
+        "default": "commercial"
+      },
+      "geo": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "pattern": "^[A-Z]{2}$",
+        "description": "Caller-supplied geographical context. This is not independently verified location."
+      },
+      "freshness_seconds": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 3600,
+        "default": 300
+      },
+      "tier": {
+        "type": "string",
+        "enum": [
+          "fresh",
+          "deep"
+        ],
+        "default": "fresh"
+      },
+      "max_total_micro": {
+        "type": "string",
+        "pattern": "^(0|[1-9][0-9]{0,10}|100000000000)$",
+        "description": "Integer micro-USDC budget, at most 100000000000; fresh 20000, deep 50000 under current configuration."
+      }
+    }
+  },
+  "outputSchema": {
+    "type": "object",
+    "required": [
+      "version",
+      "input_sha256",
+      "legal_clearance",
+      "report",
+      "evidence",
+      "payment_settlement",
+      "delivery_proof"
+    ],
+    "properties": {
+      "version": {
+        "const": "acqpath-public-rights-v1"
+      },
+      "input_sha256": {
+        "type": "string",
+        "pattern": "^[a-f0-9]{64}$"
+      },
+      "legal_clearance": {
+        "const": false
+      },
+      "report": {
+        "type": "object",
+        "required": [
+          "resource",
+          "purpose",
+          "decision",
+          "declaration_count"
+        ],
+        "properties": {
+          "resource": {
+            "type": "string",
+            "format": "uri"
+          },
+          "purpose": {
+            "type": "string",
+            "enum": [
+              "ai-input",
+              "ai-train",
+              "ai-index",
+              "search"
+            ]
+          },
+          "decision": {
+            "enum": [
+              "ALLOW_DECLARED",
+              "DENY_DECLARED",
+              "LICENSE_REQUIRED",
+              "UNKNOWN"
+            ]
+          },
+          "declaration_count": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      },
+      "evidence": {
+        "type": "object",
+        "required": [
+          "algorithm",
+          "format",
+          "payload",
+          "signature"
+        ],
+        "properties": {
+          "algorithm": {
+            "const": "Ed25519"
+          },
+          "format": {
+            "const": "acqpath-evidence-v1"
+          },
+          "payload": {
+            "type": "object"
+          },
+          "signature": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{128}$"
+          }
+        }
+      },
+      "delivery_proof": {
+        "type": "object",
+        "required": [
+          "algorithm",
+          "format",
+          "payload",
+          "signature"
+        ],
+        "properties": {
+          "algorithm": {
+            "const": "Ed25519"
+          },
+          "format": {
+            "const": "acqpath-evidence-v1"
+          },
+          "payload": {
+            "type": "object"
+          },
+          "signature": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{128}$"
+          }
+        }
+      },
+      "payment_settlement": {
+        "type": "object",
+        "required": [
+          "success",
+          "network",
+          "transaction"
+        ],
+        "properties": {
+          "success": {
+            "const": true
+          },
+          "network": {
+            "enum": [
+              "eip155:8453",
+              "eip155:84532"
+            ]
+          },
+          "transaction": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{64}$"
+          }
+        }
+      }
+    }
+  },
+  "bazaar": {
+    "info": {
+      "input": {
+        "type": "http",
+        "method": "POST",
+        "bodyType": "json",
+        "body": {
+          "resource": "https://publisher.example.org/article",
+          "purpose": "ai-input",
+          "max_total_micro": "20000",
+          "tier": "fresh"
+        }
+      },
+      "output": {
+        "type": "json",
+        "format": "application/json",
+        "example": {
+          "version": "acqpath-public-rights-v1",
+          "input_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "legal_clearance": false,
+          "report": {
+            "resource": "https://publisher.example.org/article",
+            "purpose": "ai-input",
+            "decision": "UNKNOWN",
+            "declaration_count": 1
+          },
+          "evidence": {
+            "algorithm": "Ed25519",
+            "format": "acqpath-evidence-v1",
+            "payload": {
+              "illustrative_only": true
+            },
+            "signature": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+          },
+          "delivery_proof": {
+            "algorithm": "Ed25519",
+            "format": "acqpath-evidence-v1",
+            "payload": {
+              "illustrative_only": true
+            },
+            "signature": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+          },
+          "payment_settlement": {
+            "success": true,
+            "network": "eip155:84532",
+            "transaction": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          }
+        }
+      }
+    },
+    "schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "required": [
+        "input"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "input": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "type",
+            "method",
+            "bodyType",
+            "body"
+          ],
+          "properties": {
+            "type": {
+              "const": "http"
+            },
+            "method": {
+              "const": "POST"
+            },
+            "bodyType": {
+              "const": "json"
+            },
+            "body": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "resource",
+                "purpose",
+                "max_total_micro"
+              ],
+              "properties": {
+                "resource": {
+                  "type": "string",
+                  "format": "uri",
+                  "maxLength": 2048,
+                  "description": "HTTPS resource on an explicitly reviewed origin; no query, fragment, credentials, IP literal, encoded slash or redirect."
+                },
+                "purpose": {
+                  "type": "string",
+                  "enum": [
+                    "ai-input",
+                    "ai-train",
+                    "ai-index",
+                    "search"
+                  ]
+                },
+                "user_class": {
+                  "type": "string",
+                  "enum": [
+                    "commercial",
+                    "non-commercial",
+                    "education",
+                    "government",
+                    "personal"
+                  ],
+                  "default": "commercial"
+                },
+                "geo": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "pattern": "^[A-Z]{2}$",
+                  "description": "Caller-supplied geographical context. This is not independently verified location."
+                },
+                "freshness_seconds": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 3600,
+                  "default": 300
+                },
+                "tier": {
+                  "type": "string",
+                  "enum": [
+                    "fresh",
+                    "deep"
+                  ],
+                  "default": "fresh"
+                },
+                "max_total_micro": {
+                  "type": "string",
+                  "pattern": "^(0|[1-9][0-9]{0,10}|100000000000)$",
+                  "description": "Integer micro-USDC budget, at most 100000000000; fresh 20000, deep 50000 under current configuration."
+                }
+              }
+            }
+          }
+        },
+        "output": {
+          "type": "object",
+          "required": [
+            "type",
+            "format",
+            "example"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "json"
+            },
+            "format": {
+              "const": "application/json"
+            },
+            "example": {
+              "type": "object",
+              "required": [
+                "version",
+                "input_sha256",
+                "legal_clearance",
+                "report",
+                "evidence",
+                "payment_settlement",
+                "delivery_proof"
+              ],
+              "properties": {
+                "version": {
+                  "const": "acqpath-public-rights-v1"
+                },
+                "input_sha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "legal_clearance": {
+                  "const": false
+                },
+                "report": {
+                  "type": "object",
+                  "required": [
+                    "resource",
+                    "purpose",
+                    "decision",
+                    "declaration_count"
+                  ],
+                  "properties": {
+                    "resource": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "purpose": {
+                      "type": "string",
+                      "enum": [
+                        "ai-input",
+                        "ai-train",
+                        "ai-index",
+                        "search"
+                      ]
+                    },
+                    "decision": {
+                      "enum": [
+                        "ALLOW_DECLARED",
+                        "DENY_DECLARED",
+                        "LICENSE_REQUIRED",
+                        "UNKNOWN"
+                      ]
+                    },
+                    "declaration_count": {
+                      "type": "integer",
+                      "minimum": 1
+                    }
+                  }
+                },
+                "evidence": {
+                  "type": "object",
+                  "required": [
+                    "algorithm",
+                    "format",
+                    "payload",
+                    "signature"
+                  ],
+                  "properties": {
+                    "algorithm": {
+                      "const": "Ed25519"
+                    },
+                    "format": {
+                      "const": "acqpath-evidence-v1"
+                    },
+                    "payload": {
+                      "type": "object"
+                    },
+                    "signature": {
+                      "type": "string",
+                      "pattern": "^[a-f0-9]{128}$"
+                    }
+                  }
+                },
+                "delivery_proof": {
+                  "type": "object",
+                  "required": [
+                    "algorithm",
+                    "format",
+                    "payload",
+                    "signature"
+                  ],
+                  "properties": {
+                    "algorithm": {
+                      "const": "Ed25519"
+                    },
+                    "format": {
+                      "const": "acqpath-evidence-v1"
+                    },
+                    "payload": {
+                      "type": "object"
+                    },
+                    "signature": {
+                      "type": "string",
+                      "pattern": "^[a-f0-9]{128}$"
+                    }
+                  }
+                },
+                "payment_settlement": {
+                  "type": "object",
+                  "required": [
+                    "success",
+                    "network",
+                    "transaction"
+                  ],
+                  "properties": {
+                    "success": {
+                      "const": true
+                    },
+                    "network": {
+                      "enum": [
+                        "eip155:8453",
+                        "eip155:84532"
+                      ]
+                    },
+                    "transaction": {
+                      "type": "string",
+                      "pattern": "^0x[a-fA-F0-9]{64}$"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "examplesAreSynthetic": true,
+  "clientRequirements": {
+    "nonceAwareSigner": true,
+    "genericRandomNonceClientCompatible": false,
+    "privateRetryHeader": "X-AcqPath-Request",
+    "bindingExtension": "acqpath-request-binding",
+    "privateContextInCatalog": false,
+    "persistBeforeSigning": true,
+    "retrySameOperation": true
+  },
+  "liveIntegration": {
+    "quote": "https://api.getacqpath.com/v1/rights/quote",
+    "paidReportTemplate": "/v1/rights/reports/:quote_id",
+    "privateClaimRequired": true,
+    "mcpPaidDelivery": false,
+    "npmPublished": false
+  },
+  "limitations": [
+    "The public preflight route is implemented in source but is not a live production endpoint.",
+    "The legacy quote/claim/report integration remains the deployed contract.",
+    "Catalog schema validity is not indexing, a paid test or evidence of demand.",
+    "Synthetic signatures/transactions are placeholders, not evidence.",
+    "No legal clearance, license acquisition or ownership verification. UNKNOWN is not permission.",
+    "Paid crawl and provider routing remain unsupported."
+  ]
+}
