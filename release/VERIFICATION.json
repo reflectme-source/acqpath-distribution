@@ -1,0 +1,86 @@
+{
+  "schema": "acqpath.distribution.verification.v1",
+  "at": "2026-09-09T20:49:20.883Z",
+  "node": "v22.16.0",
+  "status": "PASS",
+  "tests": 66,
+  "pass": 66,
+  "fail": 0,
+  "skipped": 0,
+  "checks": [
+    {
+      "name": "javascript_syntax",
+      "status": "PASS",
+      "modules": 34
+    },
+    {
+      "name": "static_secret_patterns",
+      "status": "PASS",
+      "scope": "Selected token/PEM/JWT/JWK patterns; not a guarantee of every possible secret."
+    },
+    {
+      "name": "vendor_file_integrity",
+      "status": "PASS",
+      "files": 6
+    }
+  ],
+  "environment": "linux",
+  "networkUsed": false,
+  "walletUsed": false,
+  "coreChanged": false,
+  "externalPublicationTested": false,
+  "notTested": [
+    "Real Windows interactive publishing",
+    "Production payment settlement",
+    "Registry moderation or ranking",
+    "Real customer demand",
+    "Cloudflare/DNS/account mutations"
+  ],
+  "package": "AcqPath Distribution & Revenue",
+  "packageVersion": "1.0.0",
+  "typescript": {
+    "status": "PASS",
+    "compilerVersion": "5.8.3",
+    "scope": "Published-layout consumer compilation; types of three package exports",
+    "options": [
+      "strict",
+      "NodeNext",
+      "ES2022",
+      "DOM"
+    ]
+  },
+  "staticSite": {
+    "status": "PASS",
+    "checks": 12,
+    "pages": 6,
+    "viewports": [
+      390,
+      1440
+    ],
+    "rendering": "Chromium set_content with local CSS; no actual hosted navigation",
+    "liveNavigationTested": false
+  },
+  "npmDryPack": {
+    "status": "PASS",
+    "files": 17,
+    "published": false
+  },
+  "publicNetworkProbe": {
+    "status": "UNVERIFIED",
+    "cause": "EAI_AGAIN DNS resolution in build environment",
+    "inference": "Not proof of production failure or missing catalog listings"
+  },
+  "sourceComparison": {
+    "status": "SELECTED_FILES_MATCH_REFERENCE",
+    "scope": "9 selected reconstructed reference files only; repeat against owner working repo"
+  },
+  "publication": {
+    "github": "NOT_PERFORMED",
+    "npm": "NOT_PERFORMED",
+    "registry": "NOT_PERFORMED",
+    "smithery": "NOT_PERFORMED",
+    "pulseMcp": "NOT_SUBMITTED",
+    "bazaar": "BLOCKED_IN_REVIEWED_CORE_CONTRACT"
+  },
+  "financialActions": "NONE_PERFORMED"
+}

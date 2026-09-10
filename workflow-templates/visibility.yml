@@ -1,0 +1,32 @@
+name: Public discovery observation
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '23 6 * * *'
+permissions:
+  contents: read
+jobs:
+  observe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: {{CHECKOUT}}
+        with:
+          persist-credentials: false
+      - uses: {{SETUP_NODE}}
+        with:
+          node-version: '24'
+      - run: node scripts/cli.mjs audit
+        continue-on-error: true
+      - run: node scripts/cli.mjs catalogs
+      - run: node scripts/cli.mjs status
+      - uses: {{UPLOAD}}
+        if: always()
+        with:
+          name: public-discovery-observation
+          path: |
+            .local/public-audit.json
+            .local/catalog-audit.json
+            .local/status.json
+          retention-days: 7
+# No admin token, no wallet, no quote, no settlement, no price change, no core deploy.

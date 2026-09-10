@@ -1,0 +1,14 @@
+{
+  "projectName": "acqpath-distribution",
+  "accountId": "449109f33c0c400ea8aef1100c801da6",
+  "customDomain": "developers.getacqpath.com",
+  "productionBranch": "main",
+  "buildCommand": "node scripts/verify.mjs && node scripts/cli.mjs build",
+  "buildOutputDirectory": "out/site",
+  "rootDirectory": "",
+  "environmentVariables": { "NODE_VERSION": "22.19.0" },
+  "deploymentType": "pages-static-git-integration",
+  "workerBindings": [],
+  "workerRoutes": [],
+  "secrets": []
+}

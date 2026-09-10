@@ -1,0 +1,10 @@
+# AcqPath Rights Preflight
+
+Timestamped diagnostic reports of observed RSL declarations. Reports are not licenses or legal clearance.
+
+- [Contract](https://api.getacqpath.com/openapi.json)
+- [Current coverage and prices](https://api.getacqpath.com/v1/capabilities)
+- [Public site](https://getacqpath.com)
+- [MCP transport](https://api.getacqpath.com/mcp): quote preparation; paid report delivery uses HTTP x402.
+
+Do not send credentials in prompts. No claim of universal MCP payment compatibility, arbitrary-web coverage, provider routing or automatic license acquisition.

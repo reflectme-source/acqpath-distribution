@@ -1,0 +1,38 @@
+{
+  "scope": "Six client-only modules copied unchanged from supplied AcqPath source archives. No backend, config, secret, key material, or provider-purchase API copied.",
+  "files": [
+    {
+      "path": "packages/rights-client/vendor/rights.mjs",
+      "sha256": "2a6a4fc1487104e3a75652f268e6f6e9eb263f9be5bffbe7f3feabfe13da8536",
+      "originalPath": "packages/sdk/rights.mjs"
+    },
+    {
+      "path": "packages/rights-client/vendor/lib/budget.mjs",
+      "sha256": "e0a84bd41f0f70dcaf40bece84f974d3bc1ed72fefb0a9d7d308df668718bf7a",
+      "originalPath": "packages/sdk/lib/budget.mjs"
+    },
+    {
+      "path": "packages/rights-client/vendor/lib/crypto.mjs",
+      "sha256": "1bdacf2fb1f6939cb5351ff0ae57af2e3b6dc4d99b88424bc95bfb21d8c24143",
+      "originalPath": "packages/sdk/lib/crypto.mjs"
+    },
+    {
+      "path": "packages/rights-client/vendor/lib/errors.mjs",
+      "sha256": "b6ab5a170834930f922dcc78397fc18d88272e8cff6d43639933499627f79269",
+      "originalPath": "packages/sdk/lib/errors.mjs"
+    },
+    {
+      "path": "packages/rights-client/vendor/lib/jws.mjs",
+      "sha256": "0a65254a2d3bf3910ad96d005e7752d142cfb41a051f7ff67898cd249dc5cc95",
+      "originalPath": "packages/sdk/lib/jws.mjs"
+    },
+    {
+      "path": "packages/rights-client/vendor/lib/money.mjs",
+      "sha256": "885bf66ab847dfc03dd9a64275b53f0a83e95fd4286ba128f343bbad60407fcf",
+      "originalPath": "packages/sdk/lib/money.mjs"
+    }
+  ],
+  "baselineExpectedProductionHash": "7b7b830d434bac12bf7b42f7b706757e2ca8dab15349adc367985208f4329671",
+  "publicKeyIsNotSecret": true,
+  "fullCoreReconstructionClaimed": false
+}

@@ -1,0 +1,41 @@
+{
+  "scope": "Read-only review of selected files from supplied base + patches; compare locally before relying on findings.",
+  "files": [
+    {
+      "path": "src/payments/extensions.mjs",
+      "sha256": "648c7733755038499ddd3ea78486e7ff8777cdc6eaa39f7365c20b950cbf927d"
+    },
+    {
+      "path": "src/payments/x402.mjs",
+      "sha256": "c78fedc31b2613ea5e926f0761336502c90b6bb240f042ad40c64a7a8a17519e"
+    },
+    {
+      "path": "src/payments/intent.mjs",
+      "sha256": "0a4c716ae0a1928979dd773aeef9833be340614d1be2638e716e12b9a4d4e6db"
+    },
+    {
+      "path": "src/native/service.mjs",
+      "sha256": "639bcedeb99c0189f5a62490d02a5d2a56b72c80e53c609405514fb3546ca93c"
+    },
+    {
+      "path": "src/native/config.mjs",
+      "sha256": "cfef5910fa969591d254d8d73f3d37ccabe8890bc92dc29325a12e04f20d2cd7"
+    },
+    {
+      "path": "src/api/mcp.mjs",
+      "sha256": "8de3f3c6cdbd69302e690772d274c2114e0d61e02246417fb074f7c43234c784"
+    },
+    {
+      "path": "src/api/rights-schema.mjs",
+      "sha256": "4063610c1b76d376fe4cd3ea9cb4164085fcd23317362308cc506f51bc5e4085"
+    },
+    {
+      "path": "src/worker.mjs",
+      "sha256": "a8dcaf35c3e31f60c3eaf095fe4aabd95e1b99dbeeb886b7a90b916ecee8ae52"
+    },
+    {
+      "path": "packages/sdk/rights.mjs",
+      "sha256": "2a6a4fc1487104e3a75652f268e6f6e9eb263f9be5bffbe7f3feabfe13da8536"
+    }
+  ]
+}

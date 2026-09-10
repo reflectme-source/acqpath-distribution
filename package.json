@@ -1,0 +1,19 @@
+{
+  "name": "acqpath-distribution-operations",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.16"
+  },
+  "scripts": {
+    "test": "node scripts/verify.mjs",
+    "verify": "node scripts/verify.mjs",
+    "prepare:distribution": "node scripts/cli.mjs prepare",
+    "audit": "node scripts/cli.mjs audit",
+    "catalogs": "node scripts/cli.mjs catalogs",
+    "build": "node scripts/cli.mjs build",
+    "status": "node scripts/cli.mjs status"
+  },
+  "license": "UNLICENSED"
+}

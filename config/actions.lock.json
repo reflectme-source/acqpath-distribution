@@ -1,0 +1,35 @@
+{
+  "at": "2026-09-10T12:35:06.853Z",
+  "actions": {
+    "CHECKOUT": {
+      "repo": "actions/checkout",
+      "tag": "v5",
+      "sha": "fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09"
+    },
+    "SETUP_NODE": {
+      "repo": "actions/setup-node",
+      "tag": "v5",
+      "sha": "a0853c24544627f65ddf259abe73b1d18a591444"
+    },
+    "UPLOAD": {
+      "repo": "actions/upload-artifact",
+      "tag": "v4",
+      "sha": "ea165f8d65b6e75b540449e92b4886f43607fa02"
+    },
+    "CONFIGURE_PAGES": {
+      "repo": "actions/configure-pages",
+      "tag": "v5",
+      "sha": "983d7736d9b0ae728b81ab479565c72886d7745b"
+    },
+    "UPLOAD_PAGES": {
+      "repo": "actions/upload-pages-artifact",
+      "tag": "v3",
+      "sha": "56afc609e74202658d3ffba0e8f6dda462b719fa"
+    },
+    "DEPLOY_PAGES": {
+      "repo": "actions/deploy-pages",
+      "tag": "v4",
+      "sha": "d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e"
+    }
+  }
+}

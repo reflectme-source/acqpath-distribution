@@ -1,0 +1,18 @@
+{
+  "status": "PREPARED_NOT_PUBLISHED",
+  "name": "AcqPath Rights Preflight",
+  "url": "https://api.getacqpath.com/mcp",
+  "transport": "streamable-http",
+  "description": "Prepare observed RSL rights report quotes for supported web resources. Signed paid reports are redeemed separately over HTTP x402. Not a license or legal clearance.",
+  "recommendedTools": [
+    "acqpath_capabilities",
+    "acqpath_rights_quote"
+  ],
+  "doNotAdvertise": [
+    "acqpath_quote provider routing",
+    "universal paid-MCP purchase",
+    "autonomous seller-wallet spending"
+  ],
+  "pricingNote": "MCP prepares a quote without payment. Current reference HTTP report fees: 0.02 fresh / 0.05 deep USDC; exact quote authoritative.",
+  "claimTokenHandling": "Private client state; never public examples, URLs or model prompts."
+}

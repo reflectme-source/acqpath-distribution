@@ -1,0 +1,57 @@
+{
+  "schema": "acqpath.distribution.config.v1",
+  "project": "acqpath-distribution",
+  "version": "1.0.0",
+  "apiOrigin": "https://api.getacqpath.com",
+  "publicOrigin": "https://getacqpath.com",
+  "expectedSourceSha256": "7b7b830d434bac12bf7b42f7b706757e2ca8dab15349adc367985208f4329671",
+  "payment": {
+    "network": "eip155:8453",
+    "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+    "payTo": "0xf69DBbd053fb0Fbc78ADfdB1BFe3b0D1F57300ec",
+    "maxSingleMicro": "50000"
+  },
+  "publicEvidenceKey": {
+    "key_ops": [
+      "verify"
+    ],
+    "ext": true,
+    "alg": "Ed25519",
+    "crv": "Ed25519",
+    "x": "PzeeZ8d8Np85ix9ialbrLZz9ebY_Og72dScn1IAft6M",
+    "kty": "OKP"
+  },
+  "mcp": {
+    "name": "com.getacqpath/acqpath",
+    "version": "3.1.0-rc.1",
+    "url": "https://api.getacqpath.com/mcp",
+    "protocolVersion": "2025-06-18"
+  },
+  "dns": {
+    "domain": "getacqpath.com",
+    "accountId": "449109f33c0c400ea8aef1100c801da6",
+    "zoneId": "336b9289cc057d9470ba8bd9975939bf"
+  },
+  "publication": {
+    "githubOwner": "reflectme-source",
+    "repo": "acqpath-distribution",
+    "npmName": "@getacqpath/rights-client",
+    "npmLicenseApproved": false,
+    "smitheryName": null,
+    "docsUrl": "https://developers.getacqpath.com"
+  },
+  "limits": {
+    "requestTimeoutMs": 12000,
+    "maxResponseBytes": 1048576,
+    "catalogQueriesPerRun": 6,
+    "catalogPagesPerRun": 3
+  },
+  "policy": {
+    "coreWritesAllowed": false,
+    "walletKeysAllowed": false,
+    "automaticPaymentsAllowed": false,
+    "paidTestDefault": false,
+    "autoPriceChangesAllowed": false,
+    "autoEnableProviderRoutingAllowed": false
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "checkedAt": "2026-09-10T12:44:05.676Z",
+  "local": { "environment": "Windows", "node": "v22.19.0", "tests": 68, "passed": 68, "failed": 0 },
+  "publicApi": { "state": "PUBLIC_READ_VERIFIED", "checkedAt": "2026-09-10T12:34:08.526Z", "sourceHashMatches": true, "publicEvidenceKeyMatches": true, "mcpInitializeAndToolsList": true, "quoteCreated": false },
+  "sourceComparison": { "state": "SELECTED_FILES_MATCH", "files": 9, "checkedAt": "2026-09-10T12:36:33.386Z", "coreFilesChanged": false, "coreSecretsRead": false },
+  "secretReview": { "sourceFindings": 0, "scanner": "Gitleaks 8.30.1", "toolArchiveFindings": "Three documentation sample credentials inside the ignored official Gitleaks archive; no AcqPath source findings." },
+  "catalogs": { "mcpRegistry": "NO_MATCH_FOR_QUERY", "bazaar": "NO_MATCH_IN_SIX_QUERIES", "checkedAt": "2026-09-10T12:34:15.178Z" },
+  "financialActions": "NONE",
+  "paidFlow": "NOT_TESTED",
+  "organicUsage": "UNVERIFIED",
+  "bazaarBlocker": "NO_BAZAAR_METADATA_IN_REVIEWED_CORE_PAYMENT_PATH",
+  "note": "This is local preparation evidence. Publication and deployment require separate readback in docs/ACCEPTANCE.md."
+}

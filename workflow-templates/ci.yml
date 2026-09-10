@@ -1,0 +1,24 @@
+name: Distribution local verification
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    steps:
+      - uses: {{CHECKOUT}}
+        with:
+          persist-credentials: false
+      - uses: {{SETUP_NODE}}
+        with:
+          node-version: '24'
+      - run: node scripts/verify.mjs
+      - run: node scripts/cli.mjs build

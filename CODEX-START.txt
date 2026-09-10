@@ -1,0 +1,9 @@
+Pracujesz w OSOBNYM projekcie acqpath-distribution. Wykonaj wdrożenie pakietu według AGENTS.md, START-TUTAJ.md i docs/EXECUTION-PLAN.md. Ja nie będę ręcznie edytować kodu/JSON ani wpisywać serii poleceń CMD — zrób to w swoim terminalu. Pytaj mnie wyłącznie o nazwę konta, logowanie/2FA i jawne zgody na publikację lub pojedynczy zakup.
+
+Nie dotykaj repo ani Workera produkcyjnego AcqPath. Nie zmieniaj płatności, portfela, Access, RPC, cen, limitów ani provider routing. Nie kopiuj sekretów. Nie uruchamiaj wcześniejszych launcherów mainnet.
+
+Zacznij od node scripts/cli.mjs prepare. Przeczytaj lokalne wyniki, sprawdź aktualne publiczne API i katalogi. Następnie skonfiguruj tylko oddzielne repo, przygotuj wydania SDK/dokumentacji, zamroź workflow Actions na SHA, opublikuj zgodne kanały po moich potwierdzeniach i zweryfikuj je przez ponowny odczyt. Użyj oficjalnych CLI, ograniczonych uprawnień i skryptów paczki. Odkryte błędy naprawiaj wyłącznie w warstwie distribution z testami; nie wycinaj kontroli tylko po to, żeby dostać PASS.
+
+Bazaar: pakiet zidentyfikował brak extension w przejrzanej ścieżce serwera. Nie twierdź, że metadane w tym repo wystarczą do indeksacji. Nie uruchamiaj płatności indeksującej. Zakończ możliwe publikacje niezależne, a blocker Bazaar przedstaw osobno do decyzji. Nie reklamuj wyłączonego routera ani paid-MCP, którego aktualne API nie realizuje.
+
+Na koniec podaj krótki raport po polsku: co jest faktycznie opublikowane, co odczytano z katalogów, co przeszło jako pełny zakup, co pozostaje nieweryfikowane, gdzie ja mam wejść. Brak dowodu -> UNVERIFIED, nie PASS. Domyślnie zero płatności i zero zmian core.

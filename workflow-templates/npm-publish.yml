@@ -1,0 +1,32 @@
+name: Publish reviewed client package via npm OIDC
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  id-token: write
+jobs:
+  publish:
+    environment: npm-release
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: {{CHECKOUT}}
+        with:
+          persist-credentials: false
+      - uses: {{SETUP_NODE}}
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+          package-manager-cache: false
+      - run: node scripts/verify.mjs
+      - run: node scripts/cli.mjs audit
+      - run: node scripts/cli.mjs build
+      - name: Require owner license approval
+        run: node -e "const c=require('./config/distribution.json');if(c.publication.npmLicenseApproved!==true)process.exit(1)"
+      - run: npm pack --dry-run --ignore-scripts
+        working-directory: out/rights-client
+      - run: npm publish --access public --provenance --ignore-scripts
+        working-directory: out/rights-client
+# First version requires account/scope ownership and interactive publication.
+# Later configure this exact repo/workflow/environment as an npm Trusted Publisher.
+# No NPM_TOKEN, Cloudflare token, seller wallet or core deployment credentials.

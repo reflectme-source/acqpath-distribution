@@ -1,0 +1,31 @@
+{
+  "schema": "acqpath.channels.v1",
+  "updatedAt": null,
+  "channels": {
+    "github": {
+      "state": "NOT_PUBLISHED"
+    },
+    "docs": {
+      "state": "NOT_PUBLISHED"
+    },
+    "npm": {
+      "state": "NOT_PUBLISHED"
+    },
+    "mcpRegistry": {
+      "state": "NOT_PUBLISHED"
+    },
+    "bazaar": {
+      "state": "UNVERIFIED",
+      "constraint": "BAZAAR_METADATA_MISSING"
+    },
+    "smithery": {
+      "state": "NOT_PUBLISHED"
+    },
+    "pulseMcp": {
+      "state": "NOT_SUBMITTED"
+    }
+  },
+  "organicCustomers": null,
+  "organicRevenueMicro": null,
+  "note": "Prepared artifacts do not establish publication or commercial revenue."
+}

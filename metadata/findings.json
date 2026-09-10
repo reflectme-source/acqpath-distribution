@@ -1,0 +1,46 @@
+{
+  "schema": "acqpath.distribution.findings.v1",
+  "basis": "Supplied source archives and owner deployment log, not a live inspection of the current account.",
+  "findings": [
+    {
+      "id": "BAZAAR_METADATA_MISSING",
+      "severity": "channel_blocker",
+      "status": "SOURCE_INDICATOR",
+      "evidence": [
+        "src/native/service.mjs: enrichOffer call",
+        "src/payments/extensions.mjs: offer-receipt + payment-identifier only",
+        "src/payments/x402.mjs: no bazaar"
+      ],
+      "meaning": "Current prepared-report payment path does not advertise Bazaar metadata. A docs-only package cannot inject authenticated server metadata into facilitator settlement.",
+      "action": "Audit public challenge before any payment. Do not pay merely to index. No backend change authorized."
+    },
+    {
+      "id": "DYNAMIC_CLAIM_REPORT",
+      "severity": "integration_constraint",
+      "status": "CONFIRMED_IN_REFERENCE",
+      "meaning": "A quote produces a private claim and quote-specific paid URL. Never submit a real claim or customer report URL to a public listing.",
+      "action": "SDK handles private quote lifecycle outside model prompts. Registry describes MCP as quote preparation, not universal paid-tool completion."
+    },
+    {
+      "id": "PUBLICATION_LIMITS",
+      "severity": "business_constraint",
+      "status": "OWNER_LOG_SNAPSHOT",
+      "meaning": "Last log retains 500 Rights quotes/day, 2000 metadata fetches/day, despite high incoming settlement ceilings.",
+      "action": "No throughput or revenue guarantee. Core configuration not changed."
+    },
+    {
+      "id": "RECOVERY_DEGRADED",
+      "severity": "operational_risk",
+      "status": "OWNER_LOG_SNAPSHOT",
+      "meaning": "Reconciliation was DEGRADED at launch; LIVE is not independent chain validation.",
+      "action": "Never retry with a new authorization after ambiguity. No automatic paid indexing. Preserve checkpoint; contact owner for recovery."
+    },
+    {
+      "id": "MCP_LEGACY_ROUTER_TOOL",
+      "severity": "metadata_constraint",
+      "status": "CONFIRMED_IN_REFERENCE",
+      "meaning": "Current native MCP tool list advertises a legacy provider-quote tool even though native-rights-only deployment disables routing.",
+      "action": "Describe only capabilities and rights quote as usable. Do not claim metadata in core was corrected."
+    }
+  ]
+}

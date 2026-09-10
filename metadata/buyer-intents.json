@@ -1,0 +1,19 @@
+{
+  "queries": [
+    "AcqPath",
+    "RSL declared AI usage rights for a supported URL",
+    "timestamped evidence of web content usage declarations",
+    "AI input rights declaration preflight",
+    "AI indexing rights evidence report",
+    "machine readable license requirement evidence"
+  ],
+  "doNotPromise": [
+    "legal clearance",
+    "copyright ownership guarantee",
+    "license acquisition",
+    "all websites supported",
+    "autonomous investment",
+    "provider routing currently enabled",
+    "all MCP clients can pay automatically"
+  ]
+}

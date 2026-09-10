@@ -1,0 +1,13 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "com.getacqpath/acqpath",
+  "title": "AcqPath Rights Preflight",
+  "description": "Prepare RSL rights-report quotes for supported URLs. Paid delivery uses HTTP x402, not MCP.",
+  "version": "3.1.0-rc.1",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://api.getacqpath.com/mcp"
+    }
+  ]
+}

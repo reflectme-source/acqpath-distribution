@@ -1,0 +1,185 @@
+[
+  {
+    "slug": "index",
+    "label": "Overview",
+    "title": "Know what a source declares. Keep the evidence.",
+    "description": "Prepare a timestamped report of machine-readable rights declarations for supported web resources. Pay for the prepared report through HTTP x402.",
+    "sections": [
+      {
+        "title": "A narrowly defined job",
+        "paragraphs": [
+          "Supply a supported HTTPS URL and an intended usage: AI input, AI training, AI indexing or search. AcqPath inspects bounded, machine-readable declarations and prepares a diagnostic report.",
+          "An ALLOW_DECLARED result means the evaluated declarations allow the stated usage under the supported profile. It is not a determination of ownership or a legal permission granted by AcqPath."
+        ]
+      },
+      {
+        "title": "What you buy",
+        "paragraphs": [
+          "The prepared report, timestamped source evidence, AcqPath report signature, payment receipt and delivery binding. You do not buy the third-party content or a license to it.",
+          "Fresh and deep modes have different bounded evaluation scopes. Consult the current quote for the exact price and expiry."
+        ]
+      },
+      {
+        "title": "Integrate once, call when needed",
+        "paragraphs": [
+          "Keep the client-side payment policy and checkpoint in your application, not in model prompts. Use the Rights client for quote, purchase and resume.",
+          "No provider routing, license acquisition or automated investment is advertised in this release."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "quickstart",
+    "label": "Quickstart",
+    "title": "The complete request path",
+    "description": "Discovery is free of settlement. A prepared report is sold over HTTP x402; MCP alone does not complete payment.",
+    "sections": [
+      {
+        "title": "Check coverage first",
+        "paragraphs": [
+          "Read the native_services entry for rights.preflight.v1. Coverage is an explicit allowlist; an allowed domain does not imply that every resource has usable declarations.",
+          "A URL must be canonical HTTPS without credentials, query, fragment, encoded slash or non-standard port. The buyer owns the use-context supplied to the service."
+        ],
+        "code": "GET https://api.getacqpath.com/v1/capabilities"
+      },
+      {
+        "title": "Prepare a quote",
+        "paragraphs": [
+          "POST resource, purpose and max_total_micro to the quote endpoint. This may use remote metadata and consume a quota, but performs no settlement.",
+          "If no verifiable declaration is found, the reference service returns available:false with NO_VERIFIABLE_DECLARATION and no report fee. UNKNOWN with a discovered but unsupported declaration can be disclosed as a purchasable report; inspect the preview."
+        ],
+        "code": "POST /v1/rights/quote\n{ \"resource\": \"https://SUPPORTED-HOST/REAL-RESOURCE\",\n  \"purpose\": \"ai-input\", \"tier\": \"fresh\",\n  \"max_total_micro\": \"20000\" }\n\nThe placeholder is not a demonstrated supported resource."
+      },
+      {
+        "title": "Purchase and resume safely",
+        "paragraphs": [
+          "The quote includes a private claim and quote-specific redeem URL. The SDK verifies a signed offer, fixes the payee/network/asset/amount, invokes a buyer-controlled signer and stores a checkpoint before submitting the signed payload.",
+          "After an ambiguous response, resume the same checkpoint. Do not create a second purchase or sign again to clear an error. The current operator-reported reconciliation state is degraded, so manual recovery may be necessary.",
+          "Never expose the claim, payment signature or checkpoint to a public registry or language model."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "integrations",
+    "label": "Integrations",
+    "title": "Put evidence in the workflow",
+    "description": "Three integration patterns for software that already needs evidence of declared rights. These are use-case hypotheses, not claims of existing customers.",
+    "sections": [
+      {
+        "title": "RAG or indexing pipeline",
+        "paragraphs": [
+          "Filter to supported origins, deduplicate canonical URLs and purpose, then request fresh evidence only when the previous evidence is too old for your policy.",
+          "A diagnostic report informs your own decision. Do not use it as an automatic substitute for legal or licensing obligations."
+        ]
+      },
+      {
+        "title": "Research assistant",
+        "paragraphs": [
+          "Evaluate the sources selected for a task, not every search result. Store provenance and the chosen usage context next to the task outcome.",
+          "Configure a per-task payment ceiling and do not let retrieved content or a model change the recipient, chain, amount policy or signer."
+        ]
+      },
+      {
+        "title": "Content workflow",
+        "paragraphs": [
+          "Preserve observed declarations for selected resources with stable identifiers and explicit evaluation dates. Compare only comparable reports.",
+          "Do not infer support for rights-history subscriptions or batch purchase: those are not advertised as current service features."
+        ]
+      },
+      {
+        "title": "MCP compatibility boundary",
+        "paragraphs": [
+          "The current MCP endpoint provides capabilities and rights-quote preparation. Paid report redemption is HTTP/x402. A generic MCP host without a suitable buyer-side payment integration cannot complete that purchase automatically.",
+          "The native tool list may include legacy acqpath_quote for provider routing; it is disabled in the last reported native-rights-only deployment. Use acqpath_rights_quote for the offered product and keep sensitive outputs outside model context."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "scope",
+    "label": "Scope",
+    "title": "Explicit scope beats a vague guarantee",
+    "description": "Use current capabilities and the quote preview. Unsupported declarations and missing information are not permissions.",
+    "sections": [
+      {
+        "title": "Decision vocabulary",
+        "paragraphs": [
+          "ALLOW_DECLARED: allowance observed under the supported profile. DENY_DECLARED: a relevant prohibition was observed. LICENSE_REQUIRED: a licensing requirement was observed. UNKNOWN: missing, conflicting or unsupported evidence prevents a stronger diagnostic conclusion.",
+          "UNKNOWN never authorizes use. LICENSE_REQUIRED does not mean AcqPath acquired a license."
+        ]
+      },
+      {
+        "title": "Coverage is live configuration",
+        "paragraphs": [
+          "Do not hard-code every publisher as supported from a marketing page. Read the current native-service coverage list.",
+          "The paid quote purpose enum is ai-input, ai-train, ai-index and search in the reviewed contract. Legacy crawl inspection is a separate free XML inspection path, not a paid product promise."
+        ]
+      },
+      {
+        "title": "Signature and finality",
+        "paragraphs": [
+          "A valid AcqPath signature proves what AcqPath signed. It does not prove that a publisher owns all rights, nor independently prove blockchain finality.",
+          "This client pins the supplied AcqPath public evidence key and checks signed reports/receipts. Replacing the key after an unexpected signature error requires an authenticated operator decision, not trust-on-first-use."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "pricing",
+    "label": "Pricing",
+    "title": "Small, explicit purchases",
+    "description": "The quote is the authority for price, expiry, recipient and network. Limits and rate policies remain separate from price.",
+    "sections": [
+      {
+        "title": "Reference prices",
+        "paragraphs": [
+          "The last supplied production configuration used 20,000 micro-USDC (0.02 USDC) for fresh reports and 50,000 micro-USDC (0.05 USDC) for deep reports. Confirm against current capabilities and the signed quote.",
+          "There is no autonomous price increase in this distribution package. No token investment or publisher-side wallet funding is required merely to receive payments."
+        ]
+      },
+      {
+        "title": "Buyer responsibility",
+        "paragraphs": [
+          "The buyer must have an appropriate wallet or signer and approve payment. This client demo supports EOA typed-signature use on Base; it is not a universal wallet-compatibility guarantee.",
+          "All price comparisons use integer micro-USDC. One USDC is 1,000,000 micro-USDC."
+        ]
+      },
+      {
+        "title": "Not a throughput or earnings promise",
+        "paragraphs": [
+          "A configured settlement ceiling does not measure capacity. Quote, fetch, rate, facilitator and hosting limits may apply earlier.",
+          "Publisher revenue is not net profit: infrastructure, payment processing, support and refunds are separate costs."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "recovery",
+    "label": "Recovery",
+    "title": "Retry the purchase, not the charge",
+    "description": "Keep the original private checkpoint and stop on uncertainty. Never replace a signed authorization just to make an error disappear.",
+    "sections": [
+      {
+        "title": "A safe retry",
+        "paragraphs": [
+          "Store the checkpoint before the first submission. Resuming uses the stored authorization and order rather than signing a new purchase.",
+          "The sample encrypted store requires a secret passphrase and a unique logical purchase ID. Lost passphrases cannot be recovered by the service. A lock left after a process crash requires review; it is not automatically removed."
+        ]
+      },
+      {
+        "title": "Manual recovery is currently possible, not guaranteed",
+        "paragraphs": [
+          "The operator last reported reconciliation as DEGRADED. A payment may remain unresolved until the operator restores trustworthy chain reconciliation. Do not promise automatic recovery or unattended financial operation.",
+          "A refund request is a request for operator review, not an automatic blockchain transfer. This distribution package does not sign refunds or use the seller wallet."
+        ]
+      },
+      {
+        "title": "Responsible reporting",
+        "paragraphs": [
+          "When asking for help, provide only the safe error code, request ID and public transaction hash when necessary. Do not send wallet seed, private key, claim, payment signature, operator token or entire checkpoint."
+        ]
+      }
+    ]
+  }
+]
