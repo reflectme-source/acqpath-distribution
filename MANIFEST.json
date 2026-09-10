@@ -19,6 +19,11 @@
       "bytes": 631
     },
     {
+      "path": ".github/workflows/docs-deploy.yml",
+      "sha256": "318db0f50771b5f2b2ef7b6824e47c8c0a3d138e921e6ff9d511655d226b1fd3",
+      "bytes": 4085
+    },
+    {
       "path": ".github/workflows/npm-publish.yml",
       "sha256": "cb3acc571c740c62482f1dc24951cabdf331c6d097f291ea30d0d1348db69803",
       "bytes": 1366
@@ -124,6 +129,41 @@
       "bytes": 6576
     },
     {
+      "path": "docs/BAZAAR-CURRENT-FLOW.md",
+      "sha256": "7f4210fc2aeeb533564e77d77b645ed1cdcc3d9c6d85f793361216e3e0364b43",
+      "bytes": 6797
+    },
+    {
+      "path": "docs/BAZAAR-ENGINEERING-STATUS.md",
+      "sha256": "91f748b93ea8541642b13319ac316134fe4f248397023f0ee58ed8d65c998cba",
+      "bytes": 4238
+    },
+    {
+      "path": "docs/BAZAAR-MAINNET-PLAN.md",
+      "sha256": "15b0c2243917251adf9e82ae116e3c64a780419642cea94de7c5af37501691e5",
+      "bytes": 4292
+    },
+    {
+      "path": "docs/BAZAAR-OFFICIAL-REQUIREMENTS.md",
+      "sha256": "3f9a41264e330a32cbaedfe60074c906cc26322448a7cfe16c8dc5fe919f4f28",
+      "bytes": 6444
+    },
+    {
+      "path": "docs/BAZAAR-PATCH-REVIEW.md",
+      "sha256": "5c04781afbcf34e4718143f11c2b59c173709ab7566d0a2d0ae1854efa162073",
+      "bytes": 10345
+    },
+    {
+      "path": "docs/BAZAAR-SECURITY-REVIEW.md",
+      "sha256": "76332a3be34bfd07eca85bb04d4a1407bdcf61156a98613fa481d3bc5d5eebf2",
+      "bytes": 6053
+    },
+    {
+      "path": "docs/BAZAAR-TESTNET-PLAN.md",
+      "sha256": "9453ab612b2c1e8353b053f504725ca89bc3ae8d4436340666cde24f9112834a",
+      "bytes": 4549
+    },
+    {
       "path": "docs/BLOCKERS.md",
       "sha256": "844f3536846440e144871bd9d16ad1d0764d60253a6cafee06ca7ff3d6d4694f",
       "bytes": 2983
@@ -192,6 +232,16 @@
       "path": "metadata/SKILL.md",
       "sha256": "78c677795f7ea5042f437bd079dd1743504434bddb3dcaf03bda33eedb106202",
       "bytes": 3086
+    },
+    {
+      "path": "metadata/bazaar-design.json",
+      "sha256": "a8b461e8fab6d3ecd88e2fb3c1b8a364507580304cb1c3610a7327fe47b218b5",
+      "bytes": 7909
+    },
+    {
+      "path": "metadata/bazaar-public-contract.json",
+      "sha256": "1b1fabe8a6d8fd5ca531a49ad6c4edd5033616598ef5789d9b208b0a406b87db",
+      "bytes": 15915
     },
     {
       "path": "metadata/buyer-intents.json",
@@ -270,8 +320,8 @@
     },
     {
       "path": "metadata/site-pages.json",
-      "sha256": "b4c5bffe109c426f93823d0c3de6107977de7fd5d2b277be4d1627a1302c8475",
-      "bytes": 38802
+      "sha256": "2c8fd6522118433064c6ce50bdd04c126530e0bed398b00425d3d99854541329",
+      "bytes": 41957
     },
     {
       "path": "metadata/smithery-listing.json",
@@ -399,14 +449,24 @@
       "bytes": 909
     },
     {
+      "path": "review/bazaar-core.mjs",
+      "sha256": "abde246c7d6cf3a3577325f7702e7030c17c9ab7c1633f7f1d8a45c75c70be37",
+      "bytes": 6852
+    },
+    {
       "path": "scripts/audit.mjs",
       "sha256": "fdfcbe93ea085e035e9bf9d62786a72a15c20423cd9a9b3f2f85d163457a0520",
       "bytes": 5112
     },
     {
+      "path": "scripts/bazaar-check.mjs",
+      "sha256": "20d44bee0a11c3250d9fb54ff6132b4fa3adee748d1aa6ff3c66cd1b13169903",
+      "bytes": 11000
+    },
+    {
       "path": "scripts/build.mjs",
-      "sha256": "7a3ef7c02888e27bd6ce697896744aa586d068040b18dbc54229637b52c59ab0",
-      "bytes": 4975
+      "sha256": "3e357374b90834ac95da87ba267d7490c08af9f1c01799d7130b7ef2182eba5f",
+      "bytes": 4119
     },
     {
       "path": "scripts/buyer-demo.mjs",
@@ -430,13 +490,23 @@
     },
     {
       "path": "scripts/discovery-assets.mjs",
-      "sha256": "dcff78cdc6c66151a3f2dcd580f87a13024f32a60b0b2a33519a70e428af8bea",
-      "bytes": 6809
+      "sha256": "6939f88996bfb711c3f80e0e4673d1251e62f0432e5649bd8b25df487eb82865",
+      "bytes": 6927
     },
     {
       "path": "scripts/discovery-check.mjs",
       "sha256": "35a4244bcecfab318dd40b3abdeddf42af9eb29d25d876c5fca17d526ea17b15",
       "bytes": 5407
+    },
+    {
+      "path": "scripts/docs-artifact.mjs",
+      "sha256": "a7b717520c041e10157503426fbcd9393347917b750e2b2570080779fd510201",
+      "bytes": 2747
+    },
+    {
+      "path": "scripts/docs-readback.mjs",
+      "sha256": "3d2c5903a208aaaedff81e46624ae665ed179ff9304bf757b6a88813d2e1010e",
+      "bytes": 602
     },
     {
       "path": "scripts/git-publish.mjs",
@@ -554,6 +624,16 @@
       "bytes": 5467
     },
     {
+      "path": "tests/bazaar-phase3.test.mjs",
+      "sha256": "52f10fbe5398759c68d3faeda64d81ba179ad07d591c1c55517bb122f4fe45ac",
+      "bytes": 5945
+    },
+    {
+      "path": "tests/bazaar-public-contract.test.mjs",
+      "sha256": "874ca8560cbc350226e6cc6eba2329b73f0dbad0de3945eafb9b4563507587f4",
+      "bytes": 3303
+    },
+    {
       "path": "tests/checkpoints.test.mjs",
       "sha256": "6ceaf07ba033e26f5a7952fe5fca51bda104ad3f5e2c8e064acb4314775e37e3",
       "bytes": 3779
@@ -582,6 +662,16 @@
       "path": "tests/support/fixture.mjs",
       "sha256": "bea3b69234b7e87fbda7d0c8bf703b8c37179e0f253a538ce157685005104d4c",
       "bytes": 4460
+    },
+    {
+      "path": "tooling/distribution/package-lock.json",
+      "sha256": "b468010cd4ccac5cc40a3b4b47b4842d706057a0c39b734261918b2a7e1106a8",
+      "bytes": 51703
+    },
+    {
+      "path": "tooling/distribution/package.json",
+      "sha256": "a1fbee7a50475310d56c6dfd2657e212eb412854733e2ca96ddee1afc73ac833",
+      "bytes": 255
     },
     {
       "path": "workflow-templates/ci.yml",

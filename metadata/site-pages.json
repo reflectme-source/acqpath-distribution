@@ -69,6 +69,18 @@
             "href": "/scope"
           }
         ]
+      },
+      {
+        "title": "Bazaar integration status",
+        "paragraphs": [
+          "A public paid HTTP adapter has been implemented in source and is undergoing deployment validation. The deployed integration remains the documented private quote/claim/report flow."
+        ],
+        "links": [
+          {
+            "label": "Read the current Bazaar status",
+            "href": "/bazaar-status"
+          }
+        ]
       }
     ]
   },
@@ -879,6 +891,59 @@
         "paragraphs": [
           "This page identifies a documentation entry path only. It does not prove that a visitor came from that catalog, integrated successfully, created a quote or paid.",
           "Browser analytics cannot measure all autonomous clients. No referral or wallet identifier is sent to the production API."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "bazaar-status",
+    "label": "Bazaar status",
+    "title": "Bazaar public adapter: implemented, awaiting deployment.",
+    "description": "The additive Rights Preflight contract is verified in source. Production still uses the private quote/claim/report flow. Bazaar indexing and real payments remain unverified.",
+    "sections": [
+      {
+        "title": "What is available now",
+        "paragraphs": [
+          "Use the existing HTTP quote and private claim flow, or MCP for capabilities and quote preparation. Keep payment and private claims in your application.",
+          "The public POST /v1/rights/preflight adapter is implemented and tested, but has not been deployed to production. Do not call it as a live paid tool. npm remains unpublished."
+        ],
+        "links": [
+          {
+            "label": "Current HTTP integration",
+            "href": "/quickstart"
+          },
+          {
+            "label": "Current MCP connection",
+            "href": "/connect"
+          }
+        ]
+      },
+      {
+        "title": "The reviewed public contract",
+        "paragraphs": [
+          "The candidate accepts a reviewed URL, AI usage purpose, tier and budget. It reuses the existing Rights Preflight pipeline and PaymentIntent journal, returning signed evidence directly.",
+          "Payment must bind the normalized request and private retry context through a specific EIP-3009 nonce. Generic clients that choose an arbitrary nonce cannot purchase this operation.",
+          "An empty POST is a discovery-only 402. It does not prepare a payable request. A buyer must verify the signed prepared binding and terms before any signature."
+        ],
+        "links": [
+          {
+            "label": "Candidate contract and synthetic schemas",
+            "href": "/bazaar-status.json"
+          }
+        ]
+      },
+      {
+        "title": "Validation and remaining gates",
+        "paragraphs": [
+          "Local regression: 438 passed, zero failed and two Windows skips. Actual local workerd D1/DO/R2 checks and SDK types pass. No real wallet signature or settlement occurred.",
+          "An isolated Base Sepolia deployment is awaiting account authorization. Production deployment and wallet/payment actions remain separate owner gates.",
+          "Bazaar indexing, external paid reports, repeat payers and received USDC remain UNVERIFIED or UNKNOWN. A catalog search result or schema pass cannot establish them."
+        ],
+        "links": [
+          {
+            "label": "CDP non-paid endpoint validation",
+            "href": "https://docs.cdp.coinbase.com/api-reference/v2/rest-api/x402-facilitator/validate-x402-endpoint"
+          }
         ]
       }
     ]

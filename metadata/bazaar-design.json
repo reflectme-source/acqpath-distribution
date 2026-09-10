@@ -1,0 +1,265 @@
+{
+  "status": "BLOCKED",
+  "classification": "B",
+  "appliedToCore": false,
+  "publishedToBazaar": false,
+  "service": {
+    "serviceName": "AcqPath Rights Preflight",
+    "description": "Retrieve a prepared, signed Native Rights Preflight report of observed RSL declarations for AI input, training, indexing or search before RAG ingestion. First create a quote and retain its private claim locally. Coverage is limited to reviewed origins. UNKNOWN is not permission. Payment buys timestamped diagnostic evidence, not legal clearance, legal advice, a license, or ownership verification. Paid crawl is unsupported.",
+    "tags": [
+      "rsl",
+      "ai-usage-rights",
+      "rights-preflight",
+      "rag-ingestion",
+      "content-rights"
+    ],
+    "mimeType": "application/json"
+  },
+  "canonicalPublicResourceUrl": null,
+  "candidateCatalogTemplate": "https://api.getacqpath.com/v1/rights/reports/:quote_id",
+  "candidateTemplateCallable": false,
+  "quotePrerequisite": {
+    "method": "POST",
+    "url": "https://api.getacqpath.com/v1/rights/quote",
+    "paid": false,
+    "inputSchema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "resource",
+        "purpose",
+        "max_total_micro"
+      ],
+      "properties": {
+        "resource": {
+          "type": "string",
+          "maxLength": 2048,
+          "pattern": "^https://(medium\\.com|theguardian\\.com|rslstandard\\.org|rslcollective\\.org)(/[^?#]*)?$",
+          "description": "Reviewed origins only; server additionally rejects credentials, encoded separators, query and fragment. Coverage does not guarantee a payable declaration."
+        },
+        "purpose": {
+          "type": "string",
+          "enum": [
+            "ai-input",
+            "ai-train",
+            "ai-index",
+            "search"
+          ]
+        },
+        "max_total_micro": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]{0,10}|100000000000)$",
+          "description": "Non-negative integer micro-USDC, maximum 100000000000; the unchanged server enforces budget before preparing a quote."
+        },
+        "user_class": {
+          "type": "string",
+          "enum": [
+            "commercial",
+            "non-commercial",
+            "education",
+            "government",
+            "personal"
+          ],
+          "default": "commercial"
+        },
+        "geo": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[A-Z]{2}$",
+          "default": null
+        },
+        "tier": {
+          "type": "string",
+          "enum": [
+            "fresh",
+            "deep"
+          ],
+          "default": "fresh"
+        },
+        "freshness_seconds": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3600,
+          "default": 300
+        }
+      }
+    },
+    "example": {
+      "resource": "https://rslstandard.org/",
+      "purpose": "ai-input",
+      "max_total_micro": "20000",
+      "tier": "fresh"
+    },
+    "exampleIsNotAnObservation": true
+  },
+  "paidOperation": {
+    "method": "GET",
+    "pathTemplate": "/v1/rights/reports/:quote_id",
+    "inputSchema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "required": [
+        "pathParams",
+        "headers"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "pathParams": {
+          "type": "object",
+          "required": [
+            "quote_id"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "quote_id": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{48}$",
+              "description": "From the caller's private, unexpired quote; never a catalog example."
+            }
+          }
+        },
+        "headers": {
+          "type": "object",
+          "required": [
+            "X-AcqPath-Claim"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "X-AcqPath-Claim": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$",
+              "writeOnly": true,
+              "description": "Private retrieval capability from quote creation. Supply locally; never index or log."
+            }
+          }
+        }
+      }
+    },
+    "example": null,
+    "exampleOmittedReason": "A reusable example cannot manufacture a live private quote or claim. No customer-specific URL or claim is catalog-safe.",
+    "outputSchema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "required": [
+        "version",
+        "quote_id",
+        "created_at",
+        "report",
+        "billing",
+        "evidence",
+        "payment_settlement",
+        "delivery_proof"
+      ],
+      "properties": {
+        "version": {
+          "const": "3.1.0-rc.1"
+        },
+        "quote_id": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{48}$"
+        },
+        "created_at": {
+          "type": "integer"
+        },
+        "report": {
+          "type": "object",
+          "required": [
+            "resource",
+            "purpose",
+            "decision",
+            "legal_clearance",
+            "evaluated_at",
+            "declaration_count"
+          ],
+          "properties": {
+            "resource": {
+              "type": "string"
+            },
+            "purpose": {
+              "enum": [
+                "ai-input",
+                "ai-train",
+                "ai-index",
+                "search"
+              ]
+            },
+            "decision": {
+              "type": "string"
+            },
+            "legal_clearance": {
+              "const": false
+            },
+            "evaluated_at": {
+              "type": "integer"
+            },
+            "declaration_count": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "billing": {
+          "type": "object",
+          "required": [
+            "fee_type",
+            "amount_micro",
+            "currency"
+          ],
+          "properties": {
+            "fee_type": {
+              "const": "rights_preflight_report"
+            },
+            "amount_micro": {
+              "enum": [
+                "20000",
+                "50000"
+              ]
+            },
+            "currency": {
+              "const": "USDC"
+            }
+          }
+        },
+        "evidence": {
+          "type": "object"
+        },
+        "payment_settlement": {
+          "type": "object"
+        },
+        "delivery_proof": {
+          "type": "object"
+        }
+      }
+    },
+    "representativeOutputExcerpt": {
+      "report": {
+        "resource": "https://rslstandard.org/",
+        "purpose": "ai-input",
+        "decision": "UNKNOWN",
+        "legal_clearance": false,
+        "evaluated_at": 1788998400000,
+        "declaration_count": 1
+      },
+      "billing": {
+        "fee_type": "rights_preflight_report",
+        "amount_micro": "20000",
+        "currency": "USDC"
+      }
+    },
+    "excerptIsSyntheticAndIncomplete": true
+  },
+  "limitations": [
+    "No deployable Bazaar extension is asserted by this design document.",
+    "Quote creation is free but consumes bounded source-fetch and quote capacity.",
+    "A payable quote requires a discovered declaration and expires after the existing TTL.",
+    "No legal clearance, legal advice, guaranteed permission, license acquisition or ownership verification.",
+    "UNKNOWN is not permission; unsupported origins and paid crawl remain unsupported.",
+    "MCP quote tools remain free; paid retrieval is HTTP only.",
+    "Canonical template normalization alone does not remove identifiers from extension examples or signed offers."
+  ],
+  "historicalReview": true,
+  "currentCandidate": "bazaar-public-contract.json"
+}
