@@ -25,5 +25,7 @@ jobs:
             .local/public-audit.json
             .local/discovery-check.json
             .local/docs-verification-*.json
+          include-hidden-files: true
+          if-no-files-found: error
           retention-days: 14
 # Public reads and MCP metadata only. No operator secrets, quote or paid calls.

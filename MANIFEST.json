@@ -25,8 +25,8 @@
     },
     {
       "path": ".github/workflows/visibility.yml",
-      "sha256": "a8bcef402a10bbcdee06cb729b8591872acfcdaae9704290991cc5c887c1d9d8",
-      "bytes": 906
+      "sha256": "d35a4ac7c759272ce87f4f86ef11b563d6c68ae8e4907767f95537e4a115e8bc",
+      "bytes": 978
     },
     {
       "path": ".gitignore",
@@ -50,8 +50,8 @@
     },
     {
       "path": "CHANNEL-MATRIX.md",
-      "sha256": "b1263fd0078ac4e9789b0dfb2d8b82cc7ab579dd2889a79798980fc26cb6a766",
-      "bytes": 9076
+      "sha256": "e99c58ff371c11a0146177cd4ebc9202fc0caf996960c76499228c1c76f909f1",
+      "bytes": 9107
     },
     {
       "path": "CODEX-START.txt",
@@ -60,13 +60,13 @@
     },
     {
       "path": "DISCOVERY-TESTS.md",
-      "sha256": "bb5a9031f4d255ec4d91e7a640379be058b5f15b5103259237dd6b7c988015fc",
-      "bytes": 8990
+      "sha256": "a2c5ee61c059283debc449cec99d4ebbb3dbaee5789ea0f615bffa5af9e66648",
+      "bytes": 11852
     },
     {
       "path": "README.md",
-      "sha256": "0f26e7c717d945586f0bb8e1a19f1a52faa01bf0f5e0079895cf3ce616fc7661",
-      "bytes": 6018
+      "sha256": "a94d058ee81046cb0f867dabeec86e1d959d011715057a5b46e9da165053a48a",
+      "bytes": 6780
     },
     {
       "path": "REVENUE-BASELINE.md",
@@ -120,8 +120,8 @@
     },
     {
       "path": "docs/ACCEPTANCE.md",
-      "sha256": "b18b6093b39a3c22abd55768ac1cdb54e2a50fb551be1313f82fbbad07b41226",
-      "bytes": 5197
+      "sha256": "c9bedf071d7a2bddaf42f427b5c4730da5f9faf98ccf866eaa0d0010df07a109",
+      "bytes": 6576
     },
     {
       "path": "docs/BLOCKERS.md",
@@ -380,8 +380,8 @@
     },
     {
       "path": "release/CONTENTS.md",
-      "sha256": "60680de1b14e44fa4f0b78cdbcf97384b978de48076e5e28d29eacb078a0a9f7",
-      "bytes": 1408
+      "sha256": "db69cad563716c6a0428928d12848ee7a8904f254f6e077111df420b7109d0af",
+      "bytes": 1410
     },
     {
       "path": "release/KNOWN-LIMITATIONS.md",
@@ -395,7 +395,7 @@
     },
     {
       "path": "release/VERIFICATION.json",
-      "sha256": "0135d658d459992bae6e9dcea95fb6c4ef3159ebfdb16881c9ddc6086f7133c8",
+      "sha256": "d4a08cdffac4786d7013b96b9c14e711caf3546fb740ba644afab27d5b099ba9",
       "bytes": 909
     },
     {
@@ -435,8 +435,8 @@
     },
     {
       "path": "scripts/discovery-check.mjs",
-      "sha256": "bad4d7766614d996d8a3c7868f2600ad86450ea5df651a563e387b88673f42c1",
-      "bytes": 4691
+      "sha256": "35a4244bcecfab318dd40b3abdeddf42af9eb29d25d876c5fca17d526ea17b15",
+      "bytes": 5407
     },
     {
       "path": "scripts/git-publish.mjs",
@@ -565,8 +565,8 @@
     },
     {
       "path": "tests/discovery-check.test.mjs",
-      "sha256": "2fb88bb8bedc3e18ab6f1f0b53575a3abf091db8cdb5e11e59e312a01cbc65db",
-      "bytes": 3244
+      "sha256": "a45ca476c1e3da3f40a78dc04742d754d375b2e9a930091e03837b0e6b70b898",
+      "bytes": 4369
     },
     {
       "path": "tests/distribution.test.mjs",
@@ -600,8 +600,8 @@
     },
     {
       "path": "workflow-templates/visibility.yml",
-      "sha256": "1692d418672ea1ba0b9cdf41a5ed657e1b67c37a7c09ebd4f802d9a14137c581",
-      "bytes": 762
+      "sha256": "9da6b493fedee47c7611de6e347f81a5363e5a9ec16b98156eb6d3f6a20a7bee",
+      "bytes": 834
     }
   ]
 }

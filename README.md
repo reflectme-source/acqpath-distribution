@@ -59,3 +59,9 @@ The SDK's MIT license applies only to its [client package](packages/rights-clien
 ## Documentation for coding agents
 
 The public [integration skill](skills/acqpath-rights-preflight/SKILL.md) and [full machine reference](https://developers.getacqpath.com/llms-full.txt) describe the private buyer flow. A separate [GitMCP documentation endpoint](https://gitmcp.io/reflectme-source/acqpath-distribution) exposes this public repository as searchable context; it does not execute or replace the paid AcqPath service. Its metadata connection was verified; search quality is recorded separately in DISCOVERY-TESTS.md.
+
+## Common integration questions
+
+**Can I use this page for RAG?** AcqPath can report observed RSL declarations for a supported page. Use `ai-index` for corpus indexing and separately evaluate `ai-input` when supplying content to a model. UNKNOWN, unsupported coverage and license-required outcomes hold ingestion. Signed evidence supports your own policy decision; it does not grant permission or replace a license.
+
+**Where do I check machine-readable usage restrictions?** Read the current capabilities, then prepare an RSL rights quote for the actual purpose and supported origin. The private HTTP/x402 integration obtains and verifies the signed report. AcqPath does not prove ownership or legal clearance, and crawl/robots policy remains a separate check.

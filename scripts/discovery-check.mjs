@@ -15,6 +15,22 @@ export function contractDrift(observed,contract) {
 export function registryMatches(data,expected) {
  return isDeepStrictEqual(data?.server,expected)&&data?._meta?.['io.modelcontextprotocol.registry/official']?.status==='active';
 }
+// Only idempotent public registry GETs may retry; metadata mismatches never do.
+export async function readRegistry(url,fetcher=globalThis.fetch) {
+ const origin='https://registry.modelcontextprotocol.io';
+ for(let attempt=1;attempt<=2;attempt++) {
+  try {
+   const r=await boundedRequest(url,{allowedOrigins:[origin],timeoutMs:25000},fetcher);
+   if(attempt===1&&[429,502,503,504].includes(r.status))continue;
+   return {...r,attempts:attempt};
+  }catch(e){
+   const transient=['AbortError','TimeoutError','TypeError'].includes(e.name);
+   if(attempt===1&&transient)continue;
+   if(['AbortError','TimeoutError'].includes(e.name))throw Object.assign(new Error('Registry read timed out'),{code:'REGISTRY_TIMEOUT'});
+   throw e;
+  }
+ }
+}
 export async function discoveryCheck(root=ROOT,{fetcher=globalThis.fetch}={}) {
  const cfg=await settings(root),contract=await load(join(root,'metadata/public-contract.json')),expected=await load(join(root,'out/registry/server.json'));
  const checks=[];
@@ -22,8 +38,8 @@ export async function discoveryCheck(root=ROOT,{fetcher=globalThis.fetch}={}) {
  await check('public_api_mcp_and_contract',async()=>{const r=await publicAudit(cfg,{fetcher});await writeLocal('.local/public-audit.json',r,root);return {pass:r.status==='PASS'&&!contractDrift(r.observed,contract),audit:r.status,contractDrift:contractDrift(r.observed,contract),noToolInvoked:true};});
  await check('documentation_assets_headers_links',async()=>{const r=await verifyDocs(cfg.publication.docsUrl,root,{fetcher,quiet:true});return {pass:r.state==='PUBLIC_DOCS_VERIFIED',state:r.state,files:r.checks.length,links:r.linkChecks.length};});
  const registry='https://registry.modelcontextprotocol.io';
- await check('official_registry_exact_active_metadata',async()=>{const url=registry+'/v0.1/servers/'+encodeURIComponent(cfg.mcp.name)+'/versions/'+cfg.mcp.version;const r=await boundedRequest(url,{allowedOrigins:[registry]},fetcher);return {pass:r.status===200&&registryMatches(r.data,expected),http:r.status,url};});
- await check('official_registry_brand_search',async()=>{const url=registry+'/v0.1/servers?search=AcqPath&limit=100';const r=await boundedRequest(url,{allowedOrigins:[registry]},fetcher);return {pass:r.status===200&&r.data?.servers?.some(s=>s.server?.name===cfg.mcp.name&&s.server?.version===cfg.mcp.version),http:r.status,search:'server-name substring only; semantic discovery tested separately'};});
+ await check('official_registry_exact_active_metadata',async()=>{const url=registry+'/v0.1/servers/'+encodeURIComponent(cfg.mcp.name)+'/versions/'+cfg.mcp.version;const r=await readRegistry(url,fetcher);return {pass:r.status===200&&registryMatches(r.data,expected),http:r.status,attempts:r.attempts,url};});
+ await check('official_registry_brand_search',async()=>{const url=registry+'/v0.1/servers?search=AcqPath&limit=100';const r=await readRegistry(url,fetcher);return {pass:r.status===200&&r.data?.servers?.some(s=>s.server?.name===cfg.mcp.name&&s.server?.version===cfg.mcp.version),http:r.status,attempts:r.attempts,search:'server-name substring only; semantic discovery tested separately'};});
  const pages=await load(join(root,'metadata/site-pages.json'));
  const external=[...new Set(pages.flatMap(p=>p.sections.flatMap(s=>(s.links||[]).map(l=>l.href))).filter(h=>h.startsWith('https:')))];
  for(const url of external)await check('documentation_external_link',async()=>{const r=await fetchPublicFile(url,{fetcher,allowedOrigins:['https://github.com',cfg.apiOrigin],maxBytes:2097152});return {pass:r.http===200,http:r.http,url};});

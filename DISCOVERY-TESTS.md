@@ -6,7 +6,7 @@ Test date: 2026-09-10. Searches are finite observations of returned results, not
 |---|---|---|---|---|---|---|
 | Official MCP Registry | Exact namespace and current version found | Name-only search cannot search description intent | Same limitation | Same limitation | Exact rc.2 manifest equals reviewed build; active; public MCP handshake/tool schemas verified separately | INDEXED / NAME SEARCHABLE / MCP METADATA CALLABLE |
 | Smithery | AcqPath missing from the five suggestions observed during early tests | `RSL rights preflight`: AcqPath first of returned suggestions | `can I use this page for RAG`: no AcqPath in five suggestions | `machine-readable usage restrictions`: no AcqPath in five suggestions | Public listing exists, truthful full description, repo/docs links and three upstream tool schemas. Successful platform metadata scan; no tool calls | PUBLISHED / CAPABILITY SEARCHABLE; other queries not proven |
-| Glama | AcqPath returned matching connector | Additional search observations appended below | Additional search observations appended below | Additional search observations appended below | Existing com.getacqpath/acqpath record, exact endpoint, healthy platform metadata inspection; ownership verified | INDEXED / BRAND SEARCHABLE / MCP METADATA CALLABLE |
+| Glama | AcqPath returned matching connector | RSL rights: FOUND | RAG question: NOT FOUND in returned links | Usage-restrictions phrase: NOT FOUND in returned links | Existing com.getacqpath/acqpath record, exact endpoint, healthy platform metadata inspection; ownership verified | INDEXED / BRAND SEARCHABLE / MCP METADATA CALLABLE |
 | GitHub repository | Exact public repo readback exists | Phase 2 search checks appended after push | Phase 2 search checks appended after push | Phase 2 search checks appended after push | Public source/README/examples and homepage; GitHub is documentation, not paid execution | PUBLISHED; search result evidence separate |
 | Public docs and machine assets | Direct URL available | Dedicated purpose pages and intents.json provide context | Direct retrieval available | Search engine indexing is not implied by publishing llms/robots/sitemap | Exact file bytes after approved Cloudflare insertion, security headers, canonical internal paths and 404 checked by verify-docs | See final deployment readback below |
 | GitMCP | Repository URL conversion is supported | Documentation search only | Documentation search only | Documentation search only | Metadata-only connection must be verified; does not call or replace AcqPath payments | See independent probe below |
@@ -14,7 +14,7 @@ Test date: 2026-09-10. Searches are finite observations of returned results, not
 | Docker | No AcqPath submission yet | N/A | N/A | N/A | Prepared remote metadata; owner approval and then curator review required | READY, NOT PUBLISHED |
 | PulseMCP | No new listing claimed | N/A | N/A | N/A | Submission form paused | NOT SUBMITTED |
 | Context7 | No listing claimed | N/A | N/A | N/A | Owner sign-in required to add public docs | READY, NOT SUBMITTED |
-| skills.sh | No directory indexing claimed | N/A | N/A | N/A | Public SKILL.md validates; repository source availability is separate from install-based ranking | SOURCE READY; DIRECTORY INDEXING UNVERIFIED |
+| skills.sh | No directory indexing claimed | N/A | N/A | N/A | Public SKILL.md validates; repository source availability is separate from install-based ranking | SOURCE PUBLISHED; DIRECTORY INDEXING UNVERIFIED |
 
 ## What counts as a pass
 
@@ -49,3 +49,21 @@ A final local secret scan and redacted staged diff scan precede the push. The fi
 - Live visual review confirmed the new landing page shows the supported purposes, signed-evidence output, fresh/deep prices, integration CTA and limitations. A stale cached CSS response on the custom domain led to a content-hash query parameter on stylesheet links in the final build. This changes only documentation presentation and avoids reusing a prior cached stylesheet.
 
 Exact 44-file readback and 27-link checks passed on both hosts before the stylesheet URL adjustment. Final deployment and CI evidence follow in docs/ACCEPTANCE.md; byte verification is repeated after the final upload because HTML changed.
+
+## GitHub and GitMCP after the push
+
+At 16:01 UTC, GitHub repository search found AcqPath by name (2 total results) and `RSL rights preflight in:description` (1 result). Exact problem and synonym phrases in README returned 0 results. All searches explicitly selected public repositories, with at most 100 returned results. Description, 12 topics, public visibility and `/from-github` were independently read back.
+
+GitMCP at 16:02 UTC successfully fetched the new 4,073-character root llms reference from the public repository. Its brand, RAG problem and machine-readable restriction queries returned documentation fallback with “No relevant documentation found”; the RSL capability query timed out. Status: DOCUMENTATION FETCH VERIFIED; SEMANTIC INDEX/QUALITY UNVERIFIED. Fallback content containing AcqPath is not a successful semantic search. No further queries were generated to influence ranking.
+
+The first Phase 2 Windows/Ubuntu CI run [34499024566](https://github.com/reflectme-source/acqpath-distribution/actions/runs/34499024566) passed for `8c2223578d0aae2c2e71ce9291aba4d3be33ef92`. The first new daily discovery run reported a failure; its diagnostic and final disposition are recorded in the acceptance evidence, rather than treating artifact upload as a passed check.
+
+## Discovery monitor correction
+
+Run 34499025305 passed production public API/MCP/contract checks, 44 docs assets, 27 links, exact active Registry metadata, GitHub documentation links, Smithery and Glama. Its only failed check was a timed-out official Registry brand search. Registry GETs now allow at most two 25-second attempts for transport timeouts or transient 429/502/503/504 responses; metadata mismatches and unsafe destinations are never retried into success. Exhaustion still fails the workflow.
+
+The first upload-artifact step skipped the hidden `.local` directory and produced no downloadable diagnostic artifact. The corrected workflow explicitly includes hidden files for only its three public-metadata path patterns, and fails when none are found. No broader workspace/private directory is uploaded.
+
+Two factual README FAQ answers were added after the first GitHub search: the RAG problem phrase and machine-readable usage restrictions now lead to the actual purpose/coverage/private-payment limitations. Prior no-match results remain recorded; text changes alone are not proof of reindexing.
+
+Final docs deployment: `43c3c41e-c1f0-47af-83a5-bd3c3b8398d5`, 47 files, ZIP SHA256 `d501f82b957043ad0bfc93d721cc698ad590b2221f168a58e1faaf7344e045d4`. Both hostnames passed 44 asset and 27 link checks at 15:53 UTC, plus the custom 404. Local full discovery passed all 10 checks at 16:10 UTC; Registry reads succeeded on their first attempt. Final GitHub execution and its downloadable diagnostics are recorded in the release verification attachment linked from docs/ACCEPTANCE.md.

@@ -8,7 +8,7 @@ packages/rights-client/ zawiera klienta HTTP/x402 i zaszyfrowane checkpointy. Je
 
 examples/ i skills/acqpath-rights-preflight/ zawierają bezpieczne przykłady integracji oraz skill. metadata/ zawiera manifesty, snapshot publicznego kontraktu, intent pages i propozycje kanałów. site/ zawiera statyczny CSS, ikonę i nagłówki docs.
 
-.github/workflows/ zawiera zweryfikowane workflow z przypiętymi SHA. Dzienny discovery jest read-only. tests/ zawiera 83 testy bez prawdziwych płatności.
+.github/workflows/ zawiera zweryfikowane workflow z przypiętymi SHA. Dzienny discovery jest read-only. tests/ zawiera 85 testów bez prawdziwych płatności.
 
 Pięć raportów Phase 2 znajduje się w root. docs/ACCEPTANCE.md podaje rzeczywiste dowody. release/VERIFICATION.json jest lokalnym raportem testów, a SETUP-VERIFICATION.json pozostaje historycznym dowodem Phase 1.
 

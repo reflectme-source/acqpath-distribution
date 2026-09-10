@@ -1,10 +1,10 @@
 {
   "schema": "acqpath.distribution.verification.v1",
-  "at": "2026-09-10T15:45:14.686Z",
+  "at": "2026-09-10T16:09:39.604Z",
   "node": "v22.19.0",
   "status": "PASS",
-  "tests": 83,
-  "pass": 83,
+  "tests": 85,
+  "pass": 85,
   "fail": 0,
   "skipped": 0,
   "checks": [
