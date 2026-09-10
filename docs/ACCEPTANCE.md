@@ -1,28 +1,29 @@
-# Odbiór wdrożenia — 10 września 2026
+# Odbiór Phase 2 MAX — 10 września 2026
 
-| Pozycja | Rzeczywisty wynik i dowód |
+| Pozycja | Stan i dowód |
 |---|---|
-| Repozytorium | PUBLISHED_READBACK: [reflectme-source/acqpath-distribution](https://github.com/reflectme-source/acqpath-distribution), osobny root Git i origin. |
-| Dokumentacja | PUBLISHED_READBACK: [developers.getacqpath.com](https://developers.getacqpath.com). Cloudflare Pages `acqpath-distribution`, direct upload; domena Active, SSL enabled. |
-| Wdrożenie Pages | `4a357b8b-ebfb-4190-a81c-b60f41bf80fa`; [domena Pages](https://acqpath-distribution.pages.dev). Archiwum 15 plików; SHA256 `353c474b7bca8e2be30b9fca7f11a4ba81507e24e1b3dfd23d33e60dd7715b2a`. |
-| Publiczny odczyt docs | PUBLIC_READ_VERIFIED: 12 adresów na każdej domenie, HTTP 200, zgodne SHA256 i nagłówki bezpieczeństwa; nieistniejąca strona zwraca własne HTTP 404. |
-| MCP Registry | PUBLISHED_READBACK: [com.getacqpath/acqpath, wersja 3.1.0-rc.1](https://registry.modelcontextprotocol.io/v0.1/servers/com.getacqpath%2Facqpath/versions/3.1.0-rc.1), status `active`, remote `https://api.getacqpath.com/mcp`. Potwierdzono 13:16 UTC. |
-| Dowód DNS MCP | DNS_PROOF_VISIBLE: dodano zatwierdzony TXT z publicznym kluczem rejestru, TTL 300 s. Prywatny klucz pozostaje lokalnie. |
-| Publiczne API | PUBLIC_READ_VERIFIED: oczekiwany hash źródła i klucz dowodowy zgodne; MCP initialize/notifications/tools-list działają. Nie wywołano narzędzi tworzących quote. |
-| Testy lokalne | LOCAL_VERIFIED: 70/70, Windows, Node 22.19.0; `.local/verification.json`. |
-| GitHub CI | PASS 70/70 na Windows i Ubuntu, Node 24.20.0, commit `2c3e239060c904c86aecb65e8b9c3c95ec7860a2`: [wynik CI](https://github.com/reflectme-source/acqpath-distribution/actions/runs/34482128139). |
-| Discovery z GitHub | [Uruchomienie 13:23 UTC](https://github.com/reflectme-source/acqpath-distribution/actions/runs/34482274141): public API PASS, MCP Registry FOUND, sześć zapytań Bazaar bez dopasowania. Workflow ma dzienny harmonogram; powodzenie tego uruchomienia nie gwarantuje przyszłych wyników. |
-| Sekrety | Gitleaks 8.30.1: brak wykrytych sekretów w źródłach, snapshotach publikacji, staged diff, SDK i docs. Pełny skan workspace znalazł jedynie trzy przykładowe dane w README ignorowanego archiwum samego skanera. `.private`, `.tools`, `.local` i `out` nie są publikowane w Git. |
-| Core | SELECTED_FILES_MATCH: ponowny odczyt 9 dozwolonych plików przez `source-audit`, 13:16 UTC. Zero zapisów do core i zero zmian konfiguracji produkcyjnego Workera/Access. Porównanie dotyczy wybranych plików, nie całego core. |
-| npm SDK | NOT_PUBLISHED_OWNER_REQUEST: właściciel zatwierdził MIT dla klienta, następnie polecił zachować SDK bez publikacji npm. `npmPublicationEnabled:false`, build `private:true`; CLI i workflow blokują publikację. Logowanie i własność scope nie zostały potwierdzone. |
-| Smithery | NOT_PUBLISHED: opcjonalny kanał, brak skonfigurowanego namespace/logowania; przygotowano metadane. |
-| PulseMCP | NOT_SUBMITTED: przygotowano materiał do moderowanego zgłoszenia, brak potwierdzonego wpisu. |
-| Bazaar | BLOCKED_BY_CURRENT_CORE_CONTRACT: brak metadanych Bazaar w przejrzanej ścieżce płatności. Sześć publicznych zapytań 13:15 UTC bez dopasowania; nie jest to dowód nieobecności we wszystkich katalogach. |
-| Pełny zakup / USDC | NOT_PERFORMED: zero płatności, zero podpisów portfela, brak dowodu pełnego paid flow. |
-| Popyt i przychód | ORGANIC_USAGE_UNVERIFIED: nie potwierdzono niezależnych klientów, powtórek ani zysku. |
+| Repozytorium | VERIFIED LIVE: [reflectme-source/acqpath-distribution](https://github.com/reflectme-source/acqpath-distribution), osobny Git root i origin. Opis, 12 topics i homepage `/from-github` odczytane publicznie. Końcowe CI i commit są podane w sekcji dowodów poniżej. |
+| Dokumentacja | VERIFIED LIVE: [developers.getacqpath.com](https://developers.getacqpath.com) oraz [Pages](https://acqpath-distribution.pages.dev). Osobny projekt `acqpath-distribution`; 19 stron i jawna lista zasobów maszynowych. |
+| Wdrożenie Pages | `0cb5dc5d-d511-4dc1-a28b-067c710dfe51`, produkcyjne wdrożenie projektu dystrybucji. Direct upload 47 plików, ZIP SHA256 `5272c149a2211883e0c672998e44834c3674b67887e40582088e650914d57e04`. |
+| Odczyt docs | VERIFIED LIVE, 15:23 UTC: na każdej domenie 44 zasoby i 27 odnośników PASS; zgodność treści, nagłówków, kanonicznych ścieżek i własnego HTTP 404. Normalizacja usuwa wyłącznie dokładny sprawdzony skrypt analityczny Cloudflare. |
+| MCP Registry | VERIFIED LIVE: [3.1.0-rc.2](https://registry.modelcontextprotocol.io/v0.1/servers/com.getacqpath%2Facqpath/versions/3.1.0-rc.2), `active`, dokładna zgodność manifestu. To rewizja metadanych; backend pozostaje rc.1. |
+| Smithery | VERIFIED LIVE: [AcqPath](https://smithery.ai/servers/reflectme-project/acqpath-rights-preflight), opublikowany remote endpoint i publiczny opis. Wyszukiwanie konkretnego RSL preflight znajduje wpis; wyniki innych zapytań nie są gwarantowane. |
+| Glama | VERIFIED LIVE: [connector](https://glama.ai/mcp/connectors/com.getacqpath/acqpath), istniejący wpis, własność DNS zweryfikowana, endpoint zgodny, health metadata działa. Nie utworzono duplikatu. |
+| GitMCP | VERIFIED LIVE w zakresie initialize/tools-list: [MCP dokumentacji](https://gitmcp.io/reflectme-source/acqpath-distribution), protokół 2025-03-26, cztery narzędzia dokumentacyjne. Nie jest płatnym MCP AcqPath. |
+| Integracje | PUBLISHED: JS, TypeScript, Python read-only, konfiguracje MCP, workflow RAG/research/training/search/crawl oraz skill. Przykłady płatne wymagają własnego zatwierdzonego signera, limitu i prywatnego checkpointu. UNKNOWN oznacza hold. |
+| Testy lokalne | 83/83 PASS, Windows Node 22.19.0, 45 modułów składni i 6 sum vendor PASS. TypeScript 7.0.2 strict i walidator SKILL PASS; Python ast.parse PASS. Nie wykonano prawdziwej płatności. |
+| Core | 15:23 UTC SELECTED_FILES_MATCH: wszystkie 9 dozwolonych plików. To ograniczone porównanie, nie pełny audyt core. Zero zapisów do core i konfiguracji produkcyjnego Workera. |
+| Analityka | PUBLISHED / aktywna wyłącznie dla docs. Beacon odczytany na obu hostach. Ścieżki `/from-*` identyfikują wejście do dokumentacji; nie łączą go z płatnością. QA i wizyty właściciela nie są klientami. |
+| npm | READY BUT OWNER ACTION REQUIRED / OWNER HOLD: klient MIT zatwierdzony, publikacja nadal wyłączona na późniejsze polecenie właściciela. `npmPublicationEnabled:false`, pakiet `private:true`. |
+| Docker | READY BUT OWNER ACTION REQUIRED: trzy pliki gotowe i sprawdzone; publiczny fork/PR wymaga odpowiedzi na już zadane pytanie po odmowie automatycznego przeglądu. Nie wysłano PR. |
+| Context7 | READY BUT OWNER ACTION REQUIRED: formularz dodania publicznej dokumentacji wymaga logowania właściciela w otwartej karcie. Nie zgłoszono biblioteki. |
+| PulseMCP | SUBMITTED / PENDING jako kategoria oczekiwania: faktycznie NOT SUBMITTED, intake wstrzymany od 3 września. Nie deklarujemy oczekującego zgłoszenia. |
+| Bazaar / pochodne / x402scan | BLOCKED BY CORE: dokładna analiza i minimalna propozycja w [BAZAAR-COMPATIBILITY](../BAZAAR-COMPATIBILITY.md). Brak zmiany core, podpisów i płatności indeksującej. |
+| Płatne katalogi / masowe listy | SKIPPED AS LOW VALUE: MCP.so, MCP Market i niezweryfikowane listy. Zero wydatków. |
+| Revenue | Jedyny zatwierdzony odczyt agregatów 13:43 UTC: 0 zarejestrowanych dostępnych quotes, 0 mainnet paid reports, 0 received micro-USDC, 0 repeat wallet IDs. Organic customers, organic revenue i net profit UNKNOWN; brak importu kosztów. |
 
-GitHub przechowuje źródła i wykonuje CI; kolejne aktualizacje dokumentacji wymagają osobnego uploadu sprawdzonego `out/site` do tego projektu Pages. Push sam nie wdraża dokumentacji. Instrukcja: `docs/CLOUDFLARE-DEPLOYMENT.md`.
+GitHub przechowuje źródła i wykonuje CI. Push nie wdraża dokumentacji: kolejna publikacja wymaga osobnego direct upload do tego projektu Pages. Dzienny workflow o 06:23 UTC sprawdza publiczne powierzchnie bez operator secrets, quotes i płatności; przyszły sukces harmonogramu nie jest zagwarantowany.
 
-Nie zmieniono PAYMENT_MODE, PAY_TO, cen, provider routing, produkcyjnych tras ani Cloudflare Access. Dodano wyłącznie CNAME `developers` i zatwierdzony TXT MCP. `RECONCILIATION_READY` nie został naprawiony w tym zadaniu; nie deklarujemy gotowości płatnego flow ani przepustowości.
+Dodano wyłącznie oddzielny projekt docs, jego CNAME, zatwierdzony TXT MCP oraz zatwierdzony TXT Glama `_glama-claim.api.getacqpath.com`, TTL 300. Nie zmieniono PAYMENT_MODE, PAY_TO, cen, wallet, providers, produkcyjnych tras, Access ani reconciliation.
 
-Następny pomiar komercyjny: pierwszy niezależny kupujący, poprawnie dostarczony raport, ponowne użycie oraz przychód pomniejszony o rzeczywiste koszty. Własny zakup testowy nie jest dowodem organicznego popytu.
+Pełne macierze: [kanały](../CHANNEL-MATRIX.md), [discovery](../DISCOVERY-TESTS.md), [baseline](../REVENUE-BASELINE.md), [ekonomika](../REVENUE-OPTIMIZATION.md). Nie ogłaszamy pełnego zakończenia zadań zależnych od właściciela. Największy spodziewany wpływ komercyjny: osobno zatwierdzona zgodność Bazaar i testy bez settlement. Provider routing nie powinien być następną fazą przed dowodem powtarzalnego zewnętrznego użycia.

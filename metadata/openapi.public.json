@@ -1,0 +1,768 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "AcqPath RSL rights preflight — public integration flow",
+    "version": "3.1.0-rc.1",
+    "description": "Documented subset of the observed public API. Check declared AI input, training, indexing and search restrictions before ingestion. Quotes prepare evidence; paid delivery uses HTTP x402. Reports are not licenses or legal clearance."
+  },
+  "servers": [
+    {
+      "url": "https://api.getacqpath.com"
+    }
+  ],
+  "externalDocs": {
+    "url": "https://developers.getacqpath.com/quickstart"
+  },
+  "x-derived-from": "https://api.getacqpath.com/openapi.json",
+  "x-observed-at": "2026-09-10T13:40:17.531Z",
+  "paths": {
+    "/v1/capabilities": {
+      "get": {
+        "operationId": "capabilities",
+        "description": "Read current rights.preflight.v1 availability, supported origins and fresh/deep report prices before preparing a quote. No payment.",
+        "responses": {
+          "200": {
+            "description": "Successful result"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "401": {
+            "description": "Claim or operator credential required"
+          },
+          "429": {
+            "description": "Rate limit"
+          },
+          "503": {
+            "description": "Unavailable or disabled"
+          }
+        }
+      }
+    },
+    "/v1/rights/inspect": {
+      "post": {
+        "operationId": "inspectRSL",
+        "description": "Free conservative XML inspection. No external resource is fetched. ai-index uses the v3.1 profile; crawl remains legacy and cannot imply usage rights.",
+        "responses": {
+          "200": {
+            "description": "Successful result"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "401": {
+            "description": "Claim or operator credential required"
+          },
+          "429": {
+            "description": "Rate limit"
+          },
+          "503": {
+            "description": "Unavailable or disabled"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "xml",
+                  "resource",
+                  "purpose"
+                ],
+                "properties": {
+                  "xml": {
+                    "type": "string",
+                    "maxLength": 131072
+                  },
+                  "resource": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "purpose": {
+                    "type": "string",
+                    "enum": [
+                      "ai-input",
+                      "ai-train",
+                      "ai-index",
+                      "search",
+                      "crawl"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/rights/quote": {
+      "post": {
+        "operationId": "quoteRightsPreflight",
+        "summary": "Prepare a report before requesting payment",
+        "description": "No financial settlement occurs. Missing declarations return available:false and charge_micro:0. UNKNOWN with a discovered declaration is disclosed before purchase.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RightsInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Quote or unavailable result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RightsQuote"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "410": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/rights/reports/{id}": {
+      "get": {
+        "operationId": "redeemRightsReport",
+        "summary": "Redeem prepared signed report through x402 v2 exact",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{48}$"
+            }
+          },
+          {
+            "name": "X-AcqPath-Claim",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "PAYMENT-SIGNATURE",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Signed report, signed settlement receipt and delivery proof. Verify using the independently pinned public key.",
+            "headers": {
+              "PAYMENT-RESPONSE": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Base64 x402 settlement response with offer-receipt extension"
+              }
+            }
+          },
+          "400": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "Unpaid exact payment challenge with signed offer",
+            "headers": {
+              "PAYMENT-REQUIRED": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "410": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/rights/refunds/{id}": {
+      "post": {
+        "operationId": "requestRightsRefund",
+        "description": "Record an idempotent refund request for operator review. This does not automatically transfer money.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-AcqPath-Claim",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "reason"
+                ],
+                "properties": {
+                  "reason": {
+                    "enum": [
+                      "delivery_issue",
+                      "incorrect_report",
+                      "duplicate_purchase",
+                      "other"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Refund ledger status; money_sent:false"
+          },
+          "400": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "410": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Request rejected; inspect error code. No automatic retry of a newly signed payment.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RightsInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "resource",
+          "purpose",
+          "max_total_micro"
+        ],
+        "properties": {
+          "resource": {
+            "type": "string",
+            "format": "uri",
+            "maxLength": 2048,
+            "description": "HTTPS resource on an explicitly reviewed origin; no query, fragment, credentials, IP literal, encoded slash or redirect."
+          },
+          "purpose": {
+            "type": "string",
+            "enum": [
+              "ai-input",
+              "ai-train",
+              "ai-index",
+              "search"
+            ],
+            "description": "Actual intended use: ai-input for model context/summarization; ai-index for indexing/RAG corpus preparation; ai-train for training; search for search. No paid crawl purpose. Check multiple purposes separately when needed."
+          },
+          "user_class": {
+            "type": "string",
+            "enum": [
+              "commercial",
+              "non-commercial",
+              "education",
+              "government",
+              "personal"
+            ],
+            "default": "commercial"
+          },
+          "geo": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[A-Z]{2}$",
+            "description": "Caller-supplied geographical context. This is not independently verified location."
+          },
+          "freshness_seconds": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 3600,
+            "default": 300
+          },
+          "tier": {
+            "type": "string",
+            "enum": [
+              "fresh",
+              "deep"
+            ],
+            "default": "fresh"
+          },
+          "max_total_micro": {
+            "type": "string",
+            "pattern": "^(0|[1-9][0-9]*)$",
+            "description": "Exact integer micro-USDC budget."
+          }
+        }
+      },
+      "RightsQuote": {
+        "type": "object",
+        "required": [
+          "available"
+        ],
+        "properties": {
+          "available": {
+            "type": "boolean"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "mode": {
+            "const": "rights_preflight"
+          },
+          "quote_id": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{48}$"
+          },
+          "expires_at": {
+            "type": "integer"
+          },
+          "fee_micro": {
+            "type": "string"
+          },
+          "total_micro": {
+            "type": "string"
+          },
+          "charge_micro": {
+            "const": "0"
+          },
+          "decision_preview": {
+            "enum": [
+              "ALLOW_DECLARED",
+              "DENY_DECLARED",
+              "LICENSE_REQUIRED",
+              "UNKNOWN"
+            ]
+          },
+          "legal_clearance": {
+            "const": false
+          },
+          "redeem_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "claim_token": {
+            "type": "string",
+            "description": "Sensitive claim credential. Never put it in logs, public URLs or prompts."
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": [
+          "error",
+          "message",
+          "request_id"
+        ],
+        "properties": {
+          "error": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "request_id": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "name": "smithery_public_listing",
+    "required": true,
+    "url": "https://smithery.ai/servers/reflectme-project/acqpath-rights-preflight",
+    "requiredText": [
+      "AcqPath",
+      "Check observed RSL declarations",
+      "acqpath_rights_quote",
+      "developers.getacqpath.com"
+    ]
+  },
+  {
+    "name": "glama_public_connector",
+    "required": true,
+    "url": "https://glama.ai/mcp/connectors/com.getacqpath/acqpath",
+    "requiredText": [
+      "AcqPath",
+      "https://api.getacqpath.com/mcp",
+      "acqpath_rights_quote",
+      "Check observed RSL declarations",
+      "routing tool is disabled",
+      "https://developers.getacqpath.com/from-glama"
+    ]
+  }
+]

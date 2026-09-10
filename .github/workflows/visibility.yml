@@ -1,4 +1,4 @@
-name: Public discovery observation
+name: Daily public discovery verification
 on:
   workflow_dispatch:
   schedule:
@@ -6,9 +6,9 @@ on:
 permissions:
   contents: read
 jobs:
-  observe:
+  verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
@@ -16,17 +16,14 @@ jobs:
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
         with:
           node-version: '24'
-      - run: node scripts/cli.mjs audit
-        continue-on-error: true
-      - run: node scripts/cli.mjs catalogs
-      - run: node scripts/cli.mjs status
+      - run: node scripts/discovery-check.mjs
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
-          name: public-discovery-observation
+          name: public-discovery-verification
           path: |
             .local/public-audit.json
-            .local/catalog-audit.json
-            .local/status.json
-          retention-days: 7
-# No admin token, no wallet, no quote, no settlement, no price change, no core deploy.
+            .local/discovery-check.json
+            .local/docs-verification-*.json
+          retention-days: 14
+# Public reads and MCP metadata only. No operator secrets, quote or paid calls.

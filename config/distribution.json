@@ -23,7 +23,7 @@
   },
   "mcp": {
     "name": "com.getacqpath/acqpath",
-    "version": "3.1.0-rc.1",
+    "version": "3.1.0-rc.2",
     "url": "https://api.getacqpath.com/mcp",
     "protocolVersion": "2025-06-18"
   },
@@ -38,7 +38,7 @@
     "npmName": "@getacqpath/rights-client",
     "npmLicenseApproved": true,
     "npmPublicationEnabled": false,
-    "smitheryName": null,
+    "smitheryName": "reflectme-project/acqpath-rights-preflight",
     "docsUrl": "https://developers.getacqpath.com"
   },
   "limits": {

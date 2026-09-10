@@ -1,0 +1,130 @@
+{
+  "observedAt": "2026-09-10T13:40:17.531Z",
+  "intents": [
+    {
+      "query": "Can I use this page for RAG?",
+      "purpose": "ai-index",
+      "boundary": "Evaluate declarations before indexing; evaluate ai-input separately before model input."
+    },
+    {
+      "query": "Check AI usage rights",
+      "purpose": "ai-input",
+      "boundary": "Reports describe observed declarations, not legal permission."
+    },
+    {
+      "query": "May an AI agent use this content?",
+      "purpose": "ai-input",
+      "boundary": "Specify the actual use and caller context."
+    },
+    {
+      "query": "Check machine-readable content rights",
+      "purpose": "ai-input",
+      "boundary": "Only supported RSL declarations and origins."
+    },
+    {
+      "query": "Check RSL declarations",
+      "purpose": "ai-input",
+      "boundary": "Missing or unsupported declarations do not authorize use."
+    },
+    {
+      "query": "Can I index this page?",
+      "purpose": "ai-index",
+      "boundary": "Separate indexing from search and model input."
+    },
+    {
+      "query": "Can I summarize this URL?",
+      "purpose": "ai-input",
+      "boundary": "Evidence for AI input; no separate summary license or permission guarantee."
+    },
+    {
+      "query": "Can I train on this content?",
+      "purpose": "ai-train",
+      "boundary": "Inspect declared training restrictions; no training license is acquired."
+    },
+    {
+      "query": "Check AI training rights",
+      "purpose": "ai-train",
+      "boundary": "Preserve purpose, context and dated evidence."
+    },
+    {
+      "query": "Check search rights",
+      "purpose": "search",
+      "boundary": "Search is its own paid purpose."
+    },
+    {
+      "query": "Preflight URL before ingestion",
+      "purpose": "ai-index",
+      "boundary": "Gate unsupported, unknown, denied and license-required results."
+    },
+    {
+      "query": "Content rights preflight",
+      "purpose": "ai-input",
+      "boundary": "Buyer decides how observed declarations affect its policy."
+    },
+    {
+      "query": "Licensing declarations for AI agents",
+      "purpose": "ai-input",
+      "boundary": "AcqPath records declarations; it is not a licensing authority."
+    },
+    {
+      "query": "Machine-readable usage restrictions",
+      "purpose": "ai-input",
+      "boundary": "Do not equate retrieval success with authorization."
+    },
+    {
+      "query": "AI crawler rights check",
+      "purpose": null,
+      "boundary": "No paid crawl purpose; choose actual downstream use and handle robots/crawl policy separately."
+    },
+    {
+      "query": "Can I crawl this URL?",
+      "purpose": null,
+      "boundary": "Legacy XML inspection accepts crawl but does not fetch a URL or grant crawl permission."
+    },
+    {
+      "query": "RSL rights preflight",
+      "purpose": "ai-input",
+      "boundary": "Use current origin coverage and a bounded report quote."
+    },
+    {
+      "query": "Content licensing metadata",
+      "purpose": "ai-input",
+      "boundary": "RSL declarations only, not ownership verification."
+    },
+    {
+      "query": "Usage permission evidence",
+      "purpose": "ai-input",
+      "boundary": "Observed declaration evidence, not permission granted by AcqPath."
+    },
+    {
+      "query": "Rights evidence for autonomous agents",
+      "purpose": "ai-input",
+      "boundary": "MCP discovery and quotes; paid delivery over HTTP x402."
+    },
+    {
+      "query": "RAG ingestion rights gate",
+      "purpose": "ai-index",
+      "boundary": "Keep embeddings/indexing and model-context purposes distinct."
+    },
+    {
+      "query": "Agent context provenance",
+      "purpose": "ai-input",
+      "boundary": "Store signed evidence alongside the chosen source."
+    },
+    {
+      "query": "Dataset training declaration audit",
+      "purpose": "ai-train",
+      "boundary": "No batch endpoint or comprehensive dataset audit is advertised."
+    },
+    {
+      "query": "Search corpus declaration check",
+      "purpose": "search",
+      "boundary": "Check selected supported resources, not every search result."
+    },
+    {
+      "query": "USDC pay-per-report RSL API",
+      "purpose": "ai-input",
+      "boundary": "Fresh 0.02 USDC; deep 0.05 USDC as observed; signed quote controls actual payment."
+    }
+  ]
+}

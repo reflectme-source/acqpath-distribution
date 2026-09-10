@@ -1,12 +1,8 @@
-# Prepared submission — NOT SENT
+# PulseMCP submission status
 
-Name: AcqPath Rights Preflight
-Remote endpoint: https://api.getacqpath.com/mcp
-Transport: Streamable HTTP, JSON POST profile
-Description: Prepare quotes for timestamped reports of observed RSL usage declarations on supported web resources. Reports are not licenses or legal clearance. Actual paid redemption uses the AcqPath HTTP x402 workflow and a private claim token; it is not a universal paid-MCP tool.
+NOT SUBMITTED. The live form at https://www.pulsemcp.com/submit says intake is paused since September 3, 2026 and recommends publishing to the official MCP Registry for later ingestion. AcqPath is published there, but PulseMCP indexing is not inferred. Recheck the official form when intake resumes; no support/email bypass or paid placement was used.
 
-Current advertised purpose: ai-input, ai-index, ai-train, search.
-Public setup: /v1/capabilities and /openapi.json on https://api.getacqpath.com.
-No operator key required by a buyer. No free-form prompts or wallet private keys should be sent to this server. Legacy acqpath_quote is a disabled router in the current native-only deployment; use acqpath_capabilities and acqpath_rights_quote only as documented.
-
-Codex: verify current submission instructions, present this prepared text to the owner only if a curated form requires their account interaction. Record the actual submitted URL/time and acceptance result. Do not claim this markdown creates a listing.
+Name: AcqPath — RSL Rights Preflight
+Endpoint: https://api.getacqpath.com/mcp
+Docs: https://developers.getacqpath.com
+Description: Observed RSL declaration evidence before AI input, RAG indexing, training or search. MCP capabilities and private quote preparation; signed paid reports use HTTP x402 separately. Not a license or legal clearance.

@@ -1,0 +1,8 @@
+{
+  "provider": "Cloudflare Pages Web Analytics",
+  "requireBeacon": true,
+  "approvedEdgeSnippet": "<!-- Cloudflare Pages Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{\"token\": \"892cf7d6633b400ab302330b9778e29e\"}'></script><!-- Cloudflare Pages Analytics -->",
+  "scope": "Distribution documentation only; no payment attribution",
+  "reviewedAt": "2026-09-10T15:08:33.231Z",
+  "note": "Exact public insertion independently matched on both domains; unknown scripts and duplicate insertions fail verification."
+}

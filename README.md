@@ -1,37 +1,61 @@
-# AcqPath Distribution & Revenue — 1.0.0
+# AcqPath — RSL rights preflight for AI and RAG
 
-A separate distribution workspace for the existing AcqPath **native declared-rights reports** service.
-Live documentation: [developers.getacqpath.com](https://developers.getacqpath.com), deployed to a separate Cloudflare Pages project. The [MCP Registry entry](https://registry.modelcontextprotocol.io/v0.1/servers/com.getacqpath%2Facqpath/versions/3.1.0-rc.1) is active and verified. See [deployment setup](docs/CLOUDFLARE-DEPLOYMENT.md) and [acceptance evidence](docs/ACCEPTANCE.md).
-Prepared 2026-09-09. This repository is **not the AcqPath backend**, a payment facilitator, a trading agent or a claim that the service already has buyers.
+Check observed content-use declarations **before AI input, RAG indexing, training or search**. AcqPath returns signed evidence of observed RSL declarations for supported URLs. It does not grant a license, establish ownership or provide legal clearance. UNKNOWN never authorizes ingestion.
 
-**Owner: start with `START-TUTAJ.md` and give `CODEX-START.txt` to Codex.**
+[Start integrating](https://developers.getacqpath.com/from-github) · [Supported scope](https://developers.getacqpath.com/scope) · [Examples](examples/README.md) · [MCP Registry](https://registry.modelcontextprotocol.io/v0.1/servers/com.getacqpath%2Facqpath/versions/3.1.0-rc.2) · [Smithery](https://smithery.ai/servers/reflectme-project/acqpath-rights-preflight) · [Glama](https://glama.ai/mcp/connectors/com.getacqpath/acqpath)
 
-## What is included
+| Before this workflow | Report purpose | Boundary |
+|---|---|---|
+| Model context, summarization, research | `ai-input` | Observed declarations; application policy still decides use |
+| RAG corpus ingestion and indexing | `ai-index` | Indexing evidence is separate from model input |
+| Training dataset ingestion | `ai-train` | Training evidence does not acquire a license |
+| Search indexing | `search` | Search evidence does not authorize crawling |
+| Crawling | No paid crawl purpose | Check robots, terms and crawler policy separately before downstream preflight |
 
-Verified-source-derived client SDK with signed-offer/report/receipt validation; durable encrypted buyer checkpoints; one opt-in local buyer-wallet flow; three buyer workflow examples; public API/MCP conformance observations; bounded Bazaar and MCP Registry queries; public integration documentation; MCP DNS-namespace publication; guarded npm publication tooling; optional Smithery publication; separate GitHub CI and Cloudflare Pages deployment; aggregate business reporting.
+Fresh **0.02 USDC**; deep **0.05 USDC**, observed 2026-09-10. Read live [capabilities](https://api.getacqpath.com/v1/capabilities) and verify the signed quote before authorizing payment. Current origin coverage is exactly `https://medium.com`, `https://theguardian.com`, `https://rslstandard.org`, and `https://rslcollective.org`. Coverage is not a promise that every URL returns a purchasable or permissive report.
 
-## Safe preparation
+## Connect once
 
-Node 22.16+ (current supported patched Node 24 recommended). No root runtime dependencies. No `npm install` is needed for local verification/build.
+For clients supporting remote HTTP MCP configuration:
 
-```text
-node scripts/cli.mjs prepare
+```json
+{"mcpServers":{"acqpath":{"url":"https://api.getacqpath.com/mcp"}}}
 ```
 
-On Windows, `START.cmd` runs the same preparation. It makes public read-only requests and MCP initialization/tool-listing only. It does not create a quote, execute a payment, mutate Cloudflare, push Git or publish a package.
+[Client-specific configuration](https://developers.getacqpath.com/connect) includes VS Code and the supported Streamable HTTP transport. Use `acqpath_capabilities` first. `acqpath_rights_quote` can prepare a quote and consume metadata quota. The upstream legacy `acqpath_quote` routing tool is disabled; exclude it in your client.
 
-## Explicit limitations
+**MCP prepares quotes. Paid report delivery uses HTTP x402 outside MCP.** Quote claims belong in private application state, outside model context, telemetry and gateway logs. Do not enable blanket tool approval.
 
-The reviewed server's native paid flow has no Bazaar extension. Docs and catalog manifests cannot repair this while keeping the core unchanged. An indexing payment must not be created under that assumption. The current MCP endpoint prepares quotes; payment/redemption stays on HTTP x402. Claims and signatures must never enter public tool descriptions, URLs or model prompts.
+## Integrate a reusable evidence gate
 
-The last owner deployment reported degraded reconciliation and 500 native quotes / 2,000 metadata fetches per day. A high incoming-value cap does not imply high throughput. This workspace does not change those limits or falsely mark recovery as working.
+[JavaScript gate](examples/evidence-gate.mjs) · [TypeScript workflows](examples/workflows.ts) · [Python read-only example](examples/read-only.py) · [Full seven-step flow](examples/README.md)
 
-## Publication states
+1. Check current origin coverage and select the downstream purpose.
+2. Create one quote for one stable job ID; hold unsupported/UNKNOWN outcomes.
+3. Verify the signed offer and its exact URL, recipient, network, asset and amount.
+4. Use a buyer-controlled signer with an explicit finite task budget; persist an encrypted checkpoint before submission.
+5. Retrieve over HTTP x402; verify report, receipt and delivery binding.
+6. After ambiguous submission, resume the same checkpoint and authorization. Never blindly create a second payment.
+7. Keep the evidence and private recovery state separate from application permission. Even `ALLOW_DECLARED` requires an application policy decision.
 
-GitHub, Cloudflare documentation and the MCP Registry entry were published and read back on 2026-09-10. The owner requested that the npm SDK remain unpublished; the build stays private and publication is disabled. GitHub pushes run CI but do not automatically deploy the direct-upload Pages project.
+The client is available as reviewed source in [packages/rights-client](packages/rights-client). **npm publication is on owner hold**; do not attempt an npm install of this unpublished package. Examples use repository-relative imports. No separate Python payment SDK is claimed.
 
-`BUILT_LOCALLY` is not `PUBLISHED`. A matching catalog entry is not verified purchase compatibility or organic revenue. No real purchase was performed. Bazaar remains blocked by the current core contract; optional Smithery and PulseMCP materials are prepared but not submitted.
+## Machine-readable integration reference
 
-Read `docs/EXECUTION-PLAN.md`, `docs/SECURITY.md`, `docs/ACCEPTANCE.md` and `release/VERIFICATION.json`.
+[llms.txt](https://developers.getacqpath.com/llms.txt) · [Full reference](https://developers.getacqpath.com/llms-full.txt) · [OpenAPI subset](https://developers.getacqpath.com/openapi.json) · [Discovery profile](https://developers.getacqpath.com/.well-known/acqpath-distribution.json) · [Pricing snapshot](https://developers.getacqpath.com/pricing.json) · [Agent skill](skills/acqpath-rights-preflight/SKILL.md)
 
-The private backend remains private. A public GitHub account and publisher namespace can still identify the account operating the public integration package; this package does not promise legal anonymity.
+The public skill describes when and how to integrate; it never authorizes spending. Its source is ready for compatible skills clients. Presence in this repository is not proof of ranking in a skills directory.
+
+## Verification and operating scope
+
+This repository contains distribution documentation and the client, not the production backend. Node 22.16+ is required; no root runtime dependencies or install step is needed for tests/build. Maintainer commands are documented in [the execution plan](docs/EXECUTION-PLAN.md).
+
+Daily [public discovery verification](.github/workflows/visibility.yml) checks public metadata, docs and links without quotes, wallets or operator secrets. A GitHub push runs CI; the isolated Cloudflare Pages project uses a separate reviewed direct upload.
+
+[Channel matrix](CHANNEL-MATRIX.md) · [Discovery tests](DISCOVERY-TESTS.md) · [Bazaar compatibility](BAZAAR-COMPATIBILITY.md) · [Revenue baseline](REVENUE-BASELINE.md) · [Revenue analysis](REVENUE-OPTIMIZATION.md) · [Acceptance](docs/ACCEPTANCE.md)
+
+The SDK's MIT license applies only to its [client package](packages/rights-client/LICENSE). No blanket license is granted to the backend, service output or publishers' content. The distribution root remains UNLICENSED. No real payment, wallet signature, independent customer or organic revenue is claimed by this release.
+
+## Documentation for coding agents
+
+The public [integration skill](skills/acqpath-rights-preflight/SKILL.md) and [full machine reference](https://developers.getacqpath.com/llms-full.txt) describe the private buyer flow. A separate [GitMCP documentation endpoint](https://gitmcp.io/reflectme-source/acqpath-distribution) exposes this public repository as searchable context; it does not execute or replace the paid AcqPath service. Its metadata connection was verified; search quality is recorded separately in DISCOVERY-TESTS.md.

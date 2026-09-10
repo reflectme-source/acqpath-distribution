@@ -1,9 +1,9 @@
 {
-  "status": "PREPARED_NOT_PUBLISHED",
-  "name": "AcqPath Rights Preflight",
+  "status": "PUBLISHED_PUBLIC_READBACK",
+  "name": "AcqPath — RSL Rights Preflight",
   "url": "https://api.getacqpath.com/mcp",
   "transport": "streamable-http",
-  "description": "Prepare observed RSL rights report quotes for supported web resources. Signed paid reports are redeemed separately over HTTP x402. Not a license or legal clearance.",
+  "description": "Check observed RSL declarations before AI input, RAG indexing, training or search on supported origins. MCP provides capabilities and report quotes; paid delivery uses HTTP x402 (fresh 0.02 USDC, deep 0.05 USDC as observed; signed quote authoritative). Reports are not licenses, legal clearance or ownership verification. Keep quote claims private; UNKNOWN never authorizes use. The legacy acqpath_quote provider-routing tool is disabled.",
   "recommendedTools": [
     "acqpath_capabilities",
     "acqpath_rights_quote"
@@ -14,5 +14,6 @@
     "autonomous seller-wallet spending"
   ],
   "pricingNote": "MCP prepares a quote without payment. Current reference HTTP report fees: 0.02 fresh / 0.05 deep USDC; exact quote authoritative.",
-  "claimTokenHandling": "Private client state; never public examples, URLs or model prompts."
+  "claimTokenHandling": "Private client state; never public examples, URLs or model prompts.",
+  "publicListing": "https://smithery.ai/servers/reflectme-project/acqpath-rights-preflight"
 }

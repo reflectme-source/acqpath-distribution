@@ -2,28 +2,72 @@
   {
     "slug": "index",
     "label": "Overview",
-    "title": "Know what a source declares. Keep the evidence.",
-    "description": "Prepare a timestamped report of machine-readable rights declarations for supported web resources. Pay for the prepared report through HTTP x402.",
+    "title": "Check declared AI usage rights before ingestion.",
+    "description": "RSL declaration evidence for supported URLs. Use it before model input, RAG indexing, training or search. Get a timestamped signed report through HTTP x402.",
+    "hero": true,
     "sections": [
       {
-        "title": "A narrowly defined job",
+        "title": "Connect once. Keep payment in your application.",
         "paragraphs": [
-          "Supply a supported HTTPS URL and an intended usage: AI input, AI training, AI indexing or search. AcqPath inspects bounded, machine-readable declarations and prepares a diagnostic report.",
-          "An ALLOW_DECLARED result means the evaluated declarations allow the stated usage under the supported profile. It is not a determination of ownership or a legal permission granted by AcqPath."
+          "MCP endpoint: https://api.getacqpath.com/mcp",
+          "MCP exposes capabilities and quote preparation. A generic chat host does not complete payment. Keep private quote claims outside model context."
+        ],
+        "code": "{\n  \"mcpServers\": {\n    \"acqpath\": {\n      \"url\": \"https://api.getacqpath.com/mcp\"\n    }\n  }\n}",
+        "links": [
+          {
+            "label": "MCP configuration examples",
+            "href": "/connect"
+          },
+          {
+            "label": "HTTP/x402 quickstart",
+            "href": "/quickstart"
+          }
         ]
       },
       {
-        "title": "What you buy",
+        "title": "Choose the actual use",
         "paragraphs": [
-          "The prepared report, timestamped source evidence, AcqPath report signature, payment receipt and delivery binding. You do not buy the third-party content or a license to it.",
-          "Fresh and deep modes have different bounded evaluation scopes. Consult the current quote for the exact price and expiry."
+          "AI input: ai-input. Indexing and RAG corpus preparation: ai-index. Training: ai-train. Search: search.",
+          "RAG may need both ai-index and ai-input. Crawl permission and robots.txt checks are separate."
+        ],
+        "links": [
+          {
+            "label": "AI input",
+            "href": "/ai-input"
+          },
+          {
+            "label": "RAG / ingestion",
+            "href": "/rag-ingestion"
+          },
+          {
+            "label": "Indexing / search",
+            "href": "/indexing-search"
+          },
+          {
+            "label": "Training",
+            "href": "/training"
+          },
+          {
+            "label": "Crawler boundary",
+            "href": "/crawl"
+          }
         ]
       },
       {
-        "title": "Integrate once, call when needed",
+        "title": "Know the scope before buying",
         "paragraphs": [
-          "Keep the client-side payment policy and checkpoint in your application, not in model prompts. Use the Rights client for quote, purchase and resume.",
-          "No provider routing, license acquisition or automated investment is advertised in this release."
+          "Current observed origins: medium.com, theguardian.com, rslstandard.org and rslcollective.org. An origin match does not guarantee usable declarations for its pages.",
+          "UNKNOWN, missing declarations, unsupported origins and LICENSE_REQUIRED do not authorize use. A report records observed RSL declarations; it is not a license or legal clearance."
+        ],
+        "links": [
+          {
+            "label": "Current API capabilities",
+            "href": "https://api.getacqpath.com/v1/capabilities"
+          },
+          {
+            "label": "Coverage and decision meanings",
+            "href": "/scope"
+          }
         ]
       }
     ]
@@ -31,67 +75,195 @@
   {
     "slug": "quickstart",
     "label": "Quickstart",
-    "title": "The complete request path",
-    "description": "Discovery is free of settlement. A prepared report is sold over HTTP x402; MCP alone does not complete payment.",
+    "title": "From supported URL to verified rights evidence",
+    "description": "Start with a free capability read. A fresh report is 0.02 USDC and a deep report is 0.05 USDC as observed; the signed quote controls the exact purchase.",
     "sections": [
       {
-        "title": "Check coverage first",
+        "title": "1. Check origin coverage and purpose",
         "paragraphs": [
-          "Read the native_services entry for rights.preflight.v1. Coverage is an explicit allowlist; an allowed domain does not imply that every resource has usable declarations.",
-          "A URL must be canonical HTTPS without credentials, query, fragment, encoded slash or non-standard port. The buyer owns the use-context supplied to the service."
+          "GET the current capability list before any quote. Use rights.preflight.v1 only when enabled.",
+          "Pass canonical HTTPS URLs without credentials, query, fragment, nonstandard port or encoded slash. Exact origin membership matters."
         ],
-        "code": "GET https://api.getacqpath.com/v1/capabilities"
+        "code": "GET https://api.getacqpath.com/v1/capabilities",
+        "links": [
+          {
+            "label": "Read-only JavaScript example",
+            "href": "/examples/read-only.mjs"
+          },
+          {
+            "label": "Read-only Python example",
+            "href": "/examples/read-only.py"
+          }
+        ]
       },
       {
-        "title": "Prepare a quote",
+        "title": "2. Prepare one quote when evidence is needed",
         "paragraphs": [
-          "POST resource, purpose and max_total_micro to the quote endpoint. This may use remote metadata and consume a quota, but performs no settlement.",
-          "If no verifiable declaration is found, the reference service returns available:false with NO_VERIFIABLE_DECLARATION and no report fee. UNKNOWN with a discovered but unsupported declaration can be disclosed as a purchasable report; inspect the preview."
+          "Quotes perform no financial settlement but can fetch metadata and consume quota. Do not create quotes for speculative discovery or every search result.",
+          "The example origin is supported at the observation time; this URL is illustrative and has not been shown to yield a purchasable declaration. Keep the returned claim private."
         ],
-        "code": "POST /v1/rights/quote\n{ \"resource\": \"https://SUPPORTED-HOST/REAL-RESOURCE\",\n  \"purpose\": \"ai-input\", \"tier\": \"fresh\",\n  \"max_total_micro\": \"20000\" }\n\nThe placeholder is not a demonstrated supported resource."
+        "code": "POST https://api.getacqpath.com/v1/rights/quote\nContent-Type: application/json\n\n{\n  \"resource\": \"https://rslstandard.org/\",\n  \"purpose\": \"ai-input\",\n  \"user_class\": \"commercial\",\n  \"tier\": \"fresh\",\n  \"max_total_micro\": \"20000\"\n}"
       },
       {
-        "title": "Purchase and resume safely",
+        "title": "3. Handle unavailable and UNKNOWN",
         "paragraphs": [
-          "The quote includes a private claim and quote-specific redeem URL. The SDK verifies a signed offer, fixes the payee/network/asset/amount, invokes a buyer-controlled signer and stores a checkpoint before submitting the signed payload.",
-          "After an ambiguous response, resume the same checkpoint. Do not create a second purchase or sign again to clear an error. The current operator-reported reconciliation state is degraded, so manual recovery may be necessary.",
-          "Never expose the claim, payment signature or checkpoint to a public registry or language model."
+          "available:false with NO_VERIFIABLE_DECLARATION has no report fee. A discovered but unsupported declaration can produce a purchasable UNKNOWN report. Inspect the preview and decide whether diagnostic evidence is worth buying.",
+          "UNKNOWN, missing declarations, unsupported origins and LICENSE_REQUIRED do not authorize use. A report records observed RSL declarations; it is not a license or legal clearance."
+        ]
+      },
+      {
+        "title": "4. Buy with bounded, verified authorization",
+        "paragraphs": [
+          "Check live coverage → prepare one bounded quote → inspect availability/preview → verify the signed offer → obtain buyer-controlled payment authorization → persist the encrypted checkpoint → redeem and verify report, receipt and delivery binding. After ambiguity, resume the same checkpoint; never sign a replacement payment blindly.",
+          "The buyer-side client pins Base, USDC, recipient and maximum amount; verifies signed offer, report, settlement receipt and delivery binding; and requires durable checkpoint persistence. A verified receipt is not independent blockchain finality."
+        ],
+        "links": [
+          {
+            "label": "JavaScript payment adapter",
+            "href": "/examples/evidence-gate.mjs"
+          },
+          {
+            "label": "TypeScript use cases",
+            "href": "/examples/workflows.ts"
+          },
+          {
+            "label": "Full HTTP flow",
+            "href": "/http-x402"
+          }
+        ]
+      },
+      {
+        "title": "5. Reuse the integration safely",
+        "paragraphs": [
+          "Use one stable logical purchase ID for one resource/purpose/context request. Resume an existing checkpoint after a timeout. Start a new purchase only for a deliberately new evidence request.",
+          "The npm package is unpublished. Use the client source from this repository; no npm install instruction is required."
+        ],
+        "code": "git clone https://github.com/reflectme-source/acqpath-distribution.git\ncd acqpath-distribution\nnode examples/read-only.mjs",
+        "links": [
+          {
+            "label": "Source repository",
+            "href": "https://github.com/reflectme-source/acqpath-distribution"
+          },
+          {
+            "label": "Recovery decisions",
+            "href": "/recovery"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "connect",
+    "label": "Connect MCP",
+    "title": "Connect AcqPath to an MCP client",
+    "description": "Remote Streamable HTTP at api.getacqpath.com/mcp. No seller API key is required for public capabilities and quote preparation.",
+    "sections": [
+      {
+        "title": "Cursor / generic mcpServers configuration",
+        "paragraphs": [
+          "Use a client that supports remote Streamable HTTP. Keep quote results containing claim_token in a private application path, not a shared conversation."
+        ],
+        "code": "{\n  \"mcpServers\": {\n    \"acqpath\": {\n      \"url\": \"https://api.getacqpath.com/mcp\"\n    }\n  }\n}"
+      },
+      {
+        "title": "VS Code mcp.json",
+        "paragraphs": [
+          "Add the remote server to a workspace MCP configuration after reviewing its tool permissions."
+        ],
+        "code": "{\n  \"servers\": {\n    \"acqpath\": {\n      \"type\": \"http\",\n      \"url\": \"https://api.getacqpath.com/mcp\"\n    }\n  }\n}"
+      },
+      {
+        "title": "Claude Code",
+        "paragraphs": [
+          "This registers the public endpoint. It does not authorize a wallet or implement paid HTTP redemption."
+        ],
+        "code": "claude mcp add --transport http acqpath https://api.getacqpath.com/mcp"
+      },
+      {
+        "title": "Tools and payment boundary",
+        "paragraphs": [
+          "acqpath_capabilities: read current capability metadata. acqpath_rights_quote: prepare a report quote; may fetch metadata and consume quota; returns a sensitive claim.",
+          "The runtime also lists a disabled legacy provider-routing tool. Exclude acqpath_quote from the integration allowlist. The distribution metadata cannot change the core tools/list response.",
+          "Initialize and list tools to test the connection. Only call quote when the selected supported resource actually needs evidence."
+        ],
+        "links": [
+          {
+            "label": "Documented tool schemas",
+            "href": "/mcp-tools.json"
+          },
+          {
+            "label": "HTTP payment and verification",
+            "href": "/http-x402"
+          }
         ]
       }
     ]
   },
   {
     "slug": "integrations",
-    "label": "Integrations",
-    "title": "Put evidence in the workflow",
-    "description": "Three integration patterns for software that already needs evidence of declared rights. These are use-case hypotheses, not claims of existing customers.",
+    "label": "Use cases",
+    "title": "Rights evidence in an agent workflow",
+    "description": "Choose the purpose, preserve evidence and keep the ingestion decision in your application. Framework-neutral examples use the same bounded buyer adapter.",
     "sections": [
       {
-        "title": "RAG or indexing pipeline",
+        "title": "RAG and ingestion gates",
         "paragraphs": [
-          "Filter to supported origins, deduplicate canonical URLs and purpose, then request fresh evidence only when the previous evidence is too old for your policy.",
-          "A diagnostic report informs your own decision. Do not use it as an automatic substitute for legal or licensing obligations."
+          "Call before adding selected supported URLs to a corpus. Use ai-index for indexing, then separately ai-input for model context if needed. UNKNOWN or unsupported results hold ingestion."
+        ],
+        "links": [
+          {
+            "label": "RAG / ingestion guide",
+            "href": "/rag-ingestion"
+          },
+          {
+            "label": "TypeScript workflows",
+            "href": "/examples/workflows.ts"
+          }
         ]
       },
       {
-        "title": "Research assistant",
+        "title": "Research agents",
         "paragraphs": [
-          "Evaluate the sources selected for a task, not every search result. Store provenance and the chosen usage context next to the task outcome.",
-          "Configure a per-task payment ceiling and do not let retrieved content or a model change the recipient, chain, amount policy or signer."
+          "Evaluate selected sources before summarization or model context with ai-input. Store the verified resource, purpose and evaluation time alongside provenance. Do not quote every search result."
+        ],
+        "links": [
+          {
+            "label": "AI input guide",
+            "href": "/ai-input"
+          }
         ]
       },
       {
-        "title": "Content workflow",
+        "title": "Crawlers",
         "paragraphs": [
-          "Preserve observed declarations for selected resources with stable identifiers and explicit evaluation dates. Compare only comparable reports.",
-          "Do not infer support for rights-history subscriptions or batch purchase: those are not advertised as current service features."
+          "Crawl authorization is separate. Use your robots/access policy before retrieval, then the actual downstream paid purpose before ingestion. Do not send crawl as a paid quote purpose."
+        ],
+        "links": [
+          {
+            "label": "Crawler boundary",
+            "href": "/crawl"
+          }
         ]
       },
       {
-        "title": "MCP compatibility boundary",
+        "title": "One reusable buyer adapter",
         "paragraphs": [
-          "The current MCP endpoint provides capabilities and rights-quote preparation. Paid report redemption is HTTP/x402. A generic MCP host without a suitable buyer-side payment integration cannot complete that purchase automatically.",
-          "The native tool list may include legacy acqpath_quote for provider routing; it is disabled in the last reported native-rights-only deployment. Use acqpath_rights_quote for the offered product and keep sensitive outputs outside model context."
+          "Check live coverage → prepare one bounded quote → inspect availability/preview → verify the signed offer → obtain buyer-controlled payment authorization → persist the encrypted checkpoint → redeem and verify report, receipt and delivery binding. After ambiguity, resume the same checkpoint; never sign a replacement payment blindly.",
+          "The examples expose no wallet key interface and make no payment when imported or run in read-only mode. Supply your own bounded signer only in a private buyer application."
+        ],
+        "links": [
+          {
+            "label": "JavaScript adapter",
+            "href": "/examples/evidence-gate.mjs"
+          },
+          {
+            "label": "Framework-neutral workflow contract",
+            "href": "/examples/workflow.json"
+          },
+          {
+            "label": "Example guide",
+            "href": "https://github.com/reflectme-source/acqpath-distribution/blob/main/examples/README.md"
+          }
         ]
       }
     ]
@@ -99,28 +271,38 @@
   {
     "slug": "scope",
     "label": "Scope",
-    "title": "Explicit scope beats a vague guarantee",
-    "description": "Use current capabilities and the quote preview. Unsupported declarations and missing information are not permissions.",
+    "title": "Coverage, decisions and limitations",
+    "description": "Explicit origin coverage and conservative decisions. Missing or unsupported evidence never becomes permission.",
     "sections": [
+      {
+        "title": "Observed coverage",
+        "paragraphs": [
+          "Observed 2026-09-10T13:40:17.531Z: medium.com, theguardian.com, rslstandard.org, rslcollective.org. Re-read live capabilities; this is a dated snapshot.",
+          "Coverage accepts an exact origin, not every subdomain. A page on an allowed origin may lack verifiable declarations."
+        ],
+        "links": [
+          {
+            "label": "Live capabilities",
+            "href": "https://api.getacqpath.com/v1/capabilities"
+          },
+          {
+            "label": "Capability snapshot",
+            "href": "/capabilities.json"
+          }
+        ]
+      },
       {
         "title": "Decision vocabulary",
         "paragraphs": [
-          "ALLOW_DECLARED: allowance observed under the supported profile. DENY_DECLARED: a relevant prohibition was observed. LICENSE_REQUIRED: a licensing requirement was observed. UNKNOWN: missing, conflicting or unsupported evidence prevents a stronger diagnostic conclusion.",
-          "UNKNOWN never authorizes use. LICENSE_REQUIRED does not mean AcqPath acquired a license."
+          "ALLOW_DECLARED: the supported profile observed a relevant allowance. DENY_DECLARED: a relevant prohibition was observed. LICENSE_REQUIRED: a licensing requirement was observed. UNKNOWN: insufficient, conflicting or unsupported evidence.",
+          "None of these outcomes verifies ownership. AcqPath does not acquire licenses or grant legal clearance."
         ]
       },
       {
-        "title": "Coverage is live configuration",
+        "title": "What is not offered",
         "paragraphs": [
-          "Do not hard-code every publisher as supported from a marketing page. Read the current native-service coverage list.",
-          "The paid quote purpose enum is ai-input, ai-train, ai-index and search in the reviewed contract. Legacy crawl inspection is a separate free XML inspection path, not a paid product promise."
-        ]
-      },
-      {
-        "title": "Signature and finality",
-        "paragraphs": [
-          "A valid AcqPath signature proves what AcqPath signed. It does not prove that a publisher owns all rights, nor independently prove blockchain finality.",
-          "This client pins the supplied AcqPath public evidence key and checks signed reports/receipts. Replacing the key after an unexpected signature error requires an authenticated operator decision, not trust-on-first-use."
+          "No universal crawl permission check, general web coverage, automatic license acquisition, batch endpoint, provider routing, paid MCP delivery or automatic refund is advertised.",
+          "A signature proves what AcqPath signed. Reconciliation was reported degraded; a successful public health check does not establish full purchase recovery or capacity."
         ]
       }
     ]
@@ -128,28 +310,38 @@
   {
     "slug": "pricing",
     "label": "Pricing",
-    "title": "Small, explicit purchases",
-    "description": "The quote is the authority for price, expiry, recipient and network. Limits and rate policies remain separate from price.",
+    "title": "0.02 USDC fresh. 0.05 USDC deep.",
+    "description": "Pay per prepared rights report on Base. Current observed prices stay unchanged; verify the signed quote before authorizing a purchase.",
     "sections": [
       {
-        "title": "Reference prices",
+        "title": "Explicit report prices",
         "paragraphs": [
-          "The last supplied production configuration used 20,000 micro-USDC (0.02 USDC) for fresh reports and 50,000 micro-USDC (0.05 USDC) for deep reports. Confirm against current capabilities and the signed quote.",
-          "There is no autonomous price increase in this distribution package. No token investment or publisher-side wallet funding is required merely to receive payments."
+          "Fresh: 20,000 micro-USDC (0.02 USDC). Deep: 50,000 micro-USDC (0.05 USDC). Observed 2026-09-10T13:40:17.531Z.",
+          "The report is the product. You do not buy third-party content or a license to it. The signed quote fixes amount, recipient, network and expiry."
+        ],
+        "links": [
+          {
+            "label": "Machine-readable pricing",
+            "href": "/pricing.json"
+          },
+          {
+            "label": "Live capability prices",
+            "href": "https://api.getacqpath.com/v1/capabilities"
+          }
         ]
       },
       {
-        "title": "Buyer responsibility",
+        "title": "Unavailability and diagnostic value",
         "paragraphs": [
-          "The buyer must have an appropriate wallet or signer and approve payment. This client demo supports EOA typed-signature use on Base; it is not a universal wallet-compatibility guarantee.",
-          "All price comparisons use integer micro-USDC. One USDC is 1,000,000 micro-USDC."
+          "No verifiable declaration: unavailable result with no report fee. A disclosed UNKNOWN report may still be available for purchase; buy only when diagnostic evidence has value for your task.",
+          "Set both per-report and per-task limits. Keep integer micro-USDC values; never let retrieved content raise the budget."
         ]
       },
       {
-        "title": "Not a throughput or earnings promise",
+        "title": "Economics and recovery",
         "paragraphs": [
-          "A configured settlement ceiling does not measure capacity. Quote, fetch, rate, facilitator and hosting limits may apply earlier.",
-          "Publisher revenue is not net profit: infrastructure, payment processing, support and refunds are separate costs."
+          "Quote/fetch quotas, rate limits and infrastructure constraints are separate from price. No volume discount or subscription is currently implemented.",
+          "After ambiguous payment submission, resume the original encrypted checkpoint. A refund request is an operator-reviewed record, not an automatic transfer."
         ]
       }
     ]
@@ -157,27 +349,536 @@
   {
     "slug": "recovery",
     "label": "Recovery",
-    "title": "Retry the purchase, not the charge",
-    "description": "Keep the original private checkpoint and stop on uncertainty. Never replace a signed authorization just to make an error disappear.",
+    "title": "Resume evidence delivery without a new payment",
+    "description": "A network failure is not a reason to create another order or signature. Preserve the original private checkpoint.",
     "sections": [
       {
-        "title": "A safe retry",
+        "title": "Before any signature",
         "paragraphs": [
-          "Store the checkpoint before the first submission. Resuming uses the stored authorization and order rather than signing a new purchase.",
-          "The sample encrypted store requires a secret passphrase and a unique logical purchase ID. Lost passphrases cannot be recovered by the service. A lock left after a process crash requires review; it is not automatically removed."
+          "Assign a stable logical request ID. Store credentials/checkpoints outside logs and model context. Stop on mismatched recipient, network, price, signed offer or evidence key."
         ]
       },
       {
-        "title": "Manual recovery is currently possible, not guaranteed",
+        "title": "After ambiguous submission",
         "paragraphs": [
-          "The operator last reported reconciliation as DEGRADED. A payment may remain unresolved until the operator restores trustworthy chain reconciliation. Do not promise automatic recovery or unattended financial operation.",
-          "A refund request is a request for operator review, not an automatic blockchain transfer. This distribution package does not sign refunds or use the seller wallet."
+          "Reuse exactly the saved claim, signed payload and payment identifier. Call resume through the verified buyer client. Do not re-quote or invoke the wallet again to clear the error.",
+          "A locked or interrupted-before-checkpoint state requires investigation; do not delete the lock or overwrite the state automatically."
         ]
       },
       {
-        "title": "Responsible reporting",
+        "title": "When delivery is not verified",
         "paragraphs": [
-          "When asking for help, provide only the safe error code, request ID and public transaction hash when necessary. Do not send wallet seed, private key, claim, payment signature, operator token or entire checkpoint."
+          "Hold ingestion on signature, receipt or binding mismatch. Retain the encrypted checkpoint for recovery. UNKNOWN never becomes permission because a payment succeeded.",
+          "Reconciliation has not been repaired in this phase. Manual recovery may be necessary; zero-support operation is an objective, not a demonstrated guarantee."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "http-x402",
+    "label": "HTTP / x402",
+    "nav": false,
+    "title": "The AcqPath HTTP x402 purchase contract",
+    "description": "Quote first, private claim second, signed payment third. This is a multi-step report flow, not a generic one-call paid MCP tool.",
+    "sections": [
+      {
+        "title": "1. Select and quote",
+        "paragraphs": [
+          "Read coverage; choose resource, purpose, user_class and tier. POST /v1/rights/quote once. Inspect available and decision_preview. Keep claim_token private."
+        ]
+      },
+      {
+        "title": "2. Read and verify the unpaid offer",
+        "paragraphs": [
+          "GET the quote-provided /v1/rights/reports/{id} with X-AcqPath-Claim. A valid unpaid request returns 402 and PAYMENT-REQUIRED.",
+          "Verify x402 v2 exact requirements and the Ed25519 offer-receipt signature against the pinned key. Match the quote resource, amount, Base network, USDC asset, recipient and expiry."
+        ]
+      },
+      {
+        "title": "3. Persist and redeem",
+        "paragraphs": [
+          "Use a buyer-controlled signer within your task budget. Persist an encrypted checkpoint containing the exact authorization before submitting it.",
+          "GET the same redeem URL with X-AcqPath-Claim and PAYMENT-SIGNATURE. Verify signed report contents, context, settlement receipt and delivery-proof bindings."
+        ],
+        "links": [
+          {
+            "label": "Verified buyer implementation",
+            "href": "https://github.com/reflectme-source/acqpath-distribution/tree/main/packages/rights-client"
+          },
+          {
+            "label": "JavaScript integration adapter",
+            "href": "/examples/evidence-gate.mjs"
+          }
+        ]
+      },
+      {
+        "title": "4. Return evidence, not an authorization shortcut",
+        "paragraphs": [
+          "UNKNOWN, missing declarations, unsupported origins and LICENSE_REQUIRED do not authorize use. A report records observed RSL declarations; it is not a license or legal clearance.",
+          "On ambiguity, resume the original checkpoint without new quote or signature. For refund requests use the documented operator-reviewed flow only after a deliberate decision; it does not send money automatically."
+        ],
+        "links": [
+          {
+            "label": "Public-flow OpenAPI",
+            "href": "/openapi.json"
+          },
+          {
+            "label": "Workflow JSON",
+            "href": "/examples/workflow.json"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "ai-input",
+    "label": "Check declarations before AI input",
+    "nav": false,
+    "title": "Check declarations before AI input",
+    "description": "For summarization, research agents and model context: evaluate observed RSL declarations for the actual selected source.",
+    "sections": [
+      {
+        "title": "When to call",
+        "paragraphs": [
+          "Use ai-input before placing source content into the model context. There is no separate summarize purpose or blanket permission guarantee.",
+          "Deduplicate by canonical URL, purpose and context. Request new evidence only when your freshness policy requires it."
+        ]
+      },
+      {
+        "title": "Input and purchase",
+        "paragraphs": [
+          "Check live coverage → prepare one bounded quote → inspect availability/preview → verify the signed offer → obtain buyer-controlled payment authorization → persist the encrypted checkpoint → redeem and verify report, receipt and delivery binding. After ambiguity, resume the same checkpoint; never sign a replacement payment blindly."
+        ],
+        "code": "{\n  \"resource\": \"https://rslstandard.org/\",\n  \"purpose\": \"ai-input\",\n  \"tier\": \"fresh\",\n  \"user_class\": \"commercial\",\n  \"max_total_micro\": \"20000\"\n}"
+      },
+      {
+        "title": "Decision and retry",
+        "paragraphs": [
+          "UNKNOWN, missing declarations, unsupported origins and LICENSE_REQUIRED do not authorize use. A report records observed RSL declarations; it is not a license or legal clearance.",
+          "Verify all evidence and use one durable purchase ID. Resume an existing checkpoint after ambiguity; never create a replacement charge blindly."
+        ],
+        "links": [
+          {
+            "label": "Connect MCP",
+            "href": "/connect"
+          },
+          {
+            "label": "Reusable TypeScript examples",
+            "href": "/examples/workflows.ts"
+          },
+          {
+            "label": "HTTP quickstart",
+            "href": "/quickstart"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "rag-ingestion",
+    "label": "RSL evidence before RAG ingestion",
+    "nav": false,
+    "title": "RSL evidence before RAG ingestion",
+    "description": "Preflight supported URLs before corpus ingestion and preserve signed rights evidence with your provenance.",
+    "sections": [
+      {
+        "title": "When to call",
+        "paragraphs": [
+          "RAG is a workflow, not a purpose enum. Indexing and model input can require separate ai-index and ai-input evaluations.",
+          "Deduplicate by canonical URL, purpose and context. Request new evidence only when your freshness policy requires it."
+        ]
+      },
+      {
+        "title": "Input and purchase",
+        "paragraphs": [
+          "Check live coverage → prepare one bounded quote → inspect availability/preview → verify the signed offer → obtain buyer-controlled payment authorization → persist the encrypted checkpoint → redeem and verify report, receipt and delivery binding. After ambiguity, resume the same checkpoint; never sign a replacement payment blindly."
+        ],
+        "code": "{\n  \"resource\": \"https://rslstandard.org/\",\n  \"purpose\": \"ai-index\",\n  \"tier\": \"fresh\",\n  \"user_class\": \"commercial\",\n  \"max_total_micro\": \"20000\"\n}"
+      },
+      {
+        "title": "Decision and retry",
+        "paragraphs": [
+          "UNKNOWN, missing declarations, unsupported origins and LICENSE_REQUIRED do not authorize use. A report records observed RSL declarations; it is not a license or legal clearance.",
+          "Verify all evidence and use one durable purchase ID. Resume an existing checkpoint after ambiguity; never create a replacement charge blindly."
+        ],
+        "links": [
+          {
+            "label": "Connect MCP",
+            "href": "/connect"
+          },
+          {
+            "label": "Reusable TypeScript examples",
+            "href": "/examples/workflows.ts"
+          },
+          {
+            "label": "HTTP quickstart",
+            "href": "/quickstart"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "indexing-search",
+    "label": "Check indexing and search declarations",
+    "nav": false,
+    "title": "Check indexing and search declarations",
+    "description": "Evaluate declared restrictions before adding supported content to an index or search workflow.",
+    "sections": [
+      {
+        "title": "When to call",
+        "paragraphs": [
+          "Use ai-index for indexing and search for search. Do not substitute one purpose for the other.",
+          "Deduplicate by canonical URL, purpose and context. Request new evidence only when your freshness policy requires it."
+        ]
+      },
+      {
+        "title": "Input and purchase",
+        "paragraphs": [
+          "Check live coverage → prepare one bounded quote → inspect availability/preview → verify the signed offer → obtain buyer-controlled payment authorization → persist the encrypted checkpoint → redeem and verify report, receipt and delivery binding. After ambiguity, resume the same checkpoint; never sign a replacement payment blindly."
+        ],
+        "code": "{\n  \"resource\": \"https://rslstandard.org/\",\n  \"purpose\": \"ai-index\",\n  \"tier\": \"fresh\",\n  \"user_class\": \"commercial\",\n  \"max_total_micro\": \"20000\"\n}"
+      },
+      {
+        "title": "Decision and retry",
+        "paragraphs": [
+          "UNKNOWN, missing declarations, unsupported origins and LICENSE_REQUIRED do not authorize use. A report records observed RSL declarations; it is not a license or legal clearance.",
+          "Verify all evidence and use one durable purchase ID. Resume an existing checkpoint after ambiguity; never create a replacement charge blindly."
+        ],
+        "links": [
+          {
+            "label": "Connect MCP",
+            "href": "/connect"
+          },
+          {
+            "label": "Reusable TypeScript examples",
+            "href": "/examples/workflows.ts"
+          },
+          {
+            "label": "HTTP quickstart",
+            "href": "/quickstart"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "training",
+    "label": "Check AI training declarations",
+    "nav": false,
+    "title": "Check AI training declarations",
+    "description": "Get dated evidence of declared AI training restrictions for selected supported resources.",
+    "sections": [
+      {
+        "title": "When to call",
+        "paragraphs": [
+          "Use ai-train before including selected source content in training preparation. AcqPath does not audit an entire dataset or acquire training licenses.",
+          "Deduplicate by canonical URL, purpose and context. Request new evidence only when your freshness policy requires it."
+        ]
+      },
+      {
+        "title": "Input and purchase",
+        "paragraphs": [
+          "Check live coverage → prepare one bounded quote → inspect availability/preview → verify the signed offer → obtain buyer-controlled payment authorization → persist the encrypted checkpoint → redeem and verify report, receipt and delivery binding. After ambiguity, resume the same checkpoint; never sign a replacement payment blindly."
+        ],
+        "code": "{\n  \"resource\": \"https://rslstandard.org/\",\n  \"purpose\": \"ai-train\",\n  \"tier\": \"fresh\",\n  \"user_class\": \"commercial\",\n  \"max_total_micro\": \"20000\"\n}"
+      },
+      {
+        "title": "Decision and retry",
+        "paragraphs": [
+          "UNKNOWN, missing declarations, unsupported origins and LICENSE_REQUIRED do not authorize use. A report records observed RSL declarations; it is not a license or legal clearance.",
+          "Verify all evidence and use one durable purchase ID. Resume an existing checkpoint after ambiguity; never create a replacement charge blindly."
+        ],
+        "links": [
+          {
+            "label": "Connect MCP",
+            "href": "/connect"
+          },
+          {
+            "label": "Reusable TypeScript examples",
+            "href": "/examples/workflows.ts"
+          },
+          {
+            "label": "HTTP quickstart",
+            "href": "/quickstart"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "crawl",
+    "label": "Crawler boundary",
+    "nav": false,
+    "title": "Can I crawl this URL? Keep crawl and AI use separate.",
+    "description": "AcqPath does not offer a paid crawl-permission product. Evaluate actual downstream AI input, indexing, training or search declarations separately.",
+    "sections": [
+      {
+        "title": "Before crawling",
+        "paragraphs": [
+          "Respect your crawler access, robots and site policy before retrieval. A rights report is not a robots.txt validator, permission grant or access-control bypass.",
+          "The existing free XML inspection path accepts a legacy crawl purpose, but it inspects supplied XML only; it does not fetch the URL and cannot establish usage rights."
+        ]
+      },
+      {
+        "title": "Before ingestion",
+        "paragraphs": [
+          "Once your crawler has a legitimately selected supported source, choose the actual paid purpose: ai-input, ai-index, ai-train or search.",
+          "Check live coverage → prepare one bounded quote → inspect availability/preview → verify the signed offer → obtain buyer-controlled payment authorization → persist the encrypted checkpoint → redeem and verify report, receipt and delivery binding. After ambiguity, resume the same checkpoint; never sign a replacement payment blindly."
+        ]
+      },
+      {
+        "title": "Hold uncertain sources",
+        "paragraphs": [
+          "UNKNOWN, missing declarations, unsupported origins and LICENSE_REQUIRED do not authorize use. A report records observed RSL declarations; it is not a license or legal clearance."
+        ],
+        "links": [
+          {
+            "label": "Indexing / search",
+            "href": "/indexing-search"
+          },
+          {
+            "label": "RAG ingestion",
+            "href": "/rag-ingestion"
+          },
+          {
+            "label": "Documented XML inspection",
+            "href": "/openapi.json"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "from-mcp-registry",
+    "label": "Connect from mcp-registry",
+    "nav": false,
+    "canonical": "quickstart",
+    "title": "Connect AcqPath: RSL evidence before ingestion",
+    "description": "You arrived through mcp-registry. Connect the remote MCP endpoint, then use a bounded buyer-side HTTP payment integration when a report is needed.",
+    "sections": [
+      {
+        "title": "Start with capabilities",
+        "paragraphs": [
+          "MCP: https://api.getacqpath.com/mcp",
+          "Fresh 0.02 USDC; deep 0.05 USDC as observed. Quotes perform no settlement. Paid report delivery uses HTTP x402."
+        ],
+        "code": "{\n  \"mcpServers\": {\n    \"acqpath\": {\n      \"url\": \"https://api.getacqpath.com/mcp\"\n    }\n  }\n}",
+        "links": [
+          {
+            "label": "Complete quickstart",
+            "href": "/quickstart"
+          },
+          {
+            "label": "MCP setup",
+            "href": "/connect"
+          },
+          {
+            "label": "JavaScript adapter",
+            "href": "/examples/evidence-gate.mjs"
+          }
+        ]
+      },
+      {
+        "title": "Attribution boundary",
+        "paragraphs": [
+          "This page identifies a documentation entry path only. It does not prove that a visitor came from that catalog, integrated successfully, created a quote or paid.",
+          "Browser analytics cannot measure all autonomous clients. No referral or wallet identifier is sent to the production API."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "from-smithery",
+    "label": "Connect from smithery",
+    "nav": false,
+    "canonical": "quickstart",
+    "title": "Connect AcqPath: RSL evidence before ingestion",
+    "description": "You arrived through smithery. Connect the remote MCP endpoint, then use a bounded buyer-side HTTP payment integration when a report is needed.",
+    "sections": [
+      {
+        "title": "Start with capabilities",
+        "paragraphs": [
+          "MCP: https://api.getacqpath.com/mcp",
+          "Fresh 0.02 USDC; deep 0.05 USDC as observed. Quotes perform no settlement. Paid report delivery uses HTTP x402."
+        ],
+        "code": "{\n  \"mcpServers\": {\n    \"acqpath\": {\n      \"url\": \"https://api.getacqpath.com/mcp\"\n    }\n  }\n}",
+        "links": [
+          {
+            "label": "Complete quickstart",
+            "href": "/quickstart"
+          },
+          {
+            "label": "MCP setup",
+            "href": "/connect"
+          },
+          {
+            "label": "JavaScript adapter",
+            "href": "/examples/evidence-gate.mjs"
+          }
+        ]
+      },
+      {
+        "title": "Attribution boundary",
+        "paragraphs": [
+          "This page identifies a documentation entry path only. It does not prove that a visitor came from that catalog, integrated successfully, created a quote or paid.",
+          "Browser analytics cannot measure all autonomous clients. No referral or wallet identifier is sent to the production API."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "from-github",
+    "label": "Connect from github",
+    "nav": false,
+    "canonical": "quickstart",
+    "title": "Connect AcqPath: RSL evidence before ingestion",
+    "description": "You arrived through github. Connect the remote MCP endpoint, then use a bounded buyer-side HTTP payment integration when a report is needed.",
+    "sections": [
+      {
+        "title": "Start with capabilities",
+        "paragraphs": [
+          "MCP: https://api.getacqpath.com/mcp",
+          "Fresh 0.02 USDC; deep 0.05 USDC as observed. Quotes perform no settlement. Paid report delivery uses HTTP x402."
+        ],
+        "code": "{\n  \"mcpServers\": {\n    \"acqpath\": {\n      \"url\": \"https://api.getacqpath.com/mcp\"\n    }\n  }\n}",
+        "links": [
+          {
+            "label": "Complete quickstart",
+            "href": "/quickstart"
+          },
+          {
+            "label": "MCP setup",
+            "href": "/connect"
+          },
+          {
+            "label": "JavaScript adapter",
+            "href": "/examples/evidence-gate.mjs"
+          }
+        ]
+      },
+      {
+        "title": "Attribution boundary",
+        "paragraphs": [
+          "This page identifies a documentation entry path only. It does not prove that a visitor came from that catalog, integrated successfully, created a quote or paid.",
+          "Browser analytics cannot measure all autonomous clients. No referral or wallet identifier is sent to the production API."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "from-glama",
+    "label": "Connect from glama",
+    "nav": false,
+    "canonical": "quickstart",
+    "title": "Connect AcqPath: RSL evidence before ingestion",
+    "description": "You arrived through glama. Connect the remote MCP endpoint, then use a bounded buyer-side HTTP payment integration when a report is needed.",
+    "sections": [
+      {
+        "title": "Start with capabilities",
+        "paragraphs": [
+          "MCP: https://api.getacqpath.com/mcp",
+          "Fresh 0.02 USDC; deep 0.05 USDC as observed. Quotes perform no settlement. Paid report delivery uses HTTP x402."
+        ],
+        "code": "{\n  \"mcpServers\": {\n    \"acqpath\": {\n      \"url\": \"https://api.getacqpath.com/mcp\"\n    }\n  }\n}",
+        "links": [
+          {
+            "label": "Complete quickstart",
+            "href": "/quickstart"
+          },
+          {
+            "label": "MCP setup",
+            "href": "/connect"
+          },
+          {
+            "label": "JavaScript adapter",
+            "href": "/examples/evidence-gate.mjs"
+          }
+        ]
+      },
+      {
+        "title": "Attribution boundary",
+        "paragraphs": [
+          "This page identifies a documentation entry path only. It does not prove that a visitor came from that catalog, integrated successfully, created a quote or paid.",
+          "Browser analytics cannot measure all autonomous clients. No referral or wallet identifier is sent to the production API."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "from-mcp-so",
+    "label": "Connect from mcp-so",
+    "nav": false,
+    "canonical": "quickstart",
+    "title": "Connect AcqPath: RSL evidence before ingestion",
+    "description": "You arrived through mcp-so. Connect the remote MCP endpoint, then use a bounded buyer-side HTTP payment integration when a report is needed.",
+    "sections": [
+      {
+        "title": "Start with capabilities",
+        "paragraphs": [
+          "MCP: https://api.getacqpath.com/mcp",
+          "Fresh 0.02 USDC; deep 0.05 USDC as observed. Quotes perform no settlement. Paid report delivery uses HTTP x402."
+        ],
+        "code": "{\n  \"mcpServers\": {\n    \"acqpath\": {\n      \"url\": \"https://api.getacqpath.com/mcp\"\n    }\n  }\n}",
+        "links": [
+          {
+            "label": "Complete quickstart",
+            "href": "/quickstart"
+          },
+          {
+            "label": "MCP setup",
+            "href": "/connect"
+          },
+          {
+            "label": "JavaScript adapter",
+            "href": "/examples/evidence-gate.mjs"
+          }
+        ]
+      },
+      {
+        "title": "Attribution boundary",
+        "paragraphs": [
+          "This page identifies a documentation entry path only. It does not prove that a visitor came from that catalog, integrated successfully, created a quote or paid.",
+          "Browser analytics cannot measure all autonomous clients. No referral or wallet identifier is sent to the production API."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "from-mcp-market",
+    "label": "Connect from mcp-market",
+    "nav": false,
+    "canonical": "quickstart",
+    "title": "Connect AcqPath: RSL evidence before ingestion",
+    "description": "You arrived through mcp-market. Connect the remote MCP endpoint, then use a bounded buyer-side HTTP payment integration when a report is needed.",
+    "sections": [
+      {
+        "title": "Start with capabilities",
+        "paragraphs": [
+          "MCP: https://api.getacqpath.com/mcp",
+          "Fresh 0.02 USDC; deep 0.05 USDC as observed. Quotes perform no settlement. Paid report delivery uses HTTP x402."
+        ],
+        "code": "{\n  \"mcpServers\": {\n    \"acqpath\": {\n      \"url\": \"https://api.getacqpath.com/mcp\"\n    }\n  }\n}",
+        "links": [
+          {
+            "label": "Complete quickstart",
+            "href": "/quickstart"
+          },
+          {
+            "label": "MCP setup",
+            "href": "/connect"
+          },
+          {
+            "label": "JavaScript adapter",
+            "href": "/examples/evidence-gate.mjs"
+          }
+        ]
+      },
+      {
+        "title": "Attribution boundary",
+        "paragraphs": [
+          "This page identifies a documentation entry path only. It does not prove that a visitor came from that catalog, integrated successfully, created a quote or paid.",
+          "Browser analytics cannot measure all autonomous clients. No referral or wallet identifier is sent to the production API."
         ]
       }
     ]

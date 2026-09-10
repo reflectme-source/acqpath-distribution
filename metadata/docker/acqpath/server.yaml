@@ -1,0 +1,17 @@
+name: acqpath
+type: remote
+meta:
+  category: developer-tools
+  tags:
+    - remote
+    - rsl
+    - ai
+    - rag
+    - x402
+about:
+  title: AcqPath — RSL Rights Preflight
+  description: Observed RSL declaration evidence before AI input, RAG indexing, training and search. MCP capabilities and quotes only; paid signed report delivery uses separate HTTP x402. Reports are not licenses. The legacy acqpath_quote tool is disabled.
+  icon: https://developers.getacqpath.com/icon.svg
+remote:
+  transport_type: streamable-http
+  url: https://api.getacqpath.com/mcp

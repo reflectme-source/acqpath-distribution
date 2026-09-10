@@ -1,19 +1,15 @@
-# Zawartość
+# Zawartość dystrybucji
 
-START-TUTAJ.md / CODEX-START.txt / AGENTS.md — instrukcje właściciela i wykonania w osobnym workspace.
+AGENTS.md, START-TUTAJ.md i CODEX-START.txt zawierają zasady osobnego workspace. Obowiązują ograniczenia zapisu do core i osobna zgoda na realną płatność.
 
-scripts/ — lokalna kontrola, publiczny audit/MCP, sprawdzenie katalogów, budowanie materiałów, DNS/Registry/npm/Smithery/GitHub/Pages, opcjonalne agregaty biznesowe.
+scripts/ zawiera lokalne testy, build, publiczne readback/discovery i narzędzia publikacji. Build tworzy 19 stron oraz machine assets z jawnej listy, wyłącznie w out/site.
 
-packages/rights-client/ — pakiet kliencki HTTP/x402 i zaszyfrowane checkpointy; trzy integracje w examples/pipelines.mjs, przykład read-only.
+packages/rights-client/ zawiera klienta HTTP/x402 i zaszyfrowane checkpointy. Jest objęty zatwierdzonym MIT, lecz publikacja npm pozostaje wyłączona. buyer-demo/ jest opcjonalny i nigdy nie uruchamia się podczas build/CI.
 
-buyer-demo/ — opcjonalny klient lokalny z potwierdzeniem portfela, nie uruchamiany przez prepare.
+examples/ i skills/acqpath-rights-preflight/ zawierają bezpieczne przykłady integracji oraz skill. metadata/ zawiera manifesty, snapshot publicznego kontraktu, intent pages i propozycje kanałów. site/ zawiera statyczny CSS, ikonę i nagłówki docs.
 
-metadata/ — manifests, opisy kanałów, treści stron, provenance i jawne ograniczenia Bazaar.
+.github/workflows/ zawiera zweryfikowane workflow z przypiętymi SHA. Dzienny discovery jest read-only. tests/ zawiera 83 testy bez prawdziwych płatności.
 
-site/ — CSS statycznej dokumentacji; build tworzy 6 stron wyłącznie w out/site.
+Pięć raportów Phase 2 znajduje się w root. docs/ACCEPTANCE.md podaje rzeczywiste dowody. release/VERIFICATION.json jest lokalnym raportem testów, a SETUP-VERIFICATION.json pozostaje historycznym dowodem Phase 1.
 
-workflow-templates/ — 4 workflow; freeze-actions zamienia refy w dokładne upstream SHA przed publikacją.
-
-tests/ — 66 testów i dynamiczne syntetyczne klucze fixture; żadnego prawdziwego klucza prywatnego.
-
-release/ — rzeczywisty raport wykonania. MANIFEST.json — sumy plików paczki, nie podpis audytora.
+MANIFEST.json zawiera aktualne sumy publicznych źródeł z normalizacją CRLF do LF, bez samego manifestu i katalogów ignorowanych. To inwentarz integralności, nie podpis audytora.

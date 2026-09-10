@@ -23,3 +23,7 @@ Przychód brutto = suma opłat. Zysk wymaga kosztów CDP, Cloudflare i pozostał
 ## Cykl
 
 Po publikacji publiczny workflow obserwuje widoczność raz dziennie; nie wykonuje płatnych testów, nie czyta admin credentials. Codex odczytuje raporty, właściciel może przekazać bezpieczne agregaty do konsultacji. Ta paczka nie tworzy asystenta pracującego w tle w ChatGPT ani abonamentu na analizę. Prawdziwe nowe potrzeby kupujących uzasadniają późniejsze zmiany; provider routing nie jest włączany w tym etapie.
+
+## Pomiar Phase 2 — 2026-09-10
+
+Właściciel zatwierdził jeden odczyt agregatów, wykonany 13:43 UTC. Nie jest on powtarzany ani dodany do harmonogramu. Pełny baseline, ograniczenia atrybucji i rzeczywiste zera/UNKNOWN: [REVENUE-BASELINE](../REVENUE-BASELINE.md). Aktualnie sprawdzony cennik facilitatora i obliczenia: [REVENUE-OPTIMIZATION](../REVENUE-OPTIMIZATION.md).

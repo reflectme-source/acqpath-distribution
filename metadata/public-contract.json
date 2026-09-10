@@ -1,0 +1,140 @@
+{
+  "schema": "acqpath.distribution.public-contract.v1",
+  "observedAt": "2026-09-10T13:40:17.531Z",
+  "coreVersion": "3.1.0-rc.1",
+  "expectedSourceSha256": "7b7b830d434bac12bf7b42f7b706757e2ca8dab15349adc367985208f4329671",
+  "apiOrigin": "https://api.getacqpath.com",
+  "capabilities": {
+    "version": "3.1.0-rc.1",
+    "deployment": "production",
+    "payment_mode": "live",
+    "pairs": [],
+    "native_services": [
+      {
+        "capability": "rights.preflight.v1",
+        "enabled": true,
+        "payments_enabled": true,
+        "coverage": [
+          "https://medium.com",
+          "https://theguardian.com",
+          "https://rslstandard.org",
+          "https://rslcollective.org"
+        ],
+        "fresh_fee_micro": "20000",
+        "deep_fee_micro": "50000",
+        "legal_clearance": false
+      }
+    ],
+    "features": {
+      "rights_preflight": true,
+      "signed_rights_offers_receipts": true,
+      "quote": false,
+      "paid_planning": false,
+      "client_side_execution": true,
+      "restricted_rsl": true,
+      "mcp_free_tools": true,
+      "autonomous_patching": false,
+      "mpp": false,
+      "ap2_verification": false,
+      "bidmesh": false,
+      "realized_savings_billing": false
+    }
+  },
+  "serverInfo": {
+    "name": "AcqPath",
+    "version": "3.1.0-rc.1"
+  },
+  "tools": [
+    {
+      "name": "acqpath_capabilities",
+      "description": "List operator-approved interchangeable capabilities; no payment.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "acqpath_rights_quote",
+      "description": "Prepare a bounded signed report of observed RSL declarations; no payment occurs. This is not a license. Keep the returned claim token private.",
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "resource",
+          "purpose",
+          "max_total_micro"
+        ],
+        "properties": {
+          "resource": {
+            "type": "string",
+            "format": "uri",
+            "maxLength": 2048,
+            "description": "HTTPS resource on an explicitly reviewed origin; no query, fragment, credentials, IP literal, encoded slash or redirect."
+          },
+          "purpose": {
+            "type": "string",
+            "enum": [
+              "ai-input",
+              "ai-train",
+              "ai-index",
+              "search"
+            ]
+          },
+          "user_class": {
+            "type": "string",
+            "enum": [
+              "commercial",
+              "non-commercial",
+              "education",
+              "government",
+              "personal"
+            ],
+            "default": "commercial"
+          },
+          "geo": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[A-Z]{2}$",
+            "description": "Caller-supplied geographical context. This is not independently verified location."
+          },
+          "freshness_seconds": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 3600,
+            "default": 300
+          },
+          "tier": {
+            "type": "string",
+            "enum": [
+              "fresh",
+              "deep"
+            ],
+            "default": "fresh"
+          },
+          "max_total_micro": {
+            "type": "string",
+            "pattern": "^(0|[1-9][0-9]*)$",
+            "description": "Exact integer micro-USDC budget."
+          }
+        }
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": true,
+        "idempotentHint": false
+      }
+    }
+  ],
+  "disabledTools": [
+    "acqpath_quote"
+  ],
+  "liveOpenapi": "https://api.getacqpath.com/openapi.json",
+  "legalClearance": false
+}

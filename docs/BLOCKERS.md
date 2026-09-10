@@ -21,3 +21,9 @@ Owner uruchomił LIVE z DEGRADED reconciliation. Metadane gotowości nie wolno z
 ## Zewnętrzne platformy
 
 Moderacja, niewłasny npm scope, brak uprawnień, wyłączone Pages, drift protokołu, DNS/firewall czy rate limits pozostają rzeczywistymi możliwymi blokadami. Błędy nie uzasadniają wycięcia kontroli. Kontynuujemy niezależne kanały, nie obiecujemy, że jedna komenda zagwarantuje publikację wszędzie.
+
+## Aktualizacja Phase 2 — 2026-09-10
+
+Aktualna analiza Bazaar znajduje się w [BAZAAR-COMPATIBILITY.md](../BAZAAR-COMPATIBILITY.md). Dynamiczne route templates są obecnie wspierane; blokadą jest brak rozszerzenia i bezpiecznej reprezentacji prywatnego przygotowania quote. Nie należy traktować starszego skrótu o dynamicznych trasach jako ograniczenia samej specyfikacji.
+
+Publikacje i bramki właściciela są w [ACCEPTANCE.md](ACCEPTANCE.md). Smithery i Glama są opublikowane. npm pozostaje wstrzymany na polecenie właściciela. Przychód i koszty opisują [REVENUE-BASELINE](../REVENUE-BASELINE.md) oraz [REVENUE-OPTIMIZATION](../REVENUE-OPTIMIZATION.md); wcześniejsze limity operatora nie są pomiarem bieżącej przepustowości.

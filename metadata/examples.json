@@ -1,0 +1,56 @@
+{
+  "schema": "acqpath.integration.examples.v1",
+  "synthetic": true,
+  "notExecuted": true,
+  "quoteInput": {
+    "resource": "https://rslstandard.org/",
+    "purpose": "ai-input",
+    "user_class": "commercial",
+    "tier": "fresh",
+    "max_total_micro": "20000"
+  },
+  "resourceCaveat": "Illustrative URL on an observed supported origin; no claim that this page has purchasable declarations.",
+  "unavailable": {
+    "available": false,
+    "reason": "NO_VERIFIABLE_DECLARATION",
+    "charge_micro": "0"
+  },
+  "decisions": [
+    "ALLOW_DECLARED",
+    "DENY_DECLARED",
+    "LICENSE_REQUIRED",
+    "UNKNOWN"
+  ],
+  "privateFieldsOmitted": [
+    "claim_token",
+    "payment signatures",
+    "checkpoint",
+    "wallet credentials"
+  ],
+  "workflow": {
+    "when": "Before selected supported content enters the intended workflow",
+    "input": "Canonical HTTPS URL plus actual purpose/context and bounded budget",
+    "unknown": "Hold; do not treat as permission",
+    "purchase": "Quote -> private claim -> signed offer -> buyer-authorized x402 exact -> verified report",
+    "verification": "Pinned Ed25519 offer/report/receipt/delivery binding via reviewed buyer client",
+    "retry": "Resume same durable checkpoint",
+    "duplicatePrevention": "One logical ID, local lock, checkpoint before submission, same authorization on retry"
+  },
+  "mcp": {
+    "generic": {
+      "mcpServers": {
+        "acqpath": {
+          "url": "https://api.getacqpath.com/mcp"
+        }
+      }
+    },
+    "vscode": {
+      "servers": {
+        "acqpath": {
+          "type": "http",
+          "url": "https://api.getacqpath.com/mcp"
+        }
+      }
+    }
+  }
+}
