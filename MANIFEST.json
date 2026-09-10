@@ -125,8 +125,8 @@
     },
     {
       "path": "docs/ACCEPTANCE.md",
-      "sha256": "c9bedf071d7a2bddaf42f427b5c4730da5f9faf98ccf866eaa0d0010df07a109",
-      "bytes": 6576
+      "sha256": "3d0b53cb37364c400dfaba219e3045a92b59f3ffec206b8375aba633c714487e",
+      "bytes": 7360
     },
     {
       "path": "docs/BAZAAR-CURRENT-FLOW.md",
@@ -135,8 +135,8 @@
     },
     {
       "path": "docs/BAZAAR-ENGINEERING-STATUS.md",
-      "sha256": "91f748b93ea8541642b13319ac316134fe4f248397023f0ee58ed8d65c998cba",
-      "bytes": 4238
+      "sha256": "f02f0240627493563fc569806e314f3ef86722fb7e091d46dc25702d4a6f4c5c",
+      "bytes": 4885
     },
     {
       "path": "docs/BAZAAR-MAINNET-PLAN.md",
@@ -240,8 +240,8 @@
     },
     {
       "path": "metadata/bazaar-public-contract.json",
-      "sha256": "1b1fabe8a6d8fd5ca531a49ad6c4edd5033616598ef5789d9b208b0a406b87db",
-      "bytes": 15915
+      "sha256": "6a953d604d8a5e04fbfa09d6fe8031b38ea9b22659b7d5b0126137a74950bc9a",
+      "bytes": 16456
     },
     {
       "path": "metadata/buyer-intents.json",
@@ -320,8 +320,8 @@
     },
     {
       "path": "metadata/site-pages.json",
-      "sha256": "2c8fd6522118433064c6ce50bdd04c126530e0bed398b00425d3d99854541329",
-      "bytes": 41957
+      "sha256": "66a8a90b4d00741c86ae6f29c6221448208b4dd0f004f53cd9239122d5684dc5",
+      "bytes": 42289
     },
     {
       "path": "metadata/smithery-listing.json",
@@ -495,8 +495,8 @@
     },
     {
       "path": "scripts/discovery-check.mjs",
-      "sha256": "35a4244bcecfab318dd40b3abdeddf42af9eb29d25d876c5fca17d526ea17b15",
-      "bytes": 5407
+      "sha256": "d4f35084e716237b411dd1e60b6493655a0c82c3608fd6daa9fad542049c7a0a",
+      "bytes": 5492
     },
     {
       "path": "scripts/docs-artifact.mjs",

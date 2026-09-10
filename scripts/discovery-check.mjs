@@ -42,7 +42,7 @@ export async function discoveryCheck(root=ROOT,{fetcher=globalThis.fetch}={}) {
  await check('official_registry_brand_search',async()=>{const url=registry+'/v0.1/servers?search=AcqPath&limit=100';const r=await readRegistry(url,fetcher);return {pass:r.status===200&&r.data?.servers?.some(s=>s.server?.name===cfg.mcp.name&&s.server?.version===cfg.mcp.version),http:r.status,attempts:r.attempts,search:'server-name substring only; semantic discovery tested separately'};});
  const pages=await load(join(root,'metadata/site-pages.json'));
  const external=[...new Set(pages.flatMap(p=>p.sections.flatMap(s=>(s.links||[]).map(l=>l.href))).filter(h=>h.startsWith('https:')))];
- for(const url of external)await check('documentation_external_link',async()=>{const r=await fetchPublicFile(url,{fetcher,allowedOrigins:['https://github.com',cfg.apiOrigin],maxBytes:2097152});return {pass:r.http===200,http:r.http,url};});
+ for(const url of external)await check('documentation_external_link',async()=>{const r=await fetchPublicFile(url,{fetcher,allowedOrigins:['https://github.com','https://docs.cdp.coinbase.com','https://acqpath-bazaar-sepolia.acqpath.workers.dev',cfg.apiOrigin],maxBytes:2097152});return {pass:r.http===200,http:r.http,url};});
  for(const record of await load(join(root,'metadata/channel-readbacks.json'))) {
   if(!record.required)continue;
   await check(record.name,async()=>{const r=await fetchPublicFile(record.url,{fetcher,maxBytes:2097152});const body=r.data.toString('utf8');return {pass:r.http===200&&record.requiredText.every(t=>body.includes(t)),http:r.http,url:record.url,scope:'Public metadata readback only; no paid-flow claim'};});

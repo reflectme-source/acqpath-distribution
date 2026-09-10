@@ -1,14 +1,14 @@
 {
   "schema": "acqpath.bazaar-public-contract.v1",
   "reviewedAt": "2026-09-10",
-  "status": "IMPLEMENTED_NOT_DEPLOYED",
+  "status": "SEPOLIA_UNPAID_VERIFIED_PRODUCTION_NOT_DEPLOYED",
   "architecture": "A_ADDITIVE_HTTP_ADAPTER",
   "appliedToCore": true,
-  "coreCommit": "11c420277f53eddf07120795201307a073335320",
+  "coreCommit": "905d8706a0f753bf3ea93dc4072084e6c5b2f3df",
   "productionDeployed": false,
   "productionEndpointActive": false,
-  "testnetOrigin": null,
-  "testnetDeployment": "AWAITING_ACCOUNT_AUTHORIZATION",
+  "testnetOrigin": "https://acqpath-bazaar-sepolia.acqpath.workers.dev",
+  "testnetDeployment": "DEPLOYED_UNPAID_ONLY",
   "indexing": "UNVERIFIED",
   "walletSigningPerformed": false,
   "settlementPerformed": false,
@@ -539,5 +539,20 @@
     "Synthetic signatures/transactions are placeholders, not evidence.",
     "No legal clearance, license acquisition or ownership verification. UNKNOWN is not permission.",
     "Paid crawl and provider routing remain unsupported."
-  ]
+  ],
+  "coreSourceSha256": "af21b15c04a56f1e104a736de699652c9b56b4871de7827cf2ac6078a05dbe84",
+  "coreMergeStatus": "MERGED",
+  "testnetVersion": "2ac81afe-ac5c-43c5-930c-049a90e6c0b7",
+  "testnetValidation": {
+    "at": "2026-09-10T20:33:12.450Z",
+    "status": "UNPAID_CHECKS_PASS",
+    "checksPassed": 14,
+    "cdpValidator": {
+      "http": 200,
+      "valid": true,
+      "simulationAccepted": true,
+      "indexingProven": false
+    },
+    "paymentSubmissionEnabled": false
+  }
 }

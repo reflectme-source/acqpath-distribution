@@ -1,3 +1,9 @@
+# Current acceptance — Phase 3B
+
+The current engineering and publication record is [Bazaar engineering status](BAZAAR-ENGINEERING-STATUS.md). Core main is merged after green non-deploying CI; isolated Sepolia passes 14 unpaid checks and the CDP validator. Production code/configuration, real wallet signing, settlement and Bazaar indexing are not part of that success. Distribution now has 98 tests and 20 docs pages. Automatic docs deployment is prepared and awaits its separately authorized Pages credential. npm remains on owner hold.
+
+The following Phase 2 snapshot is historical, including its zero-core-edit statement, deployment IDs, counts, earlier aggregate snapshot and blocker labels. It does not override the subsequent owner authorization or current Phase 3B results.
+
 # Odbiór Phase 2 MAX — 10 września 2026
 
 | Pozycja | Stan i dowód |

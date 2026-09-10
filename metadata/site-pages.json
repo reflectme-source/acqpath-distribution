@@ -73,7 +73,7 @@
       {
         "title": "Bazaar integration status",
         "paragraphs": [
-          "A public paid HTTP adapter has been implemented in source and is undergoing deployment validation. The deployed integration remains the documented private quote/claim/report flow."
+          "The additive public adapter passes isolated Sepolia checks and the CDP validator. Production continues to use the documented private quote/claim/report flow."
         ],
         "links": [
           {
@@ -898,8 +898,8 @@
   {
     "slug": "bazaar-status",
     "label": "Bazaar status",
-    "title": "Bazaar public adapter: implemented, awaiting deployment.",
-    "description": "The additive Rights Preflight contract is verified in source. Production still uses the private quote/claim/report flow. Bazaar indexing and real payments remain unverified.",
+    "title": "Bazaar public adapter: Sepolia verified, production pending.",
+    "description": "The isolated Base Sepolia candidate passes unpaid contract checks and the CDP validator. Production deployment, wallet signing, settlement and Bazaar indexing remain unverified.",
     "sections": [
       {
         "title": "What is available now",
@@ -923,7 +923,7 @@
         "paragraphs": [
           "The candidate accepts a reviewed URL, AI usage purpose, tier and budget. It reuses the existing Rights Preflight pipeline and PaymentIntent journal, returning signed evidence directly.",
           "Payment must bind the normalized request and private retry context through a specific EIP-3009 nonce. Generic clients that choose an arbitrary nonce cannot purchase this operation.",
-          "An empty POST is a discovery-only 402. It does not prepare a payable request. A buyer must verify the signed prepared binding and terms before any signature."
+          "An empty POST or empty JSON object is a discovery-only 402. It does not prepare a payable request. A buyer must verify the signed prepared binding and terms before any wallet signature."
         ],
         "links": [
           {
@@ -935,14 +935,18 @@
       {
         "title": "Validation and remaining gates",
         "paragraphs": [
-          "Local regression: 438 passed, zero failed and two Windows skips. Actual local workerd D1/DO/R2 checks and SDK types pass. No real wallet signature or settlement occurred.",
-          "An isolated Base Sepolia deployment is awaiting account authorization. Production deployment and wallet/payment actions remain separate owner gates.",
-          "Bazaar indexing, external paid reports, repeat payers and received USDC remain UNVERIFIED or UNKNOWN. A catalog search result or schema pass cannot establish them."
+          "Local regression: 444 passed, zero failed and two Windows skips; 72 dedicated adapter cases. GitHub checks, local workerd D1/DO/R2 and SDK types pass. No real wallet signature or settlement occurred.",
+          "The isolated Base Sepolia candidate passes 14 unpaid checks. CDP returns valid=true and simulation=accepted. Payment submissions are blocked; this is a contract-validation environment.",
+          "Production still runs its existing code and payment settings. Bazaar indexing, external paid reports, repeat payers and received USDC remain UNVERIFIED or UNKNOWN. Validator acceptance cannot establish a completed payment or indexing."
         ],
         "links": [
           {
             "label": "CDP non-paid endpoint validation",
             "href": "https://docs.cdp.coinbase.com/api-reference/v2/rest-api/x402-facilitator/validate-x402-endpoint"
+          },
+          {
+            "label": "Isolated Sepolia contract (unpaid only)",
+            "href": "https://acqpath-bazaar-sepolia.acqpath.workers.dev/v1/rights/preflight"
           }
         ]
       }
