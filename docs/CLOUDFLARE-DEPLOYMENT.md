@@ -2,9 +2,9 @@
 
 Target: a new **Cloudflare Pages** project named `acqpath-distribution` in the existing AcqPath account. Preferred URL: `https://developers.getacqpath.com`. The checked-in target is `config/cloudflare-pages.json`; it is deployment metadata, not Worker configuration.
 
-Use Git integration with only the separate `acqpath-distribution` GitHub repository selected. Production branch: `main`; repository root: `/`; build command: `node scripts/verify.mjs && node scripts/cli.mjs build`; output: `out/site`. The build exports an explicit public file allowlist and has no runtime dependencies, Functions, Worker bindings or service secrets.
+Use direct upload of the reviewed `out/site` build. Source branch: `main`; build command: `node scripts/verify.mjs && node scripts/cli.mjs build`; output: `out/site`. The build exports an explicit public file allowlist and has no runtime dependencies, Functions, Worker bindings or service secrets. GitHub keeps the source, CI and discovery observations. Direct upload does not automatically deploy Git pushes; Codex builds, scans and uploads each documentation release. Cloudflare requires a new Pages project if Git integration is desired later.
 
-Codex creates/configures the Pages project through the official Cloudflare dashboard or Pages API after account authorization. No Wrangler command is needed. The GitHub Pages workflow from the original package is retained only as an inactive template; it is not the selected deployment target.
+Codex creates/configures the Pages project through the official Cloudflare dashboard or Pages API after account authorization. No Wrangler command is needed. The existing GitHub app installations are preserved: the account repository picker did not expose the new personal-account repository. The GitHub Pages workflow from the original package is retained only as an inactive template; it is not the selected deployment target.
 
 Before adding the custom domain, inspect existing records for the exact hostname `developers.getacqpath.com`. Add the domain to this Pages project, then add only its required CNAME if absent. An existing unrelated record must be preserved and reported. Do not change the apex landing, `api.getacqpath.com`, `acqpath-production`, Cloudflare Access or production Worker configuration.
 

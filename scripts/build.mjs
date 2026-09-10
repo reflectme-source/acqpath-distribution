@@ -29,7 +29,7 @@ export async function build(root=ROOT){
  const vendor=await load(join(root,'metadata/vendor-provenance.json'));
  const files=[...allowed,...vendor.files.map(f=>'vendor/'+f.originalPath.replace('packages/sdk/',''))];
  for(const f of files){const src=join(pkgSrc,f),dest=join(pkgOut,f);await noSymlinks(src);await noSymlinks(dest);await mkdir(join(dest,'..'),{recursive:true});await copyFile(src,dest);}
- const pkg=await load(join(pkgSrc,'package.json'));pkg.name=cfg.publication.npmName;pkg.private=!cfg.publication.npmLicenseApproved;pkg.license=cfg.publication.npmLicenseApproved?'MIT':'UNLICENSED';
+ const pkg=await load(join(pkgSrc,'package.json'));pkg.name=cfg.publication.npmName;pkg.private=!(cfg.publication.npmLicenseApproved&&cfg.publication.npmPublicationEnabled===true);pkg.license=cfg.publication.npmLicenseApproved?'MIT':'UNLICENSED';
  if(cfg.publication.githubOwner)pkg.repository={type:'git',url:`https://github.com/${cfg.publication.githubOwner}/${cfg.publication.repo}.git`,directory:'packages/rights-client'};
  await writeLocal('out/rights-client/package.json',pkg,root);
  return {status:'BUILT_LOCALLY',sitePages:pages.length,coreChanged:false,published:false};

@@ -83,6 +83,7 @@ export async function publishRegistry(root=ROOT){
  await writeLocal('.local/registry-publication.json',{at:new Date().toISOString(),state:'SUBMITTED_NEEDS_READBACK',name:cfg.mcp.name,version:cfg.mcp.version},root);console.log('REGISTRY_SUBMITTED — run catalogs for exact readback; no claim of listing until FOUND.');
 }
 export async function publishNpm(root=ROOT){
+ if((await settings(root)).publication.npmPublicationEnabled!==true)throw Error('NPM_PUBLICATION_DISABLED_BY_OWNER');
  await recentAudit(root);const cfg=await settings(root);await confirm('PUBLISH CLIENT PACKAGE UNDER MIT');cfg.publication.npmLicenseApproved=true;await writeLocal('config/distribution.json',cfg,root);await build(root);
  const dir=join(root,'out/rights-client');const auth=await npm(['whoami'],{cwd:dir});if(auth.code!==0)throw Error('NPM_LOGIN_REQUIRED_OWNER_AUTHENTICATES_LOCALLY');
  const dry=await npm(['pack','--dry-run','--json','--ignore-scripts'],{cwd:dir});if(dry.code!==0)throw Error('NPM_PACKAGE_CHECK_FAILED');

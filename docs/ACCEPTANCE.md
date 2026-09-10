@@ -1,18 +1,27 @@
-# Odbiór — wypełnia Codex wynikami, nie założeniami
+# Odbiór wdrożenia — 10 września 2026
 
-| Pozycja | Dowód potrzebny | Status przed uruchomieniem u właściciela |
-|---|---|---|
-| Pakiet lokalny | release/VERIFICATION.json + testy | Patrz rzeczywisty raport w paczce |
-| Core bez zmian | selected-file comparison przed/po, brak komend deploy | Kod core nie jest modyfikowany przez przygotowanie |
-| Publiczne API | bieżący public-audit z source/key/handshake | REMOTE_UNVERIFIED w środowisku autora |
-| Nowe repo | dokładny owner/acqpath-distribution, commit, secret review | NOT_PUBLISHED |
-| Docs Pages | zakończony workflow + pobranie publicznej strony | NOT_PUBLISHED |
-| npm | dokładny pakiet/wersja + pobranie i test | NOT_PUBLISHED |
-| MCP Registry | API zwraca dokładny namespace i URL | NOT_PUBLISHED |
-| Smithery | wpis i test narzędzi przez gateway | NOT_PUBLISHED |
-| PulseMCP | potwierdzenie kuratora/widoczna strona | NOT_SUBMITTED |
-| Bazaar | poprawny wpis + płatne wywołanie workflow | BLOCKED_BY_CURRENT_CORE_CONTRACT |
-| Mainnet purchase | realny settlement + podpisany raport + zapis self-test | NOT_PERFORMED_BY_PACKAGE_AUTHOR |
-| Organic revenue | niepowiązani kupujący, powtórki i rozpoznane koszty | NOT_ESTABLISHED |
+| Pozycja | Rzeczywisty wynik i dowód |
+|---|---|
+| Repozytorium | PUBLISHED_READBACK: [reflectme-source/acqpath-distribution](https://github.com/reflectme-source/acqpath-distribution), osobny root Git i origin. |
+| Dokumentacja | PUBLISHED_READBACK: [developers.getacqpath.com](https://developers.getacqpath.com). Cloudflare Pages `acqpath-distribution`, direct upload; domena Active, SSL enabled. |
+| Wdrożenie Pages | `4a357b8b-ebfb-4190-a81c-b60f41bf80fa`; [domena Pages](https://acqpath-distribution.pages.dev). Archiwum 15 plików; SHA256 `353c474b7bca8e2be30b9fca7f11a4ba81507e24e1b3dfd23d33e60dd7715b2a`. |
+| Publiczny odczyt docs | PUBLIC_READ_VERIFIED: 12 adresów na każdej domenie, HTTP 200, zgodne SHA256 i nagłówki bezpieczeństwa; nieistniejąca strona zwraca własne HTTP 404. |
+| MCP Registry | PUBLISHED_READBACK: [com.getacqpath/acqpath, wersja 3.1.0-rc.1](https://registry.modelcontextprotocol.io/v0.1/servers/com.getacqpath%2Facqpath/versions/3.1.0-rc.1), status `active`, remote `https://api.getacqpath.com/mcp`. Potwierdzono 13:16 UTC. |
+| Dowód DNS MCP | DNS_PROOF_VISIBLE: dodano zatwierdzony TXT z publicznym kluczem rejestru, TTL 300 s. Prywatny klucz pozostaje lokalnie. |
+| Publiczne API | PUBLIC_READ_VERIFIED: oczekiwany hash źródła i klucz dowodowy zgodne; MCP initialize/notifications/tools-list działają. Nie wywołano narzędzi tworzących quote. |
+| Testy lokalne | LOCAL_VERIFIED: 70/70, Windows, Node 22.19.0; `.local/verification.json`. |
+| GitHub CI | Windows i Ubuntu, Node 24. [Bieżące uruchomienia CI](https://github.com/reflectme-source/acqpath-distribution/actions/workflows/ci.yml); końcowy wynik wydania w `release/SETUP-VERIFICATION.json`. |
+| Sekrety | Gitleaks 8.30.1: brak wykrytych sekretów w źródłach, snapshotach publikacji, staged diff, SDK i docs. Pełny skan workspace znalazł jedynie trzy przykładowe dane w README ignorowanego archiwum samego skanera. `.private`, `.tools`, `.local` i `out` nie są publikowane w Git. |
+| Core | SELECTED_FILES_MATCH: ponowny odczyt 9 dozwolonych plików przez `source-audit`, 13:16 UTC. Zero zapisów do core i zero zmian konfiguracji produkcyjnego Workera/Access. Porównanie dotyczy wybranych plików, nie całego core. |
+| npm SDK | NOT_PUBLISHED_OWNER_REQUEST: właściciel zatwierdził MIT dla klienta, następnie polecił zachować SDK bez publikacji npm. `npmPublicationEnabled:false`, build `private:true`; CLI i workflow blokują publikację. Logowanie i własność scope nie zostały potwierdzone. |
+| Smithery | NOT_PUBLISHED: opcjonalny kanał, brak skonfigurowanego namespace/logowania; przygotowano metadane. |
+| PulseMCP | NOT_SUBMITTED: przygotowano materiał do moderowanego zgłoszenia, brak potwierdzonego wpisu. |
+| Bazaar | BLOCKED_BY_CURRENT_CORE_CONTRACT: brak metadanych Bazaar w przejrzanej ścieżce płatności. Sześć publicznych zapytań 13:15 UTC bez dopasowania; nie jest to dowód nieobecności we wszystkich katalogach. |
+| Pełny zakup / USDC | NOT_PERFORMED: zero płatności, zero podpisów portfela, brak dowodu pełnego paid flow. |
+| Popyt i przychód | ORGANIC_USAGE_UNVERIFIED: nie potwierdzono niezależnych klientów, powtórek ani zysku. |
 
-Nie zastępuj wymaganych dowodów samym tekstem PASS w logu. `RECONCILIATION_READY` pozostaje nierozwiązane zgodnie z ostatnim logiem. Brak problemu w krótkim teście nie dowodzi odporności na awarie lub wysokiej przepustowości.
+GitHub przechowuje źródła i wykonuje CI; kolejne aktualizacje dokumentacji wymagają osobnego uploadu sprawdzonego `out/site` do tego projektu Pages. Push sam nie wdraża dokumentacji. Instrukcja: `docs/CLOUDFLARE-DEPLOYMENT.md`.
+
+Nie zmieniono PAYMENT_MODE, PAY_TO, cen, provider routing, produkcyjnych tras ani Cloudflare Access. Dodano wyłącznie CNAME `developers` i zatwierdzony TXT MCP. `RECONCILIATION_READY` nie został naprawiony w tym zadaniu; nie deklarujemy gotowości płatnego flow ani przepustowości.
+
+Następny pomiar komercyjny: pierwszy niezależny kupujący, poprawnie dostarczony raport, ponowne użycie oraz przychód pomniejszony o rzeczywiste koszty. Własny zakup testowy nie jest dowodem organicznego popytu.

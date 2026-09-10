@@ -7,7 +7,7 @@
   "buildOutputDirectory": "out/site",
   "rootDirectory": "",
   "environmentVariables": { "NODE_VERSION": "22.19.0" },
-  "deploymentType": "pages-static-git-integration",
+  "deploymentType": "pages-static-direct-upload",
   "workerBindings": [],
   "workerRoutes": [],
   "secrets": []

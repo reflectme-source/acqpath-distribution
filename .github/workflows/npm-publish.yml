@@ -21,8 +21,8 @@ jobs:
       - run: node scripts/verify.mjs
       - run: node scripts/cli.mjs audit
       - run: node scripts/cli.mjs build
-      - name: Require owner license approval
-        run: node -e "const c=require('./config/distribution.json');if(c.publication.npmLicenseApproved!==true)process.exit(1)"
+      - name: Require owner license and publication approval
+        run: node -e "const c=require('./config/distribution.json');if(c.publication.npmLicenseApproved!==true||c.publication.npmPublicationEnabled!==true)process.exit(1)"
       - run: npm pack --dry-run --ignore-scripts
         working-directory: out/rights-client
       - run: npm publish --access public --provenance --ignore-scripts

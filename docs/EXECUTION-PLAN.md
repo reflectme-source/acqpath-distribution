@@ -26,7 +26,7 @@ Nie zmieniaj auto-deploy starego projektu. Po pushu śledź realny wynik testów
 
 ## 2. Dokumentacja
 
-Aktualny cel właściciela: osobny projekt **Cloudflare Pages** `acqpath-distribution`, preferowany hostname `developers.getacqpath.com`. Wykonaj `docs/CLOUDFLARE-DEPLOYMENT.md` i użyj `config/cloudflare-pages.json`. Git integration obejmuje wyłącznie nowe repo. Nie uruchamiaj starego `publish-pages`, który dotyczy GitHub Pages.
+Aktualny cel właściciela: osobny projekt **Cloudflare Pages** `acqpath-distribution`, preferowany hostname `developers.getacqpath.com`. Wykonaj `docs/CLOUDFLARE-DEPLOYMENT.md` i użyj `config/cloudflare-pages.json`. Deployment używa direct upload sprawdzonego `out/site`; GitHub przechowuje źródła i CI. Nie uruchamiaj starego `publish-pages`, który dotyczy GitHub Pages.
 
 Codex wykonuje build, konfigurację, deployment i odczyt publicznych stron. Właściciel tylko loguje się i autoryzuje konta. Nie zmieniaj `acqpath-production`, `api.getacqpath.com`, konfiguracji produkcyjnego Workera ani Access. Dopiero zakończony deployment oraz poprawny publiczny HTTPS readback potwierdzają publikację.
 
@@ -44,6 +44,8 @@ Skrypt DNS dodaje wyłącznie własny TXT, nie nadpisuje innych rekordów. Token
 Brak checksum oficjalnego assetu -> brak automatycznej instalacji, nie zgaduj hash. Istniejący, inny TXT MCP -> STOP bez kasowania. Istniejąca wersja manifestu -> odczytaj i porównaj; nie publikuj duplikatów ani nie zmieniaj nazwy losowo. Dopiero wynik Registry z dokładnym namespace + URL jest potwierdzeniem wpisu. Gdy API Registry wymaga nowego schematu, aktualizuj tylko distribution po sprawdzeniu dokumentacji.
 
 ## 4. SDK npm
+
+Aktualna decyzja właściciela: **zachować SDK bez publikacji npm**. Zgoda na MIT pozostaje zapisana, ale `npmPublicationEnabled:false` utrzymuje `private:true` i blokuje CLI oraz workflow. Nie wznawiaj logowania ani publikacji bez nowej instrukcji właściciela. Poniższy proces dotyczy dopiero przyszłego zatwierdzonego wydania.
 
 `node scripts/cli.mjs audit`
 `node scripts/cli.mjs publish-npm`

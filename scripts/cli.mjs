@@ -17,6 +17,7 @@ async function main(){
    const audit=await auditCommand();await catalogsCommand();await status();
    console.log(audit.status==='PASS'?'LOCAL_PACKAGE_READY_PUBLIC_PROBE_PASS_NOT_PUBLISHED':'LOCAL_PACKAGE_READY_REMOTE_UNVERIFIED_NOT_PUBLISHED');break;}
   case 'build':console.log(JSON.stringify(await build(),null,2));break;
+  case 'verify-docs':{const {verifyDocs}=await import('./verify-docs.mjs');if((await verifyDocs(args[0])).state!=='PUBLIC_DOCS_VERIFIED')process.exitCode=2;break;}
   case 'audit':if((await auditCommand()).status!=='PASS')process.exitCode=2;break;
   case 'catalogs':await catalogsCommand();break;
   case 'status':await status();break;
@@ -36,7 +37,7 @@ async function main(){
   case 'metrics-import':if(!args[0])throw Error('STATS_FILE_REQUIRED');await importMetrics(args[0]);break;
   case 'metrics-read':if(!args[0])throw Error('CORE_PATH_REQUIRED_READONLY');await collectMetrics(args[0]);break;
   case 'buyer-demo':{const {startBuyerDemo}=await import('./buyer-demo.mjs');await startBuyerDemo();break;}
-  default:console.log('Commands: prepare [read-only-core-path] | audit | catalogs | build | status | source-audit path | configure | freeze-actions | dns-prepare | dns-apply | publisher-install | publish-registry | publish-npm | smithery-install | smithery-login | publish-smithery | publish-github | publish-pages | metrics-import file | metrics-read core-path | buyer-demo');
+  default:console.log('Commands: prepare [read-only-core-path] | audit | catalogs | build | verify-docs [https-origin] | status | source-audit path | configure | freeze-actions | dns-prepare | dns-apply | publisher-install | publish-registry | publish-npm | smithery-install | smithery-login | publish-smithery | publish-github | publish-pages | metrics-import file | metrics-read core-path | buyer-demo');
  }
 }
 main().catch(e=>{const message=/^[A-Z0-9_ :.-]{1,180}$/.test(e.message||'')?e.message:safeCode(e);console.error('DISTRIBUTION_STOPPED:',message);process.exitCode=1;});

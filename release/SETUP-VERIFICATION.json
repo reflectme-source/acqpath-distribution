@@ -1,13 +1,81 @@
 {
-  "checkedAt": "2026-09-10T12:44:05.676Z",
-  "local": { "environment": "Windows", "node": "v22.19.0", "tests": 68, "passed": 68, "failed": 0 },
-  "publicApi": { "state": "PUBLIC_READ_VERIFIED", "checkedAt": "2026-09-10T12:34:08.526Z", "sourceHashMatches": true, "publicEvidenceKeyMatches": true, "mcpInitializeAndToolsList": true, "quoteCreated": false },
-  "sourceComparison": { "state": "SELECTED_FILES_MATCH", "files": 9, "checkedAt": "2026-09-10T12:36:33.386Z", "coreFilesChanged": false, "coreSecretsRead": false },
-  "secretReview": { "sourceFindings": 0, "scanner": "Gitleaks 8.30.1", "toolArchiveFindings": "Three documentation sample credentials inside the ignored official Gitleaks archive; no AcqPath source findings." },
-  "catalogs": { "mcpRegistry": "NO_MATCH_FOR_QUERY", "bazaar": "NO_MATCH_IN_SIX_QUERIES", "checkedAt": "2026-09-10T12:34:15.178Z" },
+  "checkedAt": "2026-09-10T13:20:24.091Z",
+  "local": {
+    "environment": "win32",
+    "node": "v22.19.0",
+    "tests": 70,
+    "passed": 70,
+    "failed": 0
+  },
+  "publicApi": {
+    "state": "PUBLIC_READ_VERIFIED",
+    "checkedAt": "2026-09-10T13:07:48.791Z",
+    "sourceHashMatches": true,
+    "publicEvidenceKeyMatches": true,
+    "mcpInitializeAndToolsList": true,
+    "quoteCreated": false
+  },
+  "sourceComparison": {
+    "state": "SELECTED_FILES_MATCH",
+    "files": 9,
+    "checkedAt": "2026-09-10T13:16:24.352Z",
+    "coreFilesChanged": false,
+    "coreSecretsRead": false
+  },
+  "secretReview": {
+    "sourceFindings": 0,
+    "scanner": "Gitleaks 8.30.1",
+    "toolArchiveFindings": "Three documentation sample credentials inside the ignored official Gitleaks archive; no AcqPath source findings."
+  },
+  "github": {
+    "at": "2026-09-10T13:05:49.584Z",
+    "state": "PUBLISHED_AND_READ_BACK",
+    "repository": "https://github.com/reflectme-source/acqpath-distribution",
+    "commit": "1f9237fcba2370f6b7c6cda1d65cb6b2ab70e69e",
+    "ci": "https://github.com/reflectme-source/acqpath-distribution/actions/runs/34479231979",
+    "ciWindows": "PASS",
+    "ciLinux": "PASS",
+    "publicDiscovery": "https://github.com/reflectme-source/acqpath-distribution/actions/runs/34479369475"
+  },
+  "docs": {
+    "at": "2026-09-10T13:19:16.873Z",
+    "state": "PUBLISHED_AND_READ_BACK",
+    "project": "acqpath-distribution",
+    "accountId": "449109f33c0c400ea8aef1100c801da6",
+    "url": "https://developers.getacqpath.com",
+    "customDomain": "developers.getacqpath.com",
+    "customDomainState": "ACTIVE_SSL_ENABLED",
+    "deploymentType": "pages-static-direct-upload",
+    "artifactSha256": "353c474b7bca8e2be30b9fca7f11a4ba81507e24e1b3dfd23d33e60dd7715b2a",
+    "workerConfigurationChanged": false,
+    "pagesUrl": "https://acqpath-distribution.pages.dev",
+    "deploymentId": "4a357b8b-ebfb-4190-a81c-b60f41bf80fa",
+    "readbackFilesPerDomain": 12,
+    "custom404Verified": true
+  },
+  "mcpRegistry": {
+    "state": "FOUND",
+    "name": "com.getacqpath/acqpath",
+    "version": "3.1.0-rc.1",
+    "readbackUrl": "https://registry.modelcontextprotocol.io/v0.1/servers/com.getacqpath%2Facqpath/versions/3.1.0-rc.1",
+    "checkedAt": "2026-09-10T13:16:51.404Z"
+  },
+  "npm": {
+    "at": "2026-09-10T13:19:16.875Z",
+    "state": "NOT_PUBLISHED_OWNER_REQUEST",
+    "name": "@getacqpath/rights-client",
+    "version": "1.0.0",
+    "licenseApproved": "MIT client only",
+    "scopeOwnership": "UNVERIFIED",
+    "publicationEnabled": false
+  },
+  "bazaar": {
+    "state": "NO_MATCH_IN_SIX_QUERIES",
+    "checkedAt": "2026-09-10T13:15:22.597Z",
+    "blocker": "NO_BAZAAR_METADATA_IN_REVIEWED_CORE_PAYMENT_PATH"
+  },
   "financialActions": "NONE",
   "paidFlow": "NOT_TESTED",
   "organicUsage": "UNVERIFIED",
-  "bazaarBlocker": "NO_BAZAAR_METADATA_IN_REVIEWED_CORE_PAYMENT_PATH",
-  "note": "This is local preparation evidence. Publication and deployment require separate readback in docs/ACCEPTANCE.md."
+  "note": "Evidence is scoped to the recorded timestamps and commits; final CI and push records are maintained locally and in GitHub Actions."
 }

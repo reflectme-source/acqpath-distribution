@@ -36,7 +36,8 @@
     "githubOwner": "reflectme-source",
     "repo": "acqpath-distribution",
     "npmName": "@getacqpath/rights-client",
-    "npmLicenseApproved": false,
+    "npmLicenseApproved": true,
+    "npmPublicationEnabled": false,
     "smitheryName": null,
     "docsUrl": "https://developers.getacqpath.com"
   },
