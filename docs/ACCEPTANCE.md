@@ -10,7 +10,8 @@
 | Dowód DNS MCP | DNS_PROOF_VISIBLE: dodano zatwierdzony TXT z publicznym kluczem rejestru, TTL 300 s. Prywatny klucz pozostaje lokalnie. |
 | Publiczne API | PUBLIC_READ_VERIFIED: oczekiwany hash źródła i klucz dowodowy zgodne; MCP initialize/notifications/tools-list działają. Nie wywołano narzędzi tworzących quote. |
 | Testy lokalne | LOCAL_VERIFIED: 70/70, Windows, Node 22.19.0; `.local/verification.json`. |
-| GitHub CI | Windows i Ubuntu, Node 24. [Bieżące uruchomienia CI](https://github.com/reflectme-source/acqpath-distribution/actions/workflows/ci.yml); końcowy wynik wydania w `release/SETUP-VERIFICATION.json`. |
+| GitHub CI | PASS 70/70 na Windows i Ubuntu, Node 24.20.0, commit `2c3e239060c904c86aecb65e8b9c3c95ec7860a2`: [wynik CI](https://github.com/reflectme-source/acqpath-distribution/actions/runs/34482128139). |
+| Discovery z GitHub | [Uruchomienie 13:23 UTC](https://github.com/reflectme-source/acqpath-distribution/actions/runs/34482274141): public API PASS, MCP Registry FOUND, sześć zapytań Bazaar bez dopasowania. Workflow ma dzienny harmonogram; powodzenie tego uruchomienia nie gwarantuje przyszłych wyników. |
 | Sekrety | Gitleaks 8.30.1: brak wykrytych sekretów w źródłach, snapshotach publikacji, staged diff, SDK i docs. Pełny skan workspace znalazł jedynie trzy przykładowe dane w README ignorowanego archiwum samego skanera. `.private`, `.tools`, `.local` i `out` nie są publikowane w Git. |
 | Core | SELECTED_FILES_MATCH: ponowny odczyt 9 dozwolonych plików przez `source-audit`, 13:16 UTC. Zero zapisów do core i zero zmian konfiguracji produkcyjnego Workera/Access. Porównanie dotyczy wybranych plików, nie całego core. |
 | npm SDK | NOT_PUBLISHED_OWNER_REQUEST: właściciel zatwierdził MIT dla klienta, następnie polecił zachować SDK bez publikacji npm. `npmPublicationEnabled:false`, build `private:true`; CLI i workflow blokują publikację. Logowanie i własność scope nie zostały potwierdzone. |

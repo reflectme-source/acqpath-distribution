@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-09-10T13:20:24.091Z",
+  "checkedAt": "2026-09-10T13:24:17.316Z",
   "local": {
     "environment": "win32",
     "node": "v22.19.0",
@@ -28,14 +28,17 @@
     "toolArchiveFindings": "Three documentation sample credentials inside the ignored official Gitleaks archive; no AcqPath source findings."
   },
   "github": {
-    "at": "2026-09-10T13:05:49.584Z",
+    "at": "2026-09-10T13:24:17.313Z",
     "state": "PUBLISHED_AND_READ_BACK",
     "repository": "https://github.com/reflectme-source/acqpath-distribution",
-    "commit": "1f9237fcba2370f6b7c6cda1d65cb6b2ab70e69e",
-    "ci": "https://github.com/reflectme-source/acqpath-distribution/actions/runs/34479231979",
-    "ciWindows": "PASS",
-    "ciLinux": "PASS",
-    "publicDiscovery": "https://github.com/reflectme-source/acqpath-distribution/actions/runs/34479369475"
+    "commit": "2c3e239060c904c86aecb65e8b9c3c95ec7860a2",
+    "ci": "https://github.com/reflectme-source/acqpath-distribution/actions/runs/34482128139",
+    "ciWindows": "PASS_70_OF_70",
+    "ciLinux": "PASS_70_OF_70",
+    "publicDiscovery": "https://github.com/reflectme-source/acqpath-distribution/actions/runs/34482274141",
+    "ciNode": "v24.20.0",
+    "publicDiscoveryApi": "PASS",
+    "publicDiscoveryMcpRegistry": "FOUND"
   },
   "docs": {
     "at": "2026-09-10T13:19:16.873Z",
