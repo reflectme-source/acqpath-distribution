@@ -23,7 +23,8 @@ export async function verify(root=ROOT){
  checks.push({name:'vendor_file_integrity',status:'PASS',files:vendor.files.length});
  const files=all.filter(x=>x.endsWith('.test.mjs'));
  if(files.length===0)throw Error('NO_TEST_FILES');
- const r=spawnSync(process.execPath,['--test','--test-concurrency=1',...files],{cwd:root,encoding:'utf8',env,maxBuffer:16*1024*1024,timeout:120000});
+ // Node 24 defaults to the spec reporter even when piped; the summary parser requires TAP.
+ const r=spawnSync(process.execPath,['--test','--test-reporter=tap','--test-concurrency=1',...files],{cwd:root,encoding:'utf8',env,maxBuffer:16*1024*1024,timeout:120000});
  await mkdir(join(root,'.local'),{recursive:true});await writeFile(join(root,'.local/tests.tap'),(r.stdout||'')+(r.stderr||''),{mode:0o600});
  const count=k=>Number((r.stdout||'').match(new RegExp('^# '+k+' (\\d+)','m'))?.[1]||0);
  const report={schema:'acqpath.distribution.verification.v1',at:new Date().toISOString(),node:process.version,status:!r.error&&r.status===0&&count('fail')===0&&count('pass')>0?'PASS':'FAIL',tests:count('tests'),pass:count('pass'),fail:count('fail'),skipped:count('skipped'),checks,environment:process.platform,networkUsed:false,walletUsed:false,coreChanged:false,externalPublicationTested:false,notTested:['Real Windows interactive publishing','Production payment settlement','Registry moderation or ranking','Real customer demand','Cloudflare/DNS/account mutations']};
