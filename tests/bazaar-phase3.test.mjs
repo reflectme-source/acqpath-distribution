@@ -16,6 +16,7 @@ test('Docs artifact binds every byte and the exact source commit',async()=>{
   await docsArtifact('seal','a'.repeat(40),dir);await docsArtifact('verify','a'.repeat(40),dir);
   await assert.rejects(()=>docsArtifact('verify','b'.repeat(40),dir),/MISMATCH/);
   await writeFile(join(dir,'out/site/index.html'),'<script>changed</script>');await assert.rejects(()=>docsArtifact('verify','a'.repeat(40),dir),/MISMATCH/);
+  await mkdir(join(dir,'out/site/.wrangler'));await writeFile(join(dir,'out/site/.wrangler/cache.json'),'{}');await assert.rejects(()=>docsArtifact('seal','a'.repeat(40),dir),/UNSAFE_DOCS_PATH/);
  }finally{await rm(dir,{recursive:true,force:true});}
 });
 test('Bazaar schemas cannot load external network or filesystem references',()=>{

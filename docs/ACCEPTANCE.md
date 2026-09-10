@@ -1,6 +1,6 @@
 # Current acceptance — Phase 3B
 
-The current engineering and publication record is [Bazaar engineering status](BAZAAR-ENGINEERING-STATUS.md). Core main is merged after green non-deploying CI; isolated Sepolia passes 14 unpaid checks and the CDP validator. Production code/configuration, real wallet signing, settlement and Bazaar indexing are not part of that success. Distribution now has 98 tests and 20 docs pages. Automatic docs deployment is prepared and awaits its separately authorized Pages credential. npm remains on owner hold.
+The current engineering and publication record is [Bazaar engineering status](BAZAAR-ENGINEERING-STATUS.md). Core main is merged after green non-deploying CI; isolated Sepolia passes 14 unpaid checks and the CDP validator. Production code/configuration, real wallet signing, settlement and Bazaar indexing are not part of that success. Distribution now has 99 tests and 20 docs pages. Automatic docs deployment from main is enabled and verified in [run 34531864325](https://github.com/reflectme-source/acqpath-distribution/actions/runs/34531864325); its Pages-only credential is held in the main-only distribution-docs GitHub environment and expires September 11, 2027. npm remains on owner hold.
 
 The following Phase 2 snapshot is historical, including its zero-core-edit statement, deployment IDs, counts, earlier aggregate snapshot and blocker labels. It does not override the subsequent owner authorization or current Phase 3B results.
 

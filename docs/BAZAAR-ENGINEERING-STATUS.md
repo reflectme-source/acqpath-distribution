@@ -24,7 +24,7 @@ The live CDP validator returns HTTP 200, valid=true and simulation=accepted. Its
 
 ## Distribution and remaining boundaries
 
-The separate Pages project serves 20 pages plus machine assets, using an explicit 49-file artifact. The reviewed GitHub pipeline tests Windows/Linux, scans history and the sealed artifact, and targets only acqpath-distribution. Automatic deployment is prepared but disabled while the narrowly scoped Pages credential awaits owner authorization. Existing docs publication uses the authorized AcqPath CLI session.
+The separate Pages project serves 20 pages plus machine assets, using an explicit 49-file artifact. The reviewed GitHub pipeline tests Windows/Linux, scans history and the sealed artifact, and targets only acqpath-distribution. Automatic deployment is enabled for main. The owner-authorized Pages Write token is stored only in GitHub environment distribution-docs, which permits only the main branch; it expires September 11, 2027. [The first complete automatic run](https://github.com/reflectme-source/acqpath-distribution/actions/runs/34531864325) passed Windows/Linux verification, history/artifact scans, the zero-vulnerability dependency audit, Pages deployment and public byte/header/link/404 readback on both domains. The credential has Pages access for the AcqPath account; the workflow fixes the target to acqpath-distribution. Rotate the credential before expiration.
 
 MCP Registry rc.2, Smithery and Glama remain compatible with production and are checked read-only. Bazaar searches do not establish an indexed AcqPath resource. No catalog contains private retry context or payment headers.
 

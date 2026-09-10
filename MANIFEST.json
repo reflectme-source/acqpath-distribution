@@ -125,8 +125,8 @@
     },
     {
       "path": "docs/ACCEPTANCE.md",
-      "sha256": "3d0b53cb37364c400dfaba219e3045a92b59f3ffec206b8375aba633c714487e",
-      "bytes": 7360
+      "sha256": "0c1cd72edbb6efd177cbaeeb07c5307e93ab3d9e86f5f22e801564c89a4d5abf",
+      "bytes": 7552
     },
     {
       "path": "docs/BAZAAR-CURRENT-FLOW.md",
@@ -135,8 +135,8 @@
     },
     {
       "path": "docs/BAZAAR-ENGINEERING-STATUS.md",
-      "sha256": "f02f0240627493563fc569806e314f3ef86722fb7e091d46dc25702d4a6f4c5c",
-      "bytes": 4885
+      "sha256": "cbcf967cce738018a70a8bd09c72748b4b9ccc9aeb472bd7e2e5a1408540f9bd",
+      "bytes": 5351
     },
     {
       "path": "docs/BAZAAR-MAINNET-PLAN.md",
@@ -175,8 +175,8 @@
     },
     {
       "path": "docs/CLOUDFLARE-DEPLOYMENT.md",
-      "sha256": "1201558648f89a01aefc0b3f0e8dd6e057afe34a2bb3887ca57900ed2fb34a92",
-      "bytes": 2594
+      "sha256": "2d4d8cd808061934e817dc60aad045d8b08287e1995305fa9d8261eac96de79b",
+      "bytes": 2988
     },
     {
       "path": "docs/EXECUTION-PLAN.md",
@@ -525,8 +525,8 @@
     },
     {
       "path": "scripts/lib/io.mjs",
-      "sha256": "5dcdc4cb51ba704386e36f4a77fc3a1a93fb9f778bbf440c58b057aa4e4b8a20",
-      "bytes": 2988
+      "sha256": "b63539f0b1986785cb02b3268edf8f233ced3bb50a38217fa66b00925f46ce6c",
+      "bytes": 3000
     },
     {
       "path": "scripts/lib/net.mjs",
@@ -625,8 +625,8 @@
     },
     {
       "path": "tests/bazaar-phase3.test.mjs",
-      "sha256": "52f10fbe5398759c68d3faeda64d81ba179ad07d591c1c55517bb122f4fe45ac",
-      "bytes": 5945
+      "sha256": "9db21e50d3d49f8566c87be0ef8ecac3ea3053bde95533aeebba6464bd6b0a47",
+      "bytes": 6141
     },
     {
       "path": "tests/bazaar-public-contract.test.mjs",
@@ -655,8 +655,8 @@
     },
     {
       "path": "tests/package.test.mjs",
-      "sha256": "a08845c378c61890b730cd4317db0d5f06637df81e84e7763602709b3c1f35a3",
-      "bytes": 8269
+      "sha256": "9a2bf54c18086735dd8625858a7f8218855171bed7935850cf007020b54f89b4",
+      "bytes": 8710
     },
     {
       "path": "tests/support/fixture.mjs",
