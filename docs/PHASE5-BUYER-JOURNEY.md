@@ -1,3 +1,7 @@
+# Final technical release — 2026-09-11
+
+Production version 0c3b5794-f428-4e69-879e-29cab293cd1a; core commit 9533e49d262d20d5bb3712321fbc66981e477418. Configured official TS/Python x402 + SIWX integration is deployed. Local/CI/workerd and public unpaid checks PASS; no owner wallet/payment. MAINNET PAID E2E = UNVERIFIED. Acquisition UNPROVEN. See [configured integration](https://developers.getacqpath.com/public-http).
+
 # Phase 5: external buyer journey
 
 Observed 2026-09-11. Production remains Phase 4 version 61b19442-bd51-46ec-be31-01422a07f877. No core behavior, routing, payment terms, Access or reconciliation changes.
@@ -15,4 +19,4 @@ Observed 2026-09-11. Production remains Phase 4 version 61b19442-bd51-46ec-be31-
 | Retry | A blind retry could create another authorization | Persist identical context/payment; no second signing after ambiguity |
 | Demand | Internal QA could inflate demand | Buyer helper stopped/disabled; external evidence classifier and monitoring |
 
-No external paid delivery or generic paid interoperability is proven. Highest-impact next action: obtain a narrowly reviewed core compatibility change that preserves request binding and one-charge semantics while permitting standard x402 buyers, or deliver a separately reviewed extension-aware buyer SDK. Production changes require separate approval; this phase does not apply them.
+No external paid delivery or generic paid interoperability is proven. The reviewed compatibility change is deployed. Development is complete; await genuine external usage through existing monitoring.

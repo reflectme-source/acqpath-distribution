@@ -1,3 +1,7 @@
+# Final technical release — 2026-09-11
+
+Production version 0c3b5794-f428-4e69-879e-29cab293cd1a; core commit 9533e49d262d20d5bb3712321fbc66981e477418. Configured official TS/Python x402 + SIWX integration is deployed. Local/CI/workerd and public unpaid checks PASS; no owner wallet/payment. MAINNET PAID E2E = UNVERIFIED. Acquisition UNPROVEN. See [configured integration](https://developers.getacqpath.com/public-http).
+
 # Phase 5 current state
 
 MCP Registry metadata 3.1.0-rc.3 ACTIVE and exact readback; Smithery and Glama existing listings updated to intent-first descriptions and publicly read back. GitHub description/topics/homepage updated and read back. Bazaar/Agentic Market: AWAITING FIRST EXTERNAL SETTLEMENT. No owner-funded payment. Required nonce support remains the generic-client blocker. Historical channel evidence follows.

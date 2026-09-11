@@ -1,3 +1,7 @@
+# Final technical release — 2026-09-11
+
+Production version 0c3b5794-f428-4e69-879e-29cab293cd1a; core commit 9533e49d262d20d5bb3712321fbc66981e477418. Configured official TS/Python x402 + SIWX integration is deployed. Local/CI/workerd and public unpaid checks PASS; no owner wallet/payment. MAINNET PAID E2E = UNVERIFIED. Acquisition UNPROVEN. See [configured integration](https://developers.getacqpath.com/public-http).
+
 # Current acceptance — Phase 4 production coverage
 
 Core PR9 is merged and production version 61b19442-bd51-46ec-be31-01422a07f877 is live. All 19 unpaid checks pass, including two genuine non-UNKNOWN prepared offers at 0.02 USDC, pinned server signature verification, same-context unpaid retry, legacy quote/claim/report and CDP valid=true. Tests: 498 PASS, zero FAIL, two existing Windows skips; local workerd, types, CI, audit and secret scans PASS. Protected payment/runtime bindings, routes, Access, reconciliation and schema are unchanged.

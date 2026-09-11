@@ -4,7 +4,7 @@
   "status": "AWAITING FIRST EXTERNAL SETTLEMENT",
   "architecture": "A_ADDITIVE_HTTP_ADAPTER",
   "appliedToCore": true,
-  "coreCommit": "a7c4ef48faf1fa8849689f2dd90b676ffbe33fd7",
+  "coreCommit": "9533e49d262d20d5bb3712321fbc66981e477418",
   "productionDeployed": true,
   "productionEndpointActive": true,
   "testnetOrigin": "https://acqpath-bazaar-sepolia.acqpath.workers.dev",
@@ -23,7 +23,7 @@
       "training declarations",
       "indexing search"
     ],
-    "description": "Signed observed RSL declarations for AI input/RAG, training and indexing/search. Reviewed origins only. Diagnostics before ingestion or crawling; crawl is not a paid purpose. UNKNOWN is not permission or legal clearance. Requires acqpath-request-binding nonce support; generic random-nonce clients cannot buy."
+    "description": "Signed observed RSL declarations for AI input/RAG, training and indexing/search. Reviewed origins only. Diagnostics before ingestion or crawling; crawl is not a paid purpose. UNKNOWN is not permission or legal clearance. Requires acqpath-request-binding nonce support or the AcqPath SIWX adapter with unsigned payment prebinding; generic random-nonce clients cannot buy without the adapter."
   },
   "method": "POST",
   "inputSchema": {
@@ -517,13 +517,15 @@
   },
   "examplesAreSynthetic": true,
   "clientRequirements": {
-    "nonceAwareSigner": true,
+    "nonceAwareSigner": false,
     "genericRandomNonceClientCompatible": false,
     "privateRetryHeader": "X-AcqPath-Request",
     "bindingExtension": "acqpath-request-binding",
     "privateContextInCatalog": false,
     "persistBeforeSigning": true,
-    "retrySameOperation": true
+    "retrySameOperation": true,
+    "officialSignerWithSIWXAdapter": true,
+    "existingBoundNonceSupported": true
   },
   "liveIntegration": {
     "quote": "https://api.getacqpath.com/v1/rights/quote",
@@ -535,7 +537,7 @@
   "limitations": [
     "The public adapter is deployed and two real sources produce non-UNKNOWN prepared 402 offers.",
     "Generic XML requires exact bounded RSL/profile validation. Evidence marks nonstandard media type; this is not full standards conformance.",
-    "Wallet signing, settlement, delivered paid report and post-settlement retry remain unverified. One indexing payment requires explicit owner authorization.",
+    "Wallet signing, settlement, delivered paid report and post-settlement retry remain unverified. Owner-funded payments and indexing purchases are disabled.",
     "The legacy quote/claim/report integration remains compatible.",
     "Catalog validity and unpaid retry are not indexing, settlement or evidence of demand.",
     "No legal clearance, license acquisition or ownership verification. UNKNOWN is not permission.",
@@ -557,9 +559,9 @@
     "paymentSubmissionEnabled": false
   },
   "productionValidation": {
-    "at": "2026-09-11T15:51:32.805Z",
-    "version": "61b19442-bd51-46ec-be31-01422a07f877",
-    "sourceSha256": "a4dd2b4c94e06b3089c378b06e28849f85c78d504a6540cc7ac306e5d56c2d15",
+    "at": "2026-09-11T20:41:57.723Z",
+    "version": "0c3b5794-f428-4e69-879e-29cab293cd1a",
+    "sourceSha256": "a4ea2624d997ccc2864cbc2edf6715abc242c926206c2e11a06a88ec206731ee",
     "health": "PASS",
     "legacyCompatibility": "PASS",
     "unpaidDiscovery": "PASS",
@@ -570,17 +572,38 @@
     },
     "preparedPurchase": "VERIFIED_NON_UNKNOWN_402",
     "preparedResources": [
-      "https://rslstandard.org/",
-      "https://rslcollective.org/"
+      "https://rslstandard.org/"
     ],
     "decision": "LICENSE_REQUIRED",
     "feeMicro": "20000",
-    "sourceClassification": "VALID_RSL_NONSTANDARD_MEDIA_TYPE",
     "unpaidSameContextRetry": "PASS",
-    "rollbackVersion": "6f17ddad-8461-4b78-b6c3-ea7b77339cc8",
+    "siwxPrebinding": "PASS",
+    "node": "PASS",
+    "python": "PASS",
+    "rollbackVersion": "61b19442-bd51-46ec-be31-01422a07f877",
     "walletSigned": false,
     "settlementPerformed": false
   },
   "ownerFundedPaymentsAllowed": false,
-  "nextAction": "Independent external buyer only; resolve client compatibility before any signing."
+  "nextAction": "Await a genuine external buyer using the configured integration. Existing read-only revenue monitoring only; no owner payment or further development.",
+  "productionVersion": "0c3b5794-f428-4e69-879e-29cab293cd1a",
+  "productionSourceSha256": "a4ea2624d997ccc2864cbc2edf6715abc242c926206c2e11a06a88ec206731ee",
+  "officialClientBinding": {
+    "profile": "acqpath-siwx-payment-v1",
+    "proof": "SIGN-IN-WITH-X",
+    "unsigned_prebinding": "X-AcqPath-Payment-Intent",
+    "adapter_required": true,
+    "zero_config": false,
+    "preserve_payment_nonce": true
+  },
+  "integrationStatus": "SUPPORTED_WITH_ACQPATH_SIWX_ADAPTER",
+  "mainnetPaidE2E": "UNVERIFIED",
+  "unpaidValidation": {
+    "at": "2026-09-11T20:41:57.723Z",
+    "node": "PASS",
+    "python": "PASS",
+    "cdpValid": true,
+    "ownerWalletUsed": false,
+    "settlements": 0
+  }
 }

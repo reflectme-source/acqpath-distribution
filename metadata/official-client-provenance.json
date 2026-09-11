@@ -1,0 +1,25 @@
+{
+  "sourceCommit": "9533e49d262d20d5bb3712321fbc66981e477418",
+  "productionVersion": "0c3b5794-f428-4e69-879e-29cab293cd1a",
+  "localOfficialClientE2E": "PASS",
+  "mainnetPaidE2E": "UNVERIFIED",
+  "npmPublished": false,
+  "files": [
+    {
+      "file": "examples/acqpath.mjs",
+      "sha256": "387d50f7911c3f2240988c355d237fa8f8c4170921d749e7f0c17dbbb31a0e2a",
+      "bytes": 26395
+    },
+    {
+      "file": "examples/acqpath_httpx.py",
+      "sha256": "7cfa2aa877a560d1e6f05c26e5252050ea038c832d3a2a748b67bc7dd8fded17",
+      "bytes": 15269
+    },
+    {
+      "file": "examples/official-requirements.txt",
+      "sha256": "eb1ab44e5e5282e189b18f93961759f055b1315156f4090d0d6644849620c87a",
+      "bytes": 1014
+    }
+  ],
+  "lineEndings": "LF; source content unchanged from the reviewed portable clients"
+}

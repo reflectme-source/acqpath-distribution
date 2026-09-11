@@ -636,7 +636,7 @@
       "post": {
         "operationId": "publicRightsPreflight",
         "summary": "Prepare and buy a signed observed-rights report",
-        "description": "Required acqpath-request-binding nonce support. Retain X-AcqPath-Request and retry the same normalized body. Empty POST is discovery-only; never pay until a prepared binding is returned. UNKNOWN is not permission.",
+        "description": "Required acqpath-request-binding nonce support OR the AcqPath SIWX payment-binding adapter. Generic SIWX login alone is insufficient. Retain X-AcqPath-Request and retry the same normalized body. Empty POST is discovery-only; never pay until a prepared binding is returned. UNKNOWN is not permission.",
         "parameters": [
           {
             "name": "X-AcqPath-Request",

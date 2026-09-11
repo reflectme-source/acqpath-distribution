@@ -1,3 +1,7 @@
+# Latest external baseline — 2026-09-11T20:41:57.723Z
+
+External paid reports **0**, repeat external payers **0**, external revenue **0 USDC** (zero total mainnet aggregate). External eligible requests and payment attempts remain UNKNOWN; internal unpaid release probes are excluded from acquisition claims. Paid mainnet E2E remains UNVERIFIED. Existing Phase 5 hourly monitoring continues; no new feature or payment is authorized. Historical snapshots follow.
+
 # Current Phase 5 baseline
 
 Observed 2026-09-11T17:13:33.601Z: **0 mainnet paid reports; 0 received USDC; 0 repeat payer identifiers**. External paid reports and external revenue are zero within this current aggregate scope. Independent customers and repeat external demand: none proven. Billable/UNKNOWN ratio and verified delivery attribution remain UNKNOWN. Owner-funded purchases are disabled. Hourly read-only monitoring is authorized in Phase 5; see docs/PHASE5-MONITOR.md.

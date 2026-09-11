@@ -18,7 +18,7 @@ Fresh **0.02 USDC**; deep **0.05 USDC**, observed 2026-09-10. Read live [capabil
 
 POST `https://api.getacqpath.com/v1/rights/preflight` with a resource URL and purpose. No AcqPath account, API key or private operator token. [Public buyer journey](https://developers.getacqpath.com/public-http) · [JavaScript/Python/TypeScript examples](examples/PUBLIC-BUYER.md).
 
-**Compatibility:** the live endpoint requires `acqpath-request-binding` nonce support. Generic random-nonce x402 payment clients cannot buy. The repository legacy SDK is not a drop-in public endpoint client. Paid interoperability is not proven by a valid unpaid 402.
+**Compatibility:** The public endpoint supports unchanged official exact-EVM payment signers through the AcqPath SIWX adapter (TypeScript/Node and Python/httpx). The adapter reserves unsigned authorization fields, validates and signs the official SIWX request/payment challenge, then submits the original payment. Existing acqpath-request-binding nonce clients remain supported. Generic zero-config x402 clients, stock SIWX-only hooks, Payments MCP and paid proxies are not verified compatible. Mainnet paid E2E remains UNVERIFIED; no owner-funded payment. [Configured TS/Python examples](examples/OFFICIAL-CLIENTS.md).
 
 Bazaar: **AWAITING FIRST EXTERNAL SETTLEMENT**. No owner-funded payments, wallet funding or indexing QA is requested.
 
@@ -46,7 +46,7 @@ For clients supporting remote HTTP MCP configuration:
 6. After ambiguous submission, resume the same checkpoint and authorization. Never blindly create a second payment.
 7. Keep the evidence and private recovery state separate from application permission. Even `ALLOW_DECLARED` requires an application policy decision.
 
-The client is available as reviewed source in [packages/rights-client](packages/rights-client). **npm publication is on owner hold**; do not attempt an npm install of this unpublished package. Examples use repository-relative imports. No separate Python payment SDK is claimed.
+The client is available as reviewed source in [packages/rights-client](packages/rights-client). **npm publication is on owner hold**; do not attempt an npm install of this unpublished package. Examples use repository-relative imports. The configured Python/httpx adapter is supplied as source; no PyPI package is published.
 
 ## Machine-readable integration reference
 
