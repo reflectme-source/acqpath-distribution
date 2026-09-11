@@ -6,8 +6,8 @@ import {join} from 'node:path';
 import {artifactPath,docsArtifact,DOCS_TARGET} from '../scripts/docs-artifact.mjs';
 import {rejectExternalRefs,summarizeResources,discoveryReadback,validatePublicCandidate,SEARCHES,PAY_TO} from '../scripts/bazaar-check.mjs';
 test('Docs artifact rejects executable paths, traversal and hidden credentials',()=>{
- for(const p of ['_worker.js','_routes.json','functions/a.html','../x.html','.private/key.json','a//b.html','a.js'])assert.throws(()=>artifactPath(p));
- for(const p of ['index.html','_headers','.nojekyll','.well-known/acqpath-distribution.json','examples/read-only.mjs','skills/acqpath/SKILL.md'])assert.equal(artifactPath(p),p);
+ for(const p of ['_worker.js','_routes.json','functions/a.html','../x.html','.private/key.json','a//b.html','a.js','examples/unreviewed.py','functions/acqpath.mjs','acqpath.mjs'])assert.throws(()=>artifactPath(p));
+ for(const p of ['index.html','_headers','.nojekyll','.well-known/acqpath-distribution.json','examples/read-only.mjs','examples/acqpath.mjs','examples/acqpath_httpx.py','examples/official-node.mjs','examples/official-python.py','skills/acqpath/SKILL.md'])assert.equal(artifactPath(p),p);
  assert.deepEqual(DOCS_TARGET,{account:'449109f33c0c400ea8aef1100c801da6',project:'acqpath-distribution',branch:'main'});
 });
 test('Docs artifact binds every byte and the exact source commit',async()=>{
