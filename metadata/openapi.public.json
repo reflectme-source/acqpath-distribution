@@ -14,7 +14,7 @@
     "url": "https://developers.getacqpath.com/quickstart"
   },
   "x-derived-from": "https://api.getacqpath.com/openapi.json",
-  "x-observed-at": "2026-09-11T14:32:20.766Z",
+  "x-observed-at": "2026-09-11T15:51:32.805Z",
   "paths": {
     "/v1/capabilities": {
       "get": {

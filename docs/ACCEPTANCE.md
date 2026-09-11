@@ -1,8 +1,8 @@
-# Current acceptance — production Bazaar launch
+# Current acceptance — Phase 4 production coverage
 
-The reviewed core main is live as 6f17ddad-8461-4b78-b6c3-ea7b77339cc8. Health, legacy compatibility, unchanged protected bindings/domains/schedules, unpaid discovery 402, schemas and CDP valid=true pass. Fresh core CI, 444 local tests, workerd, SDK types, dependency audit and index/history/bundle secret scans passed. Automatic distribution docs deployment is active.
+Core PR9 is merged and production version 61b19442-bd51-46ec-be31-01422a07f877 is live. All 19 unpaid checks pass, including two genuine non-UNKNOWN prepared offers at 0.02 USDC, pinned server signature verification, same-context unpaid retry, legacy quote/claim/report and CDP valid=true. Tests: 498 PASS, zero FAIL, two existing Windows skips; local workerd, types, CI, audit and secret scans PASS. Protected payment/runtime bindings, routes, Access, reconciliation and schema are unchanged.
 
-Indexing purchase is blocked: four checked allowed origin roots return no verifiable declaration and charge_micro=0. No wallet signing, settlement, prepared production binding or paid retry is claimed. Bazaar indexing is UNVERIFIED; external revenue remains UNKNOWN. See [current evidence](BAZAAR-ENGINEERING-STATUS.md). npm remains on owner hold.
+No wallet was signed and no payment occurred. Bazaar indexing, delivered paid report and post-settlement retry remain UNVERIFIED; the next step requires explicit owner authorization for one payment. External revenue remains UNKNOWN. [Current evidence](BAZAAR-ENGINEERING-STATUS.md). npm remains on owner hold.
 
 The following Phase 2 snapshot is historical, including its zero-core-edit statement, deployment IDs, counts, earlier aggregate snapshot and blocker labels. It does not override the subsequent owner authorization or current Phase 3B results.
 

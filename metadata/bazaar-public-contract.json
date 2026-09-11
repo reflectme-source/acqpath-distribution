@@ -1,10 +1,10 @@
 {
   "schema": "acqpath.bazaar-public-contract.v1",
   "reviewedAt": "2026-09-11",
-  "status": "PRODUCTION_DISCOVERY_VERIFIED_PURCHASE_BLOCKED",
+  "status": "PRODUCTION_UNPAID_VERIFIED_PAYMENT_AUTHORIZATION_REQUIRED",
   "architecture": "A_ADDITIVE_HTTP_ADAPTER",
   "appliedToCore": true,
-  "coreCommit": "905d8706a0f753bf3ea93dc4072084e6c5b2f3df",
+  "coreCommit": "a7c4ef48faf1fa8849689f2dd90b676ffbe33fd7",
   "productionDeployed": true,
   "productionEndpointActive": true,
   "testnetOrigin": "https://acqpath-bazaar-sepolia.acqpath.workers.dev",
@@ -533,16 +533,15 @@
     "npmPublished": false
   },
   "limitations": [
-    "The public adapter is deployed; discovery-only 402 and CDP validation pass.",
-    "No payable report was prepared for the four checked allowlisted origin roots. RSL Collective license files use application/xml, while the reviewed profile requires application/rsl+xml; other checked roots return 403 or rejected redirects.",
-    "Production prepared binding, paid retry and settlement remain unverified. No wallet signature or payment occurred.",
+    "The public adapter is deployed and two real sources produce non-UNKNOWN prepared 402 offers.",
+    "Generic XML requires exact bounded RSL/profile validation. Evidence marks nonstandard media type; this is not full standards conformance.",
+    "Wallet signing, settlement, delivered paid report and post-settlement retry remain unverified. One indexing payment requires explicit owner authorization.",
     "The legacy quote/claim/report integration remains compatible.",
-    "Catalog schema validity is not indexing, a paid test or evidence of demand.",
-    "Synthetic signatures/transactions are placeholders, not evidence.",
+    "Catalog validity and unpaid retry are not indexing, settlement or evidence of demand.",
     "No legal clearance, license acquisition or ownership verification. UNKNOWN is not permission.",
     "Paid crawl and provider routing remain unsupported."
   ],
-  "coreSourceSha256": "af21b15c04a56f1e104a736de699652c9b56b4871de7827cf2ac6078a05dbe84",
+  "coreSourceSha256": "a4dd2b4c94e06b3089c378b06e28849f85c78d504a6540cc7ac306e5d56c2d15",
   "coreMergeStatus": "MERGED",
   "testnetVersion": "2ac81afe-ac5c-43c5-930c-049a90e6c0b7",
   "testnetValidation": {
@@ -558,9 +557,9 @@
     "paymentSubmissionEnabled": false
   },
   "productionValidation": {
-    "at": "2026-09-11T14:35:16.619Z",
-    "version": "6f17ddad-8461-4b78-b6c3-ea7b77339cc8",
-    "sourceSha256": "af21b15c04a56f1e104a736de699652c9b56b4871de7827cf2ac6078a05dbe84",
+    "at": "2026-09-11T15:51:32.805Z",
+    "version": "61b19442-bd51-46ec-be31-01422a07f877",
+    "sourceSha256": "a4dd2b4c94e06b3089c378b06e28849f85c78d504a6540cc7ac306e5d56c2d15",
     "health": "PASS",
     "legacyCompatibility": "PASS",
     "unpaidDiscovery": "PASS",
@@ -569,8 +568,16 @@
       "simulationAccepted": true,
       "indexingProven": false
     },
-    "preparedPurchase": "BLOCKED_NO_VERIFIABLE_DECLARATION",
-    "rollbackVersion": "b76bb091-bccd-44b9-ba96-8e7ea59b3d3e",
+    "preparedPurchase": "VERIFIED_NON_UNKNOWN_402",
+    "preparedResources": [
+      "https://rslstandard.org/",
+      "https://rslcollective.org/"
+    ],
+    "decision": "LICENSE_REQUIRED",
+    "feeMicro": "20000",
+    "sourceClassification": "VALID_RSL_NONSTANDARD_MEDIA_TYPE",
+    "unpaidSameContextRetry": "PASS",
+    "rollbackVersion": "6f17ddad-8461-4b78-b6c3-ea7b77339cc8",
     "walletSigned": false,
     "settlementPerformed": false
   }
