@@ -1,6 +1,8 @@
-# Phase 4 production coverage — 2026-09-11
+# Historical Phase 4 production coverage — 2026-09-11
 
-Production version `61b19442-bd51-46ec-be31-01422a07f877` is LIVE at 100% traffic from merged commit `a7c4ef48faf1fa8849689f2dd90b676ffbe33fd7`, [core PR9](https://github.com/AcqPath/acqpath/pull/9). All 19 unpaid production checks passed. No wallet signature or settlement occurred.
+Current production is `0c3b5794-f428-4e69-879e-29cab293cd1a`, core `9533e49d262d20d5bb3712321fbc66981e477418`. Tested official TypeScript and Python x402 clients use the AcqPath SIWX adapter with unchanged payment signers and random nonces. Follow the [current buyer guide](https://developers.getacqpath.com/examples/OFFICIAL-CLIENTS.md). Generic zero-config clients are not claimed; independent mainnet paid E2E remains UNVERIFIED. The coverage evidence below records the earlier Phase 4 release, not the current deployment version.
+
+At that earlier checkpoint, production version `61b19442-bd51-46ec-be31-01422a07f877` was LIVE at 100% traffic from merged commit `a7c4ef48faf1fa8849689f2dd90b676ffbe33fd7`, [core PR9](https://github.com/AcqPath/acqpath/pull/9). All 19 unpaid production checks passed. No wallet signature or settlement occurred.
 
 ## Real sources and fee
 
