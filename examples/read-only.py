@@ -4,15 +4,15 @@ Full workflow:
 1. Call before selected source content enters model input/index/training/search.
 2. Use canonical HTTPS resource plus the actual paid purpose and integer budget.
 3. Hold UNKNOWN, unsupported, DENY_DECLARED and LICENSE_REQUIRED results.
-4. For purchases, use the reviewed JS buyer adapter in your private application:
-   quote -> private claim -> verified signed offer -> bounded buyer authorization.
+4. For purchases, use the tested Python/httpx or TypeScript AcqPath SIWX adapter:
+   public preflight -> verified offer -> unchanged official signer -> SIWX.
 5. That adapter verifies Ed25519 report, receipt and delivery bindings.
-6. Persist its encrypted checkpoint before submission and resume after ambiguity.
+6. Persist private state before submission and resume the same operation after ambiguity.
 7. Reuse the same logical ID and signed payload; never create a replacement charge.
 
 This example deliberately supplies no Python payment/signature implementation.
-It is a stdlib capability probe, not a second supported SDK. See README.md and
-https://developers.getacqpath.com/http-x402 for the complete integration contract.
+This file is only a stdlib capability probe. The supported paid Python integration is
+https://developers.getacqpath.com/examples/OFFICIAL-CLIENTS.md.
 """
 import json
 import urllib.request

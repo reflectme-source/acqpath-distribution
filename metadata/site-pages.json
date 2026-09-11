@@ -10,7 +10,7 @@
         "title": "Preflight one URL, with no AcqPath account",
         "paragraphs": [
           "POST https://api.getacqpath.com/v1/rights/preflight with {resource,purpose,tier:\"fresh\",max_total_micro:\"20000\"}. A prepared 402 includes price/network/asset and the required private request binding. Empty POST is discovery-only. HTTP 200 with available:false and charge_micro:\"0\" is not a purchased report. There is no AcqPath account, API key or operator token.",
-          "The public endpoint supports unchanged official exact-EVM payment signers through the AcqPath SIWX adapter (TypeScript/Node and Python/httpx). The adapter reserves unsigned authorization fields, validates and signs the official SIWX request/payment challenge, then submits the original payment. Existing acqpath-request-binding nonce clients remain supported. Generic zero-config x402 clients, stock SIWX-only hooks, Payments MCP and paid proxies are not verified compatible. Mainnet paid E2E remains UNVERIFIED; no owner-funded payment."
+          "SUPPORTED: tested official TypeScript/Node x402 client + AcqPath SIWX adapter; tested official Python x402/httpx client + AcqPath SIWX adapter. The official EIP-3009 payment signer and its random nonce remain unchanged. The adapter adds unsigned payment prebinding and an official SIWX request/payment authorization. New integrations do not construct or sign the legacy bound payment nonce. Generic zero-config x402 clients, stock SIWX-only hooks without the AcqPath adapter, Payments MCP and generic paid proxies are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED."
         ],
         "links": [
           {
@@ -115,8 +115,7 @@
         "title": "Start with the stable public endpoint",
         "paragraphs": [
           "POST https://api.getacqpath.com/v1/rights/preflight with {resource,purpose,tier:\"fresh\",max_total_micro:\"20000\"}. A prepared 402 includes price/network/asset and the required private request binding. Empty POST is discovery-only. HTTP 200 with available:false and charge_micro:\"0\" is not a purchased report. There is no AcqPath account, API key or operator token.",
-          "The public endpoint supports unchanged official exact-EVM payment signers through the AcqPath SIWX adapter (TypeScript/Node and Python/httpx). The adapter reserves unsigned authorization fields, validates and signs the official SIWX request/payment challenge, then submits the original payment. Existing acqpath-request-binding nonce clients remain supported. Generic zero-config x402 clients, stock SIWX-only hooks, Payments MCP and paid proxies are not verified compatible. Mainnet paid E2E remains UNVERIFIED; no owner-funded payment.",
-          "The quote/claim examples below document the preserved legacy integration."
+          "SUPPORTED: tested official TypeScript/Node x402 client + AcqPath SIWX adapter; tested official Python x402/httpx client + AcqPath SIWX adapter. The official EIP-3009 payment signer and its random nonce remain unchanged. The adapter adds unsigned payment prebinding and an official SIWX request/payment authorization. New integrations do not construct or sign the legacy bound payment nonce. Generic zero-config x402 clients, stock SIWX-only hooks without the AcqPath adapter, Payments MCP and generic paid proxies are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED."
         ],
         "links": [
           {
@@ -128,7 +127,7 @@
       {
         "title": "Official TypeScript / Node and Python integration",
         "paragraphs": [
-          "The public endpoint supports unchanged official exact-EVM payment signers through the AcqPath SIWX adapter (TypeScript/Node and Python/httpx). The adapter reserves unsigned authorization fields, validates and signs the official SIWX request/payment challenge, then submits the original payment. Existing acqpath-request-binding nonce clients remain supported. Generic zero-config x402 clients, stock SIWX-only hooks, Payments MCP and paid proxies are not verified compatible. Mainnet paid E2E remains UNVERIFIED; no owner-funded payment.",
+          "SUPPORTED: tested official TypeScript/Node x402 client + AcqPath SIWX adapter; tested official Python x402/httpx client + AcqPath SIWX adapter. The official EIP-3009 payment signer and its random nonce remain unchanged. The adapter adds unsigned payment prebinding and an official SIWX request/payment authorization. New integrations do not construct or sign the legacy bound payment nonce. Generic zero-config x402 clients, stock SIWX-only hooks without the AcqPath adapter, Payments MCP and generic paid proxies are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED.",
           "Add the AcqPath transport adapter, independently pinned service terms/key, private durable store, explicit buyer opt-in and stable operation ID. It adds one unsigned prebinding round trip and one official SIWX signature; the stock payment signer is unchanged.",
           "Use the same operation ID, body and store after response loss. Never replace a pending authorization. EOA only; private-store retention and Python canonical-input limits are explained in the guide."
         ],
@@ -182,12 +181,17 @@
         ]
       },
       {
-        "title": "2. Prepare one quote when evidence is needed",
+        "title": "2. Prepare and buy through the supported adapter",
         "paragraphs": [
-          "Quotes perform no financial settlement but can fetch metadata and consume quota. Do not create quotes for speculative discovery or every search result.",
-          "The example root URL returned a prepared LICENSE_REQUIRED offer in the 2026-09-11 unpaid production check; availability must still be checked for each selected URL. Keep the returned claim private."
+          "Check live coverage → call POST /v1/rights/preflight through the AcqPath SIWX adapter → verify the prepared signed offer → preserve the unchanged official payment authorization privately → complete SIWX prebinding/authorization → receive the verified report. Use the same operation ID, input and private store after ambiguity; never create a replacement payment.",
+          "A selected real resource can consume metadata quota even before payment. Reuse one stable operation ID. The prepared 402 binds this input; an empty POST only describes the service. The guide includes exact dependency installation and calls with your existing buyer-controlled EOA signer."
         ],
-        "code": "POST https://api.getacqpath.com/v1/rights/quote\nContent-Type: application/json\n\n{\n  \"resource\": \"https://rslstandard.org/\",\n  \"purpose\": \"ai-input\",\n  \"user_class\": \"commercial\",\n  \"tier\": \"fresh\",\n  \"max_total_micro\": \"20000\"\n}"
+        "links": [
+          {
+            "label": "Copy-paste TS/Python instructions",
+            "href": "/examples/OFFICIAL-CLIENTS.md"
+          }
+        ]
       },
       {
         "title": "3. Handle unavailable and UNKNOWN",
@@ -197,31 +201,10 @@
         ]
       },
       {
-        "title": "4. Buy with bounded, verified authorization",
-        "paragraphs": [
-          "Check live coverage → prepare one bounded quote → inspect availability/preview → verify the signed offer → obtain buyer-controlled payment authorization → persist the encrypted checkpoint → redeem and verify report, receipt and delivery binding. After ambiguity, resume the same checkpoint; never sign a replacement payment blindly.",
-          "The buyer-side client pins Base, USDC, recipient and maximum amount; verifies signed offer, report, settlement receipt and delivery binding; and requires durable checkpoint persistence. A verified receipt is not independent blockchain finality."
-        ],
-        "links": [
-          {
-            "label": "JavaScript payment adapter",
-            "href": "/examples/evidence-gate.mjs"
-          },
-          {
-            "label": "TypeScript use cases",
-            "href": "/examples/workflows.ts"
-          },
-          {
-            "label": "Full HTTP flow",
-            "href": "/http-x402"
-          }
-        ]
-      },
-      {
-        "title": "5. Reuse the integration safely",
+        "title": "4. Reuse the integration safely",
         "paragraphs": [
           "Use one stable logical purchase ID for one resource/purpose/context request. Resume an existing checkpoint after a timeout. Start a new purchase only for a deliberately new evidence request.",
-          "The npm package is unpublished. Use the client source from this repository; no npm install instruction is required."
+          "AcqPath adapters are supplied as source, not published npm/PyPI packages. Install their pinned official dependencies and follow the configured-client guide."
         ],
         "code": "git clone https://github.com/reflectme-source/acqpath-distribution.git\ncd acqpath-distribution\nnode examples/read-only.mjs",
         "links": [
@@ -234,6 +217,18 @@
             "href": "/recovery"
           }
         ]
+      },
+      {
+        "title": "Existing legacy integrations",
+        "paragraphs": [
+          "The quote → private claim → report URL SDK remains available for existing users. New integrations use the public SIWX adapter above; no custom payment nonce is needed."
+        ],
+        "links": [
+          {
+            "label": "Legacy source example",
+            "href": "/examples/evidence-gate.mjs"
+          }
+        ]
       }
     ]
   },
@@ -243,6 +238,23 @@
     "title": "Connect AcqPath to an MCP client",
     "description": "Remote Streamable HTTP at api.getacqpath.com/mcp. No seller API key is required for public capabilities and quote preparation.",
     "sections": [
+      {
+        "title": "Current supported buyer integration",
+        "paragraphs": [
+          "SUPPORTED: tested official TypeScript/Node x402 client + AcqPath SIWX adapter; tested official Python x402/httpx client + AcqPath SIWX adapter. The official EIP-3009 payment signer and its random nonce remain unchanged. The adapter adds unsigned payment prebinding and an official SIWX request/payment authorization. New integrations do not construct or sign the legacy bound payment nonce. Generic zero-config x402 clients, stock SIWX-only hooks without the AcqPath adapter, Payments MCP and generic paid proxies are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED.",
+          "Fresh 0.02 USDC; deep 0.05 USDC on Base eip155:8453. Pin the exact recipient, USDC asset, fee and Ed25519 verification key. The adapter verifies offer, report, receipt and delivery binding. Private checkpoint files retain bearer authorizations and are not application-level encrypted; protect them with private ACLs and encrypted storage."
+        ],
+        "links": [
+          {
+            "label": "Install, call and verify: complete TS/Python guide",
+            "href": "/examples/OFFICIAL-CLIENTS.md"
+          },
+          {
+            "label": "Public buyer journey",
+            "href": "/public-http"
+          }
+        ]
+      },
       {
         "title": "Cursor / generic mcpServers configuration",
         "paragraphs": [
@@ -291,6 +303,23 @@
     "description": "Choose the purpose, preserve evidence and keep the ingestion decision in your application. Framework-neutral examples use the same bounded buyer adapter.",
     "sections": [
       {
+        "title": "Current supported buyer integration",
+        "paragraphs": [
+          "SUPPORTED: tested official TypeScript/Node x402 client + AcqPath SIWX adapter; tested official Python x402/httpx client + AcqPath SIWX adapter. The official EIP-3009 payment signer and its random nonce remain unchanged. The adapter adds unsigned payment prebinding and an official SIWX request/payment authorization. New integrations do not construct or sign the legacy bound payment nonce. Generic zero-config x402 clients, stock SIWX-only hooks without the AcqPath adapter, Payments MCP and generic paid proxies are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED.",
+          "Fresh 0.02 USDC; deep 0.05 USDC on Base eip155:8453. Pin the exact recipient, USDC asset, fee and Ed25519 verification key. The adapter verifies offer, report, receipt and delivery binding. Private checkpoint files retain bearer authorizations and are not application-level encrypted; protect them with private ACLs and encrypted storage."
+        ],
+        "links": [
+          {
+            "label": "Install, call and verify: complete TS/Python guide",
+            "href": "/examples/OFFICIAL-CLIENTS.md"
+          },
+          {
+            "label": "Public buyer journey",
+            "href": "/public-http"
+          }
+        ]
+      },
+      {
         "title": "RAG and ingestion gates",
         "paragraphs": [
           "Call before adding selected supported URLs to a corpus. Use ai-index for indexing, then separately ai-input for model context if needed. UNKNOWN or unsupported results hold ingestion."
@@ -333,7 +362,7 @@
       {
         "title": "One reusable buyer adapter",
         "paragraphs": [
-          "Check live coverage → prepare one bounded quote → inspect availability/preview → verify the signed offer → obtain buyer-controlled payment authorization → persist the encrypted checkpoint → redeem and verify report, receipt and delivery binding. After ambiguity, resume the same checkpoint; never sign a replacement payment blindly.",
+          "Check live coverage → call POST /v1/rights/preflight through the AcqPath SIWX adapter → verify the prepared signed offer → preserve the unchanged official payment authorization privately → complete SIWX prebinding/authorization → receive the verified report. Use the same operation ID, input and private store after ambiguity; never create a replacement payment.",
           "The examples expose no wallet key interface and make no payment when imported or run in read-only mode. Supply your own bounded signer only in a private buyer application."
         ],
         "links": [
@@ -426,7 +455,7 @@
         "title": "Economics and recovery",
         "paragraphs": [
           "Quote/fetch quotas, rate limits and infrastructure constraints are separate from price. No volume discount or subscription is currently implemented.",
-          "After ambiguous payment submission, resume the original encrypted checkpoint. A refund request is an operator-reviewed record, not an automatic transfer."
+          "After ambiguous payment submission, resume the original private checkpoint. A refund request is an operator-reviewed record, not an automatic transfer."
         ]
       }
     ]
@@ -437,6 +466,23 @@
     "title": "Resume evidence delivery without a new payment",
     "description": "A network failure is not a reason to create another order or signature. Preserve the original private checkpoint.",
     "sections": [
+      {
+        "title": "Current supported buyer integration",
+        "paragraphs": [
+          "SUPPORTED: tested official TypeScript/Node x402 client + AcqPath SIWX adapter; tested official Python x402/httpx client + AcqPath SIWX adapter. The official EIP-3009 payment signer and its random nonce remain unchanged. The adapter adds unsigned payment prebinding and an official SIWX request/payment authorization. New integrations do not construct or sign the legacy bound payment nonce. Generic zero-config x402 clients, stock SIWX-only hooks without the AcqPath adapter, Payments MCP and generic paid proxies are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED.",
+          "Fresh 0.02 USDC; deep 0.05 USDC on Base eip155:8453. Pin the exact recipient, USDC asset, fee and Ed25519 verification key. The adapter verifies offer, report, receipt and delivery binding. Private checkpoint files retain bearer authorizations and are not application-level encrypted; protect them with private ACLs and encrypted storage."
+        ],
+        "links": [
+          {
+            "label": "Install, call and verify: complete TS/Python guide",
+            "href": "/examples/OFFICIAL-CLIENTS.md"
+          },
+          {
+            "label": "Public buyer journey",
+            "href": "/public-http"
+          }
+        ]
+      },
       {
         "title": "SIWX adapter recovery",
         "paragraphs": [
@@ -458,14 +504,14 @@
       {
         "title": "After ambiguous submission",
         "paragraphs": [
-          "Reuse exactly the saved claim, signed payload and payment identifier. Call resume through the verified buyer client. Do not re-quote or invoke the wallet again to clear the error.",
+          "For the public SIWX flow, call the same adapter again with the same operation ID, input and private directory; it reloads the saved request/payment/SIWX state. The separate legacy quote/claim client resumes its own claim checkpoint. Do not re-quote or invoke the wallet again to clear the error.",
           "A locked or interrupted-before-checkpoint state requires investigation; do not delete the lock or overwrite the state automatically."
         ]
       },
       {
         "title": "When delivery is not verified",
         "paragraphs": [
-          "Hold ingestion on signature, receipt or binding mismatch. Retain the encrypted checkpoint for recovery. UNKNOWN never becomes permission because a payment succeeded.",
+          "Hold ingestion on signature, receipt or binding mismatch. Retain the private checkpoint for recovery. UNKNOWN never becomes permission because a payment succeeded.",
           "Reconciliation has not been repaired in this phase. Manual recovery may be necessary; zero-support operation is an objective, not a demonstrated guarantee."
         ]
       }
@@ -479,13 +525,16 @@
     "description": "Quote first, private claim second, signed payment third. This is a multi-step report flow, not a generic one-call paid MCP tool.",
     "sections": [
       {
-        "title": "Start with the stable public endpoint",
+        "title": "Current supported buyer integration",
         "paragraphs": [
-          "POST https://api.getacqpath.com/v1/rights/preflight with {resource,purpose,tier:\"fresh\",max_total_micro:\"20000\"}. A prepared 402 includes price/network/asset and the required private request binding. Empty POST is discovery-only. HTTP 200 with available:false and charge_micro:\"0\" is not a purchased report. There is no AcqPath account, API key or operator token.",
-          "The public endpoint supports unchanged official exact-EVM payment signers through the AcqPath SIWX adapter (TypeScript/Node and Python/httpx). The adapter reserves unsigned authorization fields, validates and signs the official SIWX request/payment challenge, then submits the original payment. Existing acqpath-request-binding nonce clients remain supported. Generic zero-config x402 clients, stock SIWX-only hooks, Payments MCP and paid proxies are not verified compatible. Mainnet paid E2E remains UNVERIFIED; no owner-funded payment.",
-          "The quote/claim examples below document the preserved legacy integration."
+          "SUPPORTED: tested official TypeScript/Node x402 client + AcqPath SIWX adapter; tested official Python x402/httpx client + AcqPath SIWX adapter. The official EIP-3009 payment signer and its random nonce remain unchanged. The adapter adds unsigned payment prebinding and an official SIWX request/payment authorization. New integrations do not construct or sign the legacy bound payment nonce. Generic zero-config x402 clients, stock SIWX-only hooks without the AcqPath adapter, Payments MCP and generic paid proxies are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED.",
+          "Fresh 0.02 USDC; deep 0.05 USDC on Base eip155:8453. Pin the exact recipient, USDC asset, fee and Ed25519 verification key. The adapter verifies offer, report, receipt and delivery binding. Private checkpoint files retain bearer authorizations and are not application-level encrypted; protect them with private ACLs and encrypted storage."
         ],
         "links": [
+          {
+            "label": "Install, call and verify: complete TS/Python guide",
+            "href": "/examples/OFFICIAL-CLIENTS.md"
+          },
           {
             "label": "Public buyer journey",
             "href": "/public-http"
@@ -493,88 +542,41 @@
         ]
       },
       {
-        "title": "Official TypeScript / Node and Python integration",
+        "title": "1. Install the tested dependencies",
         "paragraphs": [
-          "The public endpoint supports unchanged official exact-EVM payment signers through the AcqPath SIWX adapter (TypeScript/Node and Python/httpx). The adapter reserves unsigned authorization fields, validates and signs the official SIWX request/payment challenge, then submits the original payment. Existing acqpath-request-binding nonce clients remain supported. Generic zero-config x402 clients, stock SIWX-only hooks, Payments MCP and paid proxies are not verified compatible. Mainnet paid E2E remains UNVERIFIED; no owner-funded payment.",
-          "Add the AcqPath transport adapter, independently pinned service terms/key, private durable store, explicit buyer opt-in and stable operation ID. It adds one unsigned prebinding round trip and one official SIWX signature; the stock payment signer is unchanged.",
-          "Use the same operation ID, body and store after response loss. Never replace a pending authorization. EOA only; private-store retention and Python canonical-input limits are explained in the guide."
+          "Node 22.16+: @x402/core, @x402/evm, @x402/fetch, @x402/extensions 2.25.0 and viem 2.56.3. Python 3.12/3.13: x402 2.22.0, httpx 0.28.1, deliberate ABNF 2.2.0 pin. Use the supplied manifest/requirements with the source adapter."
         ],
         "links": [
           {
-            "label": "Complete configured-client guide",
+            "label": "Installation and complete examples",
             "href": "/examples/OFFICIAL-CLIENTS.md"
-          },
-          {
-            "label": "TypeScript / Node adapter",
-            "href": "/examples/acqpath.mjs"
-          },
-          {
-            "label": "Node integration example",
-            "href": "/examples/official-node.mjs"
-          },
-          {
-            "label": "Pinned Node manifest",
-            "href": "/examples/official-client-package.json"
-          },
-          {
-            "label": "Python adapter",
-            "href": "/examples/acqpath_httpx.py"
-          },
-          {
-            "label": "Python integration example",
-            "href": "/examples/official-python.py"
-          },
-          {
-            "label": "Pinned Python requirements",
-            "href": "/examples/official-requirements.txt"
           }
         ]
       },
       {
-        "title": "1. Select and quote",
+        "title": "2. Authorize exactly one logical request",
         "paragraphs": [
-          "Read coverage; choose resource, purpose, user_class and tier. POST /v1/rights/quote once. Inspect available and decision_preview. Keep claim_token private."
+          "Check live coverage → call POST /v1/rights/preflight through the AcqPath SIWX adapter → verify the prepared signed offer → preserve the unchanged official payment authorization privately → complete SIWX prebinding/authorization → receive the verified report. Use the same operation ID, input and private store after ambiguity; never create a replacement payment.",
+          "The adapter owns PAYMENT-SIGNATURE, SIGN-IN-WITH-X, X-AcqPath-Payment-Intent and X-AcqPath-Request. Do not manually replace a nonce or provide these headers. The extra SIWX signature binds the selected order and exact payment."
         ]
       },
       {
-        "title": "2. Read and verify the unpaid offer",
+        "title": "3. Verify delivery and recover",
         "paragraphs": [
-          "GET the quote-provided /v1/rights/reports/{id} with X-AcqPath-Claim. A valid unpaid request returns 402 and PAYMENT-REQUIRED.",
-          "Verify x402 v2 exact requirements and the Ed25519 offer-receipt signature against the pinned key. Match the quote resource, amount, Base network, USDC asset, recipient and expiry."
-        ]
-      },
-      {
-        "title": "3. Persist and redeem",
-        "paragraphs": [
-          "Use a buyer-controlled signer within your task budget. Persist an encrypted checkpoint containing the exact authorization before submitting it.",
-          "GET the same redeem URL with X-AcqPath-Claim and PAYMENT-SIGNATURE. Verify signed report contents, context, settlement receipt and delivery-proof bindings."
+          "A successful paid result is returned only after the adapter verifies the Ed25519 report, signed settlement receipt, input/purpose, amount and transaction-bound delivery proof. HTTP 200 with available:false and charge_micro:0 is unpaid, not a verified paid report.",
+          "On timeout, use the SAME operation ID, input and private directory. Preserve unresolved authorizations; an uncertain 503 needs existing operator reconciliation. Never delete pending state or start another payment to clear an error. A verified receipt is not independent on-chain finality."
         ],
         "links": [
           {
-            "label": "Verified buyer implementation",
-            "href": "https://github.com/reflectme-source/acqpath-distribution/tree/main/packages/rights-client"
-          },
-          {
-            "label": "JavaScript integration adapter",
-            "href": "/examples/evidence-gate.mjs"
+            "label": "Recovery",
+            "href": "/recovery"
           }
         ]
       },
       {
-        "title": "4. Return evidence, not an authorization shortcut",
+        "title": "Legacy boundary",
         "paragraphs": [
-          "UNKNOWN, missing declarations, unsupported origins and LICENSE_REQUIRED do not authorize use. A report records observed RSL declarations; it is not a license or legal clearance.",
-          "On ambiguity, resume the original checkpoint without new quote or signature. For refund requests use the documented operator-reviewed flow only after a deliberate decision; it does not send money automatically."
-        ],
-        "links": [
-          {
-            "label": "Public-flow OpenAPI",
-            "href": "/openapi.json"
-          },
-          {
-            "label": "Workflow JSON",
-            "href": "/examples/workflow.json"
-          }
+          "The older quote/claim SDK still serves existing integrations. Its report URL and encrypted store are separate from the public SIWX adapter. Existing legacy behavior does not require new buyers to implement a bound EIP-3009 nonce. UNKNOWN is not permission; a report is not a license."
         ]
       }
     ]
@@ -596,7 +598,7 @@
       {
         "title": "Input and purchase",
         "paragraphs": [
-          "Check live coverage → prepare one bounded quote → inspect availability/preview → verify the signed offer → obtain buyer-controlled payment authorization → persist the encrypted checkpoint → redeem and verify report, receipt and delivery binding. After ambiguity, resume the same checkpoint; never sign a replacement payment blindly."
+          "Check live coverage → call POST /v1/rights/preflight through the AcqPath SIWX adapter → verify the prepared signed offer → preserve the unchanged official payment authorization privately → complete SIWX prebinding/authorization → receive the verified report. Use the same operation ID, input and private store after ambiguity; never create a replacement payment."
         ],
         "code": "{\n  \"resource\": \"https://rslstandard.org/\",\n  \"purpose\": \"ai-input\",\n  \"tier\": \"fresh\",\n  \"user_class\": \"commercial\",\n  \"max_total_micro\": \"20000\"\n}"
       },
@@ -640,7 +642,7 @@
       {
         "title": "Input and purchase",
         "paragraphs": [
-          "Check live coverage → prepare one bounded quote → inspect availability/preview → verify the signed offer → obtain buyer-controlled payment authorization → persist the encrypted checkpoint → redeem and verify report, receipt and delivery binding. After ambiguity, resume the same checkpoint; never sign a replacement payment blindly."
+          "Check live coverage → call POST /v1/rights/preflight through the AcqPath SIWX adapter → verify the prepared signed offer → preserve the unchanged official payment authorization privately → complete SIWX prebinding/authorization → receive the verified report. Use the same operation ID, input and private store after ambiguity; never create a replacement payment."
         ],
         "code": "{\n  \"resource\": \"https://rslstandard.org/\",\n  \"purpose\": \"ai-index\",\n  \"tier\": \"fresh\",\n  \"user_class\": \"commercial\",\n  \"max_total_micro\": \"20000\"\n}"
       },
@@ -684,7 +686,7 @@
       {
         "title": "Input and purchase",
         "paragraphs": [
-          "Check live coverage → prepare one bounded quote → inspect availability/preview → verify the signed offer → obtain buyer-controlled payment authorization → persist the encrypted checkpoint → redeem and verify report, receipt and delivery binding. After ambiguity, resume the same checkpoint; never sign a replacement payment blindly."
+          "Check live coverage → call POST /v1/rights/preflight through the AcqPath SIWX adapter → verify the prepared signed offer → preserve the unchanged official payment authorization privately → complete SIWX prebinding/authorization → receive the verified report. Use the same operation ID, input and private store after ambiguity; never create a replacement payment."
         ],
         "code": "{\n  \"resource\": \"https://rslstandard.org/\",\n  \"purpose\": \"ai-index\",\n  \"tier\": \"fresh\",\n  \"user_class\": \"commercial\",\n  \"max_total_micro\": \"20000\"\n}"
       },
@@ -728,7 +730,7 @@
       {
         "title": "Input and purchase",
         "paragraphs": [
-          "Check live coverage → prepare one bounded quote → inspect availability/preview → verify the signed offer → obtain buyer-controlled payment authorization → persist the encrypted checkpoint → redeem and verify report, receipt and delivery binding. After ambiguity, resume the same checkpoint; never sign a replacement payment blindly."
+          "Check live coverage → call POST /v1/rights/preflight through the AcqPath SIWX adapter → verify the prepared signed offer → preserve the unchanged official payment authorization privately → complete SIWX prebinding/authorization → receive the verified report. Use the same operation ID, input and private store after ambiguity; never create a replacement payment."
         ],
         "code": "{\n  \"resource\": \"https://rslstandard.org/\",\n  \"purpose\": \"ai-train\",\n  \"tier\": \"fresh\",\n  \"user_class\": \"commercial\",\n  \"max_total_micro\": \"20000\"\n}"
       },
@@ -773,7 +775,7 @@
         "title": "Before ingestion",
         "paragraphs": [
           "Once your crawler has a legitimately selected supported source, choose the actual paid purpose: ai-input, ai-index, ai-train or search.",
-          "Check live coverage → prepare one bounded quote → inspect availability/preview → verify the signed offer → obtain buyer-controlled payment authorization → persist the encrypted checkpoint → redeem and verify report, receipt and delivery binding. After ambiguity, resume the same checkpoint; never sign a replacement payment blindly."
+          "Check live coverage → call POST /v1/rights/preflight through the AcqPath SIWX adapter → verify the prepared signed offer → preserve the unchanged official payment authorization privately → complete SIWX prebinding/authorization → receive the verified report. Use the same operation ID, input and private store after ambiguity; never create a replacement payment."
         ]
       },
       {
@@ -1042,7 +1044,7 @@
         "title": "Technical release complete; external purchase awaited",
         "paragraphs": [
           "Production version 0c3b5794-f428-4e69-879e-29cab293cd1a; merged commit 9533e49d262d20d5bb3712321fbc66981e477418. Node/Python unpaid 402, legacy compatibility, SIWX challenge and CDP valid=true verified 2026-09-11T20:41:57.723Z. No owner wallet or settlement was used.",
-          "The public endpoint supports unchanged official exact-EVM payment signers through the AcqPath SIWX adapter (TypeScript/Node and Python/httpx). The adapter reserves unsigned authorization fields, validates and signs the official SIWX request/payment challenge, then submits the original payment. Existing acqpath-request-binding nonce clients remain supported. Generic zero-config x402 clients, stock SIWX-only hooks, Payments MCP and paid proxies are not verified compatible. Mainnet paid E2E remains UNVERIFIED; no owner-funded payment.",
+          "SUPPORTED: tested official TypeScript/Node x402 client + AcqPath SIWX adapter; tested official Python x402/httpx client + AcqPath SIWX adapter. The official EIP-3009 payment signer and its random nonce remain unchanged. The adapter adds unsigned payment prebinding and an official SIWX request/payment authorization. New integrations do not construct or sign the legacy bound payment nonce. Generic zero-config x402 clients, stock SIWX-only hooks without the AcqPath adapter, Payments MCP and generic paid proxies are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED.",
           "External paid reports: 0; repeat external payers: 0; verified external revenue: 0 USDC at the latest aggregate read. External acquisition is UNPROVEN. Eligible external requests and payment attempts remain UNKNOWN because the available aggregates cannot separate QA and external activity. No Bazaar match was found by merchant, brand or the six existing intent searches."
         ]
       },
@@ -1050,7 +1052,7 @@
         "title": "Current state",
         "paragraphs": [
           "AWAITING FIRST EXTERNAL SETTLEMENT. Production health, legacy flow, prepared unpaid 402, real LICENSE_REQUIRED resources and CDP valid=true were verified. This is not settlement or indexing evidence.",
-          "The public endpoint supports unchanged official exact-EVM payment signers through the AcqPath SIWX adapter (TypeScript/Node and Python/httpx). The adapter reserves unsigned authorization fields, validates and signs the official SIWX request/payment challenge, then submits the original payment. Existing acqpath-request-binding nonce clients remain supported. Generic zero-config x402 clients, stock SIWX-only hooks, Payments MCP and paid proxies are not verified compatible. Mainnet paid E2E remains UNVERIFIED; no owner-funded payment."
+          "SUPPORTED: tested official TypeScript/Node x402 client + AcqPath SIWX adapter; tested official Python x402/httpx client + AcqPath SIWX adapter. The official EIP-3009 payment signer and its random nonce remain unchanged. The adapter adds unsigned payment prebinding and an official SIWX request/payment authorization. New integrations do not construct or sign the legacy bound payment nonce. Generic zero-config x402 clients, stock SIWX-only hooks without the AcqPath adapter, Payments MCP and generic paid proxies are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED."
         ]
       },
       {
@@ -1110,7 +1112,7 @@
         "title": "Price and integration",
         "paragraphs": [
           "Fresh 0.02 USDC; deep 0.05 USDC. Base mainnet eip155:8453; USDC 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913; recipient 0xf69DBbd053fb0Fbc78ADfdB1BFe3b0D1F57300ec. The verified signed offer is authoritative; paying buys the report, not content rights.",
-          "The public endpoint supports unchanged official exact-EVM payment signers through the AcqPath SIWX adapter (TypeScript/Node and Python/httpx). The adapter reserves unsigned authorization fields, validates and signs the official SIWX request/payment challenge, then submits the original payment. Existing acqpath-request-binding nonce clients remain supported. Generic zero-config x402 clients, stock SIWX-only hooks, Payments MCP and paid proxies are not verified compatible. Mainnet paid E2E remains UNVERIFIED; no owner-funded payment."
+          "SUPPORTED: tested official TypeScript/Node x402 client + AcqPath SIWX adapter; tested official Python x402/httpx client + AcqPath SIWX adapter. The official EIP-3009 payment signer and its random nonce remain unchanged. The adapter adds unsigned payment prebinding and an official SIWX request/payment authorization. New integrations do not construct or sign the legacy bound payment nonce. Generic zero-config x402 clients, stock SIWX-only hooks without the AcqPath adapter, Payments MCP and generic paid proxies are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED."
         ],
         "links": [
           {
@@ -1159,7 +1161,7 @@
         "title": "Price and integration",
         "paragraphs": [
           "Fresh 0.02 USDC; deep 0.05 USDC. Base mainnet eip155:8453; USDC 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913; recipient 0xf69DBbd053fb0Fbc78ADfdB1BFe3b0D1F57300ec. The verified signed offer is authoritative; paying buys the report, not content rights.",
-          "The public endpoint supports unchanged official exact-EVM payment signers through the AcqPath SIWX adapter (TypeScript/Node and Python/httpx). The adapter reserves unsigned authorization fields, validates and signs the official SIWX request/payment challenge, then submits the original payment. Existing acqpath-request-binding nonce clients remain supported. Generic zero-config x402 clients, stock SIWX-only hooks, Payments MCP and paid proxies are not verified compatible. Mainnet paid E2E remains UNVERIFIED; no owner-funded payment."
+          "SUPPORTED: tested official TypeScript/Node x402 client + AcqPath SIWX adapter; tested official Python x402/httpx client + AcqPath SIWX adapter. The official EIP-3009 payment signer and its random nonce remain unchanged. The adapter adds unsigned payment prebinding and an official SIWX request/payment authorization. New integrations do not construct or sign the legacy bound payment nonce. Generic zero-config x402 clients, stock SIWX-only hooks without the AcqPath adapter, Payments MCP and generic paid proxies are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED."
         ],
         "links": [
           {
@@ -1208,7 +1210,7 @@
         "title": "Price and integration",
         "paragraphs": [
           "Fresh 0.02 USDC; deep 0.05 USDC. Base mainnet eip155:8453; USDC 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913; recipient 0xf69DBbd053fb0Fbc78ADfdB1BFe3b0D1F57300ec. The verified signed offer is authoritative; paying buys the report, not content rights.",
-          "The public endpoint supports unchanged official exact-EVM payment signers through the AcqPath SIWX adapter (TypeScript/Node and Python/httpx). The adapter reserves unsigned authorization fields, validates and signs the official SIWX request/payment challenge, then submits the original payment. Existing acqpath-request-binding nonce clients remain supported. Generic zero-config x402 clients, stock SIWX-only hooks, Payments MCP and paid proxies are not verified compatible. Mainnet paid E2E remains UNVERIFIED; no owner-funded payment."
+          "SUPPORTED: tested official TypeScript/Node x402 client + AcqPath SIWX adapter; tested official Python x402/httpx client + AcqPath SIWX adapter. The official EIP-3009 payment signer and its random nonce remain unchanged. The adapter adds unsigned payment prebinding and an official SIWX request/payment authorization. New integrations do not construct or sign the legacy bound payment nonce. Generic zero-config x402 clients, stock SIWX-only hooks without the AcqPath adapter, Payments MCP and generic paid proxies are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED."
         ],
         "links": [
           {
@@ -1257,7 +1259,7 @@
         "title": "Price and integration",
         "paragraphs": [
           "Fresh 0.02 USDC; deep 0.05 USDC. Base mainnet eip155:8453; USDC 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913; recipient 0xf69DBbd053fb0Fbc78ADfdB1BFe3b0D1F57300ec. The verified signed offer is authoritative; paying buys the report, not content rights.",
-          "The public endpoint supports unchanged official exact-EVM payment signers through the AcqPath SIWX adapter (TypeScript/Node and Python/httpx). The adapter reserves unsigned authorization fields, validates and signs the official SIWX request/payment challenge, then submits the original payment. Existing acqpath-request-binding nonce clients remain supported. Generic zero-config x402 clients, stock SIWX-only hooks, Payments MCP and paid proxies are not verified compatible. Mainnet paid E2E remains UNVERIFIED; no owner-funded payment."
+          "SUPPORTED: tested official TypeScript/Node x402 client + AcqPath SIWX adapter; tested official Python x402/httpx client + AcqPath SIWX adapter. The official EIP-3009 payment signer and its random nonce remain unchanged. The adapter adds unsigned payment prebinding and an official SIWX request/payment authorization. New integrations do not construct or sign the legacy bound payment nonce. Generic zero-config x402 clients, stock SIWX-only hooks without the AcqPath adapter, Payments MCP and generic paid proxies are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED."
         ],
         "links": [
           {
@@ -1306,7 +1308,7 @@
         "title": "Price and integration",
         "paragraphs": [
           "Fresh 0.02 USDC; deep 0.05 USDC. Base mainnet eip155:8453; USDC 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913; recipient 0xf69DBbd053fb0Fbc78ADfdB1BFe3b0D1F57300ec. The verified signed offer is authoritative; paying buys the report, not content rights.",
-          "The public endpoint supports unchanged official exact-EVM payment signers through the AcqPath SIWX adapter (TypeScript/Node and Python/httpx). The adapter reserves unsigned authorization fields, validates and signs the official SIWX request/payment challenge, then submits the original payment. Existing acqpath-request-binding nonce clients remain supported. Generic zero-config x402 clients, stock SIWX-only hooks, Payments MCP and paid proxies are not verified compatible. Mainnet paid E2E remains UNVERIFIED; no owner-funded payment."
+          "SUPPORTED: tested official TypeScript/Node x402 client + AcqPath SIWX adapter; tested official Python x402/httpx client + AcqPath SIWX adapter. The official EIP-3009 payment signer and its random nonce remain unchanged. The adapter adds unsigned payment prebinding and an official SIWX request/payment authorization. New integrations do not construct or sign the legacy bound payment nonce. Generic zero-config x402 clients, stock SIWX-only hooks without the AcqPath adapter, Payments MCP and generic paid proxies are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED."
         ],
         "links": [
           {
@@ -1334,6 +1336,7 @@
       {
         "title": "1. Discover capability and prepare",
         "paragraphs": [
+          "SUPPORTED: tested official TypeScript/Node x402 client + AcqPath SIWX adapter; tested official Python x402/httpx client + AcqPath SIWX adapter. The official EIP-3009 payment signer and its random nonce remain unchanged. The adapter adds unsigned payment prebinding and an official SIWX request/payment authorization. New integrations do not construct or sign the legacy bound payment nonce. Generic zero-config x402 clients, stock SIWX-only hooks without the AcqPath adapter, Payments MCP and generic paid proxies are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED.",
           "POST https://api.getacqpath.com/v1/rights/preflight with {resource,purpose,tier:\"fresh\",max_total_micro:\"20000\"}. A prepared 402 includes price/network/asset and the required private request binding. Empty POST is discovery-only. HTTP 200 with available:false and charge_micro:\"0\" is not a purchased report. There is no AcqPath account, API key or operator token.",
           "Supported paid purposes: ai-input, ai-index, ai-train, search. Start with GET /v1/capabilities. Do not call the disabled acqpath_quote routing tool."
         ],
@@ -1342,7 +1345,7 @@
       {
         "title": "Official TypeScript / Node and Python integration",
         "paragraphs": [
-          "The public endpoint supports unchanged official exact-EVM payment signers through the AcqPath SIWX adapter (TypeScript/Node and Python/httpx). The adapter reserves unsigned authorization fields, validates and signs the official SIWX request/payment challenge, then submits the original payment. Existing acqpath-request-binding nonce clients remain supported. Generic zero-config x402 clients, stock SIWX-only hooks, Payments MCP and paid proxies are not verified compatible. Mainnet paid E2E remains UNVERIFIED; no owner-funded payment.",
+          "SUPPORTED: tested official TypeScript/Node x402 client + AcqPath SIWX adapter; tested official Python x402/httpx client + AcqPath SIWX adapter. The official EIP-3009 payment signer and its random nonce remain unchanged. The adapter adds unsigned payment prebinding and an official SIWX request/payment authorization. New integrations do not construct or sign the legacy bound payment nonce. Generic zero-config x402 clients, stock SIWX-only hooks without the AcqPath adapter, Payments MCP and generic paid proxies are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED.",
           "Add the AcqPath transport adapter, independently pinned service terms/key, private durable store, explicit buyer opt-in and stable operation ID. It adds one unsigned prebinding round trip and one official SIWX signature; the stock payment signer is unchanged.",
           "Use the same operation ID, body and store after response loss. Never replace a pending authorization. EOA only; private-store retention and Python canonical-input limits are explained in the guide."
         ],
@@ -1387,8 +1390,8 @@
       {
         "title": "3. Payment compatibility boundary",
         "paragraphs": [
-          "The public endpoint supports unchanged official exact-EVM payment signers through the AcqPath SIWX adapter (TypeScript/Node and Python/httpx). The adapter reserves unsigned authorization fields, validates and signs the official SIWX request/payment challenge, then submits the original payment. Existing acqpath-request-binding nonce clients remain supported. Generic zero-config x402 clients, stock SIWX-only hooks, Payments MCP and paid proxies are not verified compatible. Mainnet paid E2E remains UNVERIFIED; no owner-funded payment.",
-          "Standard x402 v2 uses PAYMENT-REQUIRED, PAYMENT-SIGNATURE and PAYMENT-RESPONSE. After verifying the offer, use the unchanged official signer with the AcqPath SIWX adapter, or an existing binding-nonce client. Retain identical normalized input and private request context. Do not modify a standard signer nonce after signing. The repository legacy SDK targets quote/claim report URLs and is not a drop-in public endpoint client."
+          "SUPPORTED: tested official TypeScript/Node x402 client + AcqPath SIWX adapter; tested official Python x402/httpx client + AcqPath SIWX adapter. The official EIP-3009 payment signer and its random nonce remain unchanged. The adapter adds unsigned payment prebinding and an official SIWX request/payment authorization. New integrations do not construct or sign the legacy bound payment nonce. Generic zero-config x402 clients, stock SIWX-only hooks without the AcqPath adapter, Payments MCP and generic paid proxies are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED.",
+          "Standard x402 v2 uses PAYMENT-REQUIRED, PAYMENT-SIGNATURE and PAYMENT-RESPONSE. After verifying the offer, use the unchanged official signer with the AcqPath SIWX adapter. Legacy nonce-binding support is retained only for existing integrations. Retain identical normalized input and private request context. Do not modify a standard signer nonce after signing. The repository legacy SDK targets quote/claim report URLs and is not a drop-in public endpoint client."
         ],
         "links": [
           {
@@ -1442,6 +1445,19 @@
           "Inject your existing buyer account; no seller secrets or AcqPath account required."
         ],
         "code": "from acqpath_httpx import AcqPathClient, PrivateFileStore\n\n# Inject an existing buyer-controlled eth_account LocalAccount.\nasync def preflight(account, operation_id, input, private_directory, allow_payment=False):\n    buyer = AcqPathClient(\n        signer=account, expected={\"origin\":\"https://api.getacqpath.com\",\"network\":\"eip155:8453\",\"asset\":\"0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913\",\"payTo\":\"0xf69DBbd053fb0Fbc78ADfdB1BFe3b0D1F57300ec\",\"amount\":\"20000\"},\n        public_jwk={\"kty\":\"OKP\",\"crv\":\"Ed25519\",\"x\":\"PzeeZ8d8Np85ix9ialbrLZz9ebY_Og72dScn1IAft6M\"},\n        store=PrivateFileStore(private_directory), allow_payment=allow_payment,\n    )\n    try:\n        return await buyer.post('https://api.getacqpath.com/v1/rights/preflight',\n                                json=input, operation_id=operation_id)\n    finally:\n        await buyer.aclose()\n"
+      },
+      {
+        "title": "Pinned dependencies, delivery verification and retry",
+        "paragraphs": [
+          "Install the supplied pinned Node manifest or Python requirements with the source adapter. The complete guide includes installation, a call using your existing buyer account, response handling and exact same-operation recovery. No internal design document is needed.",
+          "External revenue remains 0 USDC in the verified baseline. A configured buyer is technically supported; the absence of a real external paid E2E is an evidence limitation, not a technical payment block."
+        ],
+        "links": [
+          {
+            "label": "Complete installation and verified-response examples",
+            "href": "/examples/OFFICIAL-CLIENTS.md"
+          }
+        ]
       }
     ]
   }

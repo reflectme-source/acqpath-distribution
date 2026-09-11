@@ -1,3 +1,5 @@
+> Historical pre-release record — superseded for buyer integration. Production `0c3b5794-f428-4e69-879e-29cab293cd1a` (core `9533e49d262d20d5bb3712321fbc66981e477418`) supports tested official TS/Python x402 signers through the AcqPath SIWX adapter. Old blocker/design statements below describe only their dated snapshot; they are not current buyer instructions or authorization for another phase/payment. Use the [current installation, purchase and recovery guide](https://developers.getacqpath.com/examples/OFFICIAL-CLIENTS.md). Generic zero-config clients are not claimed; independent mainnet paid E2E remains UNVERIFIED.
+
 # Discovery tests — stranger perspective
 
 Test date: 2026-09-10. Searches are finite observations of returned results, not claims about all queries, global rankings or future indexing. Public MCP testing uses initialize, notifications/initialized and tools/list only. No quote tool, payment, wallet or operator secret is used by discovery tests.

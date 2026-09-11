@@ -7,8 +7,8 @@
 | GitHub / developer docs / GitMCP | LIVE NOW | Public intent and machine-readable reference; no payment attribution implied |
 | CDP Bazaar | AUTO-INDEX AFTER EXTERNAL SETTLEMENT | AWAITING FIRST EXTERNAL SETTLEMENT |
 | Agentic.Market | AUTO-INDEX AFTER EXTERNAL SETTLEMENT | Coinbase marketplace surfaces Bazaar; no separate registration form claimed |
-| CDP Agentic Wallet search | AUTO-INDEX AFTER EXTERNAL SETTLEMENT | Catalog discovery available; direct buying requires client nonce compatibility |
-| Payments MCP / Bazaar proxy_tool_call | NOT COMPATIBLE | No proof these standard clients support AcqPath required nonce/context; do not invoke paid tools |
+| CDP Agentic Wallet search | AUTO-INDEX AFTER EXTERNAL SETTLEMENT | Catalog discovery available; buying is supported through tested official TS/Python x402 + AcqPath SIWX adapters; generic CLI buying is not claimed |
+| Payments MCP / Bazaar proxy_tool_call | NOT CLAIMED | Payments MCP and generic paid proxies have not been tested with the AcqPath SIWX adapter; do not infer support |
 | x402scan | LOW VALUE | Useful independent transaction/resource cross-check; not a substitute for signed delivery or buyer independence; submission path unverified |
 | x402 Foundation membership directory | LOW VALUE | Ecosystem membership, not a self-service paid resource catalog; no membership or paid placement sought |
 | Existing Docker/PulseMCP submissions | MANUAL SUBMISSION AVAILABLE | Prepared metadata exists; moderation is not publication; avoid duplicate submissions |

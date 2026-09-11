@@ -12,8 +12,9 @@ export async function preflight(resource='https://rslstandard.org/',purpose='ai-
  const challenge=JSON.parse(Buffer.from(header,'base64')),a=challenge.accepts?.[0],b=challenge.extensions?.['acqpath-request-binding']?.info;
  if(challenge.x402Version!==2||challenge.accepts?.length!==1||challenge.resource?.url!==endpoint||a?.scheme!=='exact'||a.amount!=='20000'||a.network!=='eip155:8453'||a.asset?.toLowerCase()!=='0x833589fcd6edb6e08f4c7c32d4f71b54bda02913'||a.payTo?.toLowerCase()!=='0xf69dbbd053fb0fbc78adfdb1bfe3b0d1f57300ec'||b?.state!=='prepared')throw Error('Unexpected payment terms');
  // This sample deliberately stops before signing. Header decoding is NOT signature verification.
- // A buyer payment integration must verify binding and offer signatures, preserve this private
- // key/body and use the binding nonce. Generic random-nonce payment wrappers are incompatible.
+ // For paid use, follow OFFICIAL-CLIENTS.md: unchanged official TS/Python x402 signer
+ // plus the AcqPath SIWX adapter. It privately persists the request/payment/SIWX state.
+ // Do not replace the official signer nonce; generic zero-config clients are not claimed.
  return {status:'402_PREPARED_NO_PAYMENT',resource,purpose,decision:b.decision_preview,amountMicro:a.amount,network:a.network,asset:a.asset,payTo:a.payTo,signatureVerified:false,genericX402ClientCompatible:false,ingestionAuthorized:false};
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href)preflight(process.argv[2],process.argv[3]).then(x=>console.log(JSON.stringify(x,null,2))).catch(e=>{console.error(e.message);process.exitCode=1});

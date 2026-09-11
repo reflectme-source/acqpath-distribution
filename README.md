@@ -34,19 +34,19 @@ For clients supporting remote HTTP MCP configuration:
 
 **MCP prepares quotes. Paid report delivery uses HTTP x402 outside MCP.** Quote claims belong in private application state, outside model context, telemetry and gateway logs. Do not enable blanket tool approval.
 
-## Integrate a reusable evidence gate
+## Integrate the current public SIWX buyer
 
-[JavaScript gate](examples/evidence-gate.mjs) · [TypeScript workflows](examples/workflows.ts) · [Python read-only example](examples/read-only.py) · [Full seven-step flow](examples/README.md)
+[Install and call from TS/Python](examples/OFFICIAL-CLIENTS.md) · [Node wrapper](examples/official-node.mjs) · [Python wrapper](examples/official-python.py) · [Example index](examples/README.md)
 
 1. Check current origin coverage and select the downstream purpose.
-2. Create one quote for one stable job ID; hold unsupported/UNKNOWN outcomes.
+2. Call public Rights Preflight through the AcqPath SIWX adapter with one stable operation ID; hold unsupported/UNKNOWN outcomes.
 3. Verify the signed offer and its exact URL, recipient, network, asset and amount.
-4. Use a buyer-controlled signer with an explicit finite task budget; persist an encrypted checkpoint before submission.
+4. Keep the official EIP-3009 signer and random nonce unchanged. The adapter persists private state and adds SIWX authorization. Its checkpoint store is not application-level encrypted; use private ACLs/encrypted storage.
 5. Retrieve over HTTP x402; verify report, receipt and delivery binding.
 6. After ambiguous submission, resume the same checkpoint and authorization. Never blindly create a second payment.
 7. Keep the evidence and private recovery state separate from application permission. Even `ALLOW_DECLARED` requires an application policy decision.
 
-The client is available as reviewed source in [packages/rights-client](packages/rights-client). **npm publication is on owner hold**; do not attempt an npm install of this unpublished package. Examples use repository-relative imports. The configured Python/httpx adapter is supplied as source; no PyPI package is published.
+The public SIWX adapters are supplied in [examples](examples/OFFICIAL-CLIENTS.md). The separate [packages/rights-client](packages/rights-client) SDK is the retained legacy quote/claim integration. **npm publication is on owner hold**; do not attempt an npm install of this unpublished package. Examples use repository-relative imports. The configured Python/httpx adapter is supplied as source; no PyPI package is published.
 
 ## Machine-readable integration reference
 

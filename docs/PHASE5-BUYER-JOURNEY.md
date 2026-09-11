@@ -4,7 +4,7 @@ Production version 0c3b5794-f428-4e69-879e-29cab293cd1a; core commit 9533e49d262
 
 # Phase 5: external buyer journey
 
-Observed 2026-09-11. Production remains Phase 4 version 61b19442-bd51-46ec-be31-01422a07f877. No core behavior, routing, payment terms, Access or reconciliation changes.
+Current production: 0c3b5794-f428-4e69-879e-29cab293cd1a. This table reflects the final deployed SIWX buyer integration; the docs hotfix changes no core behavior or configuration.
 
 | Stage | Finding | Resolution / boundary |
 |---|---|---|
@@ -14,7 +14,7 @@ Observed 2026-09-11. Production remains Phase 4 version 61b19442-bd51-46ec-be31-
 | Endpoint | New buyer could be sent into quote/claim legacy flow | Stable POST /v1/rights/preflight first; legacy examples labeled |
 | 402 | Empty discovery offer could be confused with prepared offer | Explicit prepared binding requirement and unavailable-200 distinction |
 | Price | Fee must be visible without a private account | 0.02/0.05 USDC, Base asset and recipient pinned in examples |
-| Payment | Required custom nonce incompatible with generic clients | Explicit blocker; no false standard-client purchase recipe |
+| Payment | Tested official TS/Python payment signers keep their normal random nonce | Use the AcqPath SIWX adapter; no custom bound payment nonce for new buyers; generic zero-config clients not claimed |
 | Evidence | Decoding can be confused with verification | Samples declare signatureVerified:false; full cryptographic checks documented |
 | Retry | A blind retry could create another authorization | Persist identical context/payment; no second signing after ambiguity |
 | Demand | Internal QA could inflate demand | Buyer helper stopped/disabled; external evidence classifier and monitoring |

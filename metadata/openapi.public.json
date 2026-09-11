@@ -1050,5 +1050,21 @@
         }
       }
     }
+  },
+  "x-acqpath-buyer-integration": {
+    "supported": [
+      "official TypeScript x402 + AcqPath SIWX adapter",
+      "official Python x402/httpx + AcqPath SIWX adapter"
+    ],
+    "guide": "https://developers.getacqpath.com/examples/OFFICIAL-CLIENTS.md",
+    "paymentSigner": "Unchanged official signer and random nonce",
+    "notClaimed": [
+      "generic zero-config x402",
+      "stock SIWX-only hook",
+      "Payments MCP",
+      "generic paid proxies"
+    ],
+    "mainnetPaidE2E": "UNVERIFIED",
+    "metadataRole": "Distribution documentation overlay; production schema unchanged"
   }
 }

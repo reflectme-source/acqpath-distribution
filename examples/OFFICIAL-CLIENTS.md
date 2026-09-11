@@ -6,7 +6,27 @@ Node 22.16+; official @x402/core, evm, fetch and extensions 2.25.0, viem 2.56.3.
 
 ## Install into a separate buyer application
 
-Download acqpath.mjs and official-node.mjs into the buyer application. Use official-client-package.json as its package.json and install that pinned manifest. For Python, download acqpath_httpx.py, official-python.py and official-requirements.txt, then install the requirements in the buyer application's private virtual environment. The distribution maintainer build needs no root dependency installation.
+Use an empty, separate buyer application directory. These commands download public source and install dependencies; they do not initialize a wallet or buy a report. AcqPath itself is not an npm/PyPI package. Do not run these installation commands at the distribution repository root. Existing applications should merge the pinned dependencies instead of overwriting their package.json.
+
+Node / TypeScript (use `curl.exe` in Windows PowerShell):
+
+```sh
+curl --fail --silent --show-error --location https://developers.getacqpath.com/examples/acqpath.mjs --output acqpath.mjs
+curl --fail --silent --show-error --location https://developers.getacqpath.com/examples/official-node.mjs --output official-node.mjs
+curl --fail --silent --show-error --location https://developers.getacqpath.com/examples/official-client-package.json --output package.json
+npm install --ignore-scripts --no-fund
+```
+
+Python, in an activated private Python 3.12/3.13 virtual environment (use `curl.exe` on Windows):
+
+```sh
+curl --fail --silent --show-error --location https://developers.getacqpath.com/examples/acqpath_httpx.py --output acqpath_httpx.py
+curl --fail --silent --show-error --location https://developers.getacqpath.com/examples/official-python.py --output buyer_example.py
+curl --fail --silent --show-error --location https://developers.getacqpath.com/examples/official-requirements.txt --output official-requirements.txt
+python -m pip install -r official-requirements.txt
+```
+
+The Node manifest pins @x402/core, @x402/evm, @x402/fetch and @x402/extensions to 2.25.0, plus viem 2.56.3. Python requirements pin the tested dependency set including x402 2.22.0, httpx 0.28.1, eth-account 0.13.7 and abnf 2.2.0. Keep the resulting lock/environment with the buyer application. Adapter provenance: core commit `9533e49d262d20d5bb3712321fbc66981e477418`, production version `0c3b5794-f428-4e69-879e-29cab293cd1a`; [source hashes](https://github.com/reflectme-source/acqpath-distribution/blob/main/metadata/official-client-provenance.json).
 
 ## TypeScript / Node integration
 
@@ -48,6 +68,63 @@ async def preflight(account, operation_id, input, private_directory, allow_payme
 ```
 
 Example input: {"resource":"https://rslstandard.org/","purpose":"ai-input","tier":"fresh","max_total_micro":"20000"}. That resource returned LICENSE_REQUIRED in the unpaid production check; recheck current evidence. A report is not a license. UNKNOWN never permits use.
+
+## Call from the buyer application and verify delivery
+
+The application supplies an already configured EOA signer/account, a persisted operation ID, a private storage directory and its explicit purchase decision. No seed, private-key literal or environment-secret dump belongs in this example. EOA support does not imply support for every wallet provider. The official payment signer is constructed inside the adapter; do not add a second payment wrapper or alter its nonce. The TypeScript caller below imports the tested JavaScript adapter through its wrapper; use your application's existing ESM/JavaScript module support.
+
+```ts
+import type { LocalAccount } from 'viem';
+import { preflight } from './official-node.mjs';
+
+export async function buyRights(
+  signer: LocalAccount, operationId: string,
+  privateDirectory: string, purchaseApproved: boolean,
+) {
+  if (!purchaseApproved) throw new Error('Buyer approval required');
+  const response = await preflight({
+    signer, operationId, privateDirectory, allowPayment: true,
+    input: { resource: 'https://rslstandard.org/', purpose: 'ai-input',
+             tier: 'fresh', max_total_micro: '20000' },
+  });
+  if (response.status !== 200) throw new Error(`Preserve state; HTTP ${response.status}`);
+  const result = await response.json();
+  if (result.available === false) return { paid: false, available: false };
+  // The adapter has already verified the signed report, receipt and delivery proof.
+  // Return only a minimal summary; never log the raw response or checkpoint.
+  return { paid: true, deliveryVerified: true, resource: result.report.resource,
+           purpose: result.report.purpose, ingestionAuthorized: false };
+}
+```
+
+```python
+from buyer_example import preflight
+
+async def buy_rights(account, operation_id, private_directory, purchase_approved):
+    if not purchase_approved:
+        raise ValueError("Buyer approval required")
+    response = await preflight(
+        account, operation_id,
+        {"resource": "https://rslstandard.org/", "purpose": "ai-input",
+         "tier": "fresh", "max_total_micro": "20000"},
+        private_directory, allow_payment=True,
+    )
+    if response.status_code != 200:
+        raise RuntimeError(f"Preserve state; HTTP {response.status_code}")
+    result = response.json()
+    if result.get("available") is False:
+        return {"paid": False, "available": False}
+    # Verification has completed inside the adapter. Do not log raw signed artifacts.
+    return {"paid": True, "deliveryVerified": True,
+            "resource": result["report"]["resource"],
+            "purpose": result["report"]["purpose"], "ingestionAuthorized": False}
+```
+
+The samples deliberately have no automatic entrypoint. Invoke the function from the existing buyer application after its purchase policy approves. On retry, supply the identical account, operation ID, input and private directory. Do not generate a fresh ID inside a retry loop. A verification exception is a failed delivery check, never a reason to create a second purchase.
+
+The adapters validate the signed offer before signing; on paid HTTP 200 they verify Ed25519 report evidence, normalized request/purpose, signed settlement receipt, payer/network/transaction, and delivery proof binding the report, offer, recipient, asset and exact amount. They throw on a mismatch. An HTTP 200 unavailable result is explicitly unpaid. A verified service receipt is not independent blockchain finality. Save any verified report only in the buyer's private evidence store; expose a minimal summary to agents.
+
+Fresh is **20,000 micro-USDC = 0.02 USDC**; deep is **50,000 = 0.05 USDC**. These examples pin fresh. For a deliberate deep request, set `tier: 'deep'`, `max_total_micro: '50000'`, and the wrapper's expected `amount` to `'50000'` together, using a new logical operation. Never edit an unresolved operation. Both prices use Base `eip155:8453`, USDC `0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913`, recipient `0xf69DBbd053fb0Fbc78ADfdB1BFe3b0D1F57300ec`; the verified live offer must match these independent pins.
 
 ## Exact extra step
 

@@ -1,47 +1,18 @@
-# Integrate once, preserve evidence, retry the same purchase
+# Current public Rights Preflight examples
 
-These are buyer-side examples. The npm SDK is unpublished. Clone the distribution repository and import its reviewed client source. No example requires a seller credential, wallet seed or private key. The read-only JavaScript and Python commands perform only a capability GET.
+Start with the [complete TypeScript / Python installation, call and delivery verification guide](OFFICIAL-CLIENTS.md). The tested official x402 payment signer and random nonce remain unchanged; use the AcqPath SIWX adapter. No AcqPath account or seller API key is required. New buyers do not construct a legacy bound payment nonce.
 
-| Example | When to use | Purpose / behavior |
-|---|---|---|
-| `read-only.mjs` | Verify current availability and origin coverage | No quote, signer or payment |
-| `read-only.py` | Feed the same coverage into a Python workflow | Standard-library probe; no unsupported Python payment SDK |
-| `evidence-gate.mjs` | Private buyer application needs dated signed evidence | One task budget and durable purchase IDs; verified HTTP/x402 buyer client |
-| `workflows.ts` | RAG, research, training, search and crawler workflows | Thin adapters over the same verified gate; no framework dependency |
+| File | Role |
+|---|---|
+| [acqpath.mjs](acqpath.mjs) + [official-node.mjs](official-node.mjs) | Tested official TypeScript/Node x402 + AcqPath SIWX integration |
+| [acqpath_httpx.py](acqpath_httpx.py) + [official-python.py](official-python.py) | Tested official Python x402/httpx + AcqPath SIWX integration |
+| [official-client-package.json](official-client-package.json) | Exact Node dependency pins; save as package.json in a separate buyer application |
+| [official-requirements.txt](official-requirements.txt) | Tested Python dependency pins, including ABNF compatibility |
+| [public-preflight.mjs](public-preflight.mjs), [public-preflight.py](public-preflight.py) | Unpaid preparation only; decoding does not verify signatures |
+| [read-only.mjs](read-only.mjs), [read-only.py](read-only.py) | Capability GET only; no quote or payment |
+| [public-workflows.ts](public-workflows.ts) | Unpaid purpose/workflow gates |
+| [evidence-gate.mjs](evidence-gate.mjs), [workflows.ts](workflows.ts) | Existing legacy quote/claim SDK examples, not the public SIWX adapter |
 
-```js
-import {createEvidenceGate} from './examples/evidence-gate.mjs';
+Fresh 0.02 USDC; deep 0.05 USDC on Base. Verify live signed terms. The adapters verify the offer, report, receipt and delivery binding. Use a stable operation ID and private durable store; after ambiguity reuse the SAME ID, input and directory. Stored bearer authorizations are not application-level encrypted. Protect storage with private ACLs and preferably disk encryption; never share it or delete unresolved operations.
 
-// Both values come directly from your private buyer application, not an LLM.
-const gate = createEvidenceGate({
-  pay: buyerControlledSigner,
-  checkpointDirectory: buyerPrivateCheckpointDirectory,
-  checkpointPassword: buyerPrivateCheckpointPassword,
-  taskBudgetMicro: '50000'
-});
-
-// Called only when this selected supported source needs new evidence.
-// Keep this logical ID with the job and reuse it on retry.
-const evidence = await gate({
-  id: 'persisted-job-id-index-evidence-v1',
-  resource: 'https://rslstandard.org/',
-  purpose: 'ai-index',
-  tier: 'fresh'
-});
-```
-
-The URL is illustrative, on an observed supported origin. It has not been demonstrated to produce a purchasable declaration. The signer variables above are intentional buyer-supplied dependencies; this is not a paste-and-spend command.
-
-1. Call before selected content enters the intended workflow. RAG indexing uses `ai-index`; model context uses `ai-input`; training uses `ai-train`; search uses `search`. Crawl/robots policy is separate.
-2. Read live coverage, validate the canonical HTTPS URL and fix the per-report/task budget. The examples cap fresh at 20,000 and deep at 50,000 micro-USDC without increasing production prices.
-3. Hold unsupported/unavailable inputs. UNKNOWN, DENY_DECLARED and LICENSE_REQUIRED never authorize ingestion. A purchasable UNKNOWN report can still have diagnostic value; your buyer signer/policy must deliberately accept that purchase.
-4. `buyOnce` prepares a quote once. The client obtains the private-claim 402 challenge, verifies the signed offer, invokes the bounded buyer-controlled signer and saves an encrypted checkpoint before submission.
-5. The client verifies report signature and exact resource/purpose/context, signed settlement receipt, and delivery-proof amount/transaction binding. This is not an independent on-chain finality check or a license.
-6. After an ambiguous response, call the same gate with the same ID and input. Existing checkpoints take precedence over changed coverage. The client reuses the exact authorization and payment identifier without invoking the wallet.
-7. Do not delete locked/starting checkpoints or reinitialize a budget to clear an error. A new logical purchase ID means a deliberate new evidence request. TaskBudget limits one gate instance; use your buyer application's durable spending ledger for limits spanning processes or tasks.
-
-Never log raw quote, claim, payment payload, signature or checkpoint. The adapter returns a public summary and always leaves `ingestionAuthorized:false`. Your application evaluates evidence under its own policy; even ALLOW_DECLARED does not grant permission.
-
-Reconciliation remains unverified/degraded as reported. Keep ambiguous purchases on hold for recovery; zero manual support is an objective, not a demonstrated property.
-
-See [HTTP contract](https://developers.getacqpath.com/http-x402), [OpenAPI](https://developers.getacqpath.com/openapi.json), and [recovery](https://developers.getacqpath.com/recovery).
+Generic zero-config x402, stock SIWX-only hooks, Payments MCP and generic paid proxies are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED; verified external revenue is 0 USDC. UNKNOWN is not permission and a report is not a license. No example initializes a wallet or contains secrets.

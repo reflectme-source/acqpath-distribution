@@ -4,7 +4,7 @@ Production version 0c3b5794-f428-4e69-879e-29cab293cd1a; core commit 9533e49d262
 
 # Phase 5 current state
 
-MCP Registry metadata 3.1.0-rc.3 ACTIVE and exact readback; Smithery and Glama existing listings updated to intent-first descriptions and publicly read back. GitHub description/topics/homepage updated and read back. Bazaar/Agentic Market: AWAITING FIRST EXTERNAL SETTLEMENT. No owner-funded payment. Required nonce support remains the generic-client blocker. Historical channel evidence follows.
+MCP Registry metadata 3.1.0-rc.3 ACTIVE and exact readback; Smithery and Glama existing listings updated to intent-first descriptions and publicly read back. GitHub description/topics/homepage updated and read back. Bazaar/Agentic Market: AWAITING FIRST EXTERNAL SETTLEMENT. No owner-funded payment. Tested official TS/Python clients use the AcqPath SIWX adapter with unchanged payment nonces. Generic zero-config clients are not claimed. Historical channel evidence follows.
 
 # Phase 2 channel matrix — 2026-09-10
 

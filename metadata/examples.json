@@ -9,7 +9,7 @@
     "tier": "fresh",
     "max_total_micro": "20000"
   },
-  "resourceCaveat": "Illustrative URL on an observed supported origin; no claim that this page has purchasable declarations.",
+  "resourceCaveat": "The root URL returned LICENSE_REQUIRED in the 2026-09-11 unpaid production check. Recheck current availability; example output remains synthetic and no paid mainnet E2E is claimed.",
   "unavailable": {
     "available": false,
     "reason": "NO_VERIFIABLE_DECLARATION",
@@ -31,10 +31,11 @@
     "when": "Before selected supported content enters the intended workflow",
     "input": "Canonical HTTPS URL plus actual purpose/context and bounded budget",
     "unknown": "Hold; do not treat as permission",
-    "purchase": "Quote -> private claim -> signed offer -> buyer-authorized x402 exact -> verified report",
+    "purchase": "POST /v1/rights/preflight -> verified offer -> unchanged official x402 signer -> AcqPath SIWX adapter -> verified report",
     "verification": "Pinned Ed25519 offer/report/receipt/delivery binding via reviewed buyer client",
-    "retry": "Resume same durable checkpoint",
-    "duplicatePrevention": "One logical ID, local lock, checkpoint before submission, same authorization on retry"
+    "retry": "Same operation ID, input and private directory; reuse saved payment/SIWX, never replace a pending authorization",
+    "duplicatePrevention": "One logical ID, local lock, checkpoint before submission, same authorization on retry",
+    "integrationGuide": "https://developers.getacqpath.com/examples/OFFICIAL-CLIENTS.md"
   },
   "mcp": {
     "generic": {
