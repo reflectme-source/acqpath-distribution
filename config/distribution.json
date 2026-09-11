@@ -23,7 +23,7 @@
   },
   "mcp": {
     "name": "com.getacqpath/acqpath",
-    "version": "3.1.0-rc.2",
+    "version": "3.1.0-rc.3",
     "url": "https://api.getacqpath.com/mcp",
     "protocolVersion": "2025-06-18"
   },
@@ -53,6 +53,7 @@
     "automaticPaymentsAllowed": false,
     "paidTestDefault": false,
     "autoPriceChangesAllowed": false,
-    "autoEnableProviderRoutingAllowed": false
+    "autoEnableProviderRoutingAllowed": false,
+    "ownerFundedPaymentsAllowed": false
   }
 }

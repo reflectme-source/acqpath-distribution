@@ -7,7 +7,9 @@
       "AcqPath",
       "Check observed RSL declarations",
       "acqpath_rights_quote",
-      "developers.getacqpath.com"
+      "developers.getacqpath.com",
+      "Can I use this URL for RAG",
+      "acqpath-request-binding"
     ]
   },
   {
@@ -20,7 +22,9 @@
       "acqpath_rights_quote",
       "Check observed RSL declarations",
       "routing tool is disabled",
-      "https://developers.getacqpath.com/from-glama"
+      "https://developers.getacqpath.com/from-glama",
+      "Can I use this URL for RAG",
+      "acqpath-request-binding"
     ]
   }
 ]

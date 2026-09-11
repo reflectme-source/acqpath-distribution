@@ -30,8 +30,8 @@
     },
     {
       "path": ".github/workflows/visibility.yml",
-      "sha256": "d35a4ac7c759272ce87f4f86ef11b563d6c68ae8e4907767f95537e4a115e8bc",
-      "bytes": 978
+      "sha256": "de73bc2c8ea68326e2456f9759251382903a2d2bb5b6f275542133dc8ead4758",
+      "bytes": 1062
     },
     {
       "path": ".gitignore",
@@ -60,8 +60,8 @@
     },
     {
       "path": "CHANNEL-MATRIX.md",
-      "sha256": "ccc104cec5d07237160609597e554c0898cf92ca11fd83b914e5cfee13292c6e",
-      "bytes": 9203
+      "sha256": "bc6aac1e6b4b0a12cc715cfdb381955152b84086384d935915149a08f5eeef3c",
+      "bytes": 9625
     },
     {
       "path": "CODEX-START.txt",
@@ -75,13 +75,13 @@
     },
     {
       "path": "README.md",
-      "sha256": "a94d058ee81046cb0f867dabeec86e1d959d011715057a5b46e9da165053a48a",
-      "bytes": 6780
+      "sha256": "570650944e7ff9d56df627377b07104d1f97a98c468004e7a6b4e5ad86da6090",
+      "bytes": 7489
     },
     {
       "path": "REVENUE-BASELINE.md",
-      "sha256": "9e118c7acd14a6b6b820aa66e630ce2d295e2ff7bea4bea59942110c05d08e88",
-      "bytes": 4703
+      "sha256": "028f6b10478e02d7e22195db6a605554694c399b5d0d458120db3c303d19101c",
+      "bytes": 5309
     },
     {
       "path": "REVENUE-OPTIMIZATION.md",
@@ -120,8 +120,8 @@
     },
     {
       "path": "config/distribution.json",
-      "sha256": "d72f8fc81e8b30502260a7d19517e174c00963dcbc3b22320dd8cb94a53f4647",
-      "bytes": 1712
+      "sha256": "24011eed71079d8d361ae4b01de2d2840f9f969a7e0ee916d7906cbb931a799e",
+      "bytes": 1753
     },
     {
       "path": "config/docs-analytics.json",
@@ -130,8 +130,8 @@
     },
     {
       "path": "docs/ACCEPTANCE.md",
-      "sha256": "60651275434772845f9b7ef239dc6f1aee63f40e53aaa9dbed5c6cabd32f1fa9",
-      "bytes": 7679
+      "sha256": "518975480805543c495d87a234043e8f5f5db0a92e8f8834350bda8128459ac5",
+      "bytes": 7707
     },
     {
       "path": "docs/BAZAAR-CURRENT-FLOW.md",
@@ -140,13 +140,13 @@
     },
     {
       "path": "docs/BAZAAR-ENGINEERING-STATUS.md",
-      "sha256": "2b0c7b36583833561a0453f022db0da35ccf2ddc9445a3736d1163183371de78",
-      "bytes": 5382
+      "sha256": "f0c666800877334daba744a210cbd16501cbe999d6a50fb161b9cf9a4f0e071d",
+      "bytes": 5354
     },
     {
       "path": "docs/BAZAAR-MAINNET-PLAN.md",
-      "sha256": "15b0c2243917251adf9e82ae116e3c64a780419642cea94de7c5af37501691e5",
-      "bytes": 4292
+      "sha256": "5496ff7253f452c701576ef4f91b5aa80a9cb9755ffcbdb312e48946d4d3b431",
+      "bytes": 4121
     },
     {
       "path": "docs/BAZAAR-OFFICIAL-REQUIREMENTS.md",
@@ -165,8 +165,8 @@
     },
     {
       "path": "docs/BAZAAR-TESTNET-PLAN.md",
-      "sha256": "9453ab612b2c1e8353b053f504725ca89bc3ae8d4436340666cde24f9112834a",
-      "bytes": 4549
+      "sha256": "aa0e0a915412a47c7a994c6b379bf27f6724bfff91f04b2f142b8f652414ad68",
+      "bytes": 4413
     },
     {
       "path": "docs/BLOCKERS.md",
@@ -185,8 +185,28 @@
     },
     {
       "path": "docs/EXECUTION-PLAN.md",
-      "sha256": "8bd9abd474bd34205dd667f1e4febc89ff47b2e40712a1d0a255b5cb4c75fd80",
-      "bytes": 7081
+      "sha256": "262e3920b84b73899f3006d1d96e87eca4c47ecbe4c8c1e8d4b54c610eb6ce9d",
+      "bytes": 6743
+    },
+    {
+      "path": "docs/PHASE5-BUYER-JOURNEY.md",
+      "sha256": "c1b9d2985135e1f54e74615418f085f6e83ee989fac320ccfe920f5c65d2eb68",
+      "bytes": 1966
+    },
+    {
+      "path": "docs/PHASE5-COVERAGE.md",
+      "sha256": "39fe3f6b343d06b70e451536ab10c257705600cacadc550838a63b92579876a0",
+      "bytes": 2237
+    },
+    {
+      "path": "docs/PHASE5-ECOSYSTEM.md",
+      "sha256": "9d18e1b090e5c2a7888fd1a718ff73a0ae660883ac61bd93f06d4c90d8755b6c",
+      "bytes": 2941
+    },
+    {
+      "path": "docs/PHASE5-MONITOR.md",
+      "sha256": "2e4871a9f373afe98c81a61e89690cdc184eee8a83072b65860a4d62d2b7a090",
+      "bytes": 2749
     },
     {
       "path": "docs/RESEARCH-SOURCES.md",
@@ -204,6 +224,11 @@
       "bytes": 2587
     },
     {
+      "path": "examples/PUBLIC-BUYER.md",
+      "sha256": "6e9eacf7068348d4988a98b1734559ba1f6adf7f673e45ae6d9545b24edb37ad",
+      "bytes": 4153
+    },
+    {
       "path": "examples/README.md",
       "sha256": "85702dfe1053aafb262c03ae9a19f4694ed5266fca3be44080b33a6974c37791",
       "bytes": 4012
@@ -212,6 +237,21 @@
       "path": "examples/evidence-gate.mjs",
       "sha256": "165f6827d4120627fdc058dbf89c4732c2e1d351ec2132a6b2cb95d4febb5640",
       "bytes": 2651
+    },
+    {
+      "path": "examples/public-preflight.mjs",
+      "sha256": "718d28149fc19cffb770b6df0bf2cf5e14fe4e709a68e64329b236d769da25e4",
+      "bytes": 2489
+    },
+    {
+      "path": "examples/public-preflight.py",
+      "sha256": "2c0f9b5c2b9275ccf84f85821de0d38f9c3d5fb0682533833be33a76bd9d87cf",
+      "bytes": 2606
+    },
+    {
+      "path": "examples/public-workflows.ts",
+      "sha256": "5c4e05e865255c94ece5deaee7d78dfdc0623193a6bd3aa627c2ece2cc00ac89",
+      "bytes": 757
     },
     {
       "path": "examples/read-only.mjs",
@@ -245,8 +285,8 @@
     },
     {
       "path": "metadata/bazaar-public-contract.json",
-      "sha256": "07cdc2c09dd87dc2e841bc7330ebeaa7f7b165eabff042e48710ef4eacbf6731",
-      "bytes": 17556
+      "sha256": "f6776f51a16399b484a69b024b935c748089e44d63ee097b9d18b4f4e4aca602",
+      "bytes": 17697
     },
     {
       "path": "metadata/buyer-intents.json",
@@ -255,8 +295,8 @@
     },
     {
       "path": "metadata/channel-readbacks.json",
-      "sha256": "5109519899965c70c7526e95cb96c95c1b0e5d3c44d4f5fc4a20adffe1271e43",
-      "bytes": 689
+      "sha256": "8a72b22ef97710df1402a2579fd19b684dc09a7e8d6c20cb207d6f15de725085",
+      "bytes": 826
     },
     {
       "path": "metadata/channel-status.seed.json",
@@ -304,6 +344,11 @@
       "bytes": 34414
     },
     {
+      "path": "metadata/phase5-status.json",
+      "sha256": "98dd3463a1242e2260563580f19e11789fb3e0526e8fb63b60dfd39d6fdcd296",
+      "bytes": 1765
+    },
+    {
       "path": "metadata/public-contract.json",
       "sha256": "197c5a23b9f44d35cdf511523f14fbb40ebfc4a4ec425247a38932bc378be51c",
       "bytes": 3933
@@ -320,18 +365,18 @@
     },
     {
       "path": "metadata/server.json",
-      "sha256": "38df23434914b6edbc53c82595228a5024447341cbe6b0c5f1b750b22b203199",
-      "bytes": 1043
+      "sha256": "5240b48ed52c1106748f4ad89e83bb6c21162032f71e00e85fa912b5ef82ec3d",
+      "bytes": 1063
     },
     {
       "path": "metadata/site-pages.json",
-      "sha256": "e185048a442701110a362dc02062a8eea9a8a83fb4da8b8f5672fb00d2fe4206",
-      "bytes": 42688
+      "sha256": "a9f83c4b120da4afac6ad1c1d575309b0d8cfe57c59b4a7c34795ace6a7347eb",
+      "bytes": 64068
     },
     {
       "path": "metadata/smithery-listing.json",
-      "sha256": "618f680a582d40b52d7bd6e5af6ff8f72e15e064f51352755a754346229578de",
-      "bytes": 1188
+      "sha256": "bf4e20bf75573aea1372d9f85547f1be83c786391692935083b6b526866d06fe",
+      "bytes": 1494
     },
     {
       "path": "metadata/vendor-provenance.json",
@@ -465,8 +510,8 @@
     },
     {
       "path": "scripts/bazaar-check.mjs",
-      "sha256": "598c4b0fcaf3fb1aae6f4d65494166507a2b060c657d4badbb92cdcd3ff0e195",
-      "bytes": 11511
+      "sha256": "46bdadebfda7d0970a838ff46df4f1d17bd9de1186d6131311a0f328199f73b7",
+      "bytes": 11536
     },
     {
       "path": "scripts/build.mjs",
@@ -475,8 +520,8 @@
     },
     {
       "path": "scripts/buyer-demo.mjs",
-      "sha256": "b2471fbfd73baa4dcbd12177b716d3bf51098d7d94ba587e4018846f24d3feb8",
-      "bytes": 5958
+      "sha256": "06d11bd796122817b685fad1b839b811d2a0cc3fed78c7607e9e6524c40ee368",
+      "bytes": 6013
     },
     {
       "path": "scripts/capture-public-contract.mjs",
@@ -495,8 +540,8 @@
     },
     {
       "path": "scripts/discovery-assets.mjs",
-      "sha256": "6939f88996bfb711c3f80e0e4673d1251e62f0432e5649bd8b25df487eb82865",
-      "bytes": 6927
+      "sha256": "440459a22ebbbdc62aed36c7fe145b4aa90137d072ae1062398b570a4d914e04",
+      "bytes": 7392
     },
     {
       "path": "scripts/discovery-check.mjs",
@@ -505,8 +550,8 @@
     },
     {
       "path": "scripts/docs-artifact.mjs",
-      "sha256": "a7b717520c041e10157503426fbcd9393347917b750e2b2570080779fd510201",
-      "bytes": 2747
+      "sha256": "73f20d12b88dae440564971faa7d44ddfd6f997d51fcca79d802cadce47bce7e",
+      "bytes": 2841
     },
     {
       "path": "scripts/docs-readback.mjs",
@@ -557,6 +602,11 @@
       "path": "scripts/metrics.mjs",
       "sha256": "ebc101b75d8b257f2be2ddbcfc08927863d3910781bb6336968f2d7ba5e6824a",
       "bytes": 2935
+    },
+    {
+      "path": "scripts/phase5-monitor.mjs",
+      "sha256": "8cd9030d2be04c48979b38f4a3248040eca0d03bcfe3887e4633cf893cdbbb40",
+      "bytes": 6561
     },
     {
       "path": "scripts/publish.mjs",
@@ -620,8 +670,8 @@
     },
     {
       "path": "skills/acqpath-rights-preflight/SKILL.md",
-      "sha256": "78c677795f7ea5042f437bd079dd1743504434bddb3dcaf03bda33eedb106202",
-      "bytes": 3086
+      "sha256": "3cca14a5f855fe621a1df5343bff4f54b6bffe3c7afcd2ea5d08b1634f47f340",
+      "bytes": 3709
     },
     {
       "path": "tests/audit.test.mjs",
@@ -635,8 +685,8 @@
     },
     {
       "path": "tests/bazaar-public-contract.test.mjs",
-      "sha256": "dca5767407bbf0fd9ccf28c8a9198a8ed87cead798c09c4ab7af06e76a9d846a",
-      "bytes": 3422
+      "sha256": "612181c2d44641448ba529f9d84e6c95fa430bef53bec13ba19711a82817e958",
+      "bytes": 3446
     },
     {
       "path": "tests/checkpoints.test.mjs",
@@ -662,6 +712,11 @@
       "path": "tests/package.test.mjs",
       "sha256": "9a2bf54c18086735dd8625858a7f8218855171bed7935850cf007020b54f89b4",
       "bytes": 8710
+    },
+    {
+      "path": "tests/phase5.test.mjs",
+      "sha256": "504b14fba3638f0df0dc1ba71dd74189e35d610a419b8547ee2948ecccdb44a1",
+      "bytes": 2654
     },
     {
       "path": "tests/support/fixture.mjs",

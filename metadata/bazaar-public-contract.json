@@ -1,7 +1,7 @@
 {
   "schema": "acqpath.bazaar-public-contract.v1",
   "reviewedAt": "2026-09-11",
-  "status": "PRODUCTION_UNPAID_VERIFIED_PAYMENT_AUTHORIZATION_REQUIRED",
+  "status": "AWAITING FIRST EXTERNAL SETTLEMENT",
   "architecture": "A_ADDITIVE_HTTP_ADAPTER",
   "appliedToCore": true,
   "coreCommit": "a7c4ef48faf1fa8849689f2dd90b676ffbe33fd7",
@@ -9,7 +9,7 @@
   "productionEndpointActive": true,
   "testnetOrigin": "https://acqpath-bazaar-sepolia.acqpath.workers.dev",
   "testnetDeployment": "DEPLOYED_UNPAID_ONLY",
-  "indexing": "UNVERIFIED",
+  "indexing": "AWAITING FIRST EXTERNAL SETTLEMENT",
   "walletSigningPerformed": false,
   "settlementPerformed": false,
   "resource": {
@@ -580,5 +580,7 @@
     "rollbackVersion": "6f17ddad-8461-4b78-b6c3-ea7b77339cc8",
     "walletSigned": false,
     "settlementPerformed": false
-  }
+  },
+  "ownerFundedPaymentsAllowed": false,
+  "nextAction": "Independent external buyer only; resolve client compatibility before any signing."
 }

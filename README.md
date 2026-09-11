@@ -1,8 +1,8 @@
-# AcqPath — RSL rights preflight for AI and RAG
+# AcqPath — can your agent use this content?
 
 Check observed content-use declarations **before AI input, RAG indexing, training or search**. AcqPath returns signed evidence of observed RSL declarations for supported URLs. It does not grant a license, establish ownership or provide legal clearance. UNKNOWN never authorizes ingestion.
 
-[Start integrating](https://developers.getacqpath.com/from-github) · [Supported scope](https://developers.getacqpath.com/scope) · [Examples](examples/README.md) · [MCP Registry](https://registry.modelcontextprotocol.io/v0.1/servers/com.getacqpath%2Facqpath/versions/3.1.0-rc.2) · [Smithery](https://smithery.ai/servers/reflectme-project/acqpath-rights-preflight) · [Glama](https://glama.ai/mcp/connectors/com.getacqpath/acqpath)
+[Start integrating](https://developers.getacqpath.com/from-github) · [Supported scope](https://developers.getacqpath.com/scope) · [Examples](examples/README.md) · [MCP Registry](https://registry.modelcontextprotocol.io/v0.1/servers/com.getacqpath%2Facqpath/versions/3.1.0-rc.3) · [Smithery](https://smithery.ai/servers/reflectme-project/acqpath-rights-preflight) · [Glama](https://glama.ai/mcp/connectors/com.getacqpath/acqpath)
 
 | Before this workflow | Report purpose | Boundary |
 |---|---|---|
@@ -13,6 +13,14 @@ Check observed content-use declarations **before AI input, RAG indexing, trainin
 | Crawling | No paid crawl purpose | Check robots, terms and crawler policy separately before downstream preflight |
 
 Fresh **0.02 USDC**; deep **0.05 USDC**, observed 2026-09-10. Read live [capabilities](https://api.getacqpath.com/v1/capabilities) and verify the signed quote before authorizing payment. Current origin coverage is exactly `https://medium.com`, `https://theguardian.com`, `https://rslstandard.org`, and `https://rslcollective.org`. Coverage is not a promise that every URL returns a purchasable or permissive report.
+
+## Start with the stable public endpoint
+
+POST `https://api.getacqpath.com/v1/rights/preflight` with a resource URL and purpose. No AcqPath account, API key or private operator token. [Public buyer journey](https://developers.getacqpath.com/public-http) · [JavaScript/Python/TypeScript examples](examples/PUBLIC-BUYER.md).
+
+**Compatibility:** the live endpoint requires `acqpath-request-binding` nonce support. Generic random-nonce x402 payment clients cannot buy. The repository legacy SDK is not a drop-in public endpoint client. Paid interoperability is not proven by a valid unpaid 402.
+
+Bazaar: **AWAITING FIRST EXTERNAL SETTLEMENT**. No owner-funded payments, wallet funding or indexing QA is requested.
 
 ## Connect once
 

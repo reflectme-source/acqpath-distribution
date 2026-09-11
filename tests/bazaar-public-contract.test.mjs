@@ -7,7 +7,7 @@ test('Prepared production offers never claim wallet payment or indexing',async()
  const d=JSON.parse(await readFile(new URL('../metadata/bazaar-public-contract.json',import.meta.url)));
  assert.equal(d.appliedToCore,true);assert.equal(d.productionDeployed,true);assert.equal(d.productionEndpointActive,true);
  assert.equal(d.productionValidation.preparedPurchase,'VERIFIED_NON_UNKNOWN_402');assert.equal(d.productionValidation.cdpValidator.valid,true);
- assert.equal(d.indexing,'UNVERIFIED');assert.equal(d.walletSigningPerformed,false);assert.equal(d.settlementPerformed,false);
+ assert.equal(d.indexing,'AWAITING FIRST EXTERNAL SETTLEMENT');assert.equal(d.walletSigningPerformed,false);assert.equal(d.settlementPerformed,false);
  assert.equal(d.resource.url,'https://api.getacqpath.com/v1/rights/preflight');assert.equal(d.method,'POST');
  assert.equal(d.clientRequirements.genericRandomNonceClientCompatible,false);assert.equal(d.clientRequirements.privateContextInCatalog,false);
  assert.equal(d.bazaar.info.input.method,'POST');assert.equal(d.examplesAreSynthetic,true);

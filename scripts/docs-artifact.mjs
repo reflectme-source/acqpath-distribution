@@ -7,7 +7,7 @@ export const DOCS_TARGET={account:'449109f33c0c400ea8aef1100c801da6',project:'ac
 export function artifactPath(path){
  const reviewedHidden=['.nojekyll','.well-known/acqpath-distribution.json'].includes(path);
  if(!/^[a-zA-Z0-9_.\/-]+$/.test(path)||path.startsWith('/')||path.split('/').some(x=>!x||x==='..'||(x.startsWith('.')&&!reviewedHidden)))throw Error('UNSAFE_DOCS_PATH');
- const sourceDownload=['examples/evidence-gate.mjs','examples/read-only.mjs','examples/read-only.py','examples/workflows.ts'].includes(path);
+ const sourceDownload=['examples/evidence-gate.mjs','examples/read-only.mjs','examples/read-only.py','examples/workflows.ts','examples/public-preflight.mjs','examples/public-preflight.py','examples/public-workflows.ts'].includes(path);
  if(/(?:^|\/)(?:_worker\.js|_routes\.json|functions)(?:\/|$)/i.test(path)||!(/\.(?:html|css|json|md|txt|xml|svg)$/.test(path)||['_headers','.nojekyll'].includes(path)||sourceDownload))throw Error('NON_STATIC_DOCS_FILE');
  return path;
 }

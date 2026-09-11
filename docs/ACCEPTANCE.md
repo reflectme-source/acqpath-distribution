@@ -2,7 +2,7 @@
 
 Core PR9 is merged and production version 61b19442-bd51-46ec-be31-01422a07f877 is live. All 19 unpaid checks pass, including two genuine non-UNKNOWN prepared offers at 0.02 USDC, pinned server signature verification, same-context unpaid retry, legacy quote/claim/report and CDP valid=true. Tests: 498 PASS, zero FAIL, two existing Windows skips; local workerd, types, CI, audit and secret scans PASS. Protected payment/runtime bindings, routes, Access, reconciliation and schema are unchanged.
 
-No wallet was signed and no payment occurred. Bazaar indexing, delivered paid report and post-settlement retry remain UNVERIFIED; the next step requires explicit owner authorization for one payment. External revenue remains UNKNOWN. [Current evidence](BAZAAR-ENGINEERING-STATUS.md). npm remains on owner hold.
+No wallet was signed and no payment occurred. Bazaar indexing, delivered paid report and post-settlement retry remain UNVERIFIED; Phase 5 prohibits owner-funded payment. Await the first independent external settlement; current scoped mainnet aggregate is zero. [Current evidence](BAZAAR-ENGINEERING-STATUS.md). npm remains on owner hold.
 
 The following Phase 2 snapshot is historical, including its zero-core-edit statement, deployment IDs, counts, earlier aggregate snapshot and blocker labels. It does not override the subsequent owner authorization or current Phase 3B results.
 

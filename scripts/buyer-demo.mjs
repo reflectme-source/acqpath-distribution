@@ -10,6 +10,7 @@ import {confirm,hidden} from './lib/prompts.mjs';
 export function localAllowed(req,host,origin,token){const got=req.headers['x-acq-local'];return req.headers.host===host&&req.headers.origin===origin&&req.headers['content-type']==='application/json'&&typeof got==='string'&&Buffer.byteLength(got)===Buffer.byteLength(token)&&timingSafeEqual(Buffer.from(got),Buffer.from(token));}
 async function body(req){let n=0,parts=[];for await(const b of req){n+=b.length;if(n>16384)throw Error('BODY_TOO_LARGE');parts.push(b);}return JSON.parse(Buffer.concat(parts).toString('utf8'));}
 export async function startBuyerDemo(root=ROOT){
+ throw Error('OWNER_FUNDED_PURCHASE_DISABLED_PHASE5');
  await confirm('RUN ONE MAINNET PURCHASE DEMO');
  console.log('Not an indexing action. Bazaar metadata is absent in the reviewed server. Maximum 0.05 USDC; use a separate BUYER wallet, never the seller wallet.');
  const password=process.env.ACQ_CHECKPOINT_PASSWORD||await hidden('Local encrypted-checkpoint password (at least 16 characters; remember it for resume)');

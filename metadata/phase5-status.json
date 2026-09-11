@@ -1,0 +1,62 @@
+{
+  "at": "2026-09-11T17:13:33.601Z",
+  "phase": 5,
+  "status": "EXTERNAL_BUYER_UNPAID_PATH_READY_GENERIC_PAYMENT_BLOCKED",
+  "productionChanged": false,
+  "ownerFundedPaymentsAllowed": false,
+  "bazaar": "AWAITING FIRST EXTERNAL SETTLEMENT",
+  "baseline": {
+    "externalPaidReports": 0,
+    "repeatExternalPayers": 0,
+    "externalRevenueMicro": "0",
+    "verifiedExternalPaidReports": 0,
+    "verifiedIndependentPayers": 0,
+    "verifiedRepeatPayers": 0,
+    "verifiedExternalRevenueMicro": "0",
+    "coverage": "ZERO_MAINNET_AGGREGATE",
+    "freshVerified": 0,
+    "deepVerified": 0,
+    "billableUnknownRatio": null,
+    "triggers": {
+      "FIRST_EXTERNAL_PAYMENT": false,
+      "FIRST_REPEAT_PAYER": false,
+      "10_EXTERNAL_PAID_REPORTS": false,
+      "3_INDEPENDENT_PAYERS": false
+    }
+  },
+  "coverage": [
+    {
+      "resource": "https://rslstandard.org",
+      "classification": "VALID_RSL_COMPATIBILITY_MEDIA"
+    },
+    {
+      "resource": "https://rslcollective.org",
+      "classification": "VALID_RSL_COMPATIBILITY_MEDIA"
+    },
+    {
+      "resource": "https://medium.com",
+      "classification": "VALID_RSL_COMPATIBILITY_MEDIA"
+    },
+    {
+      "resource": "https://theguardian.com",
+      "classification": "FETCH_BLOCKED"
+    },
+    {
+      "resource": "https://stackoverflow.com",
+      "classification": "FETCH_BLOCKED"
+    },
+    {
+      "resource": "https://www.vox.com",
+      "classification": "UNKNOWN"
+    },
+    {
+      "resource": "https://www.oreilly.com",
+      "classification": "UNKNOWN"
+    },
+    {
+      "resource": "https://www.reddit.com",
+      "classification": "UNKNOWN"
+    }
+  ],
+  "nextAction": "Resolve required request-binding compatibility for standard external x402 clients through separately reviewed work."
+}

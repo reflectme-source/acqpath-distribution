@@ -2,10 +2,31 @@
   {
     "slug": "index",
     "label": "Overview",
-    "title": "Check declared AI usage rights before ingestion.",
-    "description": "RSL declaration evidence for supported URLs. Use it before model input, RAG indexing, training or search. Get a timestamped signed report through HTTP x402.",
+    "title": "Can your agent use this content? Check declared rights.",
+    "description": "Machine-readable rights preflight before RAG ingestion, summarization, AI input, training or indexing. Signed declaration evidence, not legal clearance.",
     "hero": true,
     "sections": [
+      {
+        "title": "Preflight one URL, with no AcqPath account",
+        "paragraphs": [
+          "POST https://api.getacqpath.com/v1/rights/preflight with {resource,purpose,tier:\"fresh\",max_total_micro:\"20000\"}. A prepared 402 includes price/network/asset and the required private request binding. Empty POST is discovery-only. HTTP 200 with available:false and charge_micro:\"0\" is not a purchased report. There is no AcqPath account, API key or operator token.",
+          "The public endpoint requires acqpath-request-binding nonce support. Unmodified random-nonce x402 clients, Payments MCP and generic paid proxies are not verified compatible. Do not sign or submit until the buyer implementation verifies the signed binding and offer, pins terms, persists the request and supports the required nonce. No owner-funded indexing payment is requested or permitted."
+        ],
+        "links": [
+          {
+            "label": "Start the public HTTP journey",
+            "href": "/public-http"
+          },
+          {
+            "label": "RAG rights",
+            "href": "/rag-rights"
+          },
+          {
+            "label": "Training rights",
+            "href": "/training-rights"
+          }
+        ]
+      },
       {
         "title": "Connect once. Keep payment in your application.",
         "paragraphs": [
@@ -90,6 +111,20 @@
     "title": "From supported URL to verified rights evidence",
     "description": "Start with a free capability read. A fresh report is 0.02 USDC and a deep report is 0.05 USDC as observed; the signed quote controls the exact purchase.",
     "sections": [
+      {
+        "title": "Start with the stable public endpoint",
+        "paragraphs": [
+          "POST https://api.getacqpath.com/v1/rights/preflight with {resource,purpose,tier:\"fresh\",max_total_micro:\"20000\"}. A prepared 402 includes price/network/asset and the required private request binding. Empty POST is discovery-only. HTTP 200 with available:false and charge_micro:\"0\" is not a purchased report. There is no AcqPath account, API key or operator token.",
+          "The public endpoint requires acqpath-request-binding nonce support. Unmodified random-nonce x402 clients, Payments MCP and generic paid proxies are not verified compatible. Do not sign or submit until the buyer implementation verifies the signed binding and offer, pins terms, persists the request and supports the required nonce. No owner-funded indexing payment is requested or permitted.",
+          "The quote/claim examples below document the preserved legacy integration."
+        ],
+        "links": [
+          {
+            "label": "Public buyer journey",
+            "href": "/public-http"
+          }
+        ]
+      },
       {
         "title": "1. Check origin coverage and purpose",
         "paragraphs": [
@@ -393,6 +428,20 @@
     "title": "The AcqPath HTTP x402 purchase contract",
     "description": "Quote first, private claim second, signed payment third. This is a multi-step report flow, not a generic one-call paid MCP tool.",
     "sections": [
+      {
+        "title": "Start with the stable public endpoint",
+        "paragraphs": [
+          "POST https://api.getacqpath.com/v1/rights/preflight with {resource,purpose,tier:\"fresh\",max_total_micro:\"20000\"}. A prepared 402 includes price/network/asset and the required private request binding. Empty POST is discovery-only. HTTP 200 with available:false and charge_micro:\"0\" is not a purchased report. There is no AcqPath account, API key or operator token.",
+          "The public endpoint requires acqpath-request-binding nonce support. Unmodified random-nonce x402 clients, Payments MCP and generic paid proxies are not verified compatible. Do not sign or submit until the buyer implementation verifies the signed binding and offer, pins terms, persists the request and supports the required nonce. No owner-funded indexing payment is requested or permitted.",
+          "The quote/claim examples below document the preserved legacy integration."
+        ],
+        "links": [
+          {
+            "label": "Public buyer journey",
+            "href": "/public-http"
+          }
+        ]
+      },
       {
         "title": "1. Select and quote",
         "paragraphs": [
@@ -898,57 +947,351 @@
   {
     "slug": "bazaar-status",
     "label": "Bazaar status",
-    "title": "Bazaar adapter live; real offers verified before payment.",
-    "description": "Two real RSL sources produce LICENSE_REQUIRED and prepared 0.02 USDC offers. CDP validation passes. Wallet payment and Bazaar indexing await authorization.",
+    "title": "Bazaar: awaiting first external settlement",
+    "description": "Live unpaid endpoint verified; no owner-funded indexing purchase. First settlement must be from an independent external buyer.",
     "sections": [
       {
-        "title": "What is available now",
+        "title": "Current state",
         "paragraphs": [
-          "Use the public HTTP preflight adapter or the compatible legacy quote/private claim flow. MCP supports capabilities and quote preparation; payment stays outside model prompts.",
-          "The deployed coverage patch accepts generic XML only after strict RSL validation and records the nonstandard transport type. npm remains unpublished."
+          "AWAITING FIRST EXTERNAL SETTLEMENT. Production health, legacy flow, prepared unpaid 402, real LICENSE_REQUIRED resources and CDP valid=true were verified. This is not settlement or indexing evidence.",
+          "The public endpoint requires acqpath-request-binding nonce support. Unmodified random-nonce x402 clients, Payments MCP and generic paid proxies are not verified compatible. Do not sign or submit until the buyer implementation verifies the signed binding and offer, pins terms, persists the request and supports the required nonce. No owner-funded indexing payment is requested or permitted."
+        ]
+      },
+      {
+        "title": "How indexing becomes observable",
+        "paragraphs": [
+          "CDP indexes eligible metadata after successful settlement. Public monitoring checks merchant lookup and unfiltered brand/intent searches. Agentic Market consumes this ecosystem; a listing is claimed only after public readback. No fixed indexing deadline is promised."
+        ]
+      },
+      {
+        "title": "External revenue baseline",
+        "paragraphs": [
+          "2026-09-11 production aggregate read: 0 mainnet paid reports, 0 received USDC, 0 repeat payer identifiers. No independent external payment or repeat demand is proven. These are scoped aggregate observations, not lifetime or profitability claims."
+        ]
+      },
+      {
+        "title": "Integration",
+        "paragraphs": [
+          "POST https://api.getacqpath.com/v1/rights/preflight with {resource,purpose,tier:\"fresh\",max_total_micro:\"20000\"}. A prepared 402 includes price/network/asset and the required private request binding. Empty POST is discovery-only. HTTP 200 with available:false and charge_micro:\"0\" is not a purchased report. There is no AcqPath account, API key or operator token.",
+          "Fresh 0.02 USDC; deep 0.05 USDC. Base mainnet eip155:8453; USDC 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913; recipient 0xf69DBbd053fb0Fbc78ADfdB1BFe3b0D1F57300ec. The verified signed offer is authoritative; paying buys the report, not content rights."
         ],
         "links": [
           {
-            "label": "Current HTTP integration",
-            "href": "/quickstart"
+            "label": "External buyer path and compatibility",
+            "href": "/public-http"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "rag-rights",
+    "label": "Can I use this URL for RAG?",
+    "title": "Can I use this URL for RAG?",
+    "description": "Preflight a source before adding it to a retrieval corpus. Later model use may need a separate ai-input check; do not silently buy both.",
+    "sections": [
+      {
+        "title": "When to call",
+        "paragraphs": [
+          "Preflight a source before adding it to a retrieval corpus. Later model use may need a separate ai-input check; do not silently buy both.",
+          "Use a canonical URL from the live supported-origin list. Coverage does not guarantee a billable or permissive result."
+        ]
+      },
+      {
+        "title": "Request without payment",
+        "paragraphs": [
+          "POST https://api.getacqpath.com/v1/rights/preflight with {resource,purpose,tier:\"fresh\",max_total_micro:\"20000\"}. A prepared 402 includes price/network/asset and the required private request binding. Empty POST is discovery-only. HTTP 200 with available:false and charge_micro:\"0\" is not a purchased report. There is no AcqPath account, API key or operator token."
+        ],
+        "code": "{\n  \"resource\": \"https://rslstandard.org/\",\n  \"purpose\": \"ai-index\",\n  \"tier\": \"fresh\",\n  \"max_total_micro\": \"20000\"\n}"
+      },
+      {
+        "title": "Possible outcomes",
+        "paragraphs": [
+          "ALLOW_DECLARED is observed evidence, not permission. DENY_DECLARED and LICENSE_REQUIRED require a hold or applicable license review. UNKNOWN stays UNKNOWN. No legal advice, legal clearance, ownership verification or license acquisition. HTTP 403 is not bypassed."
+        ]
+      },
+      {
+        "title": "Price and integration",
+        "paragraphs": [
+          "Fresh 0.02 USDC; deep 0.05 USDC. Base mainnet eip155:8453; USDC 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913; recipient 0xf69DBbd053fb0Fbc78ADfdB1BFe3b0D1F57300ec. The verified signed offer is authoritative; paying buys the report, not content rights.",
+          "The public endpoint requires acqpath-request-binding nonce support. Unmodified random-nonce x402 clients, Payments MCP and generic paid proxies are not verified compatible. Do not sign or submit until the buyer implementation verifies the signed binding and offer, pins terms, persists the request and supports the required nonce. No owner-funded indexing payment is requested or permitted."
+        ],
+        "links": [
+          {
+            "label": "Public HTTP buyer journey",
+            "href": "/public-http"
           },
           {
-            "label": "Current MCP connection",
+            "label": "Runnable JavaScript unpaid example",
+            "href": "/examples/public-preflight.mjs"
+          },
+          {
+            "label": "Python unpaid example",
+            "href": "/examples/public-preflight.py"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "crawl-rights",
+    "label": "Does this page declare restrictions before crawling?",
+    "title": "Does this page declare restrictions before crawling?",
+    "description": "There is no paid crawl purpose and this service does not fetch content for you. Apply robots.txt, access controls and your crawler policy first; use ai-input only for planned downstream AI processing.",
+    "sections": [
+      {
+        "title": "When to call",
+        "paragraphs": [
+          "There is no paid crawl purpose and this service does not fetch content for you. Apply robots.txt, access controls and your crawler policy first; use ai-input only for planned downstream AI processing.",
+          "Use a canonical URL from the live supported-origin list. Coverage does not guarantee a billable or permissive result."
+        ]
+      },
+      {
+        "title": "Request without payment",
+        "paragraphs": [
+          "POST https://api.getacqpath.com/v1/rights/preflight with {resource,purpose,tier:\"fresh\",max_total_micro:\"20000\"}. A prepared 402 includes price/network/asset and the required private request binding. Empty POST is discovery-only. HTTP 200 with available:false and charge_micro:\"0\" is not a purchased report. There is no AcqPath account, API key or operator token."
+        ],
+        "code": "{\n  \"resource\": \"https://rslstandard.org/\",\n  \"purpose\": \"ai-input\",\n  \"tier\": \"fresh\",\n  \"max_total_micro\": \"20000\"\n}"
+      },
+      {
+        "title": "Possible outcomes",
+        "paragraphs": [
+          "ALLOW_DECLARED is observed evidence, not permission. DENY_DECLARED and LICENSE_REQUIRED require a hold or applicable license review. UNKNOWN stays UNKNOWN. No legal advice, legal clearance, ownership verification or license acquisition. HTTP 403 is not bypassed."
+        ]
+      },
+      {
+        "title": "Price and integration",
+        "paragraphs": [
+          "Fresh 0.02 USDC; deep 0.05 USDC. Base mainnet eip155:8453; USDC 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913; recipient 0xf69DBbd053fb0Fbc78ADfdB1BFe3b0D1F57300ec. The verified signed offer is authoritative; paying buys the report, not content rights.",
+          "The public endpoint requires acqpath-request-binding nonce support. Unmodified random-nonce x402 clients, Payments MCP and generic paid proxies are not verified compatible. Do not sign or submit until the buyer implementation verifies the signed binding and offer, pins terms, persists the request and supports the required nonce. No owner-funded indexing payment is requested or permitted."
+        ],
+        "links": [
+          {
+            "label": "Public HTTP buyer journey",
+            "href": "/public-http"
+          },
+          {
+            "label": "Runnable JavaScript unpaid example",
+            "href": "/examples/public-preflight.mjs"
+          },
+          {
+            "label": "Python unpaid example",
+            "href": "/examples/public-preflight.py"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "ai-input-rights",
+    "label": "Can I summarize or use this page as AI input?",
+    "title": "Can I summarize or use this page as AI input?",
+    "description": "Check declared usage terms before research, summarization or adding a web page to model context.",
+    "sections": [
+      {
+        "title": "When to call",
+        "paragraphs": [
+          "Check declared usage terms before research, summarization or adding a web page to model context.",
+          "Use a canonical URL from the live supported-origin list. Coverage does not guarantee a billable or permissive result."
+        ]
+      },
+      {
+        "title": "Request without payment",
+        "paragraphs": [
+          "POST https://api.getacqpath.com/v1/rights/preflight with {resource,purpose,tier:\"fresh\",max_total_micro:\"20000\"}. A prepared 402 includes price/network/asset and the required private request binding. Empty POST is discovery-only. HTTP 200 with available:false and charge_micro:\"0\" is not a purchased report. There is no AcqPath account, API key or operator token."
+        ],
+        "code": "{\n  \"resource\": \"https://rslstandard.org/\",\n  \"purpose\": \"ai-input\",\n  \"tier\": \"fresh\",\n  \"max_total_micro\": \"20000\"\n}"
+      },
+      {
+        "title": "Possible outcomes",
+        "paragraphs": [
+          "ALLOW_DECLARED is observed evidence, not permission. DENY_DECLARED and LICENSE_REQUIRED require a hold or applicable license review. UNKNOWN stays UNKNOWN. No legal advice, legal clearance, ownership verification or license acquisition. HTTP 403 is not bypassed."
+        ]
+      },
+      {
+        "title": "Price and integration",
+        "paragraphs": [
+          "Fresh 0.02 USDC; deep 0.05 USDC. Base mainnet eip155:8453; USDC 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913; recipient 0xf69DBbd053fb0Fbc78ADfdB1BFe3b0D1F57300ec. The verified signed offer is authoritative; paying buys the report, not content rights.",
+          "The public endpoint requires acqpath-request-binding nonce support. Unmodified random-nonce x402 clients, Payments MCP and generic paid proxies are not verified compatible. Do not sign or submit until the buyer implementation verifies the signed binding and offer, pins terms, persists the request and supports the required nonce. No owner-funded indexing payment is requested or permitted."
+        ],
+        "links": [
+          {
+            "label": "Public HTTP buyer journey",
+            "href": "/public-http"
+          },
+          {
+            "label": "Runnable JavaScript unpaid example",
+            "href": "/examples/public-preflight.mjs"
+          },
+          {
+            "label": "Python unpaid example",
+            "href": "/examples/public-preflight.py"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "training-rights",
+    "label": "Can I train on this content?",
+    "title": "Can I train on this content?",
+    "description": "Check declarations before adding a supported URL to a training dataset. A report does not acquire training rights.",
+    "sections": [
+      {
+        "title": "When to call",
+        "paragraphs": [
+          "Check declarations before adding a supported URL to a training dataset. A report does not acquire training rights.",
+          "Use a canonical URL from the live supported-origin list. Coverage does not guarantee a billable or permissive result."
+        ]
+      },
+      {
+        "title": "Request without payment",
+        "paragraphs": [
+          "POST https://api.getacqpath.com/v1/rights/preflight with {resource,purpose,tier:\"fresh\",max_total_micro:\"20000\"}. A prepared 402 includes price/network/asset and the required private request binding. Empty POST is discovery-only. HTTP 200 with available:false and charge_micro:\"0\" is not a purchased report. There is no AcqPath account, API key or operator token."
+        ],
+        "code": "{\n  \"resource\": \"https://rslstandard.org/\",\n  \"purpose\": \"ai-train\",\n  \"tier\": \"fresh\",\n  \"max_total_micro\": \"20000\"\n}"
+      },
+      {
+        "title": "Possible outcomes",
+        "paragraphs": [
+          "ALLOW_DECLARED is observed evidence, not permission. DENY_DECLARED and LICENSE_REQUIRED require a hold or applicable license review. UNKNOWN stays UNKNOWN. No legal advice, legal clearance, ownership verification or license acquisition. HTTP 403 is not bypassed."
+        ]
+      },
+      {
+        "title": "Price and integration",
+        "paragraphs": [
+          "Fresh 0.02 USDC; deep 0.05 USDC. Base mainnet eip155:8453; USDC 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913; recipient 0xf69DBbd053fb0Fbc78ADfdB1BFe3b0D1F57300ec. The verified signed offer is authoritative; paying buys the report, not content rights.",
+          "The public endpoint requires acqpath-request-binding nonce support. Unmodified random-nonce x402 clients, Payments MCP and generic paid proxies are not verified compatible. Do not sign or submit until the buyer implementation verifies the signed binding and offer, pins terms, persists the request and supports the required nonce. No owner-funded indexing payment is requested or permitted."
+        ],
+        "links": [
+          {
+            "label": "Public HTTP buyer journey",
+            "href": "/public-http"
+          },
+          {
+            "label": "Runnable JavaScript unpaid example",
+            "href": "/examples/public-preflight.mjs"
+          },
+          {
+            "label": "Python unpaid example",
+            "href": "/examples/public-preflight.py"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "indexing-rights",
+    "label": "Can I index this content?",
+    "title": "Can I index this content?",
+    "description": "Use search for a search pipeline; choose ai-index for an AI/RAG index. Keep the purpose aligned with the actual downstream use.",
+    "sections": [
+      {
+        "title": "When to call",
+        "paragraphs": [
+          "Use search for a search pipeline; choose ai-index for an AI/RAG index. Keep the purpose aligned with the actual downstream use.",
+          "Use a canonical URL from the live supported-origin list. Coverage does not guarantee a billable or permissive result."
+        ]
+      },
+      {
+        "title": "Request without payment",
+        "paragraphs": [
+          "POST https://api.getacqpath.com/v1/rights/preflight with {resource,purpose,tier:\"fresh\",max_total_micro:\"20000\"}. A prepared 402 includes price/network/asset and the required private request binding. Empty POST is discovery-only. HTTP 200 with available:false and charge_micro:\"0\" is not a purchased report. There is no AcqPath account, API key or operator token."
+        ],
+        "code": "{\n  \"resource\": \"https://rslstandard.org/\",\n  \"purpose\": \"search\",\n  \"tier\": \"fresh\",\n  \"max_total_micro\": \"20000\"\n}"
+      },
+      {
+        "title": "Possible outcomes",
+        "paragraphs": [
+          "ALLOW_DECLARED is observed evidence, not permission. DENY_DECLARED and LICENSE_REQUIRED require a hold or applicable license review. UNKNOWN stays UNKNOWN. No legal advice, legal clearance, ownership verification or license acquisition. HTTP 403 is not bypassed."
+        ]
+      },
+      {
+        "title": "Price and integration",
+        "paragraphs": [
+          "Fresh 0.02 USDC; deep 0.05 USDC. Base mainnet eip155:8453; USDC 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913; recipient 0xf69DBbd053fb0Fbc78ADfdB1BFe3b0D1F57300ec. The verified signed offer is authoritative; paying buys the report, not content rights.",
+          "The public endpoint requires acqpath-request-binding nonce support. Unmodified random-nonce x402 clients, Payments MCP and generic paid proxies are not verified compatible. Do not sign or submit until the buyer implementation verifies the signed binding and offer, pins terms, persists the request and supports the required nonce. No owner-funded indexing payment is requested or permitted."
+        ],
+        "links": [
+          {
+            "label": "Public HTTP buyer journey",
+            "href": "/public-http"
+          },
+          {
+            "label": "Runnable JavaScript unpaid example",
+            "href": "/examples/public-preflight.mjs"
+          },
+          {
+            "label": "Python unpaid example",
+            "href": "/examples/public-preflight.py"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "public-http",
+    "label": "Public HTTP",
+    "title": "Preflight a URL through one stable HTTP endpoint",
+    "description": "Account-free declared-rights evidence for autonomous content use. Start without payment and check client compatibility before spending.",
+    "sections": [
+      {
+        "title": "1. Discover capability and prepare",
+        "paragraphs": [
+          "POST https://api.getacqpath.com/v1/rights/preflight with {resource,purpose,tier:\"fresh\",max_total_micro:\"20000\"}. A prepared 402 includes price/network/asset and the required private request binding. Empty POST is discovery-only. HTTP 200 with available:false and charge_micro:\"0\" is not a purchased report. There is no AcqPath account, API key or operator token.",
+          "Supported paid purposes: ai-input, ai-index, ai-train, search. Start with GET /v1/capabilities. Do not call the disabled acqpath_quote routing tool."
+        ],
+        "code": "{\n  \"resource\": \"https://rslstandard.org/\",\n  \"purpose\": \"ai-input\",\n  \"tier\": \"fresh\",\n  \"max_total_micro\": \"20000\"\n}"
+      },
+      {
+        "title": "2. Inspect the 402",
+        "paragraphs": [
+          "Fresh 0.02 USDC; deep 0.05 USDC. Base mainnet eip155:8453; USDC 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913; recipient 0xf69DBbd053fb0Fbc78ADfdB1BFe3b0D1F57300ec. The verified signed offer is authoritative; paying buys the report, not content rights.",
+          "A stranger can inspect the endpoint and prepare a real LICENSE_REQUIRED resource without an AcqPath API key. Preserve X-AcqPath-Request privately. A decoded header is not signature verification."
+        ]
+      },
+      {
+        "title": "3. Payment compatibility boundary",
+        "paragraphs": [
+          "The public endpoint requires acqpath-request-binding nonce support. Unmodified random-nonce x402 clients, Payments MCP and generic paid proxies are not verified compatible. Do not sign or submit until the buyer implementation verifies the signed binding and offer, pins terms, persists the request and supports the required nonce. No owner-funded indexing payment is requested or permitted.",
+          "Standard x402 v2 uses PAYMENT-REQUIRED, PAYMENT-SIGNATURE and PAYMENT-RESPONSE. After verifying the offer, an extension-aware buyer must sign the exact bound EIP-3009 nonce and retain identical normalized input and request context. Do not modify a standard signer nonce after signing. The repository legacy SDK targets quote/claim report URLs and is not a drop-in public endpoint client."
+        ],
+        "links": [
+          {
+            "label": "Detailed external buyer contract",
+            "href": "/examples/PUBLIC-BUYER.md"
+          }
+        ]
+      },
+      {
+        "title": "4. Successful signed output",
+        "paragraphs": [
+          "The GET contract at the same endpoint describes the JSON schema. Successful paid output contains report, evidence, payment_settlement and delivery_proof. Verify Ed25519 evidence, signed receipt, source/purpose and exact amount/transaction binding before accepting it. Published examples are synthetic; no external paid delivery has yet been proven.",
+          "On uncertainty preserve the same checkpoint and request; never generate a second signature. A settlement response is not independent chain finality or duplicate-charge proof.",
+          "ALLOW_DECLARED is observed evidence, not permission. DENY_DECLARED and LICENSE_REQUIRED require a hold or applicable license review. UNKNOWN stays UNKNOWN. No legal advice, legal clearance, ownership verification or license acquisition. HTTP 403 is not bypassed."
+        ]
+      },
+      {
+        "title": "Examples and workflows",
+        "paragraphs": [
+          "JavaScript and Python examples run only the unpaid HTTP preparation; TypeScript maps RAG, crawler, research, training and search workflows. A generic paid-client example remains blocked by the required extension rather than pretending it works."
+        ],
+        "links": [
+          {
+            "label": "JavaScript",
+            "href": "/examples/public-preflight.mjs"
+          },
+          {
+            "label": "Python",
+            "href": "/examples/public-preflight.py"
+          },
+          {
+            "label": "TypeScript workflow gates",
+            "href": "/examples/public-workflows.ts"
+          },
+          {
+            "label": "MCP connection",
             "href": "/connect"
-          }
-        ]
-      },
-      {
-        "title": "The reviewed public contract",
-        "paragraphs": [
-          "The adapter accepts a reviewed URL, AI usage purpose, tier and budget. Reports describe observed declarations, including LICENSE_REQUIRED; the fee buys the diagnostic evidence, not the publisher license.",
-          "Payment must bind the normalized request and private retry context through a specific EIP-3009 nonce. Generic clients that choose an arbitrary nonce cannot purchase this operation.",
-          "An empty POST or empty JSON object is a discovery-only 402. It does not prepare a payable request. A buyer must verify the signed prepared binding and terms before any wallet signature."
-        ],
-        "links": [
-          {
-            "label": "Candidate contract and synthetic schemas",
-            "href": "/bazaar-status.json"
-          }
-        ]
-      },
-      {
-        "title": "Validation and remaining gates",
-        "paragraphs": [
-          "Core verification: 498 passed, zero failures and two existing Windows skips across 500 tests. PR9 and merged-main CI, workerd, SDK types, audit and secret scans pass.",
-          "Production version 61b19442-bd51-46ec-be31-01422a07f877 passes 19 unpaid checks: health, legacy contracts, schemas, prepared server-signed 402, same-context retry, conflicting-input rejection and CDP valid=true / simulation=accepted.",
-          "https://rslstandard.org/ and https://rslcollective.org/ produce LICENSE_REQUIRED with a 20000 micro-USDC fee. Their linked RSL declaration is served as application/xml; source evidence explicitly marks compatibility mode.",
-          "Medium remains fetch-blocked by 403, and The Guardian redirects outside the approved origin boundary. UNKNOWN is retained; no spoofing or access-control bypass is used.",
-          "No wallet signature or payment occurred. A delivered paid report, post-settlement retry and Bazaar indexing remain unverified. External revenue remains UNKNOWN."
-        ],
-        "links": [
-          {
-            "label": "CDP non-paid endpoint validation",
-            "href": "https://docs.cdp.coinbase.com/api-reference/v2/rest-api/x402-facilitator/validate-x402-endpoint"
-          },
-          {
-            "label": "Isolated Sepolia contract (unpaid only)",
-            "href": "https://acqpath-bazaar-sepolia.acqpath.workers.dev/v1/rights/preflight"
           }
         ]
       }

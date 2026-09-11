@@ -23,7 +23,7 @@ Once a genuinely public, reviewed probe URL exists, the agent can use `scripts/b
 
 ## Payment gate — disabled
 
-There is no signing, verify-payment or settlement command in the new checker. A future testnet signature and one settlement require a separate explicit owner approval and a separate test wallet UI. The agent must first present candidate source hash, expected terms, network, single-purchase cap and recovery checkpoint procedure. If settlement becomes uncertain, resume/reconcile that same intent; never create a replacement payment automatically.
+There is no signing, verify-payment or settlement command in the new checker. This historical plan is archived by Phase 5. No owner-funded testnet or mainnet signing or settlement is permitted. If settlement becomes uncertain, resume/reconcile that same intent; never create a replacement payment automatically.
 
 After the approved indexing condition, read the exact public entry and search results, including all extension fields. Require absence of private claims, order IDs, source URLs and decoded signed-offer URL leakage. A positive transaction receipt alone does not pass this gate. Only then consider TESTNET VERIFIED; do not infer MAINNET DEPLOYED or BAZAAR INDEXED on mainnet.
 

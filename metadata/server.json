@@ -1,9 +1,9 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "com.getacqpath/acqpath",
-  "title": "AcqPath — RSL rights preflight for AI & RAG",
-  "description": "RSL rights preflight for AI, RAG indexing and training. Signed reports via HTTP x402; not licenses.",
-  "version": "3.1.0-rc.2",
+  "title": "AcqPath — content rights before RAG, AI and training",
+  "description": "Check content rights before RAG, AI input, training or indexing. Signed RSL evidence, not a license.",
+  "version": "3.1.0-rc.3",
   "remotes": [
     {
       "type": "streamable-http",
@@ -15,7 +15,7 @@
     "io.modelcontextprotocol.registry/publisher-provided": {
       "documentation": "https://developers.getacqpath.com",
       "repository": "https://github.com/reflectme-source/acqpath-distribution",
-      "metadataRevision": "Phase 2 discovery update; remote core remains 3.1.0-rc.1",
+      "metadataRevision": "Phase 5 intent metadata; metadata version only, not a core release",
       "intents": [
         "RSL declarations",
         "AI input rights",

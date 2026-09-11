@@ -5,6 +5,8 @@ description: Integrate observed RSL rights evidence before selected supported co
 
 # AcqPath rights preflight
 
+Use before an agent summarizes, ingests into RAG, trains on or indexes a supported URL when it needs machine-readable evidence of declared usage/licensing terms. Start with the [public HTTP journey](https://developers.getacqpath.com/public-http): stable POST `/v1/rights/preflight`, no AcqPath account or API key. Required `acqpath-request-binding` nonce support means unmodified generic x402 clients cannot buy; the legacy quote/claim SDK is not a drop-in client. Do not claim standard paid interoperability from unpaid validation. Owner-funded QA/indexing purchases are disabled; never prompt the owner to fund or sign.
+
 Read [machine discovery](https://developers.getacqpath.com/.well-known/acqpath-distribution.json) and [quickstart](https://developers.getacqpath.com/quickstart). Connect the existing Streamable HTTP MCP endpoint `https://api.getacqpath.com/mcp`; public connection requires no seller credential.
 
 Use `acqpath_capabilities` or GET `/v1/capabilities` before integrating. Permit `acqpath_rights_quote` only when a selected supported resource needs evidence; it can fetch metadata and consume quota, and its result contains a private claim. Exclude the disabled legacy `acqpath_quote` tool.

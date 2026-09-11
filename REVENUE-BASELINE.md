@@ -1,3 +1,9 @@
+# Current Phase 5 baseline
+
+Observed 2026-09-11T17:13:33.601Z: **0 mainnet paid reports; 0 received USDC; 0 repeat payer identifiers**. External paid reports and external revenue are zero within this current aggregate scope. Independent customers and repeat external demand: none proven. Billable/UNKNOWN ratio and verified delivery attribution remain UNKNOWN. Owner-funded purchases are disabled. Hourly read-only monitoring is authorized in Phase 5; see docs/PHASE5-MONITOR.md.
+
+The snapshot below is historical and its earlier authorization limits are superseded only for Phase 5 read-only monitoring.
+
 # Revenue baseline — before Phase 2 optimization
 
 Captured on 2026-09-10, before the distribution changes. Public contract and GitHub snapshot: **13:40:17 UTC**. The owner-approved, single aggregate read: **13:43:12 UTC**. This is an operator aggregate snapshot, not an independently reconciled accounting statement. No further production aggregate read is scheduled or authorized by this report.

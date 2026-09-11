@@ -34,6 +34,6 @@ At most two metadata redirects are allowed. Each hop consumes existing fetch/quo
 
 ## Payment boundary and distribution
 
-[CDP discovery](https://docs.cdp.coinbase.com/x402/seller/get-discovered) requires a successful settled call for indexing. The remaining boundary is explicit owner authorization for exactly one 0.02 USDC Base mainnet indexing purchase. It must be classified INTERNAL_INDEXING_QA, never organic revenue. No testnet/mainnet wallet signature or payment occurred in this rollout; delivered report, post-settlement retry/no-second-charge and Bazaar indexed readback remain UNVERIFIED.
+[CDP discovery](https://docs.cdp.coinbase.com/x402/seller/get-discovered) requires a successful settled call for indexing. Phase 5 supersedes the owner-funded indexing plan: AWAITING FIRST EXTERNAL SETTLEMENT. No owner-funded payment, wallet funding or signing is permitted. No testnet/mainnet wallet signature or payment occurred in this rollout; delivered report, post-settlement retry/no-second-charge and Bazaar indexed readback remain UNVERIFIED.
 
 Automatic distribution docs deployment is enabled on main and uses the separate Pages project. Public docs and machine status distinguish successful unpaid validation from settlement/indexing. npm remains unpublished. Earlier Phase2/Phase3 notes and Sepolia fixture results are historical and do not prove a Phase4 payment. External paid reports, external payers, repeat payers and received external USDC remain UNKNOWN.

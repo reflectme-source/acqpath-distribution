@@ -1,9 +1,9 @@
 {
   "status": "PUBLISHED_PUBLIC_READBACK",
-  "name": "AcqPath — RSL Rights Preflight",
+  "name": "AcqPath — Content Rights for AI and RAG",
   "url": "https://api.getacqpath.com/mcp",
   "transport": "streamable-http",
-  "description": "Check observed RSL declarations before AI input, RAG indexing, training or search on supported origins. MCP provides capabilities and report quotes; paid delivery uses HTTP x402 (fresh 0.02 USDC, deep 0.05 USDC as observed; signed quote authoritative). Reports are not licenses, legal clearance or ownership verification. Keep quote claims private; UNKNOWN never authorizes use. The legacy acqpath_quote provider-routing tool is disabled.",
+  "description": "Can I use this URL for RAG, summarize it, train on it or index it? Check observed RSL declarations and machine-readable usage/licensing terms before processing supported content. Use acqpath_capabilities first; acqpath_rights_quote prepares a private quote. Stable HTTP: https://api.getacqpath.com/v1/rights/preflight — no AcqPath account or API key. Fresh 0.02 USDC, deep 0.05 USDC on Base; verified signed offer authoritative. Public payment requires acqpath-request-binding nonce support; generic random-nonce x402 clients are not compatible. No paid crawl purpose. UNKNOWN is not permission; no license, legal clearance or legal advice. The legacy acqpath_quote routing tool is disabled. Keep private claims outside model context.",
   "recommendedTools": [
     "acqpath_capabilities",
     "acqpath_rights_quote"

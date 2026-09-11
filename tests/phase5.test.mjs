@@ -1,0 +1,13 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {externalBaseline} from '../scripts/phase5-monitor.mjs';
+import {startBuyerDemo} from '../scripts/buyer-demo.mjs';
+test('owner purchase is disabled before any prompt or wallet operation',async()=>{await assert.rejects(startBuyerDemo(),/OWNER_FUNDED_PURCHASE_DISABLED_PHASE5/)});
+test('unknown aggregates never manufacture zero external revenue',()=>{assert.equal(externalBaseline(null).externalRevenueMicro,null);assert.equal(externalBaseline({mainnetPaidReports:0,mainnetReceivedMicro:'0'}).externalRevenueMicro,'0')});
+test('demand milestones exclude internal, unverified, other networks and duplicate transactions',()=>{const good={network:'eip155:8453',classification:'EXTERNAL_VERIFIED',independenceVerified:true,settlementVerified:true,reportDeliveryVerified:true,noDuplicateChargeVerified:true,transaction:'0x'+'1'.repeat(64),payer:'0x'+'2'.repeat(40),amountMicro:'20000'};const result=externalBaseline(null,[good,good,{...good,transaction:'0x'+'3'.repeat(64),classification:'INTERNAL_INDEXING_QA'},{...good,network:'eip155:84532'},{...good,independenceVerified:false}]);assert.equal(result.verifiedExternalPaidReports,1);assert.equal(result.triggers.FIRST_EXTERNAL_PAYMENT,true);assert.equal(result.triggers.FIRST_REPEAT_PAYER,false);assert.equal(result.externalPaidReports,null);assert.equal(externalBaseline(null,[good],[good.payer]).verifiedExternalPaidReports,0)});
+
+test('public unpaid sample rejects price drift and never submits payment',async()=>{
+ const {preflight}=await import('../examples/public-preflight.mjs');let calls=0;
+ const fetcher=async(url,options)=>{calls++;assert.equal(url,'https://api.getacqpath.com/v1/rights/preflight');assert.equal(options.headers['PAYMENT-SIGNATURE'],undefined);return new Response('',{status:402,headers:{'payment-required':Buffer.from(JSON.stringify({x402Version:2,resource:{url},accepts:[{scheme:'exact',amount:'20001',network:'eip155:8453'}]})).toString('base64')}})};
+ await assert.rejects(preflight('https://rslstandard.org/','ai-input',{fetcher}),/Unexpected payment terms/);assert.equal(calls,1);
+});
+test('public sample holds unsupported input without pretending delivery',async()=>{const {preflight}=await import('../examples/public-preflight.mjs');let calls=0;await assert.rejects(preflight('https://rslstandard.org/','crawl',{fetcher:()=>{calls++}}));assert.equal(calls,0);const result=await preflight('https://example.org/','ai-input',{fetcher:async()=>Response.json({available:false,charge_micro:'0',reason:'NO_EVIDENCE'})});assert.equal(result.ingestionAuthorized,false);assert.equal(result.charged,'0')});

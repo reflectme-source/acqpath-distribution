@@ -68,12 +68,9 @@ Narzędzie instaluje dokładnie odczytaną wersję npm `smithery` w .tools z loc
 
 Po publikacji przetestuj handshake/tools-list przez rzeczywistą integrację. Nie testuj kupowania przez gateway bez oddzielnej zgody. `paidMcpCompatible:false` zostaje, dopóki pełna ścieżka nie została osobno potwierdzona. Materiał PulseMCP jest w metadata/pulsemcp-submission.md; brak automatyzacji moderowanego formularza nie oznacza, że został wysłany.
 
-## 6. Opcjonalna próba zakupu
+## 6. Phase 5 — bez płatności właściciela
 
-NIE jest domyślnym etapem. Dopiero po odczycie aktualnego scope, potwierdzeniu ceny, poinformowaniu o DEGRADED recovery i jawnej zgodzie uruchom:
-`node scripts/cli.mjs buyer-demo`
-
-Node uruchamia lokalny serwer 127.0.0.1, a użytkownik otwiera adres w przeglądarce z Rabby. Zatwierdza jeden raport i podpis w osobnym portfelu KUPUJĄCEGO. Hasło checkpointu min.16 znaków pozostaje lokalnie i jest potrzebne do wznowienia. Ta próba nie indeksuje Bazaar przy braku extension i nie jest realnym klientem. Po niejednoznacznym stanie tylko Resume — żadnego kasowania checkpointu ani nowego podpisu.
+Buyer-demo jest zablokowane. Prywatne narzędzia QA zachowane archiwalnie; nie uruchamiaj portfela, nie proś o środki lub podpis. Pierwsze rozliczenie ma pochodzić od niezależnego zewnętrznego kupującego. Monitoring: docs/PHASE5-MONITOR.md.
 
 ## 7. Odczyt biznesu i zakończenie
 

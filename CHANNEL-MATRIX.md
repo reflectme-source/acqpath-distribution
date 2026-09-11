@@ -1,3 +1,7 @@
+# Phase 5 current state
+
+MCP Registry metadata 3.1.0-rc.3 ACTIVE and exact readback; Smithery and Glama existing listings updated to intent-first descriptions and publicly read back. GitHub description/topics/homepage updated and read back. Bazaar/Agentic Market: AWAITING FIRST EXTERNAL SETTLEMENT. No owner-funded payment. Required nonce support remains the generic-client blocker. Historical channel evidence follows.
+
 # Phase 2 channel matrix — 2026-09-10
 
 This is a bounded review of the active, relevant surfaces below, not a claim to exhaust the internet. Qualified traffic and incremental revenue are UNKNOWN for every channel. Tier and potential describe buyer fit, not a traffic forecast. No ads, paid directory placements, fabricated reviews, self-installs or settlement traffic were purchased.

@@ -22,14 +22,14 @@ export async function validateDesign(root=ROOT){
 }
 export async function validatePublicContract(root=ROOT){
  const d=await load(join(root,'metadata/bazaar-public-contract.json'));const ajv=await schemaValidator();
- if(d.schema!=='acqpath.bazaar-public-contract.v1'||d.architecture!=='A_ADDITIVE_HTTP_ADAPTER'||d.appliedToCore!==true||d.indexing!=='UNVERIFIED'||d.settlementPerformed!==false||d.walletSigningPerformed!==false)throw Error('UNPROVEN_DISCOVERY_CLAIM');
+ if(d.schema!=='acqpath.bazaar-public-contract.v1'||d.architecture!=='A_ADDITIVE_HTTP_ADAPTER'||d.appliedToCore!==true||d.indexing!=='AWAITING FIRST EXTERNAL SETTLEMENT'||d.settlementPerformed!==false||d.walletSigningPerformed!==false)throw Error('UNPROVEN_DISCOVERY_CLAIM');
  const p=d.productionValidation;
- if(d.productionDeployed!==true||d.productionEndpointActive!==true||d.status!=='PRODUCTION_UNPAID_VERIFIED_PAYMENT_AUTHORIZATION_REQUIRED'||!p||p.version!=='61b19442-bd51-46ec-be31-01422a07f877'||p.sourceSha256!==d.coreSourceSha256||p.health!=='PASS'||p.legacyCompatibility!=='PASS'||p.unpaidDiscovery!=='PASS'||p.cdpValidator?.valid!==true||p.cdpValidator?.simulationAccepted!==true||p.preparedPurchase!=='VERIFIED_NON_UNKNOWN_402')throw Error('UNPROVEN_PRODUCTION_CLAIM');
+ if(d.productionDeployed!==true||d.productionEndpointActive!==true||d.status!=='AWAITING FIRST EXTERNAL SETTLEMENT'||!p||p.version!=='61b19442-bd51-46ec-be31-01422a07f877'||p.sourceSha256!==d.coreSourceSha256||p.health!=='PASS'||p.legacyCompatibility!=='PASS'||p.unpaidDiscovery!=='PASS'||p.cdpValidator?.valid!==true||p.cdpValidator?.simulationAccepted!==true||p.preparedPurchase!=='VERIFIED_NON_UNKNOWN_402')throw Error('UNPROVEN_PRODUCTION_CLAIM');
  if(d.method!=='POST'||d.resource.url!=='https://api.getacqpath.com/v1/rights/preflight'||d.clientRequirements.genericRandomNonceClientCompatible!==false||d.clientRequirements.privateContextInCatalog!==false)throw Error('UNREVIEWED_PUBLIC_CONTRACT');
  for(const schema of [d.inputSchema,d.outputSchema,d.bazaar.schema]){rejectExternalRefs(schema);ajv.compile(schema);}
  if(!ajv.compile(d.bazaar.schema)(d.bazaar.info))throw Error('INVALID_PUBLIC_BAZAAR_EXAMPLE');
  const catalog=JSON.stringify(d.bazaar.info);if(/x-acqpath-claim|payment-signature|authorization|cookie|\/api\/admin/i.test(catalog))throw Error('PRIVATE_CATALOG_DATA');
- return {status:d.status,schemas:'PASS',examples:'SYNTHETIC_SCHEMA_VALID',productionDeployed:true,preparedPurchase:p.preparedPurchase,indexing:'UNVERIFIED',noPaymentPerformed:true};
+ return {status:d.status,schemas:'PASS',examples:'SYNTHETIC_SCHEMA_VALID',productionDeployed:true,preparedPurchase:p.preparedPurchase,indexing:'AWAITING FIRST EXTERNAL SETTLEMENT',noPaymentPerformed:true};
 }
 export async function checkChallenge(ch,expected){
  const a=ch?.accepts?.[0];if(ch?.x402Version!==2||ch.accepts?.length!==1||!a)throw Error('BAD_402');

@@ -16,12 +16,14 @@ jobs:
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
         with:
           node-version: '24'
+      - run: node scripts/phase5-monitor.mjs
       - run: node scripts/discovery-check.mjs
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
           name: public-discovery-verification
           path: |
+            .local/phase5/monitor.json
             .local/public-audit.json
             .local/discovery-check.json
             .local/docs-verification-*.json
