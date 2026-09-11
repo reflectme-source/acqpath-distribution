@@ -1,8 +1,8 @@
 {
   "schema": "acqpath.distribution.public-contract.v1",
-  "observedAt": "2026-09-10T13:40:17.531Z",
+  "observedAt": "2026-09-11T14:35:16.619Z",
   "coreVersion": "3.1.0-rc.1",
-  "expectedSourceSha256": "7b7b830d434bac12bf7b42f7b706757e2ca8dab15349adc367985208f4329671",
+  "expectedSourceSha256": "af21b15c04a56f1e104a736de699652c9b56b4871de7827cf2ac6078a05dbe84",
   "apiOrigin": "https://api.getacqpath.com",
   "capabilities": {
     "version": "3.1.0-rc.1",

@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "apiOrigin": "https://api.getacqpath.com",
   "publicOrigin": "https://getacqpath.com",
-  "expectedSourceSha256": "7b7b830d434bac12bf7b42f7b706757e2ca8dab15349adc367985208f4329671",
+  "expectedSourceSha256": "af21b15c04a56f1e104a736de699652c9b56b4871de7827cf2ac6078a05dbe84",
   "payment": {
     "network": "eip155:8453",
     "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",

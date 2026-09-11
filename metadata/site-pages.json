@@ -73,7 +73,7 @@
       {
         "title": "Bazaar integration status",
         "paragraphs": [
-          "The additive public adapter passes isolated Sepolia checks and the CDP validator. Production continues to use the documented private quote/claim/report flow."
+          "The public adapter is deployed. Production health, legacy compatibility, discovery-only 402 and CDP validation pass. Preparing an indexing purchase is blocked by unavailable declarations on the checked sources."
         ],
         "links": [
           {
@@ -898,14 +898,14 @@
   {
     "slug": "bazaar-status",
     "label": "Bazaar status",
-    "title": "Bazaar public adapter: Sepolia verified, production pending.",
-    "description": "The isolated Base Sepolia candidate passes unpaid contract checks and the CDP validator. Production deployment, wallet signing, settlement and Bazaar indexing remain unverified.",
+    "title": "Bazaar adapter live; indexing purchase blocked.",
+    "description": "Production discovery-only 402 and CDP validation pass. No payable report was prepared from the checked sources; no payment or indexing is claimed.",
     "sections": [
       {
         "title": "What is available now",
         "paragraphs": [
           "Use the existing HTTP quote and private claim flow, or MCP for capabilities and quote preparation. Keep payment and private claims in your application.",
-          "The public POST /v1/rights/preflight adapter is implemented and tested, but has not been deployed to production. Do not call it as a live paid tool. npm remains unpublished."
+          "POST /v1/rights/preflight is deployed on production. The legacy HTTP flow remains compatible. npm remains unpublished."
         ],
         "links": [
           {
@@ -921,7 +921,7 @@
       {
         "title": "The reviewed public contract",
         "paragraphs": [
-          "The candidate accepts a reviewed URL, AI usage purpose, tier and budget. It reuses the existing Rights Preflight pipeline and PaymentIntent journal, returning signed evidence directly.",
+          "The adapter accepts a reviewed URL, AI usage purpose, tier and budget. It reuses the existing Rights Preflight pipeline and PaymentIntent journal.",
           "Payment must bind the normalized request and private retry context through a specific EIP-3009 nonce. Generic clients that choose an arbitrary nonce cannot purchase this operation.",
           "An empty POST or empty JSON object is a discovery-only 402. It does not prepare a payable request. A buyer must verify the signed prepared binding and terms before any wallet signature."
         ],
@@ -937,7 +937,8 @@
         "paragraphs": [
           "Local regression: 444 passed, zero failed and two Windows skips; 72 dedicated adapter cases. GitHub checks, local workerd D1/DO/R2 and SDK types pass. No real wallet signature or settlement occurred.",
           "The isolated Base Sepolia candidate passes 14 unpaid checks. CDP returns valid=true and simulation=accepted. Payment submissions are blocked; this is a contract-validation environment.",
-          "Production still runs its existing code and payment settings. Bazaar indexing, external paid reports, repeat payers and received USDC remain UNVERIFIED or UNKNOWN. Validator acceptance cannot establish a completed payment or indexing."
+          "Production version 6f17ddad-8461-4b78-b6c3-ea7b77339cc8 passes health, legacy compatibility, JSON schemas, unpaid discovery 402 and CDP valid=true / simulation=accepted. Payment terms, state bindings, domains and schedules match the previous version.",
+          "All four tested origin roots returned UNKNOWN with charge_micro=0. RSL Collective serves linked declarations as application/xml, which the approved application/rsl+xml profile rejects; Medium returned 403 and The Guardian a rejected redirect. Prepared production binding, wallet signing, settlement and Bazaar indexing remain unverified. External revenue is UNKNOWN."
         ],
         "links": [
           {

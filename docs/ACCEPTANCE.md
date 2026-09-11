@@ -1,6 +1,8 @@
-# Current acceptance — Phase 3B
+# Current acceptance — production Bazaar launch
 
-The current engineering and publication record is [Bazaar engineering status](BAZAAR-ENGINEERING-STATUS.md). Core main is merged after green non-deploying CI; isolated Sepolia passes 14 unpaid checks and the CDP validator. Production code/configuration, real wallet signing, settlement and Bazaar indexing are not part of that success. Distribution now has 99 tests and 20 docs pages. Automatic docs deployment from main is enabled and verified in [run 34531864325](https://github.com/reflectme-source/acqpath-distribution/actions/runs/34531864325); its Pages-only credential is held in the main-only distribution-docs GitHub environment and expires September 11, 2027. npm remains on owner hold.
+The reviewed core main is live as 6f17ddad-8461-4b78-b6c3-ea7b77339cc8. Health, legacy compatibility, unchanged protected bindings/domains/schedules, unpaid discovery 402, schemas and CDP valid=true pass. Fresh core CI, 444 local tests, workerd, SDK types, dependency audit and index/history/bundle secret scans passed. Automatic distribution docs deployment is active.
+
+Indexing purchase is blocked: four checked allowed origin roots return no verifiable declaration and charge_micro=0. No wallet signing, settlement, prepared production binding or paid retry is claimed. Bazaar indexing is UNVERIFIED; external revenue remains UNKNOWN. See [current evidence](BAZAAR-ENGINEERING-STATUS.md). npm remains on owner hold.
 
 The following Phase 2 snapshot is historical, including its zero-core-edit statement, deployment IDs, counts, earlier aggregate snapshot and blocker labels. It does not override the subsequent owner authorization or current Phase 3B results.
 

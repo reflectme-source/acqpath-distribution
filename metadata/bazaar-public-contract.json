@@ -1,12 +1,12 @@
 {
   "schema": "acqpath.bazaar-public-contract.v1",
-  "reviewedAt": "2026-09-10",
-  "status": "SEPOLIA_UNPAID_VERIFIED_PRODUCTION_NOT_DEPLOYED",
+  "reviewedAt": "2026-09-11",
+  "status": "PRODUCTION_DISCOVERY_VERIFIED_PURCHASE_BLOCKED",
   "architecture": "A_ADDITIVE_HTTP_ADAPTER",
   "appliedToCore": true,
   "coreCommit": "905d8706a0f753bf3ea93dc4072084e6c5b2f3df",
-  "productionDeployed": false,
-  "productionEndpointActive": false,
+  "productionDeployed": true,
+  "productionEndpointActive": true,
   "testnetOrigin": "https://acqpath-bazaar-sepolia.acqpath.workers.dev",
   "testnetDeployment": "DEPLOYED_UNPAID_ONLY",
   "indexing": "UNVERIFIED",
@@ -533,8 +533,10 @@
     "npmPublished": false
   },
   "limitations": [
-    "The public preflight route is implemented in source but is not a live production endpoint.",
-    "The legacy quote/claim/report integration remains the deployed contract.",
+    "The public adapter is deployed; discovery-only 402 and CDP validation pass.",
+    "No payable report was prepared for the four checked allowlisted origin roots. RSL Collective license files use application/xml, while the reviewed profile requires application/rsl+xml; other checked roots return 403 or rejected redirects.",
+    "Production prepared binding, paid retry and settlement remain unverified. No wallet signature or payment occurred.",
+    "The legacy quote/claim/report integration remains compatible.",
     "Catalog schema validity is not indexing, a paid test or evidence of demand.",
     "Synthetic signatures/transactions are placeholders, not evidence.",
     "No legal clearance, license acquisition or ownership verification. UNKNOWN is not permission.",
@@ -554,5 +556,22 @@
       "indexingProven": false
     },
     "paymentSubmissionEnabled": false
+  },
+  "productionValidation": {
+    "at": "2026-09-11T14:35:16.619Z",
+    "version": "6f17ddad-8461-4b78-b6c3-ea7b77339cc8",
+    "sourceSha256": "af21b15c04a56f1e104a736de699652c9b56b4871de7827cf2ac6078a05dbe84",
+    "health": "PASS",
+    "legacyCompatibility": "PASS",
+    "unpaidDiscovery": "PASS",
+    "cdpValidator": {
+      "valid": true,
+      "simulationAccepted": true,
+      "indexingProven": false
+    },
+    "preparedPurchase": "BLOCKED_NO_VERIFIABLE_DECLARATION",
+    "rollbackVersion": "b76bb091-bccd-44b9-ba96-8e7ea59b3d3e",
+    "walletSigned": false,
+    "settlementPerformed": false
   }
 }

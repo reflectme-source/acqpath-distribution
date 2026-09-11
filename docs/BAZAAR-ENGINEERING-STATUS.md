@@ -1,35 +1,37 @@
-# Bazaar engineering status — 2026-09-10
+# Bazaar production status — 2026-09-11
 
-The additive public HTTP adapter is merged into original core main at 905d8706a0f753bf3ea93dc4072084e6c5b2f3df (PRs 6, 7 and 8). Production remains on its existing version. The separate acqpath-bazaar-sepolia Worker is deployed and passes all unpaid checks. It cannot accept payment submissions.
+The reviewed additive adapter from core main `905d8706a0f753bf3ea93dc4072084e6c5b2f3df` is LIVE as `6f17ddad-8461-4b78-b6c3-ea7b77339cc8` at 100% traffic. Health, readiness, legacy capabilities/OpenAPI, anonymous admin rejection, MCP initialization/listing, public schemas and discovery-only unpaid 402 pass. CDP returns `valid=true`, `simulation=accepted`. No wallet was signed and no payment occurred.
 
-The Phase 3 documents remain historical analyses of the private quote/claim flow. The reviewed Phase 3B adapter, metadata/bazaar-public-contract.json and /bazaar-status describe the new candidate. The live OpenAPI snapshot and MCP tools still describe the deployed production contract. npm remains unpublished by owner choice.
+## Exact indexing blocker
 
-## Verification
+No payable report was prepared from the four checked allowed origin roots. Each returned `available=false`, `NO_VERIFIABLE_DECLARATION`, `UNKNOWN`, and `charge_micro=0`:
 
-- Core: 446 tests, 444 pass, zero failures, two existing Windows symlink skips; 72 adapter tests; 124 syntax modules. Actual local workerd with isolated D1, Durable Objects and R2 and SDK type checks pass.
-- Main CI run 34526927657 passed. Effective deployment flag is false; release run 34526927632 skipped. Production Cloudflare Git integration remains disconnected. The approved ten-line CI assertion proves the effective inherited flag before merge.
-- Full indexed source and Git history secret scans pass. The scanner ignores only the exact public EIP-3009 event topic value. A canary test verifies other secrets in the same source file remain detectable; no file-path exclusion is used.
-- Patched pinned tooling audit: zero vulnerabilities. No runtime npm dependency added.
-- Production live mode, native-only mode, recipient, fresh/deep prices, Base network, USDC asset, facilitator, Access, reconciliation and disabled provider routing remain unchanged. Four protected local configuration hashes match the baseline. Production is still on version b76bb091-bccd-44b9-ba96-8e7ea59b3d3e with 100% traffic.
+| Checked root | Observed cause |
+|---|---|
+| rslstandard.org | Linked RSL Collective license returned application/xml; approved profile requires application/rsl+xml. |
+| rslcollective.org | Same license media type mismatch. |
+| medium.com | Resource HTTP 403. |
+| theguardian.com | Redirect rejected and resource not fetched under robots policy. |
 
-## Isolated Sepolia
+These results concern the checked URLs, not every URL on those origins. Discovery-only 402 is not a payable challenge. Production prepared binding, paid report, retry after settlement and no-second-charge behavior remain unverified. Do not sign a discovery-only offer or bypass the approved MIME, redirect or source policy. No new feature or source-policy change was introduced.
 
-Origin: https://acqpath-bazaar-sepolia.acqpath.workers.dev. Version: 2ac81afe-ac5c-43c5-930c-049a90e6c0b7. Source digest: af21b15c04a56f1e104a736de699652c9b56b4871de7827cf2ac6078a05dbe84.
+[CDP discovery documentation](https://docs.cdp.coinbase.com/x402/seller/get-discovered) requires a successful settled call before indexing. Read-only validation does not perform that call or prove indexing. Bazaar indexing is UNVERIFIED; the purchase is blocked before wallet authorization.
 
-The candidate has independent D1, Durable Objects and R2, no production routes or state, fresh non-wallet evidence/telemetry keys and no facilitator settlement credentials. A request guard rejects all payment headers before the core, and hides admin, MCP and legacy purchase paths. Temporary probe-format logging was removed.
+## Release evidence
 
-At 2026-09-10T20:33:12.450Z, all 14 unpaid checks passed: health, readiness, schemas, discovery 402, signed input binding with pinned server public key, identical retry, conflicting-input rejection, zero-charge budget failure, unsupported source, malformed context/JSON, payment-header rejection, admin isolation and legacy isolation. The prepared challenge is 9,680 header bytes; clients/proxies must support that size. Signed server evidence is not a wallet signature.
+- Fresh verification: 446 tests, 444 passed, zero failures, two existing Windows symlink skips; 124 syntax checks. Actual local workerd with D1, Durable Objects and R2 passed, as did SDK type checking.
+- Main CI run 34526927657, attempt 2, passed on the deployed commit. The core automatic deployment flag remains disabled.
+- Dependency audit: zero vulnerabilities. Gitleaks scanned the tracked index, all 15 Git commits and the actual 182,255-byte compiled Worker, with no findings.
+- Rebuilt Worker SHA-256: `62c1184044136ebdb63679749603764f483712060a7fb1b6aacab570d4247f5f`, identical to the reviewed candidate. Source SHA-256: `af21b15c04a56f1e104a736de699652c9b56b4871de7827cf2ac6078a05dbe84`.
+- Fresh private change-release evidence binds results, commit, artifact, remote baseline and rollback. Historical initial-launch attestations were preserved; no unperformed test or payment was relabeled PASS.
+- Uploaded version readback matched every previous binding except SOURCE_SHA256 and RELEASE_EVIDENCE_SHA256. Runtime and all five Durable Object namespace IDs matched. Payment mode, recipient, prices, Base network, USDC asset, facilitator, Access, reconciliation and disabled provider routing remain unchanged.
+- After activation, domains, schedules and non-versioned settings matched the before snapshot. No route, Access policy or database schema migration was performed. Four protected local configuration files retained their baseline hashes.
+- Available rollback: `b76bb091-bccd-44b9-ba96-8e7ea59b3d3e`.
 
-The live CDP validator returns HTTP 200, valid=true and simulation=accepted. Its POST probe uses an empty JSON object; the core now treats both an empty body and an empty object as non-purchasable discovery. Partial objects, arrays, null, malformed input and wrong content type remain rejected. The validator index field is null. This read-only validation performs no payment and does not index the endpoint.
+## Distribution and Sepolia
 
-## Distribution and remaining boundaries
+Automatic Pages deployment from distribution main is enabled. The main-only distribution-docs GitHub environment holds the Pages credential; the workflow targets only acqpath-distribution. [The verified push-triggered run](https://github.com/reflectme-source/acqpath-distribution/actions/runs/34532332869) passed Windows/Linux tests, history/artifact scans, deployment and public byte/header/link/404 readback on both docs domains.
 
-The separate Pages project serves 20 pages plus machine assets, using an explicit 49-file artifact. The reviewed GitHub pipeline tests Windows/Linux, scans history and the sealed artifact, and targets only acqpath-distribution. Automatic deployment is enabled for main. The owner-authorized Pages Write token is stored only in GitHub environment distribution-docs, which permits only the main branch; it expires September 11, 2027. [The first complete automatic run](https://github.com/reflectme-source/acqpath-distribution/actions/runs/34531864325) passed Windows/Linux verification, history/artifact scans, the zero-vulnerability dependency audit, Pages deployment and public byte/header/link/404 readback on both domains. The credential has Pages access for the AcqPath account; the workflow fixes the target to acqpath-distribution. Rotate the credential before expiration.
+Sepolia version `2ac81afe-ac5c-43c5-930c-049a90e6c0b7` passed 14 unpaid checks on September 10, including signed prepared binding and identical retry against an isolated fixture. Those are testnet results, not production payment proof. Sepolia payment submissions remain blocked. npm remains unpublished by owner choice. Existing MCP and legacy HTTP integrations remain compatible.
 
-MCP Registry rc.2, Smithery and Glama remain compatible with production and are checked read-only. Bazaar searches do not establish an indexed AcqPath resource. No catalog contains private retry context or payment headers.
-
-The exact production command, locally prepared configuration and dry-run evidence remain private and unexecuted. Original core docs/BAZAAR-PRODUCTION-DEPLOY-PLAN.md describes the hard boundary. Fresh release-evidence review and explicit approval are required before changing production code/traffic; wallet signing and settlement require their own approval.
-
-External paid reports, repeat payers and received USDC are UNKNOWN for this phase. Earlier aggregate snapshots remain historical. QA, fixtures and an owner purchase never establish external demand. Real Bazaar indexing and external paid usage have not been demonstrated, so the commercial rollout is not complete.
-
-[CDP endpoint validation](https://docs.cdp.coinbase.com/api-reference/v2/rest-api/x402-facilitator/validate-x402-endpoint) is documented as read-only and non-indexing. [Cloudflare Pages CI](https://developers.cloudflare.com/pages/how-to/use-direct-upload-with-continuous-integration/) uses a Pages Edit credential.
+External paid reports, repeat external payers and received external USDC are UNKNOWN for this launch. Earlier aggregate snapshots are historical. Any future owner-approved indexing purchase must be classified INTERNAL_INDEXING_QA, never organic revenue.
