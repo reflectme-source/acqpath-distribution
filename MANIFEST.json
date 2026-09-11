@@ -39,6 +39,11 @@
       "bytes": 208
     },
     {
+      "path": ".gitleaks.toml",
+      "sha256": "fee88397a686fde1da1c8bf85c72461ef81f73b18a1b4b3886581a6f08d10c1f",
+      "bytes": 259
+    },
+    {
       "path": "AGENTS.md",
       "sha256": "9d8731947032b30ddc7c707405983f766dd6db886c333c6bdc22bba5c644fefd",
       "bytes": 4358

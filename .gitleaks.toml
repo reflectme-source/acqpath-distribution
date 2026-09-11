@@ -1,0 +1,7 @@
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Exact public Phase4 Worker SHA256, verified against the compiled artifact; not a credential"
+regexTarget = "secret"
+regexes = ['''^472cd226278d5e73121ac441e1b192d594043b6ab02e095ada58acb2d212c99b$''']
