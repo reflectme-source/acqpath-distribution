@@ -1627,6 +1627,305 @@
           }
         }
       }
+    },
+    "/v1/rights/preflight/x402": {
+      "get": {
+        "operationId": "describeStockPreflight",
+        "responses": {
+          "200": {
+            "description": "Unpaid stock contract and recovery metadata."
+          }
+        }
+      },
+      "post": {
+        "operationId": "stockRightsPreflight",
+        "summary": "Stock x402: RSL rights before RAG ingestion and AI training",
+        "description": "RSL rights before RAG ingestion, AI input, training and search. Stock x402 v2 EIP-3009 fresh Rights Preflight, 0.02 USDC on Base. One authorization binds one request on first valid use; no SIWX, no pre-signature body binding. Reviewed origins only. Diagnostic report, not a license or legal clearance. First unpaid valid POST returns a 402 without source work. No verifiable declaration after authorized observation means no settlement; that authorization remains bound to this attempted input. Preserve the exact signed retry privately for recovery. Secure SIWX remains recommended when supported.",
+        "tags": [
+          "RSL rights",
+          "RAG ingestion",
+          "AI content usage rights",
+          "machine-readable licensing",
+          "stock x402"
+        ],
+        "x-payment-info": {
+          "scheme": "exact",
+          "network": "eip155:8453",
+          "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+          "payTo": "0xf69DBbd053fb0Fbc78ADfdB1BFe3b0D1F57300ec",
+          "price": {
+            "amount": "0.02",
+            "currency": "USDC"
+          },
+          "client": {
+            "stockX402V2": true,
+            "adapterRequired": false,
+            "siwxRequired": false,
+            "preSignatureBodyBinding": false
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "resource",
+                  "purpose",
+                  "max_total_micro"
+                ],
+                "properties": {
+                  "resource": {
+                    "type": "string",
+                    "format": "uri",
+                    "maxLength": 2048,
+                    "description": "HTTPS resource on an explicitly reviewed origin; no query, fragment, credentials, IP literal, encoded slash or redirect."
+                  },
+                  "purpose": {
+                    "type": "string",
+                    "enum": [
+                      "ai-input",
+                      "ai-train",
+                      "ai-index",
+                      "search"
+                    ]
+                  },
+                  "user_class": {
+                    "type": "string",
+                    "enum": [
+                      "commercial",
+                      "non-commercial",
+                      "education",
+                      "government",
+                      "personal"
+                    ],
+                    "default": "commercial"
+                  },
+                  "geo": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "pattern": "^[A-Z]{2}$",
+                    "description": "Caller-supplied geographical context. This is not independently verified location."
+                  },
+                  "freshness_seconds": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 3600,
+                    "default": 300
+                  },
+                  "tier": {
+                    "enum": [
+                      "fresh"
+                    ],
+                    "default": "fresh"
+                  },
+                  "max_total_micro": {
+                    "type": "string",
+                    "pattern": "^(0|[1-9][0-9]{0,10}|100000000000)$",
+                    "description": "Integer micro-USDC budget; this fixed fresh SKU requires at least 20000 and charges exactly 20000."
+                  }
+                }
+              },
+              "example": {
+                "resource": "https://rslstandard.org/",
+                "purpose": "ai-input",
+                "max_total_micro": "20000"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Signed settled report, or available:false/charge_micro:0 when no declaration is verifiable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "version",
+                        "input_sha256",
+                        "legal_clearance",
+                        "report",
+                        "evidence",
+                        "payment_settlement",
+                        "delivery_proof"
+                      ],
+                      "properties": {
+                        "version": {
+                          "const": "acqpath-stock-rights-v1"
+                        },
+                        "input_sha256": {
+                          "type": "string",
+                          "pattern": "^[a-f0-9]{64}$"
+                        },
+                        "legal_clearance": {
+                          "const": false
+                        },
+                        "report": {
+                          "type": "object",
+                          "required": [
+                            "resource",
+                            "purpose",
+                            "decision",
+                            "declaration_count"
+                          ],
+                          "properties": {
+                            "resource": {
+                              "type": "string",
+                              "format": "uri"
+                            },
+                            "purpose": {
+                              "type": "string",
+                              "enum": [
+                                "ai-input",
+                                "ai-train",
+                                "ai-index",
+                                "search"
+                              ]
+                            },
+                            "decision": {
+                              "enum": [
+                                "ALLOW_DECLARED",
+                                "DENY_DECLARED",
+                                "LICENSE_REQUIRED",
+                                "UNKNOWN"
+                              ]
+                            },
+                            "declaration_count": {
+                              "type": "integer",
+                              "minimum": 1
+                            }
+                          }
+                        },
+                        "evidence": {
+                          "type": "object",
+                          "required": [
+                            "algorithm",
+                            "format",
+                            "payload",
+                            "signature"
+                          ],
+                          "properties": {
+                            "algorithm": {
+                              "const": "Ed25519"
+                            },
+                            "format": {
+                              "const": "acqpath-evidence-v1"
+                            },
+                            "payload": {
+                              "type": "object"
+                            },
+                            "signature": {
+                              "type": "string",
+                              "pattern": "^[a-f0-9]{128}$"
+                            }
+                          }
+                        },
+                        "delivery_proof": {
+                          "type": "object",
+                          "required": [
+                            "algorithm",
+                            "format",
+                            "payload",
+                            "signature"
+                          ],
+                          "properties": {
+                            "algorithm": {
+                              "const": "Ed25519"
+                            },
+                            "format": {
+                              "const": "acqpath-evidence-v1"
+                            },
+                            "payload": {
+                              "type": "object"
+                            },
+                            "signature": {
+                              "type": "string",
+                              "pattern": "^[a-f0-9]{128}$"
+                            }
+                          }
+                        },
+                        "payment_settlement": {
+                          "type": "object",
+                          "required": [
+                            "success",
+                            "network",
+                            "transaction"
+                          ],
+                          "properties": {
+                            "success": {
+                              "const": true
+                            },
+                            "network": {
+                              "enum": [
+                                "eip155:8453",
+                                "eip155:84532"
+                              ]
+                            },
+                            "transaction": {
+                              "type": "string",
+                              "pattern": "^0x[a-fA-F0-9]{64}$"
+                            }
+                          }
+                        },
+                        "sku": {
+                          "const": "rights.preflight.stock.fresh.v1"
+                        },
+                        "request_binding": {
+                          "const": "ATOMIC_FIRST_VALID_USE_NOT_PRE_SIGNATURE"
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "available",
+                        "charge_micro"
+                      ],
+                      "properties": {
+                        "available": {
+                          "const": false
+                        },
+                        "charge_micro": {
+                          "const": "0"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "Stock x402 v2 challenge or invalid payment. No SIWX required.",
+            "headers": {
+              "PAYMENT-REQUIRED": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Authorization already bound to another body, route or SKU."
+          },
+          "410": {
+            "description": "Report retired; financial journal retained."
+          },
+          "422": {
+            "description": "Only fresh, approved origins and sufficient budget accepted."
+          },
+          "503": {
+            "description": "Unavailable or uncertain settlement. Preserve the exact signed retry; never sign another payment for recovery."
+          }
+        }
+      }
     }
   },
   "components": {

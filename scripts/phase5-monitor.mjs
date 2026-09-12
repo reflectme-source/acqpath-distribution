@@ -4,10 +4,11 @@ import {pathToFileURL} from 'node:url';
 import {ROOT,settings} from './lib/io.mjs';
 import {metricSummary} from './metrics.mjs';
 export const QUERIES=['AcqPath','RSL rights','AI usage rights','crawl rights','RAG ingestion rights','AI training rights','batch content rights check','did this website AI policy change'];
-const endpoints=['https://api.getacqpath.com/v1/rights/preflight','https://api.getacqpath.com/v1/rights/ingestion-gate','https://api.getacqpath.com/v1/rights/revalidate'];
+const endpoints=['https://api.getacqpath.com/v1/rights/preflight','https://api.getacqpath.com/v1/rights/ingestion-gate','https://api.getacqpath.com/v1/rights/revalidate','https://api.getacqpath.com/v1/rights/preflight/x402'];
 const CDP='https://api.cdp.coinbase.com/platform/v2/x402',endpoint='https://api.getacqpath.com/v1/rights/preflight';
 export function validSkuPayment(e){
  const sku=e.sku||'rights.preflight.v1';
+ if(sku==='rights.preflight.stock.fresh.v1')return e.amountMicro==='20000'&&e.tier==='fresh'&&e.operationBindingVerified===true;
  if(sku==='rights.preflight.v1')return ['20000','50000'].includes(e.amountMicro);
  if(e.operationBindingVerified!==true||!['fresh','deep'].includes(e.tier))return false;
  if(sku==='rights.revalidate.v1')return e.amountMicro===(e.tier==='deep'?'60000':'30000');
@@ -25,7 +26,7 @@ export function externalBaseline(aggregate,events=[],excluded=[]){
  const counts=new Map();for(const e of accepted)counts.set(e.payer.toLowerCase(),(counts.get(e.payer.toLowerCase())||0)+1);
  const zero=aggregate?.mainnetPaidReports===0&&aggregate?.mainnetReceivedMicro==='0'&&accepted.length===0&&marketplace.length===0;
  const revenue=accepted.reduce((n,e)=>n+BigInt(e.amountMicro),0n),perSku={};
- for(const sku of ['rights.preflight.v1','rights.ingestion-gate.v1','rights.revalidate.v1']){const rows=accepted.filter(e=>(e.sku||'rights.preflight.v1')===sku);perSku[sku]={operations:rows.length,revenueMicro:rows.reduce((n,e)=>n+BigInt(e.amountMicro),0n).toString()};}
+ for(const sku of ['rights.preflight.v1','rights.ingestion-gate.v1','rights.revalidate.v1','rights.preflight.stock.fresh.v1']){const rows=accepted.filter(e=>(e.sku||'rights.preflight.v1')===sku);perSku[sku]={operations:rows.length,revenueMicro:rows.reduce((n,e)=>n+BigInt(e.amountMicro),0n).toString()};}
  const repeats=[...counts.values()].filter(n=>n>1);
  return {externalPaidReports:zero?0:null,repeatExternalPayers:zero?0:null,externalRevenueMicro:zero?'0':null,verifiedExternalPaidReports:accepted.length,verifiedIndependentPayers:counts.size,verifiedRepeatPayers:repeats.length,verifiedExternalRevenueMicro:revenue.toString(),coverage:zero?'ZERO_MAINNET_AGGREGATE':'PARTIAL_OR_UNKNOWN',freshVerified:accepted.filter(e=>(e.sku||'rights.preflight.v1')==='rights.preflight.v1'&&e.amountMicro==='20000').length,deepVerified:accepted.filter(e=>(e.sku||'rights.preflight.v1')==='rights.preflight.v1'&&e.amountMicro==='50000').length,billableUnknownRatio:null,perSku,marketplaceVerification:{operations:marketplace.length,revenueMicro:marketplace.reduce((n,e)=>n+BigInt(e.amountMicro),0n).toString(),organic:false},revenuePerActivePayerMicro:counts.size?Number(revenue)/counts.size:null,operationsPerRepeatPayer:repeats.length?repeats.reduce((a,b)=>a+b,0)/repeats.length:null,triggers:{FIRST_EXTERNAL_PAYMENT:accepted.length>0,FIRST_REPEAT_PAYER:repeats.length>0,'10_EXTERNAL_PAID_REPORTS':accepted.length>=10,'3_INDEPENDENT_PAYERS':counts.size>=3,'100_EXTERNAL_PAID_REPORTS':accepted.length>=100}};
 }
@@ -42,7 +43,7 @@ export async function monitor({localAggregates=false}={}){
  }
  let evidence={events:[],excludedWallets:[cfg.payment.payTo]};if(localAggregates)try{evidence=JSON.parse(await readFile(join(ROOT,'.private/external-revenue-evidence.json'),'utf8'))}catch{}
  const baseline=externalBaseline(aggregate,evidence.events,[cfg.payment.payTo,...(evidence.excludedWallets||[])]);
- const validTerms=x=>x.terms?.some(a=>a.network===cfg.payment.network&&a.payTo?.toLowerCase()===cfg.payment.payTo.toLowerCase()&&a.asset?.toLowerCase()===cfg.payment.asset.toLowerCase()&&({[endpoints[0]]:['20000','50000'],[endpoints[1]]:['60000','80000','100000','120000','140000','180000','220000'],[endpoints[2]]:['30000','60000']}[x.resource]||[]).includes(a.amount));
+ const validTerms=x=>x.terms?.some(a=>a.network===cfg.payment.network&&a.payTo?.toLowerCase()===cfg.payment.payTo.toLowerCase()&&a.asset?.toLowerCase()===cfg.payment.asset.toLowerCase()&&({[endpoints[0]]:['20000','50000'],[endpoints[1]]:['60000','80000','100000','120000','140000','180000','220000'],[endpoints[2]]:['30000','60000'],[endpoints[3]]:['20000']}[x.resource]||[]).includes(a.amount));
  const bazaarBySKU=Object.fromEntries(endpoints.map(url=>[url,checks.some(c=>c.matched?.some(x=>x.resource===url&&validTerms(x)))?'LISTED_READBACK':'AWAITING FIRST EXTERNAL SETTLEMENT']));
  const found=checks.some(c=>c.matched?.some(validTerms));
  const report={at:new Date().toISOString(),checks,aggregate,baseline,bazaarBySKU,bazaar:found?'LISTED_READBACK':'AWAITING FIRST EXTERNAL SETTLEMENT',agenticMarket:found?'BAZAAR_SOURCE_LISTED_UI_READBACK_REQUIRED':'AWAITING FIRST EXTERNAL SETTLEMENT',externalSettlementProven:baseline.verifiedExternalPaidReports>0,noPaymentPerformed:true,noQuoteCreated:true};

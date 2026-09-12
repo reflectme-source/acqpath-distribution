@@ -1,3 +1,13 @@
+# Dual-mode x402 release — 2026-09-12T16:54:46.389Z
+
+Production **b461376d-a8cf-494c-93b4-db39d192dc9b**, core **b6a2cd23cbff54c719617373b8c4cda6f8370172**, [PR #14](https://github.com/AcqPath/acqpath/pull/14) merged. [Stock fresh Preflight](https://developers.getacqpath.com/stock-x402) LIVE at **0.02 USDC on Base**; the [recommended secure SIWX route](https://developers.getacqpath.com/public-http) is unchanged. Stock binds the input at first valid use, not in the EIP-3009 signature.
+
+617 tests PASS, 0 FAIL, two existing Windows skips; bundled SIWX 83/83, workerd, exact-head CI, audits and candidate/history scans PASS. Production unpaid and legacy checks PASS; CDP valid=true for both routes. Rollback: 0b952e13-d76c-4226-a117-521741d30769. No protected configuration changes, owner wallet or payment.
+
+Agent402: origin refreshed; stock listing awaiting crawler readback. Wire behavior supported by local cryptographic reproduction; live dispatch still gated by settlement_required. PayAPI private buyer execution UNKNOWN; owner handles all email. Organic reports 0, repeat external payers 0, organic revenue 0 USDC, marketplace verification settlements 0 at 2026-09-12T16:55:31.619Z. Existing monitor includes the stock SKU and keeps marketplace verification separate.
+
+## Previous release evidence
+
 # Revenue Expansion release — 2026-09-12
 
 Production Worker 0b952e13-d76c-4226-a117-521741d30769; core merge b2a9273f7269f137af2336d7819bbd3a7595a0b3, PR #13. Preflight remains 0.02/0.05 USDC. Ingestion Gate: fresh 0.04 + 0.02 per URL, deep 0.06 + 0.04, one to four unique URLs. Revalidation: 0.03/0.06 with authentic prior gateway checkpoint. [Buyer guide](https://developers.getacqpath.com/gateway), [TS/Python examples](https://developers.getacqpath.com/examples/GATEWAY.md), [release metadata](../metadata/revenue-release.json).

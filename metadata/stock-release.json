@@ -1,0 +1,82 @@
+{
+  "schema": "acqpath.stock-x402-release.public.v1",
+  "at": "2026-09-12T16:54:46.389Z",
+  "productionVersion": "b461376d-a8cf-494c-93b4-db39d192dc9b",
+  "commit": "b6a2cd23cbff54c719617373b8c4cda6f8370172",
+  "sourceSha256": "e593d69795f9b3f841ec7352c30b7ae26c2aec2b0d181ab0559981dcbc7b17c8",
+  "pullRequest": "https://github.com/AcqPath/acqpath/pull/14",
+  "rollbackVersion": "0b952e13-d76c-4226-a117-521741d30769",
+  "production": "LIVE",
+  "secureMode": "UNCHANGED",
+  "stock": {
+    "path": "/v1/rights/preflight/x402",
+    "sku": "rights.preflight.stock.fresh.v1",
+    "tier": "fresh",
+    "amountMicro": "20000",
+    "currency": "USDC",
+    "network": "eip155:8453",
+    "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+    "payTo": "0xf69DBbd053fb0Fbc78ADfdB1BFe3b0D1F57300ec",
+    "siwxRequired": false,
+    "customSigner": false,
+    "customBuyerHook": false,
+    "requestBinding": "ATOMIC_FIRST_VALID_USE_NOT_PRE_SIGNATURE",
+    "noDeclaration": "NO_SETTLEMENT_AUTHORIZATION_REMAINS_BOUND"
+  },
+  "validation": {
+    "localTests": {
+      "tests": 619,
+      "pass": 617,
+      "fail": 0,
+      "skipped": 2
+    },
+    "officialStockTypeScript": "PASS_LOCAL_CRYPTOGRAPHIC",
+    "officialStockPython": "PASS_LOCAL_CRYPTOGRAPHIC",
+    "bundledSecureClient": "83/83 PASS",
+    "workerd": "PASS",
+    "ci": "PASS_PR_AND_MAIN",
+    "security": "PASS",
+    "protectedValuesUnchanged": true,
+    "legacy": "PASS_UNPAID",
+    "unpaidChecks": 16,
+    "cdp": [
+      {
+        "path": "/v1/rights/preflight/x402",
+        "http": 200,
+        "valid": true,
+        "simulationAccepted": true,
+        "errors": null
+      },
+      {
+        "path": "/v1/rights/preflight",
+        "http": 200,
+        "valid": true,
+        "simulationAccepted": true,
+        "errors": null
+      }
+    ]
+  },
+  "agent402": {
+    "registration": "EXISTING_ORIGIN_REFRESHED",
+    "stockListing": "AWAITING_CRAWLER_READBACK",
+    "wireCompatibility": "SUPPORTED_LOCAL_REPRODUCTION",
+    "liveRouter": "NOT_VERIFIED_SETTLEMENT_REQUIRED",
+    "sourceCommit": "d3bf2593a3939c6a65c5ba87bdd69a13bb85f618"
+  },
+  "payapi": {
+    "stockCompatibility": "UNKNOWN_PRIVATE_BUYER_NOT_OBSERVED",
+    "stockProtocolTests": "OFFICIAL_TS_PYTHON_PASS",
+    "email": "OWNER_HANDLES_NO_EMAIL_ACTION",
+    "verification": "UNVERIFIED"
+  },
+  "baseline": {
+    "at": "2026-09-12T16:55:31.619Z",
+    "organicPaidReports": 0,
+    "repeatExternalPayers": 0,
+    "organicRevenueMicro": "0",
+    "marketplaceVerificationSettlements": 0
+  },
+  "mainnetPaidE2E": "UNVERIFIED",
+  "ownerPayments": 0,
+  "ownerWalletUsed": false
+}

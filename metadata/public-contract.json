@@ -1,8 +1,8 @@
 {
   "schema": "acqpath.distribution.public-contract.v1",
-  "observedAt": "2026-09-12T09:47:19.929Z",
+  "observedAt": "2026-09-12T16:54:46.389Z",
   "coreVersion": "3.1.0-rc.1",
-  "expectedSourceSha256": "60f7c7106553f0caab732155f97973c7a3baee4730de0b2d76b383a8e0598f27",
+  "expectedSourceSha256": "e593d69795f9b3f841ec7352c30b7ae26c2aec2b0d181ab0559981dcbc7b17c8",
   "apiOrigin": "https://api.getacqpath.com",
   "capabilities": {
     "version": "3.1.0-rc.1",
@@ -172,5 +172,20 @@
     "acqpath_quote"
   ],
   "liveOpenapi": "https://api.getacqpath.com/openapi.json",
-  "legalClearance": false
+  "legalClearance": false,
+  "stockCompatibility": {
+    "path": "/v1/rights/preflight/x402",
+    "sku": "rights.preflight.stock.fresh.v1",
+    "tier": "fresh",
+    "amountMicro": "20000",
+    "currency": "USDC",
+    "network": "eip155:8453",
+    "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+    "payTo": "0xf69DBbd053fb0Fbc78ADfdB1BFe3b0D1F57300ec",
+    "siwxRequired": false,
+    "customSigner": false,
+    "customBuyerHook": false,
+    "requestBinding": "ATOMIC_FIRST_VALID_USE_NOT_PRE_SIGNATURE",
+    "noDeclaration": "NO_SETTLEMENT_AUTHORIZATION_REMAINS_BOUND"
+  }
 }
