@@ -22,3 +22,10 @@ Only enter a purchase when the user's existing authorization covers its resource
 UNKNOWN, unavailable/unsupported, DENY_DECLARED and LICENSE_REQUIRED hold ingestion. ALLOW_DECLARED records an observed allowance under the supported profile; it is not ownership verification or a license. Preserve resource, purpose, context and timestamp with the evidence. A verified service receipt is not independent chain finality.
 
 Use [recovery guidance](https://developers.getacqpath.com/recovery) when state is ambiguous. Reconciliation has not been repaired by distribution work; do not promise zero-support recovery, paid-MCP compatibility, Bazaar indexing or successful purchases without separate evidence.
+
+
+## Live Rights Gateway release
+
+Preflight remains **0.02 USDC fresh / 0.05 deep**. **Ingestion Gate** checks 1–4 unique reviewed URLs: **0.04 + 0.02 per URL fresh**, **0.06 + 0.04 per URL deep**. **Revalidation** compares one resource with an authentic signed prior gateway checkpoint: **0.03 fresh / 0.06 deep**. All payments use Base USDC. Gateway fees cover bounded observation attempts, including UNKNOWN. No legal clearance, license purchase or whole-domain coverage.
+
+Use the tested official TS/Python signer + AcqPath SIWX adapter. [Complete gateway examples](https://developers.getacqpath.com/examples/GATEWAY.md) include private state, retry and delivery verification. [Live gateway guide](https://developers.getacqpath.com/gateway). Mainnet paid E2E awaits a real external buyer; verified organic revenue remains 0 USDC. Development freeze: only incidents, security, standards compatibility and monitoring.

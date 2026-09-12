@@ -22,6 +22,9 @@ from x402.http.clients.httpx import x402AsyncTransport
 from x402.extensions.sign_in_with_x.client import create_siwx_payload
 
 PATH = '/v1/rights/preflight'
+GATE = '/v1/rights/ingestion-gate'
+DIFF = '/v1/rights/revalidate'
+GATEWAY_STATEMENT = 'Authorize this AcqPath rights gateway order and its exact payment. This is not a license.'
 CONTEXT = 'X-AcqPath-Request'
 PREBIND = 'X-AcqPath-Payment-Intent'
 SIWX = 'SIGN-IN-WITH-X'
@@ -97,6 +100,24 @@ def normalize(body):
     return dict(resource=resource, purpose=purpose, user_class=user, geo=geo, tier=tier, freshness_seconds=fresh, max_total_micro=amount)
 
 
+def normalize_operation(body, path):
+    if path == PATH:
+        return normalize(body)
+    need(path in [GATE, DIFF] and isinstance(body, dict), 'BAD_OPERATION')
+    fields = {'resources','purpose','user_class','geo','tier','freshness_seconds','max_total_micro'} | ({'previous'} if path == DIFF else set())
+    need(set(body) <= fields and isinstance(body.get('resources'), list) and 1 <= len(body['resources']) <= 4, 'BAD_INPUT')
+    aliases = {'rag-ingestion':'ai-input','summarization':'ai-input','training':'ai-train','search-indexing':'search'}
+    base = {k:v for k,v in body.items() if k not in ['resources','previous']}
+    base['purpose'] = aliases.get(base.get('purpose'), base.get('purpose'))
+    values = [normalize({**base,'resource':url}) for url in body['resources']]
+    out = {k:v for k,v in values[0].items() if k != 'resource'}
+    out['resources'] = sorted(set(v['resource'] for v in values))
+    if path == DIFF:
+        need(len(out['resources']) == 1 and isinstance(body.get('previous'),dict) and body.get('freshness_seconds',0) == 0, 'CHECKPOINT_REQUIRED')
+        out.update(previous=body['previous'],freshness_seconds=0)
+    return out
+
+
 def payment_digest(p):
     t, a = p['accepted'], p['payload']['authorization']
     need(p['x402Version'] == 2, 'BAD_PAYMENT')
@@ -122,7 +143,7 @@ def jws(value, key, origin):
 
 def review_offer(ch, state, expected, key, check_time=True):
     a, b = ch['accepts'][0], ch['extensions']['acqpath-request-binding']['info']
-    uri, digest = expected['origin'] + PATH, sha(canonical(state['body']))
+    uri, digest = expected['origin'] + expected.get('path', PATH), sha(canonical(state['body']))
     need(ch['x402Version'] == 2 and len(ch['accepts']) == 1 and ch['resource']['url'] == uri and b['required'] is True and b['state'] == 'prepared', 'PREPARED_OFFER_REQUIRED')
     need(a['scheme'] == 'exact' and all(a[k].lower() == expected[k].lower() for k in ['network','asset','payTo']) and a['amount'] == expected['amount'] and int(a['amount']) <= int(state['body']['max_total_micro']), 'PINNED_TERMS_MISMATCH')
     nonce = '0x6163717075627631' + sha(canonical(dict(version='acqpath-request-v1',resource=uri,key=state['key'],input_sha256=digest)))[:48]
@@ -135,12 +156,12 @@ def review_offer(ch, state, expected, key, check_time=True):
 
 def review_siwx(ext, state, p, expected):
     info, a = ext['info'], p['payload']['authorization']
-    uri = expected['origin']+PATH
+    uri = expected['origin']+expected.get('path', PATH)
     issued = millis(info['issuedAt'])
     need(re.fullmatch('[a-f0-9]{32}', info['nonce']) and time.time()*1000-3600000 <= issued <= time.time()*1000+5000, 'SIWX_TIME_NONCE')
     wanted = dict(domain=urlsplit(uri).netloc,uri=uri,version='1',nonce=info['nonce'],issuedAt=iso(issued),
         expirationTime=iso(min(state['challenge']['extensions']['acqpath-request-binding']['info']['expires_at'],int(a['validBefore'])*1000)),
-        statement=STATEMENT,requestId=sha('acqpath-public-intent-v1:'+state['key'])[:48],
+        statement=STATEMENT if expected.get('path',PATH) == PATH else GATEWAY_STATEMENT,requestId=sha('acqpath-public-intent-v1:'+state['key'])[:48],
         resources=[uri,'urn:acqpath:method:POST','urn:acqpath:profile:'+PROFILE,'urn:acqpath:request-sha256:'+sha(canonical(state['body'])),
                    'urn:acqpath:context-sha256:'+sha(state['key']),'urn:acqpath:payment-sha256:'+payment_digest(p)])
     chain = dict(chainId=p['accepted']['network'],type='eip191',signatureScheme='eip191')
@@ -152,16 +173,27 @@ def verify_delivery(result, state, expected, key):
     signed = {k:v for k,v in result.items() if k not in ['evidence','payment_settlement','delivery_proof']}
     need(evidence(result['evidence'],key) == signed, 'REPORT_SIGNATURE')
     body, r, digest = state['body'], result['report'], sha(canonical(state['body']))
-    need(result['version'] == 'acqpath-public-rights-v1' and result['input_sha256'] == digest and result['legal_clearance'] is False and r['legal_clearance'] is False and all(r[k] == body[k] for k in ['resource','purpose','user_class','geo']) and result['billing']['fee_type'] == 'rights_preflight_report' and result['billing']['amount_micro'] == expected['amount'], 'REPORT_BINDING')
+    path = expected.get('path', PATH)
+    if path in [GATE,DIFF]:
+        sku = 'rights.ingestion-gate.v1' if path == GATE else 'rights.revalidate.v1'
+        need(result['version'] == 'acqpath-public-gateway-v1' and result['input_sha256'] == digest and result['legal_clearance'] is False and r['legal_clearance'] is False and r['sku'] == sku and [x['resource'] for x in r['resources']] == body['resources'] and all(r[k] == body[k] for k in ['purpose','user_class','geo','tier']) and result['billing']['fee_type'] == sku and result['billing']['amount_micro'] == expected['amount'], 'REPORT_BINDING')
+        for item in r['resources']:
+            if item.get('checkpoint'):
+                c = evidence(item['checkpoint'],key)
+                need(c['resource'] == item['resource'] and c['fingerprint'] == item['policy_fingerprint'] == sha(canonical(c['policy'])), 'CHECKPOINT_SIGNATURE')
+        if path == DIFF:
+            need(r['diff']['previous_fingerprint'] == body['previous']['payload']['fingerprint'], 'DIFF_BASELINE')
+    else:
+        need(result['version'] == 'acqpath-public-rights-v1' and result['input_sha256'] == digest and result['legal_clearance'] is False and r['legal_clearance'] is False and all(r[k] == body[k] for k in ['resource','purpose','user_class','geo']) and result['billing']['fee_type'] == 'rights_preflight_report' and result['billing']['amount_micro'] == expected['amount'], 'REPORT_BINDING')
     s = result['payment_settlement']
     need(s['success'] is True and s['network'] == expected['network'] and re.fullmatch('0x[0-9a-fA-F]{64}', s['transaction']), 'SETTLEMENT_INVALID')
     receipt = s['extensions']['offer-receipt']['info']['receipt']
     need(receipt['format'] == 'jws', 'RECEIPT_FORMAT')
     rp = jws(receipt['signature'],key,expected['origin'])
     p = unb64(state['paymentHeader'])
-    need(rp['version'] == 1 and rp['network'] == expected['network'] and rp['resourceUrl'] == expected['origin']+PATH and rp['transaction'] == s['transaction'] and rp['payer'].lower() == p['payload']['authorization']['from'].lower() and type(rp['issuedAt']) is int and rp['issuedAt'] <= time.time()+30, 'RECEIPT_BINDING')
+    need(rp['version'] == 1 and rp['network'] == expected['network'] and rp['resourceUrl'] == expected['origin']+expected.get('path', PATH) and rp['transaction'] == s['transaction'] and rp['payer'].lower() == p['payload']['authorization']['from'].lower() and type(rp['issuedAt']) is int and rp['issuedAt'] <= time.time()+30, 'RECEIPT_BINDING')
     d = evidence(result['delivery_proof'],key)
-    need(d['version'] == 'acqpath-public-delivery-v1' and d['input_sha256'] == digest and d['resource_url'] == expected['origin']+PATH and d['report_sha256'] == sha(canonical({**signed,'evidence':result['evidence']})) and d['offer_sha256'] == sha(canonical(state['challenge']['extensions']['offer-receipt']['info']['offers'][0])) and d['network'] == expected['network'] and d['asset'].lower() == expected['asset'].lower() and d['pay_to'].lower() == expected['payTo'].lower() and d['amount_micro'] == expected['amount'] and d['transaction'] == s['transaction'], 'DELIVERY_BINDING')
+    need(d['version'] == 'acqpath-public-delivery-v1' and d['input_sha256'] == digest and d['resource_url'] == expected['origin']+expected.get('path', PATH) and d['report_sha256'] == sha(canonical({**signed,'evidence':result['evidence']})) and d['offer_sha256'] == sha(canonical(state['challenge']['extensions']['offer-receipt']['info']['offers'][0])) and d['network'] == expected['network'] and d['asset'].lower() == expected['asset'].lower() and d['pay_to'].lower() == expected['payTo'].lower() and d['amount_micro'] == expected['amount'] and d['transaction'] == s['transaction'], 'DELIVERY_BINDING')
 
 
 class PrivateFileStore:
@@ -200,11 +232,12 @@ class AcqPathClient:
         self.allow_payment = allow_payment
 
     async def post(self, url, *, json: dict, operation_id: str):
-        need(url == self.expected['origin']+PATH and 0 < len(operation_id) <= 128, 'CANONICAL_OPERATION_REQUIRED')
-        body = normalize(json)
+        need(url == self.expected['origin']+self.expected.get('path', PATH) and 0 < len(operation_id) <= 128, 'CANONICAL_OPERATION_REQUIRED')
+        path = self.expected.get('path',PATH)
+        body = normalize_operation(json,path)
         with self.store.lock(operation_id) as (saved,save):
-            state = saved or dict(version=1,origin=self.expected['origin'],body=body,key=secrets.token_hex(32),status='NEW')
-            need(state['version'] == 1 and state['origin'] == self.expected['origin'] and state['body'] == body, 'OPERATION_INPUT_MISMATCH')
+            state = saved or dict(version=1,path=path,origin=self.expected['origin'],body=body,key=secrets.token_hex(32),status='NEW')
+            need(state.get('path',PATH) == path and state['version'] == 1 and state['origin'] == self.expected['origin'] and state['body'] == body, 'OPERATION_INPUT_MISMATCH')
             headers = {'content-type':'application/json',CONTEXT:state['key']}
             def request(extra=None):
                 return httpx.Request('POST',url,headers={**headers,**(extra or {})},content=canonical(body).encode())

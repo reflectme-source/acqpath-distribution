@@ -2,10 +2,28 @@
   {
     "slug": "index",
     "label": "Overview",
-    "title": "Can your agent use this content? Check declared rights.",
-    "description": "Machine-readable rights preflight before RAG ingestion, summarization, AI input, training or indexing. Signed declaration evidence, not legal clearance.",
+    "title": "Rights evidence before AI ingestion. Revalidate before reuse.",
+    "description": "A machine rights gateway: single-resource Preflight, bounded batch Ingestion Gate and signed policy revalidation. RSL declarations and evidence, not legal clearance.",
     "hero": true,
     "sections": [
+      {
+        "title": "Rights Gateway: select the paid operation",
+        "paragraphs": [
+          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
+          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "SUPPORTED: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter. The official EIP-3009 signer and random nonce remain unchanged. Generic zero-config x402, stock SIWX-only hooks, Payments MCP, generic paid proxies and Agent402 router payment are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED; awaiting a real customer."
+        ],
+        "links": [
+          {
+            "label": "Gateway limits, prices and workflow",
+            "href": "/gateway"
+          },
+          {
+            "label": "Complete TypeScript and Python examples",
+            "href": "/examples/GATEWAY.md"
+          }
+        ]
+      },
       {
         "title": "Preflight one URL, with no AcqPath account",
         "paragraphs": [
@@ -111,6 +129,24 @@
     "title": "From supported URL to verified rights evidence",
     "description": "Start with a free capability read. A fresh report is 0.02 USDC and a deep report is 0.05 USDC as observed; the signed quote controls the exact purchase.",
     "sections": [
+      {
+        "title": "Rights Gateway: select the paid operation",
+        "paragraphs": [
+          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
+          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "SUPPORTED: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter. The official EIP-3009 signer and random nonce remain unchanged. Generic zero-config x402, stock SIWX-only hooks, Payments MCP, generic paid proxies and Agent402 router payment are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED; awaiting a real customer."
+        ],
+        "links": [
+          {
+            "label": "Gateway limits, prices and workflow",
+            "href": "/gateway"
+          },
+          {
+            "label": "Complete TypeScript and Python examples",
+            "href": "/examples/GATEWAY.md"
+          }
+        ]
+      },
       {
         "title": "Start with the stable public endpoint",
         "paragraphs": [
@@ -239,6 +275,24 @@
     "description": "Remote Streamable HTTP at api.getacqpath.com/mcp. No seller API key is required for public capabilities and quote preparation.",
     "sections": [
       {
+        "title": "Rights Gateway: select the paid operation",
+        "paragraphs": [
+          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
+          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "SUPPORTED: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter. The official EIP-3009 signer and random nonce remain unchanged. Generic zero-config x402, stock SIWX-only hooks, Payments MCP, generic paid proxies and Agent402 router payment are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED; awaiting a real customer."
+        ],
+        "links": [
+          {
+            "label": "Gateway limits, prices and workflow",
+            "href": "/gateway"
+          },
+          {
+            "label": "Complete TypeScript and Python examples",
+            "href": "/examples/GATEWAY.md"
+          }
+        ]
+      },
+      {
         "title": "Current supported buyer integration",
         "paragraphs": [
           "SUPPORTED: tested official TypeScript/Node x402 client + AcqPath SIWX adapter; tested official Python x402/httpx client + AcqPath SIWX adapter. The official EIP-3009 payment signer and its random nonce remain unchanged. The adapter adds unsigned payment prebinding and an official SIWX request/payment authorization. New integrations do not construct or sign the legacy bound payment nonce. Generic zero-config x402 clients, stock SIWX-only hooks without the AcqPath adapter, Payments MCP and generic paid proxies are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED.",
@@ -302,6 +356,24 @@
     "title": "Rights evidence in an agent workflow",
     "description": "Choose the purpose, preserve evidence and keep the ingestion decision in your application. Framework-neutral examples use the same bounded buyer adapter.",
     "sections": [
+      {
+        "title": "Rights Gateway: select the paid operation",
+        "paragraphs": [
+          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
+          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "SUPPORTED: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter. The official EIP-3009 signer and random nonce remain unchanged. Generic zero-config x402, stock SIWX-only hooks, Payments MCP, generic paid proxies and Agent402 router payment are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED; awaiting a real customer."
+        ],
+        "links": [
+          {
+            "label": "Gateway limits, prices and workflow",
+            "href": "/gateway"
+          },
+          {
+            "label": "Complete TypeScript and Python examples",
+            "href": "/examples/GATEWAY.md"
+          }
+        ]
+      },
       {
         "title": "Current supported buyer integration",
         "paragraphs": [
@@ -389,6 +461,24 @@
     "description": "Explicit origin coverage and conservative decisions. Missing or unsupported evidence never becomes permission.",
     "sections": [
       {
+        "title": "Rights Gateway: select the paid operation",
+        "paragraphs": [
+          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
+          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "SUPPORTED: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter. The official EIP-3009 signer and random nonce remain unchanged. Generic zero-config x402, stock SIWX-only hooks, Payments MCP, generic paid proxies and Agent402 router payment are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED; awaiting a real customer."
+        ],
+        "links": [
+          {
+            "label": "Gateway limits, prices and workflow",
+            "href": "/gateway"
+          },
+          {
+            "label": "Complete TypeScript and Python examples",
+            "href": "/examples/GATEWAY.md"
+          }
+        ]
+      },
+      {
         "title": "Observed coverage",
         "paragraphs": [
           "Observed 2026-09-10T13:40:17.531Z: medium.com, theguardian.com, rslstandard.org, rslcollective.org. Re-read live capabilities; this is a dated snapshot.",
@@ -428,6 +518,24 @@
     "description": "Pay per prepared rights report on Base. Current observed prices stay unchanged; verify the signed quote before authorizing a purchase.",
     "sections": [
       {
+        "title": "Rights Gateway: select the paid operation",
+        "paragraphs": [
+          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
+          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "SUPPORTED: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter. The official EIP-3009 signer and random nonce remain unchanged. Generic zero-config x402, stock SIWX-only hooks, Payments MCP, generic paid proxies and Agent402 router payment are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED; awaiting a real customer."
+        ],
+        "links": [
+          {
+            "label": "Gateway limits, prices and workflow",
+            "href": "/gateway"
+          },
+          {
+            "label": "Complete TypeScript and Python examples",
+            "href": "/examples/GATEWAY.md"
+          }
+        ]
+      },
+      {
         "title": "Explicit report prices",
         "paragraphs": [
           "Fresh: 20,000 micro-USDC (0.02 USDC). Deep: 50,000 micro-USDC (0.05 USDC). Observed 2026-09-10T13:40:17.531Z.",
@@ -466,6 +574,24 @@
     "title": "Resume evidence delivery without a new payment",
     "description": "A network failure is not a reason to create another order or signature. Preserve the original private checkpoint.",
     "sections": [
+      {
+        "title": "Rights Gateway: select the paid operation",
+        "paragraphs": [
+          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
+          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "SUPPORTED: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter. The official EIP-3009 signer and random nonce remain unchanged. Generic zero-config x402, stock SIWX-only hooks, Payments MCP, generic paid proxies and Agent402 router payment are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED; awaiting a real customer."
+        ],
+        "links": [
+          {
+            "label": "Gateway limits, prices and workflow",
+            "href": "/gateway"
+          },
+          {
+            "label": "Complete TypeScript and Python examples",
+            "href": "/examples/GATEWAY.md"
+          }
+        ]
+      },
       {
         "title": "Current supported buyer integration",
         "paragraphs": [
@@ -524,6 +650,24 @@
     "title": "The AcqPath HTTP x402 purchase contract",
     "description": "Quote first, private claim second, signed payment third. This is a multi-step report flow, not a generic one-call paid MCP tool.",
     "sections": [
+      {
+        "title": "Rights Gateway: select the paid operation",
+        "paragraphs": [
+          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
+          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "SUPPORTED: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter. The official EIP-3009 signer and random nonce remain unchanged. Generic zero-config x402, stock SIWX-only hooks, Payments MCP, generic paid proxies and Agent402 router payment are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED; awaiting a real customer."
+        ],
+        "links": [
+          {
+            "label": "Gateway limits, prices and workflow",
+            "href": "/gateway"
+          },
+          {
+            "label": "Complete TypeScript and Python examples",
+            "href": "/examples/GATEWAY.md"
+          }
+        ]
+      },
       {
         "title": "Current supported buyer integration",
         "paragraphs": [
@@ -589,6 +733,24 @@
     "description": "For summarization, research agents and model context: evaluate observed RSL declarations for the actual selected source.",
     "sections": [
       {
+        "title": "Rights Gateway: select the paid operation",
+        "paragraphs": [
+          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
+          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "SUPPORTED: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter. The official EIP-3009 signer and random nonce remain unchanged. Generic zero-config x402, stock SIWX-only hooks, Payments MCP, generic paid proxies and Agent402 router payment are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED; awaiting a real customer."
+        ],
+        "links": [
+          {
+            "label": "Gateway limits, prices and workflow",
+            "href": "/gateway"
+          },
+          {
+            "label": "Complete TypeScript and Python examples",
+            "href": "/examples/GATEWAY.md"
+          }
+        ]
+      },
+      {
         "title": "When to call",
         "paragraphs": [
           "Use ai-input before placing source content into the model context. There is no separate summarize purpose or blanket permission guarantee.",
@@ -632,6 +794,24 @@
     "title": "RSL evidence before RAG ingestion",
     "description": "Preflight supported URLs before corpus ingestion and preserve signed rights evidence with your provenance.",
     "sections": [
+      {
+        "title": "Rights Gateway: select the paid operation",
+        "paragraphs": [
+          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
+          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "SUPPORTED: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter. The official EIP-3009 signer and random nonce remain unchanged. Generic zero-config x402, stock SIWX-only hooks, Payments MCP, generic paid proxies and Agent402 router payment are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED; awaiting a real customer."
+        ],
+        "links": [
+          {
+            "label": "Gateway limits, prices and workflow",
+            "href": "/gateway"
+          },
+          {
+            "label": "Complete TypeScript and Python examples",
+            "href": "/examples/GATEWAY.md"
+          }
+        ]
+      },
       {
         "title": "When to call",
         "paragraphs": [
@@ -677,6 +857,24 @@
     "description": "Evaluate declared restrictions before adding supported content to an index or search workflow.",
     "sections": [
       {
+        "title": "Rights Gateway: select the paid operation",
+        "paragraphs": [
+          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
+          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "SUPPORTED: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter. The official EIP-3009 signer and random nonce remain unchanged. Generic zero-config x402, stock SIWX-only hooks, Payments MCP, generic paid proxies and Agent402 router payment are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED; awaiting a real customer."
+        ],
+        "links": [
+          {
+            "label": "Gateway limits, prices and workflow",
+            "href": "/gateway"
+          },
+          {
+            "label": "Complete TypeScript and Python examples",
+            "href": "/examples/GATEWAY.md"
+          }
+        ]
+      },
+      {
         "title": "When to call",
         "paragraphs": [
           "Use ai-index for indexing and search for search. Do not substitute one purpose for the other.",
@@ -720,6 +918,24 @@
     "title": "Check AI training declarations",
     "description": "Get dated evidence of declared AI training restrictions for selected supported resources.",
     "sections": [
+      {
+        "title": "Rights Gateway: select the paid operation",
+        "paragraphs": [
+          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
+          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "SUPPORTED: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter. The official EIP-3009 signer and random nonce remain unchanged. Generic zero-config x402, stock SIWX-only hooks, Payments MCP, generic paid proxies and Agent402 router payment are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED; awaiting a real customer."
+        ],
+        "links": [
+          {
+            "label": "Gateway limits, prices and workflow",
+            "href": "/gateway"
+          },
+          {
+            "label": "Complete TypeScript and Python examples",
+            "href": "/examples/GATEWAY.md"
+          }
+        ]
+      },
       {
         "title": "When to call",
         "paragraphs": [
@@ -765,6 +981,24 @@
     "description": "AcqPath does not offer a paid crawl-permission product. Evaluate actual downstream AI input, indexing, training or search declarations separately.",
     "sections": [
       {
+        "title": "Rights Gateway: select the paid operation",
+        "paragraphs": [
+          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
+          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "SUPPORTED: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter. The official EIP-3009 signer and random nonce remain unchanged. Generic zero-config x402, stock SIWX-only hooks, Payments MCP, generic paid proxies and Agent402 router payment are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED; awaiting a real customer."
+        ],
+        "links": [
+          {
+            "label": "Gateway limits, prices and workflow",
+            "href": "/gateway"
+          },
+          {
+            "label": "Complete TypeScript and Python examples",
+            "href": "/examples/GATEWAY.md"
+          }
+        ]
+      },
+      {
         "title": "Before crawling",
         "paragraphs": [
           "Respect your crawler access, robots and site policy before retrieval. A rights report is not a robots.txt validator, permission grant or access-control bypass.",
@@ -809,6 +1043,24 @@
     "description": "You arrived through mcp-registry. Connect the remote MCP endpoint, then use a bounded buyer-side HTTP payment integration when a report is needed.",
     "sections": [
       {
+        "title": "Rights Gateway: select the paid operation",
+        "paragraphs": [
+          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
+          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "SUPPORTED: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter. The official EIP-3009 signer and random nonce remain unchanged. Generic zero-config x402, stock SIWX-only hooks, Payments MCP, generic paid proxies and Agent402 router payment are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED; awaiting a real customer."
+        ],
+        "links": [
+          {
+            "label": "Gateway limits, prices and workflow",
+            "href": "/gateway"
+          },
+          {
+            "label": "Complete TypeScript and Python examples",
+            "href": "/examples/GATEWAY.md"
+          }
+        ]
+      },
+      {
         "title": "Start with capabilities",
         "paragraphs": [
           "MCP: https://api.getacqpath.com/mcp",
@@ -847,6 +1099,24 @@
     "title": "Connect AcqPath: RSL evidence before ingestion",
     "description": "You arrived through smithery. Connect the remote MCP endpoint, then use a bounded buyer-side HTTP payment integration when a report is needed.",
     "sections": [
+      {
+        "title": "Rights Gateway: select the paid operation",
+        "paragraphs": [
+          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
+          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "SUPPORTED: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter. The official EIP-3009 signer and random nonce remain unchanged. Generic zero-config x402, stock SIWX-only hooks, Payments MCP, generic paid proxies and Agent402 router payment are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED; awaiting a real customer."
+        ],
+        "links": [
+          {
+            "label": "Gateway limits, prices and workflow",
+            "href": "/gateway"
+          },
+          {
+            "label": "Complete TypeScript and Python examples",
+            "href": "/examples/GATEWAY.md"
+          }
+        ]
+      },
       {
         "title": "Start with capabilities",
         "paragraphs": [
@@ -887,6 +1157,24 @@
     "description": "You arrived through github. Connect the remote MCP endpoint, then use a bounded buyer-side HTTP payment integration when a report is needed.",
     "sections": [
       {
+        "title": "Rights Gateway: select the paid operation",
+        "paragraphs": [
+          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
+          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "SUPPORTED: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter. The official EIP-3009 signer and random nonce remain unchanged. Generic zero-config x402, stock SIWX-only hooks, Payments MCP, generic paid proxies and Agent402 router payment are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED; awaiting a real customer."
+        ],
+        "links": [
+          {
+            "label": "Gateway limits, prices and workflow",
+            "href": "/gateway"
+          },
+          {
+            "label": "Complete TypeScript and Python examples",
+            "href": "/examples/GATEWAY.md"
+          }
+        ]
+      },
+      {
         "title": "Start with capabilities",
         "paragraphs": [
           "MCP: https://api.getacqpath.com/mcp",
@@ -925,6 +1213,24 @@
     "title": "Connect AcqPath: RSL evidence before ingestion",
     "description": "You arrived through glama. Connect the remote MCP endpoint, then use a bounded buyer-side HTTP payment integration when a report is needed.",
     "sections": [
+      {
+        "title": "Rights Gateway: select the paid operation",
+        "paragraphs": [
+          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
+          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "SUPPORTED: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter. The official EIP-3009 signer and random nonce remain unchanged. Generic zero-config x402, stock SIWX-only hooks, Payments MCP, generic paid proxies and Agent402 router payment are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED; awaiting a real customer."
+        ],
+        "links": [
+          {
+            "label": "Gateway limits, prices and workflow",
+            "href": "/gateway"
+          },
+          {
+            "label": "Complete TypeScript and Python examples",
+            "href": "/examples/GATEWAY.md"
+          }
+        ]
+      },
       {
         "title": "Start with capabilities",
         "paragraphs": [
@@ -965,6 +1271,24 @@
     "description": "You arrived through mcp-so. Connect the remote MCP endpoint, then use a bounded buyer-side HTTP payment integration when a report is needed.",
     "sections": [
       {
+        "title": "Rights Gateway: select the paid operation",
+        "paragraphs": [
+          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
+          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "SUPPORTED: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter. The official EIP-3009 signer and random nonce remain unchanged. Generic zero-config x402, stock SIWX-only hooks, Payments MCP, generic paid proxies and Agent402 router payment are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED; awaiting a real customer."
+        ],
+        "links": [
+          {
+            "label": "Gateway limits, prices and workflow",
+            "href": "/gateway"
+          },
+          {
+            "label": "Complete TypeScript and Python examples",
+            "href": "/examples/GATEWAY.md"
+          }
+        ]
+      },
+      {
         "title": "Start with capabilities",
         "paragraphs": [
           "MCP: https://api.getacqpath.com/mcp",
@@ -1004,6 +1328,24 @@
     "description": "You arrived through mcp-market. Connect the remote MCP endpoint, then use a bounded buyer-side HTTP payment integration when a report is needed.",
     "sections": [
       {
+        "title": "Rights Gateway: select the paid operation",
+        "paragraphs": [
+          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
+          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "SUPPORTED: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter. The official EIP-3009 signer and random nonce remain unchanged. Generic zero-config x402, stock SIWX-only hooks, Payments MCP, generic paid proxies and Agent402 router payment are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED; awaiting a real customer."
+        ],
+        "links": [
+          {
+            "label": "Gateway limits, prices and workflow",
+            "href": "/gateway"
+          },
+          {
+            "label": "Complete TypeScript and Python examples",
+            "href": "/examples/GATEWAY.md"
+          }
+        ]
+      },
+      {
         "title": "Start with capabilities",
         "paragraphs": [
           "MCP: https://api.getacqpath.com/mcp",
@@ -1041,30 +1383,35 @@
     "description": "Live unpaid endpoint verified; no owner-funded indexing purchase. First settlement must be from an independent external buyer.",
     "sections": [
       {
-        "title": "Technical release complete; external purchase awaited",
+        "title": "Rights Gateway: select the paid operation",
         "paragraphs": [
-          "Production version 0c3b5794-f428-4e69-879e-29cab293cd1a; merged commit 9533e49d262d20d5bb3712321fbc66981e477418. Node/Python unpaid 402, legacy compatibility, SIWX challenge and CDP valid=true verified 2026-09-11T20:41:57.723Z. No owner wallet or settlement was used.",
-          "SUPPORTED: tested official TypeScript/Node x402 client + AcqPath SIWX adapter; tested official Python x402/httpx client + AcqPath SIWX adapter. The official EIP-3009 payment signer and its random nonce remain unchanged. The adapter adds unsigned payment prebinding and an official SIWX request/payment authorization. New integrations do not construct or sign the legacy bound payment nonce. Generic zero-config x402 clients, stock SIWX-only hooks without the AcqPath adapter, Payments MCP and generic paid proxies are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED.",
-          "External paid reports: 0; repeat external payers: 0; verified external revenue: 0 USDC at the latest aggregate read. External acquisition is UNPROVEN. Eligible external requests and payment attempts remain UNKNOWN because the available aggregates cannot separate QA and external activity. No Bazaar match was found by merchant, brand or the six existing intent searches."
+          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
+          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "SUPPORTED: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter. The official EIP-3009 signer and random nonce remain unchanged. Generic zero-config x402, stock SIWX-only hooks, Payments MCP, generic paid proxies and Agent402 router payment are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED; awaiting a real customer."
+        ],
+        "links": [
+          {
+            "label": "Gateway limits, prices and workflow",
+            "href": "/gateway"
+          },
+          {
+            "label": "Complete TypeScript and Python examples",
+            "href": "/examples/GATEWAY.md"
+          }
         ]
       },
       {
-        "title": "Current state",
+        "title": "Production release and external evidence",
         "paragraphs": [
-          "AWAITING FIRST EXTERNAL SETTLEMENT. Production health, legacy flow, prepared unpaid 402, real LICENSE_REQUIRED resources and CDP valid=true were verified. This is not settlement or indexing evidence.",
-          "SUPPORTED: tested official TypeScript/Node x402 client + AcqPath SIWX adapter; tested official Python x402/httpx client + AcqPath SIWX adapter. The official EIP-3009 payment signer and its random nonce remain unchanged. The adapter adds unsigned payment prebinding and an official SIWX request/payment authorization. New integrations do not construct or sign the legacy bound payment nonce. Generic zero-config x402 clients, stock SIWX-only hooks without the AcqPath adapter, Payments MCP and generic paid proxies are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED."
+          "Live Worker 0b952e13-d76c-4226-a117-521741d30769; merged core b2a9273f7269f137af2336d7819bbd3a7595a0b3 (PR #13). Unpaid production checks PASS. Existing Preflight prices, recipient, Base/USDC/facilitator, Access, provider routing and database schema are unchanged.",
+          "Organic paid operations: 0; repeat external payers: 0; verified organic revenue: 0 USDC. Marketplace verification settlements: 0. These are aggregate observations, not proof of buyer demand. No owner wallet or payment was used. CDP Bazaar indexing awaits a real external settlement.",
+          "Agent402 existing listing remains live. New SKU crawler refresh and per-intent readback are recorded in release status; listing is not proof of SIWX router compatibility. PayAPI existing submission remains pending_review, payment_verified=false; its dashboard has no editing workflow."
         ]
       },
       {
         "title": "How indexing becomes observable",
         "paragraphs": [
           "CDP indexes eligible metadata after successful settlement. Public monitoring checks merchant lookup and unfiltered brand/intent searches. Agentic Market consumes this ecosystem; a listing is claimed only after public readback. No fixed indexing deadline is promised."
-        ]
-      },
-      {
-        "title": "External revenue baseline",
-        "paragraphs": [
-          "2026-09-11 production aggregate read: 0 mainnet paid reports, 0 received USDC, 0 repeat payer identifiers. No independent external payment or repeat demand is proven. These are scoped aggregate observations, not lifetime or profitability claims."
         ]
       },
       {
@@ -1079,6 +1426,23 @@
             "href": "/public-http"
           }
         ]
+      },
+      {
+        "title": "Agent402: three independently discoverable paid products",
+        "paragraphs": [
+          "Public index readback shows Preflight at 0.02, Ingestion Gate from 0.06 and Revalidation at 0.03 USDC on Base (eip155:8453). These are fresh minimums, not flat prices for every batch or tier. Agent402 router payment remains unsupported for the AcqPath SIWX adapter; its settlement_required label does not prove compatibility.",
+          "Observed free searches: Preflight #1 for RSL rights before RAG ingestion; Gate #1 for rights evidence before indexing and #2 for batch content rights check; Revalidation #1 for AI usage rights policy changes. Other phrases returned no AcqPath result, including did this website AI policy change and policy revalidation rights diff. Rankings are timestamped observations, not guarantees or customer demand."
+        ],
+        "links": [
+          {
+            "label": "Current indexed seller",
+            "href": "https://agent402.tools/api/index?seller=api.getacqpath.com"
+          },
+          {
+            "label": "Release evidence and complete search outcomes",
+            "href": "/revenue-release.json"
+          }
+        ]
       }
     ]
   },
@@ -1088,6 +1452,24 @@
     "title": "Can I use this URL for RAG?",
     "description": "Preflight a source before adding it to a retrieval corpus. Later model use may need a separate ai-input check; do not silently buy both.",
     "sections": [
+      {
+        "title": "Rights Gateway: select the paid operation",
+        "paragraphs": [
+          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
+          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "SUPPORTED: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter. The official EIP-3009 signer and random nonce remain unchanged. Generic zero-config x402, stock SIWX-only hooks, Payments MCP, generic paid proxies and Agent402 router payment are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED; awaiting a real customer."
+        ],
+        "links": [
+          {
+            "label": "Gateway limits, prices and workflow",
+            "href": "/gateway"
+          },
+          {
+            "label": "Complete TypeScript and Python examples",
+            "href": "/examples/GATEWAY.md"
+          }
+        ]
+      },
       {
         "title": "When to call",
         "paragraphs": [
@@ -1138,6 +1520,24 @@
     "description": "There is no paid crawl purpose and this service does not fetch content for you. Apply robots.txt, access controls and your crawler policy first; use ai-input only for planned downstream AI processing.",
     "sections": [
       {
+        "title": "Rights Gateway: select the paid operation",
+        "paragraphs": [
+          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
+          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "SUPPORTED: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter. The official EIP-3009 signer and random nonce remain unchanged. Generic zero-config x402, stock SIWX-only hooks, Payments MCP, generic paid proxies and Agent402 router payment are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED; awaiting a real customer."
+        ],
+        "links": [
+          {
+            "label": "Gateway limits, prices and workflow",
+            "href": "/gateway"
+          },
+          {
+            "label": "Complete TypeScript and Python examples",
+            "href": "/examples/GATEWAY.md"
+          }
+        ]
+      },
+      {
         "title": "When to call",
         "paragraphs": [
           "There is no paid crawl purpose and this service does not fetch content for you. Apply robots.txt, access controls and your crawler policy first; use ai-input only for planned downstream AI processing.",
@@ -1186,6 +1586,24 @@
     "title": "Can I summarize or use this page as AI input?",
     "description": "Check declared usage terms before research, summarization or adding a web page to model context.",
     "sections": [
+      {
+        "title": "Rights Gateway: select the paid operation",
+        "paragraphs": [
+          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
+          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "SUPPORTED: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter. The official EIP-3009 signer and random nonce remain unchanged. Generic zero-config x402, stock SIWX-only hooks, Payments MCP, generic paid proxies and Agent402 router payment are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED; awaiting a real customer."
+        ],
+        "links": [
+          {
+            "label": "Gateway limits, prices and workflow",
+            "href": "/gateway"
+          },
+          {
+            "label": "Complete TypeScript and Python examples",
+            "href": "/examples/GATEWAY.md"
+          }
+        ]
+      },
       {
         "title": "When to call",
         "paragraphs": [
@@ -1236,6 +1654,24 @@
     "description": "Check declarations before adding a supported URL to a training dataset. A report does not acquire training rights.",
     "sections": [
       {
+        "title": "Rights Gateway: select the paid operation",
+        "paragraphs": [
+          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
+          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "SUPPORTED: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter. The official EIP-3009 signer and random nonce remain unchanged. Generic zero-config x402, stock SIWX-only hooks, Payments MCP, generic paid proxies and Agent402 router payment are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED; awaiting a real customer."
+        ],
+        "links": [
+          {
+            "label": "Gateway limits, prices and workflow",
+            "href": "/gateway"
+          },
+          {
+            "label": "Complete TypeScript and Python examples",
+            "href": "/examples/GATEWAY.md"
+          }
+        ]
+      },
+      {
         "title": "When to call",
         "paragraphs": [
           "Check declarations before adding a supported URL to a training dataset. A report does not acquire training rights.",
@@ -1285,6 +1721,24 @@
     "description": "Use search for a search pipeline; choose ai-index for an AI/RAG index. Keep the purpose aligned with the actual downstream use.",
     "sections": [
       {
+        "title": "Rights Gateway: select the paid operation",
+        "paragraphs": [
+          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
+          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "SUPPORTED: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter. The official EIP-3009 signer and random nonce remain unchanged. Generic zero-config x402, stock SIWX-only hooks, Payments MCP, generic paid proxies and Agent402 router payment are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED; awaiting a real customer."
+        ],
+        "links": [
+          {
+            "label": "Gateway limits, prices and workflow",
+            "href": "/gateway"
+          },
+          {
+            "label": "Complete TypeScript and Python examples",
+            "href": "/examples/GATEWAY.md"
+          }
+        ]
+      },
+      {
         "title": "When to call",
         "paragraphs": [
           "Use search for a search pipeline; choose ai-index for an AI/RAG index. Keep the purpose aligned with the actual downstream use.",
@@ -1333,6 +1787,24 @@
     "title": "Preflight a URL through one stable HTTP endpoint",
     "description": "Account-free declared-rights evidence for autonomous content use. Start without payment and check client compatibility before spending.",
     "sections": [
+      {
+        "title": "Rights Gateway: select the paid operation",
+        "paragraphs": [
+          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
+          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "SUPPORTED: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter. The official EIP-3009 signer and random nonce remain unchanged. Generic zero-config x402, stock SIWX-only hooks, Payments MCP, generic paid proxies and Agent402 router payment are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED; awaiting a real customer."
+        ],
+        "links": [
+          {
+            "label": "Gateway limits, prices and workflow",
+            "href": "/gateway"
+          },
+          {
+            "label": "Complete TypeScript and Python examples",
+            "href": "/examples/GATEWAY.md"
+          }
+        ]
+      },
       {
         "title": "1. Discover capability and prepare",
         "paragraphs": [
@@ -1456,6 +1928,75 @@
           {
             "label": "Complete installation and verified-response examples",
             "href": "/examples/OFFICIAL-CLIENTS.md"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "gateway",
+    "label": "Gateway",
+    "title": "Batch rights checks and policy revalidation",
+    "description": "Check up to four reviewed URLs before AI ingestion; detect observed policy changes on repeat use. Exact Base USDC pricing and verified TS/Python delivery.",
+    "sections": [
+      {
+        "title": "Rights Gateway: select the paid operation",
+        "paragraphs": [
+          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
+          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "SUPPORTED: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter. The official EIP-3009 signer and random nonce remain unchanged. Generic zero-config x402, stock SIWX-only hooks, Payments MCP, generic paid proxies and Agent402 router payment are NOT CLAIMED compatible. Independent external MAINNET PAID E2E remains UNVERIFIED; awaiting a real customer."
+        ],
+        "links": [
+          {
+            "label": "Gateway limits, prices and workflow",
+            "href": "/gateway"
+          },
+          {
+            "label": "Complete TypeScript and Python examples",
+            "href": "/examples/GATEWAY.md"
+          }
+        ]
+      },
+      {
+        "title": "Machine contract and intended use",
+        "paragraphs": [
+          "POST /v1/rights/ingestion-gate takes resources, purpose, tier, freshness_seconds and max_total_micro. A single URL uses a one-element resources array. ai-input covers model input or summarization; ai-index covers indexing for RAG; ai-train covers training; search covers search. Choose the actual use. Crawl is not a paid RSL purpose or a robots access grant. Canonical URL duplicates count once; at most four entries are accepted.",
+          "POST /v1/rights/revalidate takes the same scope with one resource and previous: the signed checkpoint from a delivered gateway resource item. It always reobserves conditionally (freshness_seconds: 0). Resource, purpose, user class, geography and tier must match. A new revalidation is a separately authorized purchase, never a retry of an earlier purchase."
+        ],
+        "code": "{\n  \"resources\": [\n    \"https://rslstandard.org/\"\n  ],\n  \"purpose\": \"ai-input\",\n  \"tier\": \"fresh\",\n  \"freshness_seconds\": 300,\n  \"max_total_micro\": \"60000\"\n}",
+        "links": [
+          {
+            "label": "Live operation schemas",
+            "href": "https://api.getacqpath.com/openapi.json"
+          },
+          {
+            "label": "Live coverage",
+            "href": "https://api.getacqpath.com/v1/capabilities"
+          }
+        ]
+      },
+      {
+        "title": "Signed evidence and conservative interpretation",
+        "paragraphs": [
+          "The verified report includes operation ID, SKU, deterministic evaluator profile, observation/evaluation timestamps, cache age, provenance, source hashes, normalized RSL 1.0 signals, conflicts, policy fingerprints, observed license references and signed checkpoints. Legal clearance is always false. IETF AIPREF drafts are not evaluated.",
+          "PERMITTED_BY_OBSERVED_DECLARATION is an observation, not legal permission. LICENSE_REQUIRED does not acquire a license. CONFLICT and UNKNOWN remain explicit. Revalidation returns UNCHANGED, CHANGED, DECLARATION_ADDED, DECLARATION_REMOVED, LICENSE_PATH_CHANGED, CONFLICT_CHANGED, SOURCE_UNAVAILABLE or UNKNOWN. Incomplete current or prior evidence never proves removal. A raw policy declaration change can change the fingerprint even when the normalized verdict is unchanged."
+        ]
+      },
+      {
+        "title": "Work, freshness and recovery bounds",
+        "paragraphs": [
+          "Four reviewed HTTPS origins: medium.com, theguardian.com, rslstandard.org and rslcollective.org. Fresh allows at most four upstream requests per resource; deep at most eight. Concurrent resource work is capped at two. Per-resource source deadline defaults to 12 seconds; four slow resources can take two waves. Resource work starts only after verified SIWX/payment authorization and durable reservations. No HTTP 403 bypass, private-IP access or unlimited crawl.",
+          "Cache reuse exposes the original observation timestamp and age. Revalidation uses conditional requests and 304 when supported. Each item is bounded at 12,000 bytes and the gateway report at 52,000 bytes. A failed or oversized source produces UNKNOWN. A durable interrupted execution fails closed without automatic recomputation or settlement.",
+          "Use the supplied TS/Python adapter and its private ACL-protected state directory. Files are not application-level encrypted. Keep original operation ID, normalized input and directory on retry. Never log signed artifacts, checkpoint state or private request context. The adapter verifies report, receipt and delivery binding; HTTP 200 alone is insufficient. Preserve pending state across rollback; an older server version may not understand new gateway journal records."
+        ],
+        "links": [
+          {
+            "label": "Copy-paste Node / Python",
+            "href": "/examples/GATEWAY.md"
+          },
+          {
+            "label": "Recovery",
+            "href": "/recovery"
           }
         ]
       }

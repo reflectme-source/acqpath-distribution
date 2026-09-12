@@ -1,20 +1,3 @@
-// examples/official-clients/acqpath-fetch.mjs
-import { createSIWxPayload, encodeSIWxHeader } from "@x402/extensions/sign-in-with-x";
-import { x402Client } from "@x402/core/client";
-import { ExactEvmScheme } from "@x402/evm/exact/client";
-import { wrapFetchWithPayment } from "@x402/fetch";
-
-// src/api/rights-schema.mjs
-var RightsInputSchema = { type: "object", additionalProperties: false, required: ["resource", "purpose", "max_total_micro"], properties: {
-  resource: { type: "string", format: "uri", maxLength: 2048, description: "HTTPS resource on an explicitly reviewed origin; no query, fragment, credentials, IP literal, encoded slash or redirect." },
-  purpose: { type: "string", enum: ["ai-input", "ai-train", "ai-index", "search"] },
-  user_class: { type: "string", enum: ["commercial", "non-commercial", "education", "government", "personal"], default: "commercial" },
-  geo: { type: ["string", "null"], pattern: "^[A-Z]{2}$", description: "Caller-supplied geographical context. This is not independently verified location." },
-  freshness_seconds: { type: "integer", minimum: 0, maximum: 3600, default: 300 },
-  tier: { type: "string", enum: ["fresh", "deep"], default: "fresh" },
-  max_total_micro: { type: "string", pattern: "^(0|[1-9][0-9]*)$", description: "Exact integer micro-USDC budget." }
-} };
-
 // src/lib/errors.mjs
 var Fault = class extends Error {
   constructor(code, message, status = 400, details = void 0) {
@@ -179,17 +162,61 @@ function signingKid(origin) {
   return `did:web:${host}#acqpath-evidence-1`;
 }
 
+// src/native/gateway.mjs
+var GATE_PATH = "/v1/rights/ingestion-gate";
+var DIFF_PATH = "/v1/rights/revalidate";
+var GATEWAY_PATHS = [GATE_PATH, DIFF_PATH];
+var aliases = { "rag-ingestion": "ai-input", summarization: "ai-input", training: "ai-train", "search-indexing": "search" };
+var gatewaySKU = (path) => path === GATE_PATH ? "rights.ingestion-gate.v1" : "rights.revalidate.v1";
+function gatewayInput(body, path) {
+  requireThat(GATEWAY_PATHS.includes(path) && body && typeof body === "object" && !Array.isArray(body), "BAD_INPUT", "Invalid gateway input.");
+  const keys = ["resources", "purpose", "user_class", "geo", "tier", "freshness_seconds", "max_total_micro", ...path === DIFF_PATH ? ["previous"] : []];
+  requireThat(Object.keys(body).every((k) => keys.includes(k)), "BAD_INPUT", "Unknown gateway input field.");
+  requireThat(Array.isArray(body.resources) && body.resources.length >= 1 && body.resources.length <= 4, "BATCH_LIMIT", "Supply one to four resource URLs.");
+  requireThat(body.purpose !== "crawl", "UNSUPPORTED_PURPOSE", "Crawl access is not an RSL usage grant; select the actual content use.");
+  for (const key of ["user_class", "tier"]) if (body[key] !== void 0) requireThat(typeof body[key] === "string" && body[key].length > 0, "BAD_INPUT", "Invalid optional field.");
+  if (body.geo !== void 0) requireThat(body.geo === null || typeof body.geo === "string" && /^[A-Z]{2}$/.test(body.geo), "BAD_INPUT", "Invalid geo.");
+  const normalized = body.resources.map((resource2) => rightsInput({
+    resource: resource2,
+    purpose: aliases[body.purpose] || body.purpose,
+    user_class: body.user_class,
+    geo: body.geo,
+    tier: body.tier,
+    freshness_seconds: body.freshness_seconds,
+    max_total_micro: body.max_total_micro
+  }));
+  const { resource, ...common } = normalized[0];
+  const resources = [...new Set(normalized.map((i) => i.resource))].sort();
+  if (path === DIFF_PATH) {
+    requireThat(resources.length === 1 && body.previous && typeof body.previous === "object" && !Array.isArray(body.previous), "CHECKPOINT_REQUIRED", "Revalidation requires one resource and its signed checkpoint.");
+    requireThat(common.freshness_seconds === 0 || body.freshness_seconds === void 0, "FRESHNESS_REQUIRED", "Revalidation always performs conditional source observation; freshness_seconds must be zero.");
+    requireThat(new TextEncoder().encode(JSON.stringify(body.previous)).length <= 12e3, "CHECKPOINT_LIMIT", "Checkpoint exceeds limit.");
+    return { ...common, freshness_seconds: 0, resources, previous: body.previous };
+  }
+  return { ...common, resources };
+}
+
+// examples/official-clients/acqpath-fetch.mjs
+import { createSIWxPayload, encodeSIWxHeader } from "@x402/extensions/sign-in-with-x";
+import { x402Client } from "@x402/core/client";
+import { ExactEvmScheme } from "@x402/evm/exact/client";
+import { wrapFetchWithPayment } from "@x402/fetch";
+
+// src/api/rights-schema.mjs
+var RightsInputSchema = { type: "object", additionalProperties: false, required: ["resource", "purpose", "max_total_micro"], properties: {
+  resource: { type: "string", format: "uri", maxLength: 2048, description: "HTTPS resource on an explicitly reviewed origin; no query, fragment, credentials, IP literal, encoded slash or redirect." },
+  purpose: { type: "string", enum: ["ai-input", "ai-train", "ai-index", "search"] },
+  user_class: { type: "string", enum: ["commercial", "non-commercial", "education", "government", "personal"], default: "commercial" },
+  geo: { type: ["string", "null"], pattern: "^[A-Z]{2}$", description: "Caller-supplied geographical context. This is not independently verified location." },
+  freshness_seconds: { type: "integer", minimum: 0, maximum: 3600, default: 300 },
+  tier: { type: "string", enum: ["fresh", "deep"], default: "fresh" },
+  max_total_micro: { type: "string", pattern: "^(0|[1-9][0-9]*)$", description: "Exact integer micro-USDC budget." }
+} };
+
 // src/native/public-contract.mjs
 var PUBLIC_PATH = "/v1/rights/preflight";
 var REQUEST_HEADER = "X-AcqPath-Request";
 var BINDING_EXTENSION = "acqpath-request-binding";
-var publicResource = (env) => ({
-  url: env.APP_ORIGIN + PUBLIC_PATH,
-  mimeType: "application/json",
-  serviceName: "AcqPath Rights Preflight",
-  tags: ["AI usage rights", "RSL", "RAG ingestion", "training declarations", "indexing search"],
-  description: "Signed observed RSL declarations for AI input/RAG, training and indexing/search. Reviewed origins only. Diagnostics before ingestion or crawling; crawl is not a paid purpose. UNKNOWN is not permission or legal clearance. Requires acqpath-request-binding nonce support or the AcqPath SIWX adapter with unsigned payment prebinding; generic random-nonce clients cannot buy without the adapter."
-});
 var PublicInputSchema = { ...RightsInputSchema, properties: {
   ...RightsInputSchema.properties,
   max_total_micro: { type: "string", pattern: "^(0|[1-9][0-9]{0,10}|100000000000)$", description: "Integer micro-USDC budget, at most 100000000000; fresh 20000, deep 50000 under current configuration." }
@@ -234,7 +261,22 @@ function publicInput(body) {
 var requestHash = (input) => sha256(canonical(input));
 var PUBLIC_NONCE_PREFIX = "0x6163717075627631";
 var publicIntentId = (key) => sha256("acqpath-public-intent-v1:" + key).then((x) => x.slice(0, 48));
-var boundNonce = (env, key, inputHash) => sha256(canonical({ version: "acqpath-request-v1", resource: publicResource(env).url, key, input_sha256: inputHash })).then((x) => PUBLIC_NONCE_PREFIX + x.slice(0, 48));
+var boundNonce = (env, key, inputHash, path = PUBLIC_PATH) => sha256(canonical({ version: "acqpath-request-v1", resource: env.APP_ORIGIN + path, key, input_sha256: inputHash })).then((x) => PUBLIC_NONCE_PREFIX + x.slice(0, 48));
+var GatewayOutputSchema = { type: "object", required: ["version", "input_sha256", "legal_clearance", "report", "evidence", "delivery_proof", "payment_settlement"], properties: {
+  ...PublicOutputSchema.properties,
+  version: { const: "acqpath-public-gateway-v1" },
+  report: { type: "object", required: ["sku", "resources", "profile", "legal_clearance"], properties: {
+    sku: { enum: ["rights.ingestion-gate.v1", "rights.revalidate.v1"] },
+    resources: { type: "array", minItems: 1, maxItems: 4, items: { type: "object", required: ["resource", "classification", "legal_clearance"], properties: {
+      resource: { type: "string", format: "uri" },
+      classification: { enum: ["PERMITTED_BY_OBSERVED_DECLARATION", "PROHIBITED_BY_OBSERVED_DECLARATION", "LICENSE_REQUIRED", "NO_MACHINE_READABLE_DECLARATION", "CONFLICT", "UNKNOWN"] },
+      legal_clearance: { const: false },
+      checkpoint: { type: ["object", "null"] }
+    } } },
+    profile: { const: "acqpath-observed-policy-v1" },
+    legal_clearance: { const: false }
+  } }
+} };
 
 // src/native/siwx-binding.mjs
 import { verifySIWxSignature } from "@x402/extensions/sign-in-with-x";
@@ -275,7 +317,7 @@ async function orderSIWXInfo(i, p) {
     nonce: i.public.siwx_nonce,
     issuedAt: new Date(i.created_at).toISOString(),
     expirationTime: new Date(Math.min(i.expires_at, Number(p.payload.authorization.validBefore) * 1e3)).toISOString(),
-    statement: SIWX_STATEMENT,
+    statement: new URL(uri).pathname === "/v1/rights/preflight" ? SIWX_STATEMENT : "Authorize this AcqPath rights gateway order and its exact payment. This is not a license.",
     requestId: i.id,
     resources: [
       uri,
@@ -291,11 +333,13 @@ async function orderSIWXInfo(i, p) {
 // examples/public-rights-request.mjs
 async function reviewPublicOffer({ challenge, body, key, origin, publicJwk, expected, now = Date.now() }) {
   requireThat(/^[a-f0-9]{64}$/.test(key || ""), "BAD_CONTEXT", "Retain the private request key.");
-  const input = publicInput(body), hash = await requestHash(input);
+  const path = expected?.path || PUBLIC_PATH;
+  requireThat(path === PUBLIC_PATH || GATEWAY_PATHS.includes(path), "BAD_OPERATION", "Unknown operation.");
+  const input = GATEWAY_PATHS.includes(path) ? gatewayInput(body, path) : publicInput(body), hash = await requestHash(input);
   const b = challenge.extensions?.[BINDING_EXTENSION]?.info, a = challenge.accepts?.[0];
-  requireThat(challenge.x402Version === 2 && challenge.accepts?.length === 1 && challenge.resource?.url === origin + PUBLIC_PATH && b?.required === true && b.state === "prepared", "OFFER_REJECTED", "A prepared canonical offer is required.");
+  requireThat(challenge.x402Version === 2 && challenge.accepts?.length === 1 && challenge.resource?.url === origin + path && b?.required === true && b.state === "prepared", "OFFER_REJECTED", "A prepared canonical offer is required.");
   requireThat(expected && a.scheme === "exact" && a.network === expected.network && a.asset.toLowerCase() === expected.asset.toLowerCase() && a.payTo.toLowerCase() === expected.payTo.toLowerCase() && a.amount === expected.amount && BigInt(a.amount) <= BigInt(input.max_total_micro), "TERMS_REJECTED", "Payment terms differ from independently approved terms.");
-  requireThat(b.input_sha256 === hash && b.resource === challenge.resource.url && b.expires_at > now + 5e3 && b.nonce === await boundNonce({ APP_ORIGIN: origin }, key, hash), "BINDING_REJECTED", "Request binding differs or expires too soon.");
+  requireThat(b.input_sha256 === hash && b.resource === challenge.resource.url && b.expires_at > now + 5e3 && b.nonce === await boundNonce({ APP_ORIGIN: origin }, key, hash, path), "BINDING_REJECTED", "Request binding differs or expires too soon.");
   requireThat(await verifyEvidence(b.evidence, publicJwk) && canonical(b.evidence.payload) === canonical({ version: b.version, resource: b.resource, input_sha256: hash, nonce: b.nonce, expires_at: b.expires_at }), "BINDING_SIGNATURE", "Request evidence signature rejected.");
   const offer = await verifyJWS(challenge.extensions?.["offer-receipt"]?.info?.offers?.[0]?.signature, publicJwk, signingKid(origin));
   requireThat(offer && offer.resourceUrl === challenge.resource.url && offer.amount === a.amount && offer.network === a.network && offer.asset === a.asset && offer.payTo === a.payTo && offer.scheme === "exact" && offer.validUntil === Math.floor(b.expires_at / 1e3), "OFFER_SIGNATURE", "Signed offer does not match terms.");
@@ -313,7 +357,12 @@ async function verifyPublicDelivery({ result, body, challenge, payment, origin, 
   delete signed.delivery_proof;
   ensure(await verifyEvidence(result.evidence, publicJwk) && canonical(signed) === canonical(result.evidence.payload), "REPORT_SIGNATURE_INVALID");
   const hash = await sha256(canonical(body)), r = result.report;
-  ensure(result.version === "acqpath-public-rights-v1" && result.input_sha256 === hash && result.legal_clearance === false && r.resource === body.resource && r.purpose === body.purpose && r.user_class === body.user_class && r.geo === body.geo && r.legal_clearance === false && result.billing.fee_type === "rights_preflight_report" && result.billing.amount_micro === expected.amount, "REPORT_INPUT_OR_TERMS_MISMATCH");
+  const path = expected.path || "/v1/rights/preflight";
+  if (GATEWAY_PATHS.includes(path)) {
+    ensure(result.version === "acqpath-public-gateway-v1" && result.input_sha256 === hash && result.legal_clearance === false && r.legal_clearance === false && r.sku === gatewaySKU(path) && canonical(r.resources.map((x) => x.resource)) === canonical(body.resources) && ["purpose", "user_class", "geo", "tier"].every((k) => r[k] === body[k]) && result.billing.fee_type === gatewaySKU(path) && result.billing.amount_micro === expected.amount, "REPORT_INPUT_OR_TERMS_MISMATCH");
+    for (const item of r.resources) if (item.checkpoint) ensure(await verifyEvidence(item.checkpoint, publicJwk) && item.checkpoint.payload.resource === item.resource && item.checkpoint.payload.fingerprint === item.policy_fingerprint && item.policy_fingerprint === await sha256(canonical(item.checkpoint.payload.policy)), "CHECKPOINT_SIGNATURE_INVALID");
+    if (path !== GATE_PATH) ensure(r.diff.previous_fingerprint === body.previous.payload.fingerprint, "DIFF_BASELINE_MISMATCH");
+  } else ensure(result.version === "acqpath-public-rights-v1" && result.input_sha256 === hash && result.legal_clearance === false && r.resource === body.resource && r.purpose === body.purpose && r.user_class === body.user_class && r.geo === body.geo && r.legal_clearance === false && result.billing.fee_type === "rights_preflight_report" && result.billing.amount_micro === expected.amount, "REPORT_INPUT_OR_TERMS_MISMATCH");
   const s = result.payment_settlement, receipt = s?.extensions?.["offer-receipt"]?.info?.receipt;
   ensure(s?.success === true && s.network === expected.network && /^0x[a-f0-9]{64}$/i.test(s.transaction || ""), "SETTLEMENT_INVALID");
   const rp = receipt?.format === "jws" && await verifyJWS(receipt.signature, publicJwk, signingKid(origin));
@@ -332,12 +381,13 @@ function createAcqPathFetch({ signer, expected, publicJwk, store, fetch: transpo
   return async function acqpathFetch(url, init = {}) {
     const { operationId, ...http } = init;
     ensure2(typeof operationId === "string" && operationId.length > 0 && operationId.length <= 128, "LOGICAL_OPERATION_ID_REQUIRED");
-    const target = new URL(url), origin = target.origin;
-    ensure2(target.href === origin + PUBLIC_PATH && origin === expected.origin && http.method === "POST", "CANONICAL_POST_REQUIRED");
-    const body = publicInput(JSON.parse(http.body)), bodyText = JSON.stringify(body);
+    const target = new URL(url), origin = target.origin, path = expected.path || PUBLIC_PATH;
+    ensure2(path === PUBLIC_PATH || GATEWAY_PATHS.includes(path), "CANONICAL_POST_REQUIRED");
+    ensure2(target.href === origin + path && origin === expected.origin && http.method === "POST", "CANONICAL_POST_REQUIRED");
+    const body = GATEWAY_PATHS.includes(path) ? gatewayInput(JSON.parse(http.body), path) : publicInput(JSON.parse(http.body)), bodyText = JSON.stringify(body);
     return store.withLock(operationId, async ({ value: saved, save }) => {
-      let state = saved || { version: 1, origin, body, key: token(32), status: "NEW" };
-      ensure2(state.version === 1 && state.origin === origin && canonical(state.body) === canonical(body), "OPERATION_INPUT_MISMATCH");
+      let state = saved || { version: 1, origin, path, body, key: token(32), status: "NEW" };
+      ensure2((state.path || PUBLIC_PATH) === path && state.version === 1 && state.origin === origin && canonical(state.body) === canonical(body), "OPERATION_INPUT_MISMATCH");
       ensure2(!new Headers(http.headers).has("payment-signature") && !new Headers(http.headers).has(SIWX_HEADER) && !new Headers(http.headers).has(PREBIND_HEADER) && !new Headers(http.headers).has(REQUEST_HEADER), "CALLER_PAYMENT_HEADERS_FORBIDDEN");
       const headers = new Headers(http.headers);
       headers.set("content-type", "application/json");

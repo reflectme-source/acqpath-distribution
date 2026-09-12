@@ -1,10 +1,10 @@
 # Final technical release — 2026-09-11
 
-Production version 0c3b5794-f428-4e69-879e-29cab293cd1a; core commit 9533e49d262d20d5bb3712321fbc66981e477418. Configured official TS/Python x402 + SIWX integration is deployed. Local/CI/workerd and public unpaid checks PASS; no owner wallet/payment. MAINNET PAID E2E = UNVERIFIED. Acquisition UNPROVEN. See [configured integration](https://developers.getacqpath.com/public-http).
+Production version 0b952e13-d76c-4226-a117-521741d30769; core commit b2a9273f7269f137af2336d7819bbd3a7595a0b3. Configured official TS/Python x402 + SIWX integration is deployed. Local/CI/workerd and public unpaid checks PASS; no owner wallet/payment. MAINNET PAID E2E = UNVERIFIED. Acquisition UNPROVEN. See [configured integration](https://developers.getacqpath.com/public-http).
 
 # Phase 5: external buyer journey
 
-Current production: 0c3b5794-f428-4e69-879e-29cab293cd1a. This table reflects the final deployed SIWX buyer integration; the docs hotfix changes no core behavior or configuration.
+Current production: 0b952e13-d76c-4226-a117-521741d30769. This table reflects the final deployed SIWX buyer integration; the docs hotfix changes no core behavior or configuration.
 
 | Stage | Finding | Resolution / boundary |
 |---|---|---|
@@ -20,3 +20,10 @@ Current production: 0c3b5794-f428-4e69-879e-29cab293cd1a. This table reflects th
 | Demand | Internal QA could inflate demand | Buyer helper stopped/disabled; external evidence classifier and monitoring |
 
 No external paid delivery or generic paid interoperability is proven. The reviewed compatibility change is deployed. Development is complete; await genuine external usage through existing monitoring.
+
+
+## Live Rights Gateway release
+
+Preflight remains **0.02 USDC fresh / 0.05 deep**. **Ingestion Gate** checks 1–4 unique reviewed URLs: **0.04 + 0.02 per URL fresh**, **0.06 + 0.04 per URL deep**. **Revalidation** compares one resource with an authentic signed prior gateway checkpoint: **0.03 fresh / 0.06 deep**. All payments use Base USDC. Gateway fees cover bounded observation attempts, including UNKNOWN. No legal clearance, license purchase or whole-domain coverage.
+
+Use the tested official TS/Python signer + AcqPath SIWX adapter. [Complete gateway examples](https://developers.getacqpath.com/examples/GATEWAY.md) include private state, retry and delivery verification. [Live gateway guide](https://developers.getacqpath.com/gateway). Mainnet paid E2E awaits a real external buyer; verified organic revenue remains 0 USDC. Development freeze: only incidents, security, standards compatibility and monitoring.

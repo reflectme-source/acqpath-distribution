@@ -9,6 +9,7 @@ export function metricSummary(s){
  for(const r of rows){received+=money(r.received_micro);paid+=count(r.paid_reports);payers+=count(r.payer_identifiers);}
  for(const r of s.repeats.filter(x=>x.network==='eip155:8453'))repeats+=count(r.repeat_payer_identifiers);
  return {schema:'acqpath.business-summary.v1',at:new Date().toISOString(),availableQuotesRecorded:count(s.quotes),metadataFetches:count(s.metadata_fetches),mainnetPaidReports:paid,mainnetReceivedMicro:received.toString(),mainnetWalletIdentifiers:payers,repeatWalletIdentifiers:repeats,
+ skuJournalTotals:(s.skus||[]).map(r=>({sku:r.service,network:r.network,offers:count(r.offers),settledOperations:count(r.settled_operations),grossMicro:money(r.gross_micro).toString(),cacheHits:count(r.cache_hits),sourceFetches:count(r.source_fetches),classification:'UNCLASSIFIED_NOT_ORGANIC'})),eligibleExternalRequests:null,paymentAttempts:null,deliveredResultsVerified:null,
  organicCustomers:null,organicRevenueMicro:null,netProfitMicro:null,costStatus:s.cost_status||'NOT_IMPORTED',externalPayersVerified:false,
  interpretation:['Available-quote records do not include every rejected or unavailable input.','Wallet identifiers are not verified independent customers.','Aggregates alone cannot exclude self-purchases or identify acquisition channel.','Revenue is not profit; settlement receipt is not independent chain verification.']};
 }

@@ -1,5 +1,5 @@
 {
-  "observedAt": "2026-09-10T13:40:17.531Z",
+  "observedAt": "2026-09-12T09:47:19.929Z",
   "intents": [
     {
       "query": "Can I use this page for RAG?",
@@ -125,6 +125,18 @@
       "query": "USDC pay-per-report RSL API",
       "purpose": "ai-input",
       "boundary": "Fresh 0.02 USDC; deep 0.05 USDC as observed; signed quote controls actual payment."
+    },
+    {
+      "query": "Batch content rights check before RAG ingestion",
+      "purpose": "ai-input",
+      "operation": "/v1/rights/ingestion-gate",
+      "boundary": "One to four reviewed URLs; observed evidence, not legal clearance."
+    },
+    {
+      "query": "Did this website AI policy change?",
+      "purpose": "ai-input",
+      "operation": "/v1/rights/revalidate",
+      "boundary": "One authentic prior gateway checkpoint; incomplete evidence cannot prove removal."
     }
   ]
 }

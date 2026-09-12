@@ -3,7 +3,7 @@
   "info": {
     "title": "AcqPath RSL rights preflight — public integration flow",
     "version": "3.1.0-rc.1",
-    "description": "Documented subset of the observed public API. Check declared AI input, training, indexing and search restrictions before ingestion. Quotes prepare evidence; paid delivery uses HTTP x402. Reports are not licenses or legal clearance."
+    "description": "Documented subset of the observed public API. Check declared AI input, training, indexing and search restrictions before ingestion. Quotes prepare evidence; paid delivery uses HTTP x402. Reports are not licenses or legal clearance. Rights Gateway: Preflight, bounded Ingestion Gate and signed policy revalidation. Official TS/Python signer plus AcqPath SIWX adapter required."
   },
   "servers": [
     {
@@ -635,8 +635,41 @@
       },
       "post": {
         "operationId": "publicRightsPreflight",
-        "summary": "Prepare and buy a signed observed-rights report",
-        "description": "Required acqpath-request-binding nonce support OR the AcqPath SIWX payment-binding adapter. Generic SIWX login alone is insufficient. Retain X-AcqPath-Request and retry the same normalized body. Empty POST is discovery-only; never pay until a prepared binding is returned. UNKNOWN is not permission.",
+        "summary": "Check RSL and machine-readable content usage rights before AI ingestion",
+        "description": "Use the tested official TypeScript or Python x402 signer with the AcqPath SIWX adapter; the normal signer and random payment nonce remain unchanged. Retain private X-AcqPath-Request state and retry the same normalized body. Zero-config stock x402, stock SIWX-only hooks, Agent402 automatic router execution and generic paid proxies are not claimed. Empty POST is discovery-only; never pay until a prepared binding is returned. UNKNOWN is not permission.",
+        "tags": [
+          "RSL rights",
+          "AI content usage rights",
+          "RAG ingestion",
+          "training content rights",
+          "machine-readable licensing"
+        ],
+        "x-payment-info": {
+          "scheme": "exact",
+          "network": "eip155:8453",
+          "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+          "payTo": "0xf69DBbd053fb0Fbc78ADfdB1BFe3b0D1F57300ec",
+          "price": {
+            "amount": "0.02",
+            "currency": "USDC"
+          },
+          "tiers": {
+            "fresh": {
+              "amount": "0.02",
+              "amount_micro": "20000"
+            },
+            "deep": {
+              "amount": "0.05",
+              "amount_micro": "50000"
+            }
+          },
+          "client": {
+            "profile": "acqpath-siwx-payment-v1",
+            "officialSignerUnchanged": true,
+            "adapterRequired": true,
+            "zeroConfigStockX402Claimed": false
+          }
+        },
         "parameters": [
           {
             "name": "X-AcqPath-Request",
@@ -903,6 +936,691 @@
           },
           "410": {
             "description": "Unpaid request expired or paid report retired."
+          },
+          "503": {
+            "description": "Unavailable or uncertain settlement; preserve context, never automatically sign again."
+          }
+        }
+      }
+    },
+    "/v1/rights/ingestion-gate": {
+      "get": {
+        "operationId": "describeIngestionGate",
+        "responses": {
+          "200": {
+            "description": "Static contract metadata; no fetch or payment."
+          }
+        }
+      },
+      "post": {
+        "operationId": "ingestionGate",
+        "summary": "Batch content usage rights evidence before RAG ingestion",
+        "description": "Batch observed RSL rights evidence before RAG ingestion, AI input, training or indexing. One to four reviewed URLs; signed per-resource policy, provenance, conflicts and revalidation checkpoints. Fresh 0.04 + 0.02 per unique URL; deep 0.06 + 0.04. USDC on Base. AcqPath SIWX adapter required; not legal clearance. Charge buys a bounded observation attempt, including UNKNOWN or unavailable sources. No result is legal permission. Persist private operation state and retry the same operation with the official TypeScript/Python x402 signer plus AcqPath SIWX adapter.",
+        "x-payment-info": {
+          "scheme": "exact",
+          "network": "eip155:8453",
+          "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+          "payTo": "0xf69DBbd053fb0Fbc78ADfdB1BFe3b0D1F57300ec",
+          "price": {
+            "amount": "0.06",
+            "currency": "USDC"
+          },
+          "pricing": {
+            "fresh": {
+              "base_micro": "40000",
+              "per_unique_resource_micro": "20000"
+            },
+            "deep": {
+              "base_micro": "60000",
+              "per_unique_resource_micro": "40000"
+            },
+            "max_resources": 4
+          },
+          "client": {
+            "profile": "acqpath-siwx-payment-v1",
+            "adapterRequired": true,
+            "zeroConfigStockX402Claimed": false
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "resources",
+                  "purpose",
+                  "max_total_micro"
+                ],
+                "properties": {
+                  "purpose": {
+                    "enum": [
+                      "ai-input",
+                      "ai-train",
+                      "ai-index",
+                      "search",
+                      "rag-ingestion",
+                      "summarization",
+                      "training",
+                      "search-indexing"
+                    ]
+                  },
+                  "user_class": {
+                    "type": "string",
+                    "enum": [
+                      "commercial",
+                      "non-commercial",
+                      "education",
+                      "government",
+                      "personal"
+                    ],
+                    "default": "commercial"
+                  },
+                  "geo": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "pattern": "^[A-Z]{2}$",
+                    "description": "Caller-supplied geographical context. This is not independently verified location."
+                  },
+                  "freshness_seconds": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 3600,
+                    "default": 300
+                  },
+                  "tier": {
+                    "type": "string",
+                    "enum": [
+                      "fresh",
+                      "deep"
+                    ],
+                    "default": "fresh"
+                  },
+                  "max_total_micro": {
+                    "type": "string",
+                    "pattern": "^(0|[1-9][0-9]{0,10}|100000000000)$",
+                    "description": "Maximum budget in micro-USDC. Exact deterministic charge is in the signed 402 offer."
+                  },
+                  "resources": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 4,
+                    "items": {
+                      "type": "string",
+                      "format": "uri",
+                      "maxLength": 2048,
+                      "description": "HTTPS resource on an explicitly reviewed origin; no query, fragment, credentials, IP literal, encoded slash or redirect."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "X-AcqPath-Request",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 64,
+              "maxLength": 64
+            },
+            "description": "Private random retry context, required on paid retry. Never log or publish."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Signed observed-policy report, authenticated settlement receipt and delivery proof.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "version",
+                    "input_sha256",
+                    "legal_clearance",
+                    "report",
+                    "evidence",
+                    "delivery_proof",
+                    "payment_settlement"
+                  ],
+                  "properties": {
+                    "version": {
+                      "const": "acqpath-public-gateway-v1"
+                    },
+                    "input_sha256": {
+                      "type": "string",
+                      "pattern": "^[a-f0-9]{64}$"
+                    },
+                    "legal_clearance": {
+                      "const": false
+                    },
+                    "report": {
+                      "type": "object",
+                      "required": [
+                        "sku",
+                        "resources",
+                        "profile",
+                        "legal_clearance"
+                      ],
+                      "properties": {
+                        "sku": {
+                          "enum": [
+                            "rights.ingestion-gate.v1",
+                            "rights.revalidate.v1"
+                          ]
+                        },
+                        "resources": {
+                          "type": "array",
+                          "minItems": 1,
+                          "maxItems": 4,
+                          "items": {
+                            "type": "object",
+                            "required": [
+                              "resource",
+                              "classification",
+                              "legal_clearance"
+                            ],
+                            "properties": {
+                              "resource": {
+                                "type": "string",
+                                "format": "uri"
+                              },
+                              "classification": {
+                                "enum": [
+                                  "PERMITTED_BY_OBSERVED_DECLARATION",
+                                  "PROHIBITED_BY_OBSERVED_DECLARATION",
+                                  "LICENSE_REQUIRED",
+                                  "NO_MACHINE_READABLE_DECLARATION",
+                                  "CONFLICT",
+                                  "UNKNOWN"
+                                ]
+                              },
+                              "legal_clearance": {
+                                "const": false
+                              },
+                              "checkpoint": {
+                                "type": [
+                                  "object",
+                                  "null"
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "profile": {
+                          "const": "acqpath-observed-policy-v1"
+                        },
+                        "legal_clearance": {
+                          "const": false
+                        }
+                      }
+                    },
+                    "evidence": {
+                      "type": "object",
+                      "required": [
+                        "algorithm",
+                        "format",
+                        "payload",
+                        "signature"
+                      ],
+                      "properties": {
+                        "algorithm": {
+                          "const": "Ed25519"
+                        },
+                        "format": {
+                          "const": "acqpath-evidence-v1"
+                        },
+                        "payload": {
+                          "type": "object"
+                        },
+                        "signature": {
+                          "type": "string",
+                          "pattern": "^[a-f0-9]{128}$"
+                        }
+                      }
+                    },
+                    "delivery_proof": {
+                      "type": "object",
+                      "required": [
+                        "algorithm",
+                        "format",
+                        "payload",
+                        "signature"
+                      ],
+                      "properties": {
+                        "algorithm": {
+                          "const": "Ed25519"
+                        },
+                        "format": {
+                          "const": "acqpath-evidence-v1"
+                        },
+                        "payload": {
+                          "type": "object"
+                        },
+                        "signature": {
+                          "type": "string",
+                          "pattern": "^[a-f0-9]{128}$"
+                        }
+                      }
+                    },
+                    "payment_settlement": {
+                      "type": "object",
+                      "required": [
+                        "success",
+                        "network",
+                        "transaction"
+                      ],
+                      "properties": {
+                        "success": {
+                          "const": true
+                        },
+                        "network": {
+                          "enum": [
+                            "eip155:8453",
+                            "eip155:84532"
+                          ]
+                        },
+                        "transaction": {
+                          "type": "string",
+                          "pattern": "^0x[a-fA-F0-9]{64}$"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input."
+          },
+          "402": {
+            "description": "x402 v2 challenge. Prepared binding is required before signing.",
+            "headers": {
+              "PAYMENT-REQUIRED": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-AcqPath-Request": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Context/body mismatch or payment replay; no new signature."
+          },
+          "410": {
+            "description": "Unpaid request expired or paid report retired."
+          },
+          "413": {
+            "description": "Body over 24576 bytes."
+          },
+          "422": {
+            "description": "Unapproved resource, budget too low or invalid checkpoint."
+          },
+          "429": {
+            "description": "Work/quote/financial limit."
+          },
+          "503": {
+            "description": "Unavailable or uncertain settlement; preserve context, never automatically sign again."
+          }
+        }
+      }
+    },
+    "/v1/rights/revalidate": {
+      "get": {
+        "operationId": "describeRevalidation",
+        "responses": {
+          "200": {
+            "description": "Static contract metadata; no fetch or payment."
+          }
+        }
+      },
+      "post": {
+        "operationId": "revalidateRights",
+        "summary": "Detect changes in observed AI usage declarations",
+        "description": "Did this resource AI usage policy change? Revalidate one signed AcqPath checkpoint with conditional source requests; signed policy diff and license-path changes. Fresh 0.03 / deep 0.06 USDC on Base. Reviewed origins only; AcqPath SIWX adapter required. UNKNOWN is not permission. Charge buys a bounded observation attempt, including UNKNOWN or unavailable sources. No result is legal permission. Persist private operation state and retry the same operation with the official TypeScript/Python x402 signer plus AcqPath SIWX adapter.",
+        "x-payment-info": {
+          "scheme": "exact",
+          "network": "eip155:8453",
+          "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+          "payTo": "0xf69DBbd053fb0Fbc78ADfdB1BFe3b0D1F57300ec",
+          "price": {
+            "amount": "0.03",
+            "currency": "USDC"
+          },
+          "pricing": {
+            "fresh_micro": "30000",
+            "deep_micro": "60000",
+            "max_resources": 1
+          },
+          "client": {
+            "profile": "acqpath-siwx-payment-v1",
+            "adapterRequired": true,
+            "zeroConfigStockX402Claimed": false
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "resources",
+                  "purpose",
+                  "max_total_micro",
+                  "previous"
+                ],
+                "properties": {
+                  "purpose": {
+                    "enum": [
+                      "ai-input",
+                      "ai-train",
+                      "ai-index",
+                      "search",
+                      "rag-ingestion",
+                      "summarization",
+                      "training",
+                      "search-indexing"
+                    ]
+                  },
+                  "user_class": {
+                    "type": "string",
+                    "enum": [
+                      "commercial",
+                      "non-commercial",
+                      "education",
+                      "government",
+                      "personal"
+                    ],
+                    "default": "commercial"
+                  },
+                  "geo": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "pattern": "^[A-Z]{2}$",
+                    "description": "Caller-supplied geographical context. This is not independently verified location."
+                  },
+                  "freshness_seconds": {
+                    "const": 0
+                  },
+                  "tier": {
+                    "type": "string",
+                    "enum": [
+                      "fresh",
+                      "deep"
+                    ],
+                    "default": "fresh"
+                  },
+                  "max_total_micro": {
+                    "type": "string",
+                    "pattern": "^(0|[1-9][0-9]{0,10}|100000000000)$",
+                    "description": "Maximum budget in micro-USDC. Exact deterministic charge is in the signed 402 offer."
+                  },
+                  "resources": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": {
+                      "type": "string",
+                      "format": "uri",
+                      "maxLength": 2048,
+                      "description": "HTTPS resource on an explicitly reviewed origin; no query, fragment, credentials, IP literal, encoded slash or redirect."
+                    }
+                  },
+                  "previous": {
+                    "type": "object",
+                    "required": [
+                      "algorithm",
+                      "format",
+                      "payload",
+                      "signature"
+                    ],
+                    "properties": {
+                      "algorithm": {
+                        "const": "Ed25519"
+                      },
+                      "format": {
+                        "const": "acqpath-evidence-v1"
+                      },
+                      "payload": {
+                        "type": "object"
+                      },
+                      "signature": {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{128}$"
+                      }
+                    },
+                    "description": "Authentic checkpoint returned by an earlier Ingestion Gate or Revalidation item with the same resource, purpose, user class, geo and depth."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "X-AcqPath-Request",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 64,
+              "maxLength": 64
+            },
+            "description": "Private random retry context, required on paid retry. Never log or publish."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Signed observed-policy report, authenticated settlement receipt and delivery proof.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "version",
+                    "input_sha256",
+                    "legal_clearance",
+                    "report",
+                    "evidence",
+                    "delivery_proof",
+                    "payment_settlement"
+                  ],
+                  "properties": {
+                    "version": {
+                      "const": "acqpath-public-gateway-v1"
+                    },
+                    "input_sha256": {
+                      "type": "string",
+                      "pattern": "^[a-f0-9]{64}$"
+                    },
+                    "legal_clearance": {
+                      "const": false
+                    },
+                    "report": {
+                      "type": "object",
+                      "required": [
+                        "sku",
+                        "resources",
+                        "profile",
+                        "legal_clearance"
+                      ],
+                      "properties": {
+                        "sku": {
+                          "enum": [
+                            "rights.ingestion-gate.v1",
+                            "rights.revalidate.v1"
+                          ]
+                        },
+                        "resources": {
+                          "type": "array",
+                          "minItems": 1,
+                          "maxItems": 4,
+                          "items": {
+                            "type": "object",
+                            "required": [
+                              "resource",
+                              "classification",
+                              "legal_clearance"
+                            ],
+                            "properties": {
+                              "resource": {
+                                "type": "string",
+                                "format": "uri"
+                              },
+                              "classification": {
+                                "enum": [
+                                  "PERMITTED_BY_OBSERVED_DECLARATION",
+                                  "PROHIBITED_BY_OBSERVED_DECLARATION",
+                                  "LICENSE_REQUIRED",
+                                  "NO_MACHINE_READABLE_DECLARATION",
+                                  "CONFLICT",
+                                  "UNKNOWN"
+                                ]
+                              },
+                              "legal_clearance": {
+                                "const": false
+                              },
+                              "checkpoint": {
+                                "type": [
+                                  "object",
+                                  "null"
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "profile": {
+                          "const": "acqpath-observed-policy-v1"
+                        },
+                        "legal_clearance": {
+                          "const": false
+                        }
+                      }
+                    },
+                    "evidence": {
+                      "type": "object",
+                      "required": [
+                        "algorithm",
+                        "format",
+                        "payload",
+                        "signature"
+                      ],
+                      "properties": {
+                        "algorithm": {
+                          "const": "Ed25519"
+                        },
+                        "format": {
+                          "const": "acqpath-evidence-v1"
+                        },
+                        "payload": {
+                          "type": "object"
+                        },
+                        "signature": {
+                          "type": "string",
+                          "pattern": "^[a-f0-9]{128}$"
+                        }
+                      }
+                    },
+                    "delivery_proof": {
+                      "type": "object",
+                      "required": [
+                        "algorithm",
+                        "format",
+                        "payload",
+                        "signature"
+                      ],
+                      "properties": {
+                        "algorithm": {
+                          "const": "Ed25519"
+                        },
+                        "format": {
+                          "const": "acqpath-evidence-v1"
+                        },
+                        "payload": {
+                          "type": "object"
+                        },
+                        "signature": {
+                          "type": "string",
+                          "pattern": "^[a-f0-9]{128}$"
+                        }
+                      }
+                    },
+                    "payment_settlement": {
+                      "type": "object",
+                      "required": [
+                        "success",
+                        "network",
+                        "transaction"
+                      ],
+                      "properties": {
+                        "success": {
+                          "const": true
+                        },
+                        "network": {
+                          "enum": [
+                            "eip155:8453",
+                            "eip155:84532"
+                          ]
+                        },
+                        "transaction": {
+                          "type": "string",
+                          "pattern": "^0x[a-fA-F0-9]{64}$"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input."
+          },
+          "402": {
+            "description": "x402 v2 challenge. Prepared binding is required before signing.",
+            "headers": {
+              "PAYMENT-REQUIRED": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-AcqPath-Request": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Context/body mismatch or payment replay; no new signature."
+          },
+          "410": {
+            "description": "Unpaid request expired or paid report retired."
+          },
+          "413": {
+            "description": "Body over 24576 bytes."
+          },
+          "422": {
+            "description": "Unapproved resource, budget too low or invalid checkpoint."
+          },
+          "429": {
+            "description": "Work/quote/financial limit."
           },
           "503": {
             "description": "Unavailable or uncertain settlement; preserve context, never automatically sign again."

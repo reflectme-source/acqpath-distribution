@@ -1,6 +1,6 @@
 # Configured official x402 buyers
 
-Deployed 2026-09-11. The public endpoint supports unchanged official exact-EVM payment signers through the AcqPath SIWX adapter (TypeScript/Node and Python/httpx). The adapter reserves unsigned authorization fields, validates and signs the official SIWX request/payment challenge, then submits the original payment. Existing acqpath-request-binding nonce clients remain supported. Generic zero-config x402 clients, stock SIWX-only hooks, Payments MCP and paid proxies are not verified compatible. Mainnet paid E2E remains UNVERIFIED; no owner-funded payment.
+Gateway release deployed 2026-09-12. The public endpoint supports unchanged official exact-EVM payment signers through the AcqPath SIWX adapter (TypeScript/Node and Python/httpx). The adapter reserves unsigned authorization fields, validates and signs the official SIWX request/payment challenge, then submits the original payment. Existing acqpath-request-binding nonce clients remain supported. Generic zero-config x402 clients, stock SIWX-only hooks, Payments MCP and paid proxies are not verified compatible. Mainnet paid E2E remains UNVERIFIED; no owner-funded payment.
 
 Node 22.16+; official @x402/core, evm, fetch and extensions 2.25.0, viem 2.56.3. Python 3.12/3.13, x402 2.22.0 and httpx 0.28.1. EOA only; no smart-wallet or Permit2 support. These source files are not an npm or PyPI publication.
 
@@ -26,7 +26,7 @@ curl --fail --silent --show-error --location https://developers.getacqpath.com/e
 python -m pip install -r official-requirements.txt
 ```
 
-The Node manifest pins @x402/core, @x402/evm, @x402/fetch and @x402/extensions to 2.25.0, plus viem 2.56.3. Python requirements pin the tested dependency set including x402 2.22.0, httpx 0.28.1, eth-account 0.13.7 and abnf 2.2.0. Keep the resulting lock/environment with the buyer application. Adapter provenance: core commit `9533e49d262d20d5bb3712321fbc66981e477418`, production version `0c3b5794-f428-4e69-879e-29cab293cd1a`; [source hashes](https://github.com/reflectme-source/acqpath-distribution/blob/main/metadata/official-client-provenance.json).
+The Node manifest pins @x402/core, @x402/evm, @x402/fetch and @x402/extensions to 2.25.0, plus viem 2.56.3. Python requirements pin the tested dependency set including x402 2.22.0, httpx 0.28.1, eth-account 0.13.7 and abnf 2.2.0. Keep the resulting lock/environment with the buyer application. Adapter provenance: core commit `b2a9273f7269f137af2336d7819bbd3a7595a0b3`, production version `0b952e13-d76c-4226-a117-521741d30769`; [source hashes](https://github.com/reflectme-source/acqpath-distribution/blob/main/metadata/official-client-provenance.json).
 
 ## TypeScript / Node integration
 
@@ -141,3 +141,10 @@ The store writes no signer private key. It does retain bearer payment/SIWX autho
 ABNF 2.2.0 is intentionally pinned for official signinwithethereum 5.0.1 compatibility; no permissive parser fallback or library patch is used. Python rejects unsupported floats/non-ASCII object keys and noncanonical ASCII HTTPS publisher URLs. Both clients reject purchase redirects. SIWX enforces binding at AcqPath application entrypoints, not an on-chain POST-body witness.
 
 Local official-client cryptographic E2E, substitution, concurrency and recovery tests PASS; public Node/Python unpaid contract checks PASS; CDP valid=true. MAINNET PAID E2E = UNVERIFIED. No external customer, revenue, zero-config generic client or Bazaar indexing claim follows from these checks.
+
+
+## Live Rights Gateway release
+
+Preflight remains **0.02 USDC fresh / 0.05 deep**. **Ingestion Gate** checks 1–4 unique reviewed URLs: **0.04 + 0.02 per URL fresh**, **0.06 + 0.04 per URL deep**. **Revalidation** compares one resource with an authentic signed prior gateway checkpoint: **0.03 fresh / 0.06 deep**. All payments use Base USDC. Gateway fees cover bounded observation attempts, including UNKNOWN. No legal clearance, license purchase or whole-domain coverage.
+
+Use the tested official TS/Python signer + AcqPath SIWX adapter. [Complete gateway examples](https://developers.getacqpath.com/examples/GATEWAY.md) include private state, retry and delivery verification. [Live gateway guide](https://developers.getacqpath.com/gateway). Mainnet paid E2E awaits a real external buyer; verified organic revenue remains 0 USDC. Development freeze: only incidents, security, standards compatibility and monitoring.

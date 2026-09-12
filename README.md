@@ -73,3 +73,10 @@ The public [integration skill](skills/acqpath-rights-preflight/SKILL.md) and [fu
 **Can I use this page for RAG?** AcqPath can report observed RSL declarations for a supported page. Use `ai-index` for corpus indexing and separately evaluate `ai-input` when supplying content to a model. UNKNOWN, unsupported coverage and license-required outcomes hold ingestion. Signed evidence supports your own policy decision; it does not grant permission or replace a license.
 
 **Where do I check machine-readable usage restrictions?** Read the current capabilities, then prepare an RSL rights quote for the actual purpose and supported origin. The private HTTP/x402 integration obtains and verifies the signed report. AcqPath does not prove ownership or legal clearance, and crawl/robots policy remains a separate check.
+
+
+## Live Rights Gateway release
+
+Preflight remains **0.02 USDC fresh / 0.05 deep**. **Ingestion Gate** checks 1–4 unique reviewed URLs: **0.04 + 0.02 per URL fresh**, **0.06 + 0.04 per URL deep**. **Revalidation** compares one resource with an authentic signed prior gateway checkpoint: **0.03 fresh / 0.06 deep**. All payments use Base USDC. Gateway fees cover bounded observation attempts, including UNKNOWN. No legal clearance, license purchase or whole-domain coverage.
+
+Use the tested official TS/Python signer + AcqPath SIWX adapter. [Complete gateway examples](https://developers.getacqpath.com/examples/GATEWAY.md) include private state, retry and delivery verification. [Live gateway guide](https://developers.getacqpath.com/gateway). Mainnet paid E2E awaits a real external buyer; verified organic revenue remains 0 USDC. Development freeze: only incidents, security, standards compatibility and monitoring.

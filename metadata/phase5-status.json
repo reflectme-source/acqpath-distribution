@@ -1,8 +1,8 @@
 {
-  "at": "2026-09-11T17:13:33.601Z",
+  "at": "2026-09-12T09:47:19.929Z",
   "phase": 5,
-  "status": "EXTERNAL_BUYER_UNPAID_PATH_READY_GENERIC_PAYMENT_BLOCKED",
-  "productionChanged": false,
+  "status": "RIGHTS_GATEWAY_LIVE_AWAITING_EXTERNAL_BUYER",
+  "productionChanged": true,
   "ownerFundedPaymentsAllowed": false,
   "bazaar": "AWAITING FIRST EXTERNAL SETTLEMENT",
   "baseline": {
@@ -17,11 +17,33 @@
     "freshVerified": 0,
     "deepVerified": 0,
     "billableUnknownRatio": null,
+    "perSku": {
+      "rights.preflight.v1": {
+        "operations": 0,
+        "revenueMicro": "0"
+      },
+      "rights.ingestion-gate.v1": {
+        "operations": 0,
+        "revenueMicro": "0"
+      },
+      "rights.revalidate.v1": {
+        "operations": 0,
+        "revenueMicro": "0"
+      }
+    },
+    "marketplaceVerification": {
+      "operations": 0,
+      "revenueMicro": "0",
+      "organic": false
+    },
+    "revenuePerActivePayerMicro": null,
+    "operationsPerRepeatPayer": null,
     "triggers": {
       "FIRST_EXTERNAL_PAYMENT": false,
       "FIRST_REPEAT_PAYER": false,
       "10_EXTERNAL_PAID_REPORTS": false,
-      "3_INDEPENDENT_PAYERS": false
+      "3_INDEPENDENT_PAYERS": false,
+      "100_EXTERNAL_PAID_REPORTS": false
     }
   },
   "coverage": [
@@ -58,5 +80,8 @@
       "classification": "UNKNOWN"
     }
   ],
-  "nextAction": "Resolve required request-binding compatibility for standard external x402 clients through separately reviewed work."
+  "nextAction": "Development freeze; monitor real external behavior. No owner payments.",
+  "release": "revenue-release.json",
+  "baselineObservedAt": "2026-09-12T09:52:11.270Z",
+  "coverageInterpretation": "Historical source observations; use live capabilities for current approved origins and request fresh evidence for current policy"
 }

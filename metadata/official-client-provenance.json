@@ -1,19 +1,19 @@
 {
-  "sourceCommit": "9533e49d262d20d5bb3712321fbc66981e477418",
-  "productionVersion": "0c3b5794-f428-4e69-879e-29cab293cd1a",
+  "sourceCommit": "b2a9273f7269f137af2336d7819bbd3a7595a0b3",
+  "productionVersion": "0b952e13-d76c-4226-a117-521741d30769",
   "localOfficialClientE2E": "PASS",
   "mainnetPaidE2E": "UNVERIFIED",
   "npmPublished": false,
   "files": [
     {
       "file": "examples/acqpath.mjs",
-      "sha256": "387d50f7911c3f2240988c355d237fa8f8c4170921d749e7f0c17dbbb31a0e2a",
-      "bytes": 26395
+      "sha256": "b465f5b2c57f2c7d3a20fa2aae9b5213a517076c6018348da1c314f2369c67cc",
+      "bytes": 31063
     },
     {
       "file": "examples/acqpath_httpx.py",
-      "sha256": "7cfa2aa877a560d1e6f05c26e5252050ea038c832d3a2a748b67bc7dd8fded17",
-      "bytes": 15269
+      "sha256": "47d4e24ed891b504424a678a6d05ad3d172f9153381ac9608aa955184f2fa0d4",
+      "bytes": 17938
     },
     {
       "file": "examples/official-requirements.txt",
@@ -21,5 +21,10 @@
       "bytes": 1014
     }
   ],
-  "lineEndings": "LF; source content unchanged from the reviewed portable clients"
+  "lineEndings": "LF; source content unchanged from the reviewed portable clients",
+  "operations": [
+    "/v1/rights/preflight",
+    "/v1/rights/ingestion-gate",
+    "/v1/rights/revalidate"
+  ]
 }

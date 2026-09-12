@@ -1,10 +1,10 @@
 {
   "schema": "acqpath.bazaar-public-contract.v1",
-  "reviewedAt": "2026-09-11",
+  "reviewedAt": "2026-09-12T09:47:19.929Z",
   "status": "AWAITING FIRST EXTERNAL SETTLEMENT",
   "architecture": "A_ADDITIVE_HTTP_ADAPTER",
   "appliedToCore": true,
-  "coreCommit": "9533e49d262d20d5bb3712321fbc66981e477418",
+  "coreCommit": "b2a9273f7269f137af2336d7819bbd3a7595a0b3",
   "productionDeployed": true,
   "productionEndpointActive": true,
   "testnetOrigin": "https://acqpath-bazaar-sepolia.acqpath.workers.dev",
@@ -23,7 +23,7 @@
       "training declarations",
       "indexing search"
     ],
-    "description": "Signed observed RSL declarations for AI input/RAG, training and indexing/search. Reviewed origins only. Diagnostics before ingestion or crawling; crawl is not a paid purpose. UNKNOWN is not permission or legal clearance. Requires acqpath-request-binding nonce support or the AcqPath SIWX adapter with unsigned payment prebinding; generic random-nonce clients cannot buy without the adapter."
+    "description": "Observed RSL rights before AI ingestion. Tested official TypeScript/Python x402 signer plus AcqPath SIWX adapter. Generic zero-config clients are not claimed compatible. Not legal clearance."
   },
   "method": "POST",
   "inputSchema": {
@@ -543,7 +543,7 @@
     "No legal clearance, license acquisition or ownership verification. UNKNOWN is not permission.",
     "Paid crawl and provider routing remain unsupported."
   ],
-  "coreSourceSha256": "a4dd2b4c94e06b3089c378b06e28849f85c78d504a6540cc7ac306e5d56c2d15",
+  "coreSourceSha256": "60f7c7106553f0caab732155f97973c7a3baee4730de0b2d76b383a8e0598f27",
   "coreMergeStatus": "MERGED",
   "testnetVersion": "2ac81afe-ac5c-43c5-930c-049a90e6c0b7",
   "testnetValidation": {
@@ -582,12 +582,13 @@
     "python": "PASS",
     "rollbackVersion": "61b19442-bd51-46ec-be31-01422a07f877",
     "walletSigned": false,
-    "settlementPerformed": false
+    "settlementPerformed": false,
+    "historical": true
   },
   "ownerFundedPaymentsAllowed": false,
-  "nextAction": "Await a genuine external buyer using the configured integration. Existing read-only revenue monitoring only; no owner payment or further development.",
-  "productionVersion": "0c3b5794-f428-4e69-879e-29cab293cd1a",
-  "productionSourceSha256": "a4ea2624d997ccc2864cbc2edf6715abc242c926206c2e11a06a88ec206731ee",
+  "nextAction": "Observe real external buyers; development freeze active. No owner-funded payment.",
+  "productionVersion": "0b952e13-d76c-4226-a117-521741d30769",
+  "productionSourceSha256": "60f7c7106553f0caab732155f97973c7a3baee4730de0b2d76b383a8e0598f27",
   "officialClientBinding": {
     "profile": "acqpath-siwx-payment-v1",
     "proof": "SIGN-IN-WITH-X",
@@ -604,6 +605,53 @@
     "python": "PASS",
     "cdpValid": true,
     "ownerWalletUsed": false,
-    "settlements": 0
+    "settlements": 0,
+    "historical": true
+  },
+  "portfolio": [
+    {
+      "sku": "rights.preflight.v1",
+      "path": "/v1/rights/preflight",
+      "freshMicro": "20000",
+      "deepMicro": "50000",
+      "maxResources": 1
+    },
+    {
+      "sku": "rights.ingestion-gate.v1",
+      "path": "/v1/rights/ingestion-gate",
+      "freshBaseMicro": "40000",
+      "freshPerResourceMicro": "20000",
+      "deepBaseMicro": "60000",
+      "deepPerResourceMicro": "40000",
+      "maxResources": 4
+    },
+    {
+      "sku": "rights.revalidate.v1",
+      "path": "/v1/rights/revalidate",
+      "freshMicro": "30000",
+      "deepMicro": "60000",
+      "maxResources": 1,
+      "requires": "Authentic prior gateway checkpoint with identical scope"
+    }
+  ],
+  "currentReleaseValidation": {
+    "coreTests": {
+      "tests": 589,
+      "pass": 587,
+      "fail": 0,
+      "skipped": 2
+    },
+    "bundledAdapterTests": 83,
+    "workerd": "PASS",
+    "coreCI": "PASS",
+    "unpaidProductionChecks": 26,
+    "nodeLiveSignedOffer": "PASS_NO_SIGNATURE",
+    "pythonLiveSignedOffer": "PASS_NO_SIGNATURE",
+    "productionRevalidationCheckpoint": "Awaiting authentic checkpoint from real customer; complete paid flow tested locally only",
+    "at": "2026-09-12T09:47:19.929Z",
+    "productionVersion": "0b952e13-d76c-4226-a117-521741d30769",
+    "sourceSha256": "60f7c7106553f0caab732155f97973c7a3baee4730de0b2d76b383a8e0598f27",
+    "settlements": 0,
+    "ownerWalletUsed": false
   }
 }

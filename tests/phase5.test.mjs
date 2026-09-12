@@ -20,7 +20,7 @@ test('current public buyer guidance keeps SIWX support distinct from unclaimed c
 
 test('documentation hotfix preserves the reviewed paid adapter source hashes',async()=>{
  const provenance=JSON.parse(await readFile(new URL('../metadata/official-client-provenance.json',import.meta.url)));
- assert.equal(provenance.productionVersion,'0c3b5794-f428-4e69-879e-29cab293cd1a');
+ const release=JSON.parse(await readFile(new URL('../metadata/revenue-release.json',import.meta.url)));assert.equal(provenance.productionVersion,release.productionVersion);assert.equal(provenance.sourceCommit,release.commit);assert.equal(provenance.operations.length,3);
  for(const file of provenance.files){const bytes=await readFile(new URL('../'+file.file,import.meta.url));assert.equal(createHash('sha256').update(bytes).digest('hex'),file.sha256,file.file);}
 });
 test('owner purchase is disabled before any prompt or wallet operation',async()=>{await assert.rejects(startBuyerDemo(),/OWNER_FUNDED_PURCHASE_DISABLED_PHASE5/)});

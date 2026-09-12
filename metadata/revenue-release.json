@@ -1,0 +1,334 @@
+{
+  "schema": "acqpath.revenue-expansion.v1",
+  "at": "2026-09-12T09:47:19.929Z",
+  "commit": "b2a9273f7269f137af2336d7819bbd3a7595a0b3",
+  "productionVersion": "0b952e13-d76c-4226-a117-521741d30769",
+  "sourceSha256": "60f7c7106553f0caab732155f97973c7a3baee4730de0b2d76b383a8e0598f27",
+  "previousVersion": "e492edc4-47f1-4fe2-bdda-864f65b101cf",
+  "production": "LIVE",
+  "unpaidReadback": "PASS",
+  "mainnetPaidE2E": "AWAITING REAL EXTERNAL BUYER",
+  "ownerPayments": 0,
+  "ownerWalletUsed": false,
+  "developmentFreeze": true,
+  "products": [
+    {
+      "sku": "rights.preflight.v1",
+      "path": "/v1/rights/preflight",
+      "freshMicro": "20000",
+      "deepMicro": "50000",
+      "maxResources": 1
+    },
+    {
+      "sku": "rights.ingestion-gate.v1",
+      "path": "/v1/rights/ingestion-gate",
+      "freshBaseMicro": "40000",
+      "freshPerResourceMicro": "20000",
+      "deepBaseMicro": "60000",
+      "deepPerResourceMicro": "40000",
+      "maxResources": 4
+    },
+    {
+      "sku": "rights.revalidate.v1",
+      "path": "/v1/rights/revalidate",
+      "freshMicro": "30000",
+      "deepMicro": "60000",
+      "maxResources": 1,
+      "requires": "Authentic prior gateway checkpoint with identical scope"
+    }
+  ],
+  "baseline": {
+    "organicPaidOperations": 0,
+    "repeatExternalPayers": 0,
+    "organicRevenueMicro": "0",
+    "marketplaceVerificationOperations": 0,
+    "observedAt": "2026-09-12T09:43:19.872Z"
+  },
+  "agent402": {
+    "status": "INDEXED",
+    "listing": "https://agent402.tools/api/index?seller=api.getacqpath.com",
+    "at": "2026-09-12T09:57:42.535Z",
+    "paidTools": 3,
+    "network": "eip155:8453",
+    "routerPayment": "UNSUPPORTED: stock x402 does not implement AcqPath SIWX adapter",
+    "searches": [
+      {
+        "query": "AcqPath",
+        "results": [
+          {
+            "route": "/v1/rights/preflight",
+            "rank": 1,
+            "networks": [
+              "eip155:8453"
+            ],
+            "price": "0.02"
+          },
+          {
+            "route": "/v1/rights/revalidate",
+            "rank": 2,
+            "networks": [
+              "eip155:8453"
+            ],
+            "price": "0.03"
+          },
+          {
+            "route": "/v1/rights/ingestion-gate",
+            "rank": 3,
+            "networks": [
+              "eip155:8453"
+            ],
+            "price": "0.06"
+          }
+        ]
+      },
+      {
+        "query": "batch content rights check",
+        "results": [
+          {
+            "route": "/v1/rights/ingestion-gate",
+            "rank": 2,
+            "networks": [
+              "eip155:8453"
+            ],
+            "price": "0.06"
+          },
+          {
+            "route": "/v1/rights/preflight",
+            "rank": 3,
+            "networks": [
+              "eip155:8453"
+            ],
+            "price": "0.02"
+          }
+        ]
+      },
+      {
+        "query": "did this website AI policy change",
+        "results": []
+      },
+      {
+        "query": "policy revalidation rights diff",
+        "results": []
+      },
+      {
+        "query": "machine-readable license discovery",
+        "results": []
+      },
+      {
+        "query": "RSL rights before RAG ingestion",
+        "results": [
+          {
+            "route": "/v1/rights/preflight",
+            "rank": 1,
+            "networks": [
+              "eip155:8453"
+            ],
+            "price": "0.02"
+          },
+          {
+            "route": "/v1/rights/ingestion-gate",
+            "rank": 2,
+            "networks": [
+              "eip155:8453"
+            ],
+            "price": "0.06"
+          }
+        ]
+      },
+      {
+        "query": "AI content usage rights",
+        "results": [
+          {
+            "route": "/v1/rights/preflight",
+            "rank": 1,
+            "networks": [
+              "eip155:8453"
+            ],
+            "price": "0.02"
+          },
+          {
+            "route": "/v1/rights/ingestion-gate",
+            "rank": 2,
+            "networks": [
+              "eip155:8453"
+            ],
+            "price": "0.06"
+          }
+        ]
+      },
+      {
+        "query": "rights before AI ingestion",
+        "results": [
+          {
+            "route": "/v1/rights/preflight",
+            "rank": 1,
+            "networks": [
+              "eip155:8453"
+            ],
+            "price": "0.02"
+          },
+          {
+            "route": "/v1/rights/ingestion-gate",
+            "rank": 2,
+            "networks": [
+              "eip155:8453"
+            ],
+            "price": "0.06"
+          }
+        ]
+      },
+      {
+        "query": "training content rights",
+        "results": [
+          {
+            "route": "/v1/rights/preflight",
+            "rank": 1,
+            "networks": [
+              "eip155:8453"
+            ],
+            "price": "0.02"
+          },
+          {
+            "route": "/v1/rights/ingestion-gate",
+            "rank": 2,
+            "networks": [
+              "eip155:8453"
+            ],
+            "price": "0.06"
+          }
+        ]
+      },
+      {
+        "query": "machine-readable licensing",
+        "results": [
+          {
+            "route": "/v1/rights/preflight",
+            "rank": 1,
+            "networks": [
+              "eip155:8453"
+            ],
+            "price": "0.02"
+          }
+        ]
+      },
+      {
+        "query": "content licensing check",
+        "results": [
+          {
+            "route": "/v1/rights/preflight",
+            "rank": 2,
+            "networks": [
+              "eip155:8453"
+            ],
+            "price": "0.02"
+          }
+        ]
+      },
+      {
+        "query": "AI usage rights policy changes",
+        "results": [
+          {
+            "route": "/v1/rights/revalidate",
+            "rank": 1,
+            "networks": [
+              "eip155:8453"
+            ],
+            "price": "0.03"
+          },
+          {
+            "route": "/v1/rights/preflight",
+            "rank": 2,
+            "networks": [
+              "eip155:8453"
+            ],
+            "price": "0.02"
+          }
+        ]
+      },
+      {
+        "query": "detect changes in AI usage declarations",
+        "results": [
+          {
+            "route": "/v1/rights/revalidate",
+            "rank": 1,
+            "networks": [
+              "eip155:8453"
+            ],
+            "price": "0.03"
+          }
+        ]
+      },
+      {
+        "query": "revalidate content usage rights",
+        "results": [
+          {
+            "route": "/v1/rights/preflight",
+            "rank": 1,
+            "networks": [
+              "eip155:8453"
+            ],
+            "price": "0.02"
+          },
+          {
+            "route": "/v1/rights/ingestion-gate",
+            "rank": 2,
+            "networks": [
+              "eip155:8453"
+            ],
+            "price": "0.06"
+          }
+        ]
+      },
+      {
+        "query": "rights evidence before indexing",
+        "results": [
+          {
+            "route": "/v1/rights/ingestion-gate",
+            "rank": 1,
+            "networks": [
+              "eip155:8453"
+            ],
+            "price": "0.06"
+          }
+        ]
+      }
+    ]
+  },
+  "payapi": {
+    "status": "pending_review",
+    "paymentVerified": false,
+    "updated": false,
+    "reason": "Existing dashboard has no edit workflow; no duplicate submission"
+  },
+  "validation": {
+    "coreTests": {
+      "tests": 589,
+      "pass": 587,
+      "fail": 0,
+      "skipped": 2
+    },
+    "bundledAdapterTests": 83,
+    "workerd": "PASS",
+    "coreCI": "PASS",
+    "unpaidProductionChecks": 26,
+    "nodeLiveSignedOffer": "PASS_NO_SIGNATURE",
+    "pythonLiveSignedOffer": "PASS_NO_SIGNATURE",
+    "productionRevalidationCheckpoint": "Awaiting authentic checkpoint from real customer; complete paid flow tested locally only"
+  },
+  "estimatedCosts": {
+    "currency": "USD",
+    "gateNormal": 0.0015,
+    "gateBoundedReserve": 0.005,
+    "revalidateNormal": 0.0013,
+    "revalidateBoundedReserve": 0.003,
+    "actualCloudBillingImported": false,
+    "exclusions": [
+      "Fixed account costs",
+      "Taxes",
+      "Customer acquisition",
+      "Refunds",
+      "Adversarial unpaid traffic allocation"
+    ],
+    "interpretation": "Software marginal-cost model, not measured profit or proof of demand"
+  }
+}
