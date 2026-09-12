@@ -4,7 +4,7 @@ Production **b461376d-a8cf-494c-93b4-db39d192dc9b**, core **b6a2cd23cbff54c71961
 
 617 tests PASS, 0 FAIL, two existing Windows skips; bundled SIWX 83/83, workerd, exact-head CI, audits and candidate/history scans PASS. Production unpaid and legacy checks PASS; CDP valid=true for both routes. Rollback: 0b952e13-d76c-4226-a117-521741d30769. No protected configuration changes, owner wallet or payment.
 
-Agent402: origin refreshed; stock listing awaiting crawler readback. Wire behavior supported by local cryptographic reproduction; live dispatch still gated by settlement_required. PayAPI private buyer execution UNKNOWN; owner handles all email. Organic reports 0, repeat external payers 0, organic revenue 0 USDC, marketplace verification settlements 0 at 2026-09-12T16:55:31.619Z. Existing monitor includes the stock SKU and keeps marketplace verification separate.
+Agent402: origin refreshed; stock POST listing LIVE_READBACK at 0.02 USDC, eip155:8453, correct USDC and required JSON fields. Current index omits payTo; the live unpaid 402 still matches the protected recipient. Free search readback includes RSL rights before RAG ingestion, rights before AI ingestion and training content rights. Wire behavior supported by local cryptographic reproduction; live dispatch still gated by settlement_required. PayAPI private buyer execution UNKNOWN; owner handles all email. Organic reports 0, repeat external payers 0, organic revenue 0 USDC, marketplace verification settlements 0 at 2026-09-12T16:55:31.619Z. Existing monitor includes the stock SKU and keeps marketplace verification separate.
 
 ## Previous release evidence
 

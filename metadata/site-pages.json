@@ -1451,7 +1451,7 @@
         "title": "Dual-mode production release verified",
         "paragraphs": [
           "Production b461376d-a8cf-494c-93b4-db39d192dc9b; merged core b6a2cd23cbff54c719617373b8c4cda6f8370172, PR #14. Secure SIWX unchanged; separate stock fresh Preflight LIVE. Local tests 617 PASS, 0 FAIL, two existing Windows skips; CI, workerd, audits and secret scans PASS. All 16 public checks and legacy unpaid quote/claim PASS. CDP valid=true for secure and stock resources.",
-          "Agent402 stock wire behavior is reproduced locally; its live router still requires external settlement proof. The new stock listing is awaiting crawler readback. PayAPI private buyer settlement remains UNVERIFIED; the owner handles communication. Marketplace verification never counts as organic demand.",
+          "Agent402 stock wire behavior is reproduced locally; its live router still requires external settlement proof. The stock endpoint is now indexed at 0.02 USDC on Base. Free need searches return it for RSL rights before RAG ingestion, rights before AI ingestion and training content rights; the router still reports settlement_required. PayAPI private buyer settlement remains UNVERIFIED; the owner handles communication. Marketplace verification never counts as organic demand.",
           "Fresh production aggregates show zero settled reports, zero repeat external payers, zero marketplace verification settlements and 0 USDC organic revenue. No owner wallet or payment."
         ],
         "links": [

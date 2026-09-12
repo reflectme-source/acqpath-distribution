@@ -58,10 +58,95 @@
   },
   "agent402": {
     "registration": "EXISTING_ORIGIN_REFRESHED",
-    "stockListing": "AWAITING_CRAWLER_READBACK",
+    "stockListing": "LISTED_READBACK",
     "wireCompatibility": "SUPPORTED_LOCAL_REPRODUCTION",
     "liveRouter": "NOT_VERIFIED_SETTLEMENT_REQUIRED",
-    "sourceCommit": "d3bf2593a3939c6a65c5ba87bdd69a13bb85f618"
+    "sourceCommit": "d3bf2593a3939c6a65c5ba87bdd69a13bb85f618",
+    "checkedAt": "2026-09-12T17:17:55.585Z",
+    "indexUrl": "https://agent402.tools/api/index?seller=api.getacqpath.com",
+    "indexedStock": {
+      "method": "POST",
+      "route": "/v1/rights/preflight/x402",
+      "name": "Stock x402: RSL rights before RAG ingestion and AI training",
+      "priceMicro": "20000",
+      "networks": [
+        "eip155:8453"
+      ],
+      "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "payTo": null,
+      "requestContract": {
+        "state": "declared",
+        "source": "seller_openapi",
+        "required": {
+          "body": [
+            "resource",
+            "purpose",
+            "max_total_micro"
+          ]
+        },
+        "runtimeVerified": false
+      }
+    },
+    "recipientReadback": "CURRENT_INDEX_OMITS_PAYTO_LIVE_UNPAID_402_MATCHES_PROTECTED_RECIPIENT",
+    "searches": [
+      {
+        "query": "AcqPath",
+        "http": 200,
+        "stockRank": null
+      },
+      {
+        "query": "batch content rights check",
+        "http": 200,
+        "stockRank": null
+      },
+      {
+        "query": "did this website AI policy change",
+        "http": 200,
+        "stockRank": null
+      },
+      {
+        "query": "policy revalidation rights diff",
+        "http": 200,
+        "stockRank": null
+      },
+      {
+        "query": "machine-readable license discovery",
+        "http": 200,
+        "stockRank": null
+      },
+      {
+        "query": "RSL rights before RAG ingestion",
+        "http": 200,
+        "stockRank": 1
+      },
+      {
+        "query": "AI content usage rights",
+        "http": 200,
+        "stockRank": null
+      },
+      {
+        "query": "rights before AI ingestion",
+        "http": 200,
+        "stockRank": 1
+      },
+      {
+        "query": "training content rights",
+        "http": 200,
+        "stockRank": 1
+      },
+      {
+        "query": "machine-readable licensing",
+        "http": 200,
+        "stockRank": null
+      },
+      {
+        "query": "content licensing check",
+        "http": 200,
+        "stockRank": null
+      }
+    ],
+    "routerDispatchEligible": false,
+    "routerDispatchReason": "settlement_required"
   },
   "payapi": {
     "stockCompatibility": "UNKNOWN_PRIVATE_BUYER_NOT_OBSERVED",
