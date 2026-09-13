@@ -3,7 +3,7 @@
   "info": {
     "title": "AcqPath RSL rights preflight — public integration flow",
     "version": "3.1.0-rc.1",
-    "description": "Documented subset of the observed public API. Check declared AI input, training, indexing and search restrictions before ingestion. Quotes prepare evidence; paid delivery uses HTTP x402. Reports are not licenses or legal clearance. Rights Gateway: Preflight, bounded Ingestion Gate and signed policy revalidation. Official TS/Python signer plus AcqPath SIWX adapter required."
+    "description": "Documented subset of the observed public API. Check declared AI input, training, indexing and search restrictions before ingestion. Quotes prepare evidence; paid delivery uses HTTP x402. Reports are not licenses or legal clearance. POST /v1/rights/preflight and Rights Gateway routes use the official TS/Python signer plus the AcqPath SIWX adapter. POST /v1/rights/preflight/x402 is a separate stock x402 v2 route: fresh Rights Preflight only, 0.02 USDC on Base, with no SIWX or custom signer."
   },
   "servers": [
     {

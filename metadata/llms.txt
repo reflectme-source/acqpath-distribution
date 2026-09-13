@@ -6,6 +6,8 @@ MCP: https://api.getacqpath.com/mcp (Streamable HTTP). Paid report delivery uses
 Fresh 0.02 USDC; deep 0.05 USDC, observed 2026-09-10T13:40:17.531Z. Verify live capabilities and signed quote.
 UNKNOWN and unsupported inputs do not authorize ingestion. Private claims and signatures stay outside model context. npm is unpublished.
 
+Payment modes: `POST /v1/rights/preflight` is the secure x402 + AcqPath SIWX route. `POST /v1/rights/preflight/x402` is a separate stock x402 v2 route with no SIWX or custom signer; it is limited to fresh Rights Preflight at 0.02 USDC on Base. See [stock integration and recovery](https://developers.getacqpath.com/examples/STOCK-X402.md).
+
 ## Integration
 - [Check declared AI usage rights before ingestion.](https://developers.getacqpath.com/): RSL declaration evidence for supported URLs. Use it before model input, RAG indexing, training or search. Get a timestamped signed report through HTTP x402.
 - [From supported URL to verified rights evidence](https://developers.getacqpath.com/quickstart): Start with a free capability read. A fresh report is 0.02 USDC and a deep report is 0.05 USDC as observed; the signed quote controls the exact purchase.

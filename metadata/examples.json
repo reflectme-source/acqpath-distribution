@@ -31,11 +31,14 @@
     "when": "Before selected supported content enters the intended workflow",
     "input": "Canonical HTTPS URL plus actual purpose/context and bounded budget",
     "unknown": "Hold; do not treat as permission",
-    "purchase": "POST /v1/rights/preflight -> verified offer -> unchanged official x402 signer -> AcqPath SIWX adapter -> verified report",
+    "purchase": "Secure mode: POST /v1/rights/preflight -> verified offer -> unchanged official x402 signer -> AcqPath SIWX adapter -> verified report",
+    "stockPurchase": "Stock mode: POST /v1/rights/preflight/x402 -> verified 0.02 USDC fresh offer -> unchanged official x402 v2 signer -> verified report; no SIWX or custom signer",
+    "modeSelection": "Use secure mode when payer-signed request binding is required. Stock mode is limited to fresh Rights Preflight at 0.02 USDC on Base.",
     "verification": "Pinned Ed25519 offer/report/receipt/delivery binding via reviewed buyer client",
-    "retry": "Same operation ID, input and private directory; reuse saved payment/SIWX, never replace a pending authorization",
+    "retry": "Secure mode: reuse saved payment/SIWX state. Stock mode: reuse the exact signed request and PAYMENT-SIGNATURE. Never replace a pending authorization.",
     "duplicatePrevention": "One logical ID, local lock, checkpoint before submission, same authorization on retry",
-    "integrationGuide": "https://developers.getacqpath.com/examples/OFFICIAL-CLIENTS.md"
+    "integrationGuide": "https://developers.getacqpath.com/examples/OFFICIAL-CLIENTS.md",
+    "stockIntegrationGuide": "https://developers.getacqpath.com/examples/STOCK-X402.md"
   },
   "mcp": {
     "generic": {

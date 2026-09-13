@@ -10,4 +10,6 @@ test('dual-mode pages state separate stock scope and residual risk without alter
  for(const slug of ['stock-x402','index','quickstart','public-http','connect','recovery','bazaar-status']){const p=JSON.stringify(pages.find(p=>p.slug===slug));for(const word of ['/v1/rights/preflight/x402','0.02','SIWX','UNVERIFIED'])assert.ok(p.includes(word),slug+' '+word);}
  const guide=await readFile(new URL('../examples/STOCK-X402.md',import.meta.url),'utf8');for(const word of ['2.25.0','2.22.0','20000','eip155:8453','before presentation','same saved body','does not','PAYMENT-SIGNATURE'])assert.ok(guide.includes(word),word);
  const api=JSON.parse(await readFile(new URL('../metadata/openapi.public.json',import.meta.url)));assert.equal(api.paths['/v1/rights/preflight/x402'].post['x-payment-info'].client.siwxRequired,false);assert.equal(api.paths['/v1/rights/preflight'].post['x-payment-info'].client.adapterRequired,true);
+ assert.match(api.info.description,/\/v1\/rights\/preflight\/x402.*no SIWX or custom signer/);
+ const examples=JSON.parse(await readFile(new URL('../metadata/examples.json',import.meta.url)));assert.match(examples.workflow.purchase,/Secure mode/);assert.match(examples.workflow.stockPurchase,/no SIWX or custom signer/);
 });
