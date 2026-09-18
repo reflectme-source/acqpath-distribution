@@ -15,4 +15,4 @@ Public Node, standard Python/httpx and urllib reachability PASS after the narrow
 
 Fresh 0.02 USDC, deep 0.05 USDC; exact live signed terms control a buyer-authorized purchase. UNKNOWN is not permission. Reports do not provide a license or legal clearance.
 
-Local cryptographic E2E and unpaid production validation PASS. MAINNET PAID E2E = UNVERIFIED. No owner-funded payment or indexing settlement.
+Local cryptographic E2E and unpaid production validation PASS. SECURE SIWX PAID E2E = UNVERIFIED; STOCK PAYAPI VERIFICATION = SETTLED. No owner-funded payment or indexing settlement.

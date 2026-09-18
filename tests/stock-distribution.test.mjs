@@ -7,7 +7,12 @@ test('stock marketplace verification is never organic revenue, and stock accepts
 });
 test('dual-mode pages state separate stock scope and residual risk without altering SIWX adapter',async()=>{
  const pages=JSON.parse(await readFile(new URL('../metadata/site-pages.json',import.meta.url)));
- for(const slug of ['stock-x402','index','quickstart','public-http','connect','recovery','bazaar-status']){const p=JSON.stringify(pages.find(p=>p.slug===slug));for(const word of ['/v1/rights/preflight/x402','0.02','SIWX','UNVERIFIED'])assert.ok(p.includes(word),slug+' '+word);}
+ for(const slug of ['stock-x402','index','quickstart','public-http','connect','recovery','bazaar-status']){
+  const p=JSON.stringify(pages.find(p=>p.slug===slug));
+  for(const word of ['/v1/rights/preflight/x402','0.02','SIWX'])assert.ok(p.includes(word),slug+' '+word);
+  assert.ok(p.includes('PayAPI')&&p.includes('marketplace verification'),slug+' PayAPI verification');
+  assert.ok(p.includes('organic demand remains unproven')||p.includes('organic demand and retention remain unproven'),slug+' organic demand boundary');
+ }
  const guide=await readFile(new URL('../examples/STOCK-X402.md',import.meta.url),'utf8');for(const word of ['2.25.0','2.22.0','20000','eip155:8453','before presentation','same saved body','does not','PAYMENT-SIGNATURE'])assert.ok(guide.includes(word),word);
  const api=JSON.parse(await readFile(new URL('../metadata/openapi.public.json',import.meta.url)));assert.equal(api.paths['/v1/rights/preflight/x402'].post['x-payment-info'].client.siwxRequired,false);assert.equal(api.paths['/v1/rights/preflight'].post['x-payment-info'].client.adapterRequired,true);
  assert.match(api.info.description,/\/v1\/rights\/preflight\/x402.*no SIWX or custom signer/);

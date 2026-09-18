@@ -2,7 +2,7 @@
 
 Use `POST https://api.getacqpath.com/v1/rights/preflight/x402` for the fixed fresh marketplace SKU: **0.02 USDC (20000 micro-USDC), Base mainnet `eip155:8453`**. USDC asset: `0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913`; recipient: `0xf69DBbd053fb0Fbc78ADfdB1BFe3b0D1F57300ec`. Deep, Ingestion Gate and Revalidation are not offered through this endpoint.
 
-This endpoint uses the normal official EIP-3009 signer and random nonce. **No AcqPath SIWX, custom signer, custom nonce or custom buyer hook.** Tested locally with official TypeScript x402 **2.25.0** and Python x402 **2.22.0** using real cryptographic signatures and simulated settlement. Independent external mainnet paid E2E remains **UNVERIFIED** until an external buyer completes it.
+This endpoint uses the normal official EIP-3009 signer and random nonce. **No AcqPath SIWX, custom signer, custom nonce or custom buyer hook.** Tested locally with official TypeScript x402 **2.25.0** and Python x402 **2.22.0** using real cryptographic signatures and simulated settlement. PayAPI completed one external marketplace verification settlement; organic buyer demand and retention remain unproven.
 
 ## Exact request and unpaid check
 

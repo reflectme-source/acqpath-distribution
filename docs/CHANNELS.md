@@ -4,9 +4,9 @@ Production Worker 0b952e13-d76c-4226-a117-521741d30769; core merge b2a9273f7269f
 
 Core: 587 PASS, 2 existing Windows skips, 0 FAIL; bundled adapter 83/83; workerd, CI, audits and full candidate/history secret scans PASS. Production unpaid 26/26 PASS; Node/Python signed-offer verification stops before signing. No migrations; protected values unchanged. No owner wallet or payment. Mainnet paid E2E awaits a real external buyer.
 
-Agent402: three paid routes indexed with Base metadata. Preflight #1 RSL rights before RAG ingestion; Gate #1 rights evidence before indexing / #2 batch content rights check; Revalidation #1 AI usage rights policy changes. Router payment UNSUPPORTED. Some other query phrasings have no result. PayAPI existing listing pending_review, payment_verified=false; no supported edit flow and no duplicate.
+Agent402: three paid routes indexed with Base metadata. Preflight #1 RSL rights before RAG ingestion; Gate #1 rights evidence before indexing / #2 batch content rights check; Revalidation #1 AI usage rights policy changes. Router payment UNSUPPORTED. Some other query phrasings have no result. PayAPI listing is LIVE with payment_verified=true after one marketplace verification settlement; this is not organic demand.
 
-Organic paid operations 0; repeat external payers 0; organic revenue 0 USDC; marketplace verification settlements 0 (fresh aggregate and monitor readback 2026-09-12). Existing hourly monitor ACTIVE, including SKU mix and 100-operation milestone. Development freeze ACTIVE: incidents, security, standards compatibility and measurement only. No more directories or owner-funded transactions.
+Organic paid operations 0; repeat external payers 0; organic revenue 0 USDC; marketplace verification settlements 1 (PayAPI verification; not organic demand). Existing hourly monitor ACTIVE, including SKU mix and 100-operation milestone. Development freeze ACTIVE: incidents, security, standards compatibility and measurement only. No more directories or owner-funded transactions.
 
 ## Historical evidence follows
 

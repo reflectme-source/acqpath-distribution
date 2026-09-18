@@ -1,6 +1,6 @@
 # Rights gateway buyer integration
 
-Use the tested official TypeScript/Node x402 2.25.0 or Python x402 2.22.0 signer with the AcqPath SIWX adapter. The normal EIP-3009 payment signature and random nonce are unchanged. The adapter handles the additional SIWX order signature, request binding, durable retry and verification. Generic zero-config x402, stock SIWX-only hooks, Agent402 automatic router payment, Payments MCP and generic proxies are not claimed compatible. Mainnet paid E2E awaits a real external buyer.
+Use the tested official TypeScript/Node x402 2.25.0 or Python x402 2.22.0 signer with the AcqPath SIWX adapter. The normal EIP-3009 payment signature and random nonce are unchanged. The adapter handles the additional SIWX order signature, request binding, durable retry and verification. Generic zero-config x402, stock SIWX-only hooks, Agent402 automatic router payment, Payments MCP and generic proxies are not claimed compatible. Secure SIWX paid E2E awaits a real external buyer; the stock endpoint has one PayAPI marketplace verification settlement.
 
 ## Select an operation
 
