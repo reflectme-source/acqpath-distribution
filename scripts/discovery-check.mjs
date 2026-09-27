@@ -62,3 +62,4 @@ export async function discoveryCheck(root=ROOT,{fetcher=globalThis.fetch}={}) {
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href) {
  try{await build();if((await discoveryCheck()).state!=='PASS')process.exitCode=2;}catch(e){console.error('DISCOVERY_STOPPED',safeCode(e));process.exitCode=2;}
 }
+

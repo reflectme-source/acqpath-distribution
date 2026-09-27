@@ -166,3 +166,87 @@ OWNER ACTION: NONE.
 ## DECYZJA H72
 
 Current interim state: NO_NEAR_TERM_SIGNAL so far, because there is no maintainer response, no direct operator asking to buy, no new independent settlement and no repeat paid use. This is an interim first-block result, not a 72h market conclusion.
+
+## CONTINUATION — 2026-09-27T12:20Z
+
+ETAP: Agent402 correction, monitoring diagnostic/fix, Wave 1 scope review, commercial qualification.
+
+### AGENT402
+
+AGENT402_DISCOVERY: available according to latest public index readback. AcqPath origin is indexed, health `1`, 16 tools, 4 paid tools, stock route listed.
+
+AGENT402_MANAGED_EXECUTION: blocked. Live readback reports `routerDispatchEligible:false`, `routerDispatchReason:"settlement_required"`, Base detail `below the settlement floor`.
+
+Threshold evidence:
+
+- Public Agent402 source at `MikeyPetrillo/Agent402` commit `d97202cfcec61053bb5d0a97fc51dc49e82b7a0b`, `src/settlement-proof.js`, `meetsRouterGate`, defaults to `minSettled = 50`, `minPayers = 3`.
+- That code explains `below the settlement floor` as insufficient observed settlement count, not AcqPath price.
+- These source defaults are not proof of the live hosted threshold. Live threshold remains UNKNOWN beyond the observed reason.
+
+FIRST_CUSTOMER_STRATEGY: direct external buyer, not Agent402 managed router. Do not raise price, manufacture settlement history, fund buyers, refund buyers, change payTo or route around router policy.
+
+### MONITORING DIAGNOSTIC
+
+PUBLIC_DISCOVERY_MONITOR:
+
+- Reproduced local scheduled failure with `node scripts/discovery-check.mjs`: state `REGRESSION_OR_UNAVAILABLE`, one failing `documentation_external_link`, but the original checker logged only `Error` and lost the URL.
+- Replayed the exact external-link list from `metadata/site-pages.json` with URL-aware diagnostics.
+- Exact failing URL: `https://agent402.tools/api/index?seller=api.getacqpath.com`.
+- Cause: checker allowlist omitted `https://agent402.tools`, causing `UNEXPECTED_PUBLIC_ORIGIN`. The URL itself returned HTTP 200 when checked with the correct allowlist.
+- Other external links passed: capabilities, GitHub repo, examples README, OpenAPI, stock endpoint.
+- Local minimal fix applied in `scripts/discovery-check.mjs`: preserve `url`/`code` on thrown check failures and add `https://agent402.tools` to the external documentation link allowlist. This does not remove the check and does not convert real HTTP failures to PASS.
+- After local fix, `node scripts/discovery-check.mjs` returned PASS and all six external links passed.
+- Remote scheduled workflow is not fixed until this local commit is pushed and the next GitHub run succeeds.
+
+WAVE1_THREAD_MONITOR:
+
+- Current readback at 2026-09-27T12:20:42Z: all three Wave 1 issues are open with 0 comments and no maintainer response.
+
+PRIVATE_REVENUE_MONITOR:
+
+- MANUAL_ONLY / NOT_SCHEDULED. Public `visibility.yml` does not run `--local-aggregates` and must not receive production secrets. No active local AcqPath revenue heartbeat exists in `C:\Users\shyxz\.codex\automations`.
+- No fresh credentialed aggregate read was performed in this continuation block because AGENTS.md requires a separate confirmation for that local credentialed read and no unused active approval was available.
+
+### COMMERCIAL QUALIFICATION
+
+| target | technical fit | coverage evidence | need evidence | operating evidence | direct purchase path | decyzja |
+|---|---|---|---|---|---|---|
+| Agentic Research Marketplace | VERIFIED Base mainnet x402 buyer in source/docs | No proof current workflow specifically uses `medium.com`, `theguardian.com`, `rslstandard.org` or `rslcollective.org`; workflow can produce arbitrary Tavily URLs | HYPOTHESIS; no maintainer/operator stated rights-evidence need yet | Repo and deployed app documented; volume UNKNOWN | Possible only if selected result URL is one of reviewed origins and operator opts in; does not require AcqPath backend change | NEEDS_QUALIFICATION |
+| AgentRAG | VERIFIED Base mainnet default x402 wallet mode | Docs examples use generic/example sources, not current AcqPath reviewed origins | HYPOTHESIS; no maintainer/operator stated rights-evidence need yet | Active client/CLI repo; actual collection traffic UNKNOWN | Possible for explicit supported source URL through stock endpoint, before ingest | NEEDS_QUALIFICATION |
+| Sentinel | x402 policy/audit tooling fit; exact AcqPath buyer workflow not proven | No proof example agents use current reviewed origins | HYPOTHESIS; policy/audit need is conceptual from product scope, not a buyer request | Repo/app examples exist; actual buyer traffic UNKNOWN | As optional example/tool only; not direct buyer without an operator workflow | DISTRIBUTION_ONLY |
+| AgentProcure | Buyer capability exists but hard-coded Base Sepolia | Coverage not evaluated because payment network blocks current product | HYPOTHESIS | Demo repo; usage UNKNOWN | Cannot call existing Base mainnet stock endpoint without target-side network change | NO_CURRENT_FIT |
+
+READY_FOR_DIRECT_OFFER: none verified.
+
+Why not ready: every candidate is missing at least one critical condition: specific supported resource in their live workflow, explicit buyer/operator need, or direct stock Base x402 purchase path without framework merge/network change.
+
+### WAVE1 SCOPE CORRECTION
+
+Existing Wave 1 posts can be read as broader than current live coverage because they say source URLs / external content without naming reviewed origins. Public correction should be short and non-promotional. Do not post without owner approval.
+
+Recommended correction text for each existing issue:
+
+```md
+Small scope clarification: AcqPath should only be considered for URLs on its current reviewed live origins, not arbitrary search/source URLs. Current live coverage is `https://medium.com`, `https://theguardian.com`, `https://rslstandard.org`, and `https://rslcollective.org`; exact path, redirects and request validity still need to pass the live stock endpoint. The intended integration point is therefore “selected supported source URLs that will enter context,” not every result URL. UNKNOWN remains UNKNOWN and the report is not legal clearance or permission.
+```
+
+EXACT APPROVAL BUNDLE:
+
+- Recipient/repo: `rtolpin/Agentic-Research-Marketplace`, issue #1. Action: post the scope clarification comment above. Why now: existing post references source URLs and top cited sources without the reviewed-origin limit.
+- Recipient/repo: `agentx402-ai/agentrag`, issue #21. Action: post the same scope clarification comment. Why now: existing post says source URLs/crawl roots and should not imply all sources are supported.
+- Recipient/repo: `valeo-cash/Sentinel`, issue #3. Action: post the same scope clarification comment. Why now: existing post says URL-bearing external content and should not imply arbitrary URLs are supported.
+
+OWNER ACTION: approve or decline the three scope-clarification comments. No other external action is requested.
+
+### REVENUE
+
+REVENUE_OBSERVED_AT: no fresh credentialed aggregate read in this block. Last approved aggregate baseline remains the source for revenue counters.
+INDEPENDENT CUSTOMER REVENUE: 0 USDC verified at last approved baseline.
+PAID EVALUATION: 0 verified.
+REPEAT: 0 verified.
+MARGIN: UNKNOWN.
+NEW SPEND: 0.
+
+### NEXT
+
+If owner approves the scope clarification package, post the three comments and update `WAVE1_LIVE.md`. If declined, keep monitoring the existing issues and do not broaden outreach. Independently, the local monitoring fix should be committed; remote monitoring remains unverified until pushed and a scheduled/manual GitHub visibility run passes.

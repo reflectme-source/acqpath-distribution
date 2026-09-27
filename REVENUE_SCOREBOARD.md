@@ -44,3 +44,7 @@ Published 3 approved external GitHub issues on 2026-09-27T12:37:42+02:00: Agenti
 
 H0: 2026-09-27T11:47:41Z. Live public readback confirmed stock 0.02 USDC Base 402 for rslstandard.org and current coverage/purposes. Wave 1 issues remain open with 0 comments. Agent402 index lists AcqPath but routerDispatchEligible=false due settlement_required/below settlement floor. CDP/Bazaar public monitor shows 0 AcqPath resources by payTo/brand/intent. Monitoring is not running verified: latest three scheduled visibility runs failed and no active local AcqPath automation exists. Organic revenue remains 0 USDC at last approved aggregate baseline; no fresh credentialed aggregate read, payment, wallet use or production change occurred.
 
+
+## 72h continuation
+
+Agent402 interpretation corrected: discovery available, managed execution blocked by settlement-history gate (`settlement_required` / below settlement floor), direct external buyer remains first-customer strategy. Monitoring diagnostic found the scheduled visibility failure was the checker rejecting `https://agent402.tools/api/index?seller=api.getacqpath.com` as `UNEXPECTED_PUBLIC_ORIGIN`; local diagnostic/allowlist fix makes discovery-check PASS. Wave 1 remains open with 0 comments. No ready direct-offer buyer verified; all current candidates lack confirmed reviewed-origin usage and explicit buyer need. No new spend, payment, wallet use or production change.
