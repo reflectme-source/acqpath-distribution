@@ -15,13 +15,18 @@ PAYMENT_TO_REPEAT_CONVERSION: organic UNKNOWN; gross marketplace-including 0/1
 
 ## Secondary acquisition state
 
-qualified_prospects: 0 in Day 0–2 scope
-top_prospects: 0 in Day 0–2 scope
-integration_patches_ready: 0
+qualified_prospects: 15 verified public candidates inspected in Days 3–7 prep
+top_prospects: 10 target briefs prepared
+integration_patches_ready: 10 local integration sketches prepared; 0 external PRs opened
 outreach_approved: 0
-integrations_started: 0
-integrations_live: 0
+integrations_started: 0 external
+integrations_live: 0 external
 
 ## Notes
 
 This scoreboard intentionally excludes marketplace verification, owner/team/canary/test payments and UNKNOWN payers from organic revenue. See `REVENUE_BASELINE.md`, `CHANNEL_STATUS.md` and `PURCHASE_PATH_AUDIT.md` for evidence.
+
+## Days 3-7 prospecting update
+
+Priority prospects >=75: 7. Top 10 target briefs and integration sketches prepared locally. No outreach, external PR, production change, payment or wallet use occurred.
+
