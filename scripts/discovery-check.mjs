@@ -15,6 +15,12 @@ export function contractDrift(observed,contract) {
 export function registryMatches(data,expected) {
  return isDeepStrictEqual(data?.server,expected)&&data?._meta?.['io.modelcontextprotocol.registry/official']?.status==='active';
 }
+export function publicExternalLinkOrigins(cfg) {
+ return ['https://github.com','https://docs.cdp.coinbase.com','https://agent402.tools','https://acqpath-bazaar-sepolia.acqpath.workers.dev',cfg.apiOrigin];
+}
+export function failureDetail(e) {
+ return {error:safeCode(e),url:e?.url,code:e?.code};
+}
 // Only idempotent public registry GETs may retry; metadata mismatches never do.
 export async function readRegistry(url,fetcher=globalThis.fetch) {
  const origin='https://registry.modelcontextprotocol.io';
@@ -34,7 +40,7 @@ export async function readRegistry(url,fetcher=globalThis.fetch) {
 export async function discoveryCheck(root=ROOT,{fetcher=globalThis.fetch}={}) {
  const cfg=await settings(root),contract=await load(join(root,'metadata/public-contract.json')),expected=await load(join(root,'out/registry/server.json'));
  const checks=[];
- async function check(name,fn) {try{const detail=await fn();checks.push({name,...detail,pass:detail.pass===true});}catch(e){checks.push({name,pass:false,error:safeCode(e)});}}
+ async function check(name,fn) {try{const detail=await fn();checks.push({name,...detail,pass:detail.pass===true});}catch(e){checks.push({name,pass:false,...failureDetail(e)});}}
  await check('public_api_mcp_and_contract',async()=>{const r=await publicAudit(cfg,{fetcher});await writeLocal('.local/public-audit.json',r,root);return {pass:r.status==='PASS'&&!contractDrift(r.observed,contract),audit:r.status,contractDrift:contractDrift(r.observed,contract),noToolInvoked:true};});
  await check('documentation_assets_headers_links',async()=>{const r=await verifyDocs(cfg.publication.docsUrl,root,{fetcher,quiet:true});return {pass:r.state==='PUBLIC_DOCS_VERIFIED',state:r.state,files:r.checks.length,links:r.linkChecks.length};});
  const registry='https://registry.modelcontextprotocol.io';
@@ -42,7 +48,7 @@ export async function discoveryCheck(root=ROOT,{fetcher=globalThis.fetch}={}) {
  await check('official_registry_brand_search',async()=>{const url=registry+'/v0.1/servers?search=AcqPath&limit=100';const r=await readRegistry(url,fetcher);return {pass:r.status===200&&r.data?.servers?.some(s=>s.server?.name===cfg.mcp.name&&s.server?.version===cfg.mcp.version),http:r.status,attempts:r.attempts,search:'server-name substring only; semantic discovery tested separately'};});
  const pages=await load(join(root,'metadata/site-pages.json'));
  const external=[...new Set(pages.flatMap(p=>p.sections.flatMap(s=>(s.links||[]).map(l=>l.href))).filter(h=>h.startsWith('https:')))];
- for(const url of external)await check('documentation_external_link',async()=>{const r=await fetchPublicFile(url,{fetcher,allowedOrigins:['https://github.com','https://docs.cdp.coinbase.com','https://acqpath-bazaar-sepolia.acqpath.workers.dev',cfg.apiOrigin],maxBytes:2097152});return {pass:r.http===200,http:r.http,url};});
+ for(const url of external)await check('documentation_external_link',async()=>{try{const r=await fetchPublicFile(url,{fetcher,allowedOrigins:publicExternalLinkOrigins(cfg),maxBytes:2097152});return {pass:r.http===200,http:r.http,url};}catch(e){e.url=url;throw e;}});
  for(const record of await load(join(root,'metadata/channel-readbacks.json'))) {
   if(!record.required)continue;
   await check(record.name,async()=>{const r=await fetchPublicFile(record.url,{fetcher,maxBytes:2097152});const body=r.data.toString('utf8');return {pass:r.http===200&&record.requiredText.every(t=>body.includes(t)),http:r.http,url:record.url,scope:'Public metadata readback only; no paid-flow claim'};});
