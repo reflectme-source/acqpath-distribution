@@ -18,8 +18,8 @@ PAYMENT_TO_REPEAT_CONVERSION: organic UNKNOWN; gross marketplace-including 0/1
 qualified_prospects: 15 verified public candidates inspected in Days 3–7 prep
 top_prospects: Wave 1 narrowed to 4 verified targets; 3 publish-ready, 1 hold
 integration_patches_ready: 1 Wave 1 patch prepared, 2 reviewed example briefs, 1 hold; 0 external PRs opened
-outreach_approved: 0
-integrations_started: 0 external
+outreach_approved: 3 Wave 1 publications approved and sent
+integrations_started: 0 external; 3 async proposals published
 integrations_live: 0 external
 
 ## Notes
@@ -35,3 +35,7 @@ Priority prospects >=75: 7. Top 10 target briefs and integration sketches prepar
 Wave 1 targets verified: 4. Publish-ready targets: 3 (Agentic Research Marketplace, AgentRAG, Sentinel). Hold target: 1 (AgentProcure; Base Sepolia only). Patch prepared: 1. Patch fully tested: 0; narrow syntax checks pass, full Agentic Research Marketplace typecheck is blocked by an upstream unrelated `serviceCategory` type mismatch. Organic revenue remains 0 USDC. No outreach, production change, payment or wallet use occurred.
 
 
+
+## Wave 1 publication update
+
+Published 3 approved external GitHub issues on 2026-09-27T12:37:42+02:00: Agentic Research Marketplace https://github.com/rtolpin/Agentic-Research-Marketplace/issues/1, AgentRAG https://github.com/agentx402-ai/agentrag/issues/21, Sentinel https://github.com/valeo-cash/Sentinel/issues/3. AgentProcure remains HOLD. No PR, production change, payment, wallet use, email or additional prospect contact occurred. Organic revenue remains 0 USDC at the last verified baseline; no new credentialed production aggregate read was performed in this publication step.

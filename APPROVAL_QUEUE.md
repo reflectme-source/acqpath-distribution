@@ -1,26 +1,18 @@
 # Approval queue
 
-No messages, issues, PRs, emails, discussions or payments were sent.
+Wave 1 was approved by the owner and published on 2026-09-27T12:37:42+02:00.
 
-## Recommended first approval bundle
+| Target | Action | URL | Status |
+|---|---|---|---|
+| Agentic Research Marketplace | GitHub issue | https://github.com/rtolpin/Agentic-Research-Marketplace/issues/1 | PUBLISHED |
+| AgentRAG | GitHub issue | https://github.com/agentx402-ai/agentrag/issues/21 | PUBLISHED |
+| Sentinel | GitHub issue | https://github.com/valeo-cash/Sentinel/issues/3 | PUBLISHED |
+| AgentProcure | none | none | HOLD |
 
-TARGET: Agentic Research Marketplace
-SCORE: 94/100
-WHY: Existing Base mainnet autonomous x402 buyer; repeated multi-agent web research workflow; low integration friction.
-INTEGRATION: Add AcqPath stock Rights Preflight immediately before each worker converts external search/source results into findings.
-EXPECTED VALUE: Each research session can create multiple paid preflight operations; if the app gains users, usage repeats naturally per research task.
-PATCH READY: Local snippet ready in `integrations/agentic-research-marketplace-acqpath.md`.
-OUTREACH READY: Draft ready in `targets/TARGET_AGENTIC_RESEARCH_MARKETPLACE.md`.
-ACTION REQUIRED: Approve opening a targeted GitHub issue or discussion. A PR should wait until maintainer confirms they want the integration.
+No further owner approval is pending for routine monitoring or routine technical replies. Owner-level approval is still required for PRs that require material product decisions, pricing/partnership/legal commitments, production/core changes, wallet use or payments.
 
-## Other approval candidates
+## Monitoring queue
 
-1. AgentProcure — approve GitHub issue/discussion proposing AcqPath as a new paid service in its executor service list.
-2. AgentRAG — approve technical discussion asking for Base mainnet exact-EVM confirmation and proposing preflight before source ingestion.
-3. Sentinel — approve PR/discussion adding AcqPath as a compliance/preflight example for research agents.
-4. x402 Agentic Research — approve issue proposing rights preflight on returned research sources.
+Track each published thread for these states: PUBLISHED, VIEWED_OR_ACTIVITY, MAINTAINER_RESPONDED, INTERESTED, PATCH_REQUESTED, PR_OPENED, PR_ACCEPTED, INTEGRATION_ENABLED, FIRST_EXTERNAL_PAYMENT, SECOND_EXTERNAL_PAYMENT, 10_PAID_OPERATIONS, 100_PAID_OPERATIONS.
 
-## Not ready for outreach as first wave
-
-- Polymarket Agent, Stellar MCP, Walras: payment chain mismatch with AcqPath stock Base route.
-- 402 Indexer and x402 Indexer: strong crawler volume, but buyer/payment capability is not proven.
+Current state: PUBLISHED for all three live Wave 1 targets. No maintainer response yet.
