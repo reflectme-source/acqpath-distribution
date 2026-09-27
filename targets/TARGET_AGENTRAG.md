@@ -1,67 +1,30 @@
-# Target
+# Target: AgentRAG
 
-System.Collections.Hashtable.name
+STATUS: OUTREACH_READY
+RECOMMENDATION: PUBLISH
 
 ## Verified evidence
 
-Repository: https://github.com/agentx402-ai/agentrag
+- Repo: https://github.com/agentx402-ai/agentrag
+- Current HEAD inspected: `83971ca4702a363b00431bacd6dcde84b71123c9`
+- Payment: CLI docs describe wallet-mode x402 payment; client package depends on `@agentx402-ai/core` with x402 EVM support.
+- Network: `AGENTRAG_NETWORK` default is `eip155:8453` Base mainnet; `eip155:84532` is optional.
+- External content: `agentrag ask --sources` and `agentrag ingest --sources` accept external exact URLs or crawl roots.
 
-Payment evidence: AGENTS.md describes x402-paid client SDK with spend caps for ask/ingest/extend/status
+## Exact insertion point
 
-External-content workflow: Client ingests sources into RAG collections and ask can trigger implicit ingest
+Before `client.ingest(parsed.opts)` in `cli/src/commands/ingest.ts`, and before `client.ask(..., opts)` for `ask --sources`, as an optional pre-ingest policy wrapper.
 
-## Why it could generate revenue
+## Economics
 
-This target can create repeated AcqPath calls when external URLs enter its research, RAG, crawl or indexing loop. The expected frequency class is **HIGH** and score is **82/100**.
+AgentRAG ingest is documented as $0.005/page and ask as $0.008 without ingest. AcqPath is $0.02/source. Checking every page could multiply small ingest costs, so recommend opt-in collection policy with source limits.
 
-## Current workflow
+## Patch status
 
-Client ingests sources into RAG collections and ask can trigger implicit ingest
+No direct patch prepared. A direct client patch needs maintainer input on where evidence should live: CLI output, collection metadata, or server-side ingest records.
 
-## Exact AcqPath insertion point
+Status: OUTREACH_READY concept/example.
 
-Client source ingest path before signing/paying AgentRAG ingest quote; preflight each source URL before upload/collection write
+## Outreach
 
-## Existing payment capability
-
-AGENTS.md describes x402-paid client SDK with spend caps for ask/ingest/extend/status
-
-## Proposed integration
-
-Use the existing paid-fetch/wallet path where compatible and call:
-
-POST https://api.getacqpath.com/v1/rights/preflight/x402
-
-with { resource, purpose: 'ai-input', tier: 'fresh', max_total_micro: '20000' } before the external resource is added to context, index, vector store or synthesis.
-
-## Expected call-frequency class
-
-HIGH
-
-## Integration complexity
-
-MEDIUM
-
-## Value proposition for maintainer/company
-
-Add machine-readable rights evidence before external content enters AI/RAG/indexing/training workflows. This gives the agent an auditable signed preflight result and explicit UNKNOWN handling without creating accounts or subscriptions.
-
-## Risks
-
-Need confirm exact network and wallet support; repo says client surface but server path may be private.
-
-## Disqualification conditions
-
-Disqualify if the project cannot use Base mainnet USDC/x402, refuses per-resource preflight cost, has no repeated external URL workflow, or requires AcqPath to claim legal clearance.
-
-## Legitimate contribution/contact route
-
-GitHub issue/discussion first. PR only after maintainer confirms interest.
-
-## Draft outreach
-
-We inspected your public workflow. External resources enter at: Client source ingest path before signing/paying AgentRAG ingest quote; preflight each source URL before upload/collection write. AcqPath can perform a stock x402 Rights Preflight immediately before that point, returning signed observed rights evidence for 0.02 USDC on Base. UNKNOWN remains UNKNOWN; this is not legal advice or copyright clearance. I prepared a minimal integration note for your exact workflow and can open a PR if you want it.
-
-## Patch/PR preparation status
-
-Local integration artifact ready: $(System.Collections.Hashtable.artifact). No external PR opened.
+Use exact text in `WAVE1_APPROVAL.md`.

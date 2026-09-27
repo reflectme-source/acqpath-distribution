@@ -1,0 +1,126 @@
+diff --git a/src/worker.ts b/src/worker.ts
+index c38a009..cd9d707 100644
+--- a/src/worker.ts
++++ b/src/worker.ts
+@@ -1,5 +1,6 @@
+ import { paidCall } from './payment.js';
+ import * as ledger from './ledger.js';
++import { attachRightsEvidence } from './acqpath.js';
+ import type { ResearchTask, WorkerResult, Finding, ServiceInfo, TavilyResponse } from './types.js';
+ 
+ const MAX_QUERIES_PER_WORKER = Math.min(parseInt(process.env.MAX_QUERIES_PER_WORKER ?? '2', 10), 5);
+@@ -47,9 +48,11 @@ export async function runWorker(
+       console.log(`[${workerId}] Querying "${query}" via ${service.name} (${service.url})`);
+       const result = await paidCall(service.url, { query, max_results: 5, include_answer: true }, workerId);
+ 
+-      const newFindings = parseTavilyResults(result.data);
++      const parsedFindings = parseTavilyResults(result.data);
++      const { findings: newFindings, acqpathSpendUsd, checked } = await attachRightsEvidence(parsedFindings, workerId);
+       findings.push(...newFindings);
+-      spend += result.costUsd;
++      if (checked > 0) console.log(`[${workerId}] AcqPath checked ${checked} source(s), cost: $${acqpathSpendUsd.toFixed(4)}`);
++      spend += result.costUsd + acqpathSpendUsd;
+       queriesRun++;
+       if (result.txHash) txHashes.push(result.txHash);
+ 
+@@ -74,3 +77,4 @@ export async function runWorker(
+     serviceSource: service.source,
+   };
+ }
++
+diff --git a/src/types.ts b/src/types.ts
+index 3c1069a..f98adf6 100644
+--- a/src/types.ts
++++ b/src/types.ts
+@@ -17,6 +17,12 @@ export interface Finding {
+   url: string;
+   content: string;
+   score?: number;
++  rightsEvidence?: {
++    checked: boolean;
++    decision?: 'ALLOW_DECLARED' | 'DENY_DECLARED' | 'LICENSE_REQUIRED' | 'UNKNOWN';
++    declarationCount?: number;
++    error?: string;
++  };
+ }
+ 
+ export interface WorkerResult {
+@@ -67,3 +73,4 @@ export interface TavilyResponse {
+   answer?: string;
+   query: string;
+ }
++
+diff --git a/src/acqpath.ts b/src/acqpath.ts
+new file mode 100644
+--- /dev/null
++++ b/src/acqpath.ts
++import type { Finding } from './types.js';
++import { paidCall } from './payment.js';
++
++const ACQPATH_STOCK_URL = 'https://api.getacqpath.com/v1/rights/preflight/x402';
++const DEFAULT_MAX_SOURCES = Math.min(parseInt(process.env.ACQPATH_MAX_SOURCES_PER_WORKER ?? '2', 10), 5);
++const DEFAULT_MAX_SPEND_USD = Number.parseFloat(process.env.ACQPATH_MAX_SPEND_USD ?? '0.10');
++const ACQPATH_PRICE_USD = 0.02;
++
++type AcqPathDecision = 'ALLOW_DECLARED' | 'DENY_DECLARED' | 'LICENSE_REQUIRED' | 'UNKNOWN';
++
++export interface RightsEvidence {
++  checked: boolean;
++  decision?: AcqPathDecision;
++  declarationCount?: number;
++  error?: string;
++}
++
++function sourceBudgetRemaining(spend: number, checked: number, maxSpendUsd: number): boolean {
++  return spend + (checked + 1) * ACQPATH_PRICE_USD <= maxSpendUsd;
++}
++
++export async function attachRightsEvidence(
++  findings: Finding[],
++  workerId: string,
++): Promise<{ findings: Finding[]; acqpathSpendUsd: number; checked: number }> {
++  if (process.env.ACQPATH_RIGHTS_MODE !== 'advisory') {
++    return { findings, acqpathSpendUsd: 0, checked: 0 };
++  }
++
++  const maxSources = Number.isFinite(DEFAULT_MAX_SOURCES) && DEFAULT_MAX_SOURCES > 0 ? DEFAULT_MAX_SOURCES : 2;
++  const maxSpendUsd = Number.isFinite(DEFAULT_MAX_SPEND_USD) && DEFAULT_MAX_SPEND_USD > 0 ? DEFAULT_MAX_SPEND_USD : 0.10;
++  let checked = 0;
++
++  const enriched = await Promise.all(findings.map(async (finding) => {
++    if (!finding.url || checked >= maxSources || !sourceBudgetRemaining(0, checked, maxSpendUsd)) {
++      return { ...finding, rightsEvidence: { checked: false } as RightsEvidence };
++    }
++    checked++;
++    try {
++      const result = await paidCall(ACQPATH_STOCK_URL, {
++        resource: finding.url,
++        purpose: 'ai-input',
++        tier: 'fresh',
++        max_total_micro: '20000',
++      }, `${workerId}-acqpath`);
++      const data = result.data as { report?: { decision?: AcqPathDecision; declaration_count?: number } };
++      return {
++        ...finding,
++        rightsEvidence: {
++          checked: true,
++          decision: data.report?.decision,
++          declarationCount: data.report?.declaration_count,
++        } satisfies RightsEvidence,
++      };
++    } catch (err) {
++      return {
++        ...finding,
++        rightsEvidence: {
++          checked: true,
++          error: err instanceof Error ? err.message : String(err),
++        } satisfies RightsEvidence,
++      };
++    }
++  }));
++
++  return { findings: enriched, acqpathSpendUsd: checked * ACQPATH_PRICE_USD, checked };
++}
++
+
+

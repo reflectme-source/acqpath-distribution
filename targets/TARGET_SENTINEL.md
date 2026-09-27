@@ -1,67 +1,29 @@
-# Target
+# Target: Sentinel
 
-System.Collections.Hashtable.name
+STATUS: OUTREACH_READY
+RECOMMENDATION: PUBLISH
 
 ## Verified evidence
 
-Repository: https://github.com/valeo-cash/Sentinel
+- Repo: https://github.com/valeo-cash/Sentinel
+- Current HEAD inspected: `f103066e8eaca1dd83a45e203865d9fd7f874c4f`
+- Payment: package peer-depends on `@x402/fetch`; example imports `SentinelX402Tool` for LangChain research agents.
+- External content: `examples/x402-langchain-agent/index.ts` directs a research agent to fetch paid data from x402 endpoints under a $1 budget.
 
-Payment evidence: Examples import @x402/fetch and expose SentinelX402Tool for LangChain/Vercel AI agents
+## Exact insertion point
 
-External-content workflow: Research/fleet examples route paid API calls through policy-controlled sentinel fetch
+Example/tool layer, not core: `examples/x402-langchain-agent/index.ts`, before `sentinel_x402_fetch` admits URL-bearing content into the research result. A Sentinel policy example can decide ADVISORY vs STRICT behavior.
 
-## Why it could generate revenue
+## Economics
 
-This target can create repeated AcqPath calls when external URLs enter its research, RAG, crawl or indexing loop. The expected frequency class is **HIGH** and score is **81/100**.
+Two selected AcqPath checks cost $0.04 within the example $1 budget. Best pitched as optional compliance/audit policy, not mandatory every-fetch overhead.
 
-## Current workflow
+## Patch status
 
-Research/fleet examples route paid API calls through policy-controlled sentinel fetch
+No core patch prepared. Recommend a small example PR only if maintainer wants it.
 
-## Exact AcqPath insertion point
+Status: OUTREACH_READY.
 
-examples/x402-langchain-agent/index.ts before sentinel_x402_fetch call; or as a policy preflight inside router strategy for URL-bearing research calls
+## Outreach
 
-## Existing payment capability
-
-Examples import @x402/fetch and expose SentinelX402Tool for LangChain/Vercel AI agents
-
-## Proposed integration
-
-Use the existing paid-fetch/wallet path where compatible and call:
-
-POST https://api.getacqpath.com/v1/rights/preflight/x402
-
-with { resource, purpose: 'ai-input', tier: 'fresh', max_total_micro: '20000' } before the external resource is added to context, index, vector store or synthesis.
-
-## Expected call-frequency class
-
-HIGH
-
-## Integration complexity
-
-MEDIUM
-
-## Value proposition for maintainer/company
-
-Add machine-readable rights evidence before external content enters AI/RAG/indexing/training workflows. This gives the agent an auditable signed preflight result and explicit UNKNOWN handling without creating accounts or subscriptions.
-
-## Risks
-
-Best shipped first as example/tool, not Sentinel core requirement.
-
-## Disqualification conditions
-
-Disqualify if the project cannot use Base mainnet USDC/x402, refuses per-resource preflight cost, has no repeated external URL workflow, or requires AcqPath to claim legal clearance.
-
-## Legitimate contribution/contact route
-
-GitHub issue/discussion first. PR only after maintainer confirms interest.
-
-## Draft outreach
-
-We inspected your public workflow. External resources enter at: examples/x402-langchain-agent/index.ts before sentinel_x402_fetch call; or as a policy preflight inside router strategy for URL-bearing research calls. AcqPath can perform a stock x402 Rights Preflight immediately before that point, returning signed observed rights evidence for 0.02 USDC on Base. UNKNOWN remains UNKNOWN; this is not legal advice or copyright clearance. I prepared a minimal integration note for your exact workflow and can open a PR if you want it.
-
-## Patch/PR preparation status
-
-Local integration artifact ready: $(System.Collections.Hashtable.artifact). No external PR opened.
+Use exact text in `WAVE1_APPROVAL.md`.

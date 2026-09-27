@@ -1,67 +1,35 @@
-# Target
+# Target: Agentic Research Marketplace
 
-System.Collections.Hashtable.name
+STATUS: PATCH_PREPARED
+RECOMMENDATION: PUBLISH
 
 ## Verified evidence
 
-Repository: https://github.com/rtolpin/Agentic-Research-Marketplace
+- Repo: https://github.com/rtolpin/Agentic-Research-Marketplace
+- Current HEAD inspected: `961a91b4e69089bc67268b0f548008a49fbc1b48`
+- Payment: `src/payment.ts` imports `wrapFetchWithPayment`, `x402Client`, `@x402/evm`, and uses CDP EVM account signing.
+- Network: README and UI state Base mainnet.
+- External content: `src/worker.ts` parses Tavily URL-bearing results into `Finding[]`.
 
-Payment evidence: Base mainnet CDP wallet and @x402/fetch for autonomous x402 searches
+## Exact insertion point
 
-External-content workflow: src/orchestrator.ts plans research tasks; src/worker.ts calls each assigned service and parseTavilyResults converts external search results into findings
+`src/worker.ts`, inside `runWorker`: after `const result = await paidCall(...)` returns and before `parseTavilyResults(result.data)` findings are appended for synthesis.
 
-## Why it could generate revenue
+## Economics
 
-This target can create repeated AcqPath calls when external URLs enter its research, RAG, crawl or indexing loop. The expected frequency class is **HIGH** and score is **94/100**.
+Do not check every source by default. Recommended: advisory `RIGHTS_AWARE` mode checking only top selected sources entering synthesis, capped by count and spend.
 
-## Current workflow
+Scenario: 3 workers × 2 queries × top 2 findings = 12 AcqPath calls = $0.24. This can exceed underlying search cost, so the prepared patch defaults to opt-in and budget-controlled.
 
-src/orchestrator.ts plans research tasks; src/worker.ts calls each assigned service and parseTavilyResults converts external search results into findings
+## Patch status
 
-## Exact AcqPath insertion point
+Patch: `integrations/wave1/agentic-research-marketplace.patch`
 
-src/worker.ts in runWorker, immediately after each service returns URL-bearing search results and before parseTavilyResults/result findings are appended
+- PATCH_APPLIES: prepared against current paths.
+- Syntax/transpile: PASS for modified files.
+- Full typecheck: blocked by upstream unrelated `src/runIntent.ts` event type error.
+- Status: PATCH_PREPARED, not PATCH_TESTED.
 
-## Existing payment capability
+## Outreach
 
-Base mainnet CDP wallet and @x402/fetch for autonomous x402 searches
-
-## Proposed integration
-
-Use the existing paid-fetch/wallet path where compatible and call:
-
-POST https://api.getacqpath.com/v1/rights/preflight/x402
-
-with { resource, purpose: 'ai-input', tier: 'fresh', max_total_micro: '20000' } before the external resource is added to context, index, vector store or synthesis.
-
-## Expected call-frequency class
-
-HIGH
-
-## Integration complexity
-
-LOW
-
-## Value proposition for maintainer/company
-
-Add machine-readable rights evidence before external content enters AI/RAG/indexing/training workflows. This gives the agent an auditable signed preflight result and explicit UNKNOWN handling without creating accounts or subscriptions.
-
-## Risks
-
-Must keep report wording as evidence/UNKNOWN, not legal clearance.
-
-## Disqualification conditions
-
-Disqualify if the project cannot use Base mainnet USDC/x402, refuses per-resource preflight cost, has no repeated external URL workflow, or requires AcqPath to claim legal clearance.
-
-## Legitimate contribution/contact route
-
-GitHub issue/discussion first. PR only after maintainer confirms interest.
-
-## Draft outreach
-
-We inspected your public workflow. External resources enter at: src/worker.ts in runWorker, immediately after each service returns URL-bearing search results and before parseTavilyResults/result findings are appended. AcqPath can perform a stock x402 Rights Preflight immediately before that point, returning signed observed rights evidence for 0.02 USDC on Base. UNKNOWN remains UNKNOWN; this is not legal advice or copyright clearance. I prepared a minimal integration note for your exact workflow and can open a PR if you want it.
-
-## Patch/PR preparation status
-
-Local integration artifact ready: $(System.Collections.Hashtable.artifact). No external PR opened.
+Use exact text in `WAVE1_APPROVAL.md`.
