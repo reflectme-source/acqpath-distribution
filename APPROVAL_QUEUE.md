@@ -16,3 +16,8 @@ No further owner approval is pending for routine monitoring or routine technical
 Track each published thread for these states: PUBLISHED, VIEWED_OR_ACTIVITY, MAINTAINER_RESPONDED, INTERESTED, PATCH_REQUESTED, PR_OPENED, PR_ACCEPTED, INTEGRATION_ENABLED, FIRST_EXTERNAL_PAYMENT, SECOND_EXTERNAL_PAYMENT, 10_PAID_OPERATIONS, 100_PAID_OPERATIONS.
 
 Current state: PUBLISHED for all three live Wave 1 targets. No maintainer response yet.
+
+## 72h execution
+
+Current owner action: NONE. No new publication package is ready. Wave 1 is published and waiting for maintainer signal. Monitoring repair may become a future local/GitHub workflow task, but no production, payment or pricing action is requested in the first block.
+
