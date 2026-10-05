@@ -1,0 +1,18 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.reflectme-source/acqpath",
+  "title": "AcqPath",
+  "description": "Signed source-rights evidence for AI and RAG workflows",
+  "version": "1.0.0",
+  "websiteUrl": "https://developers.getacqpath.com",
+  "repository": {
+    "url": "https://github.com/reflectme-source/acqpath-distribution",
+    "source": "github"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://api.getacqpath.com/mcp"
+    }
+  ]
+}
