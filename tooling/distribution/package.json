@@ -5,6 +5,9 @@
   "description": "Isolated docs uploader and offline JSON Schema validator; no core dependencies",
   "devDependencies": {
     "ajv": "8.20.0",
-    "wrangler": "4.147.0"
+    "wrangler": "4.148.0"
+  },
+  "overrides": {
+    "sharp": "0.35.5"
   }
 }
