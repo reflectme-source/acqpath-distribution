@@ -1,6 +1,6 @@
 # Configured official x402 buyers
 
-Gateway release deployed 2026-09-12. The secure public endpoint supports unchanged official exact-EVM payment signers through the AcqPath SIWX adapter (TypeScript/Node and Python/httpx). The adapter reserves unsigned authorization fields, validates and signs the official SIWX request/payment challenge, then submits the original payment. Existing acqpath-request-binding nonce clients remain supported. On the secure SIWX endpoint, generic zero-config x402 clients and stock SIWX-only hooks are not compatible. The separate stock endpoint `/v1/rights/preflight/x402` supports stock x402 v2 without SIWX or a custom signer for fresh 0.02 USDC Rights Preflight. Payments MCP and generic paid proxies are not claimed. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven.
+The secure public endpoint supports official exact-EVM payment signers through the AcqPath SIWX adapter (TypeScript/Node and Python/httpx). The adapter reserves unsigned authorization fields, validates and signs the SIWX request/payment challenge, then submits the original payment. Existing acqpath-request-binding nonce clients remain supported. The separate stock endpoint `/v1/rights/preflight/x402` supports stock x402 v2 without SIWX or a custom signer for fresh 0.02 USDC Rights Preflight. Payments MCP and generic paid proxies are not supported.
 
 Node 22.16+; official @x402/core, evm, fetch and extensions 2.25.0, viem 2.56.3. Python 3.12/3.13, x402 2.22.0 and httpx 0.28.1. EOA only; no smart-wallet or Permit2 support. These source files are not an npm or PyPI publication.
 
@@ -140,16 +140,16 @@ The store writes no signer private key. It does retain bearer payment/SIWX autho
 
 ABNF 2.2.0 is intentionally pinned for official signinwithethereum 5.0.1 compatibility; no permissive parser fallback or library patch is used. Python rejects unsupported floats/non-ASCII object keys and noncanonical ASCII HTTPS publisher URLs. Both clients reject purchase redirects. SIWX enforces binding at AcqPath application entrypoints, not an on-chain POST-body witness.
 
-Local official-client cryptographic E2E, substitution, concurrency and recovery tests PASS; public Node/Python unpaid contract checks PASS; CDP valid=true. MAINNET PAID E2E = UNVERIFIED. No external customer, revenue, zero-config generic client or Bazaar indexing claim follows from these checks.
+The integration contract covers signing, substitution resistance, concurrency and recovery behavior. Production buyers must verify the live signed terms and preserve their own checkpoints and chain-verification policy.
 
 
 ## Live Rights Gateway release
 
 Preflight remains **0.02 USDC fresh / 0.05 deep**. **Ingestion Gate** checks 1–4 unique reviewed URLs: **0.04 + 0.02 per URL fresh**, **0.06 + 0.04 per URL deep**. **Revalidation** compares one resource with an authentic signed prior gateway checkpoint: **0.03 fresh / 0.06 deep**. All payments use Base USDC. Gateway fees cover bounded observation attempts, including UNKNOWN. No legal clearance, license purchase or whole-domain coverage.
 
-Use the tested official TS/Python signer + AcqPath SIWX adapter. [Complete gateway examples](https://developers.getacqpath.com/examples/GATEWAY.md) include private state, retry and delivery verification. [Live gateway guide](https://developers.getacqpath.com/gateway). Secure SIWX paid E2E awaits a real external buyer; the stock endpoint has one PayAPI marketplace verification settlement. Verified organic revenue remains 0 USDC. Development freeze: only incidents, security, standards compatibility and monitoring.
+Use the official TS/Python signer with the AcqPath SIWX adapter on secure routes. [Complete gateway examples](https://developers.getacqpath.com/examples/GATEWAY.md) include private state, retry and delivery verification. [Gateway guide](https://developers.getacqpath.com/gateway). Payments MCP and generic paid proxy integrations are not supported.
 
 
 ## Separate stock marketplace mode
 
-`POST /v1/rights/preflight/x402` accepts unmodified official TypeScript x402 2.25.0 and Python x402 2.22.0 buyers, with no AcqPath SIWX/custom signer/buyer hook. Fresh only, **0.02 USDC on Base**. The first valid payment atomically binds one request; it does not provide pre-signature cryptographic body binding. A leaked pre-use authorization can be raced. Keep exact signed requests private and recover with the same authorization; never sign again after uncertainty. SIWX remains recommended on the existing secure route. [Stock JSON, official clients and recovery](https://developers.getacqpath.com/examples/STOCK-X402.md). PayAPI completed one external marketplace verification settlement; this is not organic demand or retention.
+`POST /v1/rights/preflight/x402` accepts unmodified official TypeScript x402 2.25.0 and Python x402 2.22.0 buyers, with no AcqPath SIWX/custom signer/buyer hook. Fresh only, **0.02 USDC on Base**. The first valid payment atomically binds one request; it does not provide pre-signature cryptographic body binding. A leaked pre-use authorization can be raced. Keep exact signed requests private and recover with the same authorization; never sign again after uncertainty. SIWX remains recommended on the existing secure route. [Stock JSON, official clients and recovery](https://developers.getacqpath.com/examples/STOCK-X402.md).

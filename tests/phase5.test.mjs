@@ -8,9 +8,8 @@ test('current public buyer guidance keeps SIWX support distinct from unclaimed c
  const pages=JSON.parse(await readFile(new URL('../metadata/site-pages.json',import.meta.url)));
  for(const slug of ['public-http','quickstart','http-x402','connect','recovery','bazaar-status']){
   const page=JSON.stringify(pages.find(p=>p.slug===slug));
-  for(const text of ['TypeScript','Python','AcqPath SIWX adapter','zero-config','Payments MCP'])assert.ok(page.includes(text),slug+' missing '+text);
-  assert.ok(page.includes('UNVERIFIED')||page.includes('organic demand remains unproven'),slug+' missing residual demand boundary');
-  assert.ok(page.includes('PayAPI')&&page.includes('marketplace verification'),slug+' missing PayAPI marketplace verification');
+  for(const text of ['TypeScript','Python','AcqPath SIWX adapter','/v1/rights/preflight/x402','Payments MCP'])assert.ok(page.includes(text),slug+' missing '+text);
+  assert.doesNotMatch(page,/PayAPI|organic demand|owner-funded|AWAITING FIRST|development freeze|verified organic revenue/i,slug+' exposes internal rollout state');
  }
  for(const file of ['README.md','examples/README.md','examples/public-preflight.mjs','examples/read-only.py','docs/PHASE5-BUYER-JOURNEY.md','metadata/site-pages.json']){
   const text=await readFile(new URL('../'+file,import.meta.url),'utf8');

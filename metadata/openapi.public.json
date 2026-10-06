@@ -2081,7 +2081,6 @@
       "Payments MCP",
       "generic paid proxies"
     ],
-    "mainnetPaidE2E": "UNVERIFIED",
-    "metadataRole": "Distribution documentation overlay; production schema unchanged"
+    "paidDelivery": "HTTP x402 outside MCP"
   }
 }

@@ -9,7 +9,7 @@
       {
         "title": "Separate stock marketplace endpoint",
         "paragraphs": [
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven.",
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract.",
           "Same signed authorization plus same normalized request recovers the existing stock result; changed input or another route is rejected after binding. A pre-use leaked stock authorization can be raced for another same-priced request. Keep signed HTTP requests private. Never create a replacement authorization after an uncertain payment."
         ],
         "links": [
@@ -24,7 +24,7 @@
         "paragraphs": [
           "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
           "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven."
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract."
         ],
         "links": [
           {
@@ -41,7 +41,7 @@
         "title": "Preflight one URL, with no AcqPath account",
         "paragraphs": [
           "POST https://api.getacqpath.com/v1/rights/preflight with {resource,purpose,tier:\"fresh\",max_total_micro:\"20000\"}. A prepared 402 includes price/network/asset and the required private request binding. Empty POST is discovery-only. HTTP 200 with available:false and charge_micro:\"0\" is not a purchased report. There is no AcqPath account, API key or operator token.",
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven."
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract."
         ],
         "links": [
           {
@@ -64,7 +64,7 @@
           "MCP endpoint: https://api.getacqpath.com/mcp",
           "MCP exposes capabilities and quote preparation. A generic chat host does not complete payment. Keep private quote claims outside model context."
         ],
-        "code": "{\n  \"mcpServers\": {\n    \"acqpath\": {\n      \"url\": \"https://api.getacqpath.com/mcp\"\n    }\n  }\n}",
+        "code": "{ \"mcpServers\": { \"acqpath\": { \"url\": \"https://api.getacqpath.com/mcp\" } }\n}",
         "links": [
           {
             "label": "MCP configuration examples",
@@ -123,14 +123,19 @@
         ]
       },
       {
-        "title": "Bazaar integration status",
+        "title": "Marketplace x402 compatibility",
         "paragraphs": [
-          "Production Rights Preflight now prepares 0.02 USDC offers for real RSL declarations. Health, legacy compatibility, unpaid 402 and CDP validation pass. Wallet payment and Bazaar indexing remain unverified."
+          "For marketplace-style buyers, use POST /v1/rights/preflight/x402. It supports the documented official TypeScript and Python x402 flows, fresh tier only at 0.02 USDC on Base.",
+          "Use /v1/rights/preflight with the AcqPath SIWX adapter when payer-signed request binding is required. Payments MCP and generic paid proxy integrations are not supported."
         ],
         "links": [
           {
-            "label": "Read the current Bazaar status",
+            "label": "Marketplace x402 integration",
             "href": "/bazaar-status"
+          },
+          {
+            "label": "Stock endpoint guide",
+            "href": "/stock-x402"
           }
         ]
       }
@@ -145,7 +150,7 @@
       {
         "title": "Separate stock marketplace endpoint",
         "paragraphs": [
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven.",
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract.",
           "Same signed authorization plus same normalized request recovers the existing stock result; changed input or another route is rejected after binding. A pre-use leaked stock authorization can be raced for another same-priced request. Keep signed HTTP requests private. Never create a replacement authorization after an uncertain payment."
         ],
         "links": [
@@ -160,7 +165,7 @@
         "paragraphs": [
           "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
           "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven."
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract."
         ],
         "links": [
           {
@@ -177,7 +182,7 @@
         "title": "Start with the stable public endpoint",
         "paragraphs": [
           "POST https://api.getacqpath.com/v1/rights/preflight with {resource,purpose,tier:\"fresh\",max_total_micro:\"20000\"}. A prepared 402 includes price/network/asset and the required private request binding. Empty POST is discovery-only. HTTP 200 with available:false and charge_micro:\"0\" is not a purchased report. There is no AcqPath account, API key or operator token.",
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven."
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract."
         ],
         "links": [
           {
@@ -189,7 +194,7 @@
       {
         "title": "Official TypeScript / Node and Python integration",
         "paragraphs": [
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven.",
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract.",
           "Add the AcqPath transport adapter, independently pinned service terms/key, private durable store, explicit buyer opt-in and stable operation ID. It adds one unsigned prebinding round trip and one official SIWX signature; the stock payment signer is unchanged.",
           "Use the same operation ID, body and store after response loss. Never replace a pending authorization. EOA only; private-store retention and Python canonical-input limits are explained in the guide."
         ],
@@ -303,7 +308,7 @@
       {
         "title": "Separate stock marketplace endpoint",
         "paragraphs": [
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven.",
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract.",
           "Same signed authorization plus same normalized request recovers the existing stock result; changed input or another route is rejected after binding. A pre-use leaked stock authorization can be raced for another same-priced request. Keep signed HTTP requests private. Never create a replacement authorization after an uncertain payment."
         ],
         "links": [
@@ -318,7 +323,7 @@
         "paragraphs": [
           "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
           "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven."
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract."
         ],
         "links": [
           {
@@ -334,7 +339,7 @@
       {
         "title": "Current supported buyer integration",
         "paragraphs": [
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven.",
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract.",
           "Fresh 0.02 USDC; deep 0.05 USDC on Base eip155:8453. Pin the exact recipient, USDC asset, fee and Ed25519 verification key. The adapter verifies offer, report, receipt and delivery binding. Private checkpoint files retain bearer authorizations and are not application-level encrypted; protect them with private ACLs and encrypted storage."
         ],
         "links": [
@@ -353,14 +358,14 @@
         "paragraphs": [
           "Use a client that supports remote Streamable HTTP. Keep quote results containing claim_token in a private application path, not a shared conversation."
         ],
-        "code": "{\n  \"mcpServers\": {\n    \"acqpath\": {\n      \"url\": \"https://api.getacqpath.com/mcp\"\n    }\n  }\n}"
+        "code": "{ \"mcpServers\": { \"acqpath\": { \"url\": \"https://api.getacqpath.com/mcp\" } }\n}"
       },
       {
         "title": "VS Code mcp.json",
         "paragraphs": [
           "Add the remote server to a workspace MCP configuration after reviewing its tool permissions."
         ],
-        "code": "{\n  \"servers\": {\n    \"acqpath\": {\n      \"type\": \"http\",\n      \"url\": \"https://api.getacqpath.com/mcp\"\n    }\n  }\n}"
+        "code": "{ \"servers\": { \"acqpath\": { \"type\": \"http\", \"url\": \"https://api.getacqpath.com/mcp\" } }\n}"
       },
       {
         "title": "Claude Code",
@@ -400,7 +405,7 @@
         "paragraphs": [
           "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
           "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven."
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract."
         ],
         "links": [
           {
@@ -416,7 +421,7 @@
       {
         "title": "Current supported buyer integration",
         "paragraphs": [
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven.",
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract.",
           "Fresh 0.02 USDC; deep 0.05 USDC on Base eip155:8453. Pin the exact recipient, USDC asset, fee and Ed25519 verification key. The adapter verifies offer, report, receipt and delivery binding. Private checkpoint files retain bearer authorizations and are not application-level encrypted; protect them with private ACLs and encrypted storage."
         ],
         "links": [
@@ -504,7 +509,7 @@
         "paragraphs": [
           "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
           "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven."
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract."
         ],
         "links": [
           {
@@ -561,7 +566,7 @@
         "paragraphs": [
           "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
           "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven."
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract."
         ],
         "links": [
           {
@@ -616,7 +621,7 @@
       {
         "title": "Separate stock marketplace endpoint",
         "paragraphs": [
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven.",
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract.",
           "Same signed authorization plus same normalized request recovers the existing stock result; changed input or another route is rejected after binding. A pre-use leaked stock authorization can be raced for another same-priced request. Keep signed HTTP requests private. Never create a replacement authorization after an uncertain payment."
         ],
         "links": [
@@ -631,7 +636,7 @@
         "paragraphs": [
           "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
           "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven."
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract."
         ],
         "links": [
           {
@@ -647,7 +652,7 @@
       {
         "title": "Current supported buyer integration",
         "paragraphs": [
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven.",
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract.",
           "Fresh 0.02 USDC; deep 0.05 USDC on Base eip155:8453. Pin the exact recipient, USDC asset, fee and Ed25519 verification key. The adapter verifies offer, report, receipt and delivery binding. Private checkpoint files retain bearer authorizations and are not application-level encrypted; protect them with private ACLs and encrypted storage."
         ],
         "links": [
@@ -705,7 +710,7 @@
       {
         "title": "Separate stock marketplace endpoint",
         "paragraphs": [
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven.",
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract.",
           "Same signed authorization plus same normalized request recovers the existing stock result; changed input or another route is rejected after binding. A pre-use leaked stock authorization can be raced for another same-priced request. Keep signed HTTP requests private. Never create a replacement authorization after an uncertain payment."
         ],
         "links": [
@@ -720,7 +725,7 @@
         "paragraphs": [
           "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
           "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven."
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract."
         ],
         "links": [
           {
@@ -736,7 +741,7 @@
       {
         "title": "Current supported buyer integration",
         "paragraphs": [
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven.",
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract.",
           "Fresh 0.02 USDC; deep 0.05 USDC on Base eip155:8453. Pin the exact recipient, USDC asset, fee and Ed25519 verification key. The adapter verifies offer, report, receipt and delivery binding. Private checkpoint files retain bearer authorizations and are not application-level encrypted; protect them with private ACLs and encrypted storage."
         ],
         "links": [
@@ -802,7 +807,7 @@
         "paragraphs": [
           "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
           "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven."
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract."
         ],
         "links": [
           {
@@ -827,7 +832,7 @@
         "paragraphs": [
           "Check live coverage → call POST /v1/rights/preflight through the AcqPath SIWX adapter → verify the prepared signed offer → preserve the unchanged official payment authorization privately → complete SIWX prebinding/authorization → receive the verified report. Use the same operation ID, input and private store after ambiguity; never create a replacement payment."
         ],
-        "code": "{\n  \"resource\": \"https://rslstandard.org/\",\n  \"purpose\": \"ai-input\",\n  \"tier\": \"fresh\",\n  \"user_class\": \"commercial\",\n  \"max_total_micro\": \"20000\"\n}"
+        "code": "{ \"resource\": \"https://rslstandard.org/\", \"purpose\": \"ai-input\", \"tier\": \"fresh\", \"user_class\": \"commercial\", \"max_total_micro\": \"20000\"\n}"
       },
       {
         "title": "Decision and retry",
@@ -864,7 +869,7 @@
         "paragraphs": [
           "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
           "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven."
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract."
         ],
         "links": [
           {
@@ -889,7 +894,7 @@
         "paragraphs": [
           "Check live coverage → call POST /v1/rights/preflight through the AcqPath SIWX adapter → verify the prepared signed offer → preserve the unchanged official payment authorization privately → complete SIWX prebinding/authorization → receive the verified report. Use the same operation ID, input and private store after ambiguity; never create a replacement payment."
         ],
-        "code": "{\n  \"resource\": \"https://rslstandard.org/\",\n  \"purpose\": \"ai-index\",\n  \"tier\": \"fresh\",\n  \"user_class\": \"commercial\",\n  \"max_total_micro\": \"20000\"\n}"
+        "code": "{ \"resource\": \"https://rslstandard.org/\", \"purpose\": \"ai-index\", \"tier\": \"fresh\", \"user_class\": \"commercial\", \"max_total_micro\": \"20000\"\n}"
       },
       {
         "title": "Decision and retry",
@@ -926,7 +931,7 @@
         "paragraphs": [
           "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
           "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven."
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract."
         ],
         "links": [
           {
@@ -951,7 +956,7 @@
         "paragraphs": [
           "Check live coverage → call POST /v1/rights/preflight through the AcqPath SIWX adapter → verify the prepared signed offer → preserve the unchanged official payment authorization privately → complete SIWX prebinding/authorization → receive the verified report. Use the same operation ID, input and private store after ambiguity; never create a replacement payment."
         ],
-        "code": "{\n  \"resource\": \"https://rslstandard.org/\",\n  \"purpose\": \"ai-index\",\n  \"tier\": \"fresh\",\n  \"user_class\": \"commercial\",\n  \"max_total_micro\": \"20000\"\n}"
+        "code": "{ \"resource\": \"https://rslstandard.org/\", \"purpose\": \"ai-index\", \"tier\": \"fresh\", \"user_class\": \"commercial\", \"max_total_micro\": \"20000\"\n}"
       },
       {
         "title": "Decision and retry",
@@ -988,7 +993,7 @@
         "paragraphs": [
           "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
           "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven."
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract."
         ],
         "links": [
           {
@@ -1013,7 +1018,7 @@
         "paragraphs": [
           "Check live coverage → call POST /v1/rights/preflight through the AcqPath SIWX adapter → verify the prepared signed offer → preserve the unchanged official payment authorization privately → complete SIWX prebinding/authorization → receive the verified report. Use the same operation ID, input and private store after ambiguity; never create a replacement payment."
         ],
-        "code": "{\n  \"resource\": \"https://rslstandard.org/\",\n  \"purpose\": \"ai-train\",\n  \"tier\": \"fresh\",\n  \"user_class\": \"commercial\",\n  \"max_total_micro\": \"20000\"\n}"
+        "code": "{ \"resource\": \"https://rslstandard.org/\", \"purpose\": \"ai-train\", \"tier\": \"fresh\", \"user_class\": \"commercial\", \"max_total_micro\": \"20000\"\n}"
       },
       {
         "title": "Decision and retry",
@@ -1050,7 +1055,7 @@
         "paragraphs": [
           "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
           "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven."
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract."
         ],
         "links": [
           {
@@ -1112,7 +1117,7 @@
         "paragraphs": [
           "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
           "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven."
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract."
         ],
         "links": [
           {
@@ -1131,7 +1136,7 @@
           "MCP: https://api.getacqpath.com/mcp",
           "Fresh 0.02 USDC; deep 0.05 USDC as observed. Quotes perform no settlement. Paid report delivery uses HTTP x402."
         ],
-        "code": "{\n  \"mcpServers\": {\n    \"acqpath\": {\n      \"url\": \"https://api.getacqpath.com/mcp\"\n    }\n  }\n}",
+        "code": "{ \"mcpServers\": { \"acqpath\": { \"url\": \"https://api.getacqpath.com/mcp\" } }\n}",
         "links": [
           {
             "label": "Complete quickstart",
@@ -1169,7 +1174,7 @@
         "paragraphs": [
           "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
           "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven."
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract."
         ],
         "links": [
           {
@@ -1188,7 +1193,7 @@
           "MCP: https://api.getacqpath.com/mcp",
           "Fresh 0.02 USDC; deep 0.05 USDC as observed. Quotes perform no settlement. Paid report delivery uses HTTP x402."
         ],
-        "code": "{\n  \"mcpServers\": {\n    \"acqpath\": {\n      \"url\": \"https://api.getacqpath.com/mcp\"\n    }\n  }\n}",
+        "code": "{ \"mcpServers\": { \"acqpath\": { \"url\": \"https://api.getacqpath.com/mcp\" } }\n}",
         "links": [
           {
             "label": "Complete quickstart",
@@ -1226,7 +1231,7 @@
         "paragraphs": [
           "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
           "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven."
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract."
         ],
         "links": [
           {
@@ -1245,7 +1250,7 @@
           "MCP: https://api.getacqpath.com/mcp",
           "Fresh 0.02 USDC; deep 0.05 USDC as observed. Quotes perform no settlement. Paid report delivery uses HTTP x402."
         ],
-        "code": "{\n  \"mcpServers\": {\n    \"acqpath\": {\n      \"url\": \"https://api.getacqpath.com/mcp\"\n    }\n  }\n}",
+        "code": "{ \"mcpServers\": { \"acqpath\": { \"url\": \"https://api.getacqpath.com/mcp\" } }\n}",
         "links": [
           {
             "label": "Complete quickstart",
@@ -1283,7 +1288,7 @@
         "paragraphs": [
           "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
           "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven."
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract."
         ],
         "links": [
           {
@@ -1302,7 +1307,7 @@
           "MCP: https://api.getacqpath.com/mcp",
           "Fresh 0.02 USDC; deep 0.05 USDC as observed. Quotes perform no settlement. Paid report delivery uses HTTP x402."
         ],
-        "code": "{\n  \"mcpServers\": {\n    \"acqpath\": {\n      \"url\": \"https://api.getacqpath.com/mcp\"\n    }\n  }\n}",
+        "code": "{ \"mcpServers\": { \"acqpath\": { \"url\": \"https://api.getacqpath.com/mcp\" } }\n}",
         "links": [
           {
             "label": "Complete quickstart",
@@ -1340,7 +1345,7 @@
         "paragraphs": [
           "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
           "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven."
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract."
         ],
         "links": [
           {
@@ -1359,7 +1364,7 @@
           "MCP: https://api.getacqpath.com/mcp",
           "Fresh 0.02 USDC; deep 0.05 USDC as observed. Quotes perform no settlement. Paid report delivery uses HTTP x402."
         ],
-        "code": "{\n  \"mcpServers\": {\n    \"acqpath\": {\n      \"url\": \"https://api.getacqpath.com/mcp\"\n    }\n  }\n}",
+        "code": "{ \"mcpServers\": { \"acqpath\": { \"url\": \"https://api.getacqpath.com/mcp\" } }\n}",
         "links": [
           {
             "label": "Complete quickstart",
@@ -1397,7 +1402,7 @@
         "paragraphs": [
           "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
           "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven."
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract."
         ],
         "links": [
           {
@@ -1416,7 +1421,7 @@
           "MCP: https://api.getacqpath.com/mcp",
           "Fresh 0.02 USDC; deep 0.05 USDC as observed. Quotes perform no settlement. Paid report delivery uses HTTP x402."
         ],
-        "code": "{\n  \"mcpServers\": {\n    \"acqpath\": {\n      \"url\": \"https://api.getacqpath.com/mcp\"\n    }\n  }\n}",
+        "code": "{ \"mcpServers\": { \"acqpath\": { \"url\": \"https://api.getacqpath.com/mcp\" } }\n}",
         "links": [
           {
             "label": "Complete quickstart",
@@ -1443,100 +1448,54 @@
   },
   {
     "slug": "bazaar-status",
-    "label": "Bazaar status",
-    "title": "Bazaar: awaiting first external settlement",
-    "description": "Live unpaid endpoint verified; no owner-funded indexing purchase. First settlement must be from an independent external buyer.",
+    "label": "Marketplace x402",
+    "title": "Marketplace x402 compatibility",
+    "description": "Use AcqPath's documented stock x402 endpoint with official TypeScript or Python buyers, or the secure SIWX route when payer-signed request binding is required.",
     "sections": [
       {
-        "title": "Dual-mode production release verified",
+        "title": "Choose the endpoint",
         "paragraphs": [
-          "Production b461376d-a8cf-494c-93b4-db39d192dc9b; merged core b6a2cd23cbff54c719617373b8c4cda6f8370172, PR #14. Secure SIWX unchanged; separate stock fresh Preflight LIVE. Local tests 617 PASS, 0 FAIL, two existing Windows skips; CI, workerd, audits and secret scans PASS. All 16 public checks and legacy unpaid quote/claim PASS. CDP valid=true for secure and stock resources.",
-          "Agent402 stock wire behavior is reproduced locally; its live router still requires external settlement proof. The stock endpoint is now indexed at 0.02 USDC on Base. Free need searches return it for RSL rights before RAG ingestion, rights before AI ingestion and training content rights; the router still reports settlement_required. PayAPI private buyer settlement remains UNVERIFIED; the owner handles communication. Marketplace verification never counts as organic demand.",
-          "Fresh production aggregates show zero settled reports, zero repeat external payers, zero marketplace verification settlements and 0 USDC organic revenue. No owner wallet or payment."
+          "POST /v1/rights/preflight/x402 is the fixed stock marketplace route. It supports the documented official TypeScript x402 2.25.0 and Python x402 2.22.0 buyer flows, fresh tier only at 0.02 USDC on Base, without AcqPath SIWX or a custom buyer hook.",
+          "POST /v1/rights/preflight is the secure route. Use the AcqPath SIWX adapter with the standard payment signer when the request must be bound by a payer signature before delivery."
         ],
         "links": [
           {
-            "label": "Exact stock contract and official clients",
+            "label": "Stock x402 guide",
             "href": "/stock-x402"
           },
           {
-            "label": "Machine-readable release evidence",
-            "href": "/stock-release.json"
-          }
-        ]
-      },
-      {
-        "title": "Separate stock marketplace endpoint",
-        "paragraphs": [
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven.",
-          "Same signed authorization plus same normalized request recovers the existing stock result; changed input or another route is rejected after binding. A pre-use leaked stock authorization can be raced for another same-priced request. Keep signed HTTP requests private. Never create a replacement authorization after an uncertain payment."
-        ],
-        "links": [
-          {
-            "label": "Stock endpoint, JSON, official TypeScript/Python and recovery",
-            "href": "/stock-x402"
-          }
-        ]
-      },
-      {
-        "title": "Rights Gateway: select the paid operation",
-        "paragraphs": [
-          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
-          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven."
-        ],
-        "links": [
-          {
-            "label": "Gateway limits, prices and workflow",
-            "href": "/gateway"
-          },
-          {
-            "label": "Complete TypeScript and Python examples",
-            "href": "/examples/GATEWAY.md"
-          }
-        ]
-      },
-      {
-        "title": "Production release and external evidence",
-        "paragraphs": [
-          "Live Worker b461376d-a8cf-494c-93b4-db39d192dc9b; merged core b6a2cd23cbff54c719617373b8c4cda6f8370172 (PR #14), including the separate fresh stock endpoint. Unpaid production checks PASS. Existing Preflight prices, recipient, Base/USDC/facilitator, Access, provider routing and database schema are unchanged.",
-          "Organic paid operations: 0; repeat external payers: 0; verified organic revenue: 0 USDC. Marketplace verification settlements: 0. These are aggregate observations, not proof of buyer demand. No owner wallet or payment was used. CDP Bazaar indexing awaits a real external settlement.",
-          "Agent402 existing listing remains live. New SKU crawler refresh and per-intent readback are recorded in release status; listing is not proof of SIWX router compatibility. PayAPI listing is LIVE with payment_verified=true after one marketplace verification settlement; organic demand remains unproven."
-        ]
-      },
-      {
-        "title": "How indexing becomes observable",
-        "paragraphs": [
-          "CDP indexes eligible metadata after successful settlement. Public monitoring checks merchant lookup and unfiltered brand/intent searches. Agentic Market consumes this ecosystem; a listing is claimed only after public readback. No fixed indexing deadline is promised."
-        ]
-      },
-      {
-        "title": "Integration",
-        "paragraphs": [
-          "POST https://api.getacqpath.com/v1/rights/preflight with {resource,purpose,tier:\"fresh\",max_total_micro:\"20000\"}. A prepared 402 includes price/network/asset and the required private request binding. Empty POST is discovery-only. HTTP 200 with available:false and charge_micro:\"0\" is not a purchased report. There is no AcqPath account, API key or operator token.",
-          "Fresh 0.02 USDC; deep 0.05 USDC. Base mainnet eip155:8453; USDC 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913; recipient 0xf69DBbd053fb0Fbc78ADfdB1BFe3b0D1F57300ec. The verified signed offer is authoritative; paying buys the report, not content rights."
-        ],
-        "links": [
-          {
-            "label": "External buyer path and compatibility",
+            "label": "Public HTTP integration",
             "href": "/public-http"
           }
         ]
       },
       {
-        "title": "Agent402: three independently discoverable paid products",
+        "title": "Request binding and recovery",
         "paragraphs": [
-          "Public index readback shows Preflight at 0.02, Ingestion Gate from 0.06 and Revalidation at 0.03 USDC on Base (eip155:8453). These are fresh minimums, not flat prices for every batch or tier. Agent402 router payment remains unsupported for the AcqPath SIWX adapter; its settlement_required label does not prove compatibility.",
-          "Observed free searches: Preflight #1 for RSL rights before RAG ingestion; Gate #1 for rights evidence before indexing and #2 for batch content rights check; Revalidation #1 for AI usage rights policy changes. Other phrases returned no AcqPath result, including did this website AI policy change and policy revalidation rights diff. Rankings are timestamped observations, not guarantees or customer demand."
+          "The stock route atomically binds the first valid payment authorization to one normalized request. The payment signature does not pre-sign the POST body, so keep signed requests private.",
+          "After an ambiguous response, retry the same normalized request with the same saved authorization. Do not create a replacement authorization merely because transport failed."
         ],
         "links": [
           {
-            "label": "Current indexed seller",
-            "href": "https://agent402.tools/api/index?seller=api.getacqpath.com"
+            "label": "Recovery guidance",
+            "href": "/recovery"
+          }
+        ]
+      },
+      {
+        "title": "Compatibility boundary",
+        "paragraphs": [
+          "Payments MCP and generic paid proxy integrations are not supported. Clients outside the documented secure and stock flows must validate compatibility against the endpoint contract before production use.",
+          "MCP is used for discovery and quote preparation; paid report delivery is HTTP x402. A rights report records observed declarations and is not a license or legal clearance."
+        ],
+        "links": [
+          {
+            "label": "OpenAPI contract",
+            "href": "/openapi.json"
           },
           {
-            "label": "Release evidence and complete search outcomes",
-            "href": "/revenue-release.json"
+            "label": "Gateway integration",
+            "href": "/gateway"
           }
         ]
       }
@@ -1553,7 +1512,7 @@
         "paragraphs": [
           "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
           "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven."
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract."
         ],
         "links": [
           {
@@ -1578,7 +1537,7 @@
         "paragraphs": [
           "POST https://api.getacqpath.com/v1/rights/preflight with {resource,purpose,tier:\"fresh\",max_total_micro:\"20000\"}. A prepared 402 includes price/network/asset and the required private request binding. Empty POST is discovery-only. HTTP 200 with available:false and charge_micro:\"0\" is not a purchased report. There is no AcqPath account, API key or operator token."
         ],
-        "code": "{\n  \"resource\": \"https://rslstandard.org/\",\n  \"purpose\": \"ai-index\",\n  \"tier\": \"fresh\",\n  \"max_total_micro\": \"20000\"\n}"
+        "code": "{ \"resource\": \"https://rslstandard.org/\", \"purpose\": \"ai-index\", \"tier\": \"fresh\", \"max_total_micro\": \"20000\"\n}"
       },
       {
         "title": "Possible outcomes",
@@ -1590,7 +1549,7 @@
         "title": "Price and integration",
         "paragraphs": [
           "Fresh 0.02 USDC; deep 0.05 USDC. Base mainnet eip155:8453; USDC 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913; recipient 0xf69DBbd053fb0Fbc78ADfdB1BFe3b0D1F57300ec. The verified signed offer is authoritative; paying buys the report, not content rights.",
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven."
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract."
         ],
         "links": [
           {
@@ -1620,7 +1579,7 @@
         "paragraphs": [
           "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
           "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven."
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract."
         ],
         "links": [
           {
@@ -1645,7 +1604,7 @@
         "paragraphs": [
           "POST https://api.getacqpath.com/v1/rights/preflight with {resource,purpose,tier:\"fresh\",max_total_micro:\"20000\"}. A prepared 402 includes price/network/asset and the required private request binding. Empty POST is discovery-only. HTTP 200 with available:false and charge_micro:\"0\" is not a purchased report. There is no AcqPath account, API key or operator token."
         ],
-        "code": "{\n  \"resource\": \"https://rslstandard.org/\",\n  \"purpose\": \"ai-input\",\n  \"tier\": \"fresh\",\n  \"max_total_micro\": \"20000\"\n}"
+        "code": "{ \"resource\": \"https://rslstandard.org/\", \"purpose\": \"ai-input\", \"tier\": \"fresh\", \"max_total_micro\": \"20000\"\n}"
       },
       {
         "title": "Possible outcomes",
@@ -1657,7 +1616,7 @@
         "title": "Price and integration",
         "paragraphs": [
           "Fresh 0.02 USDC; deep 0.05 USDC. Base mainnet eip155:8453; USDC 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913; recipient 0xf69DBbd053fb0Fbc78ADfdB1BFe3b0D1F57300ec. The verified signed offer is authoritative; paying buys the report, not content rights.",
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven."
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract."
         ],
         "links": [
           {
@@ -1687,7 +1646,7 @@
         "paragraphs": [
           "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
           "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven."
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract."
         ],
         "links": [
           {
@@ -1712,7 +1671,7 @@
         "paragraphs": [
           "POST https://api.getacqpath.com/v1/rights/preflight with {resource,purpose,tier:\"fresh\",max_total_micro:\"20000\"}. A prepared 402 includes price/network/asset and the required private request binding. Empty POST is discovery-only. HTTP 200 with available:false and charge_micro:\"0\" is not a purchased report. There is no AcqPath account, API key or operator token."
         ],
-        "code": "{\n  \"resource\": \"https://rslstandard.org/\",\n  \"purpose\": \"ai-input\",\n  \"tier\": \"fresh\",\n  \"max_total_micro\": \"20000\"\n}"
+        "code": "{ \"resource\": \"https://rslstandard.org/\", \"purpose\": \"ai-input\", \"tier\": \"fresh\", \"max_total_micro\": \"20000\"\n}"
       },
       {
         "title": "Possible outcomes",
@@ -1724,7 +1683,7 @@
         "title": "Price and integration",
         "paragraphs": [
           "Fresh 0.02 USDC; deep 0.05 USDC. Base mainnet eip155:8453; USDC 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913; recipient 0xf69DBbd053fb0Fbc78ADfdB1BFe3b0D1F57300ec. The verified signed offer is authoritative; paying buys the report, not content rights.",
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven."
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract."
         ],
         "links": [
           {
@@ -1754,7 +1713,7 @@
         "paragraphs": [
           "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
           "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven."
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract."
         ],
         "links": [
           {
@@ -1779,7 +1738,7 @@
         "paragraphs": [
           "POST https://api.getacqpath.com/v1/rights/preflight with {resource,purpose,tier:\"fresh\",max_total_micro:\"20000\"}. A prepared 402 includes price/network/asset and the required private request binding. Empty POST is discovery-only. HTTP 200 with available:false and charge_micro:\"0\" is not a purchased report. There is no AcqPath account, API key or operator token."
         ],
-        "code": "{\n  \"resource\": \"https://rslstandard.org/\",\n  \"purpose\": \"ai-train\",\n  \"tier\": \"fresh\",\n  \"max_total_micro\": \"20000\"\n}"
+        "code": "{ \"resource\": \"https://rslstandard.org/\", \"purpose\": \"ai-train\", \"tier\": \"fresh\", \"max_total_micro\": \"20000\"\n}"
       },
       {
         "title": "Possible outcomes",
@@ -1791,7 +1750,7 @@
         "title": "Price and integration",
         "paragraphs": [
           "Fresh 0.02 USDC; deep 0.05 USDC. Base mainnet eip155:8453; USDC 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913; recipient 0xf69DBbd053fb0Fbc78ADfdB1BFe3b0D1F57300ec. The verified signed offer is authoritative; paying buys the report, not content rights.",
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven."
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract."
         ],
         "links": [
           {
@@ -1821,7 +1780,7 @@
         "paragraphs": [
           "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
           "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven."
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract."
         ],
         "links": [
           {
@@ -1846,7 +1805,7 @@
         "paragraphs": [
           "POST https://api.getacqpath.com/v1/rights/preflight with {resource,purpose,tier:\"fresh\",max_total_micro:\"20000\"}. A prepared 402 includes price/network/asset and the required private request binding. Empty POST is discovery-only. HTTP 200 with available:false and charge_micro:\"0\" is not a purchased report. There is no AcqPath account, API key or operator token."
         ],
-        "code": "{\n  \"resource\": \"https://rslstandard.org/\",\n  \"purpose\": \"search\",\n  \"tier\": \"fresh\",\n  \"max_total_micro\": \"20000\"\n}"
+        "code": "{ \"resource\": \"https://rslstandard.org/\", \"purpose\": \"search\", \"tier\": \"fresh\", \"max_total_micro\": \"20000\"\n}"
       },
       {
         "title": "Possible outcomes",
@@ -1858,7 +1817,7 @@
         "title": "Price and integration",
         "paragraphs": [
           "Fresh 0.02 USDC; deep 0.05 USDC. Base mainnet eip155:8453; USDC 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913; recipient 0xf69DBbd053fb0Fbc78ADfdB1BFe3b0D1F57300ec. The verified signed offer is authoritative; paying buys the report, not content rights.",
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven."
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract."
         ],
         "links": [
           {
@@ -1886,7 +1845,7 @@
       {
         "title": "Separate stock marketplace endpoint",
         "paragraphs": [
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven.",
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract.",
           "Same signed authorization plus same normalized request recovers the existing stock result; changed input or another route is rejected after binding. A pre-use leaked stock authorization can be raced for another same-priced request. Keep signed HTTP requests private. Never create a replacement authorization after an uncertain payment."
         ],
         "links": [
@@ -1901,7 +1860,7 @@
         "paragraphs": [
           "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
           "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven."
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract."
         ],
         "links": [
           {
@@ -1917,16 +1876,16 @@
       {
         "title": "1. Discover capability and prepare",
         "paragraphs": [
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven.",
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract.",
           "POST https://api.getacqpath.com/v1/rights/preflight with {resource,purpose,tier:\"fresh\",max_total_micro:\"20000\"}. A prepared 402 includes price/network/asset and the required private request binding. Empty POST is discovery-only. HTTP 200 with available:false and charge_micro:\"0\" is not a purchased report. There is no AcqPath account, API key or operator token.",
           "Supported paid purposes: ai-input, ai-index, ai-train, search. Start with GET /v1/capabilities. Do not call the disabled acqpath_quote routing tool."
         ],
-        "code": "{\n  \"resource\": \"https://rslstandard.org/\",\n  \"purpose\": \"ai-input\",\n  \"tier\": \"fresh\",\n  \"max_total_micro\": \"20000\"\n}"
+        "code": "{ \"resource\": \"https://rslstandard.org/\", \"purpose\": \"ai-input\", \"tier\": \"fresh\", \"max_total_micro\": \"20000\"\n}"
       },
       {
         "title": "Official TypeScript / Node and Python integration",
         "paragraphs": [
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven.",
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract.",
           "Add the AcqPath transport adapter, independently pinned service terms/key, private durable store, explicit buyer opt-in and stable operation ID. It adds one unsigned prebinding round trip and one official SIWX signature; the stock payment signer is unchanged.",
           "Use the same operation ID, body and store after response loss. Never replace a pending authorization. EOA only; private-store retention and Python canonical-input limits are explained in the guide."
         ],
@@ -1971,7 +1930,7 @@
       {
         "title": "3. Payment compatibility boundary",
         "paragraphs": [
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven.",
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract.",
           "Standard x402 v2 uses PAYMENT-REQUIRED, PAYMENT-SIGNATURE and PAYMENT-RESPONSE. After verifying the offer, use the unchanged official signer with the AcqPath SIWX adapter. Legacy nonce-binding support is retained only for existing integrations. Retain identical normalized input and private request context. Do not modify a standard signer nonce after signing. The repository legacy SDK targets quote/claim report URLs and is not a drop-in public endpoint client."
         ],
         "links": [
@@ -2018,20 +1977,20 @@
         "paragraphs": [
           "Inject your configured buyer signer; allowPayment defaults to false."
         ],
-        "code": "import { createAcqPathFetch, privateFileStore } from './acqpath.mjs';\n\n// Inject an existing buyer-controlled viem EOA signer. No key is stored here.\nexport async function preflight({ signer, operationId, input, privateDirectory, allowPayment = false }) {\n  const buy = createAcqPathFetch({\n    signer, expected: {\"origin\":\"https://api.getacqpath.com\",\"network\":\"eip155:8453\",\"asset\":\"0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913\",\"payTo\":\"0xf69DBbd053fb0Fbc78ADfdB1BFe3b0D1F57300ec\",\"amount\":\"20000\"},\n    publicJwk: {\"key_ops\":[\"verify\"],\"ext\":true,\"alg\":\"Ed25519\",\"crv\":\"Ed25519\",\"x\":\"PzeeZ8d8Np85ix9ialbrLZz9ebY_Og72dScn1IAft6M\",\"kty\":\"OKP\"},\n    store: privateFileStore(privateDirectory), allowPayment,\n  });\n  return buy('https://api.getacqpath.com/v1/rights/preflight', {\n    method: 'POST', operationId, body: JSON.stringify(input),\n  });\n}\n"
+        "code": "import { createAcqPathFetch, privateFileStore } from './acqpath.mjs'; // Inject an existing buyer-controlled viem EOA signer. No key is stored here.\nexport async function preflight({ signer, operationId, input, privateDirectory, allowPayment = false }) { const buy = createAcqPathFetch({ signer, expected: {\"origin\":\"https://api.getacqpath.com\",\"network\":\"eip155:8453\",\"asset\":\"0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913\",\"payTo\":\"0xf69DBbd053fb0Fbc78ADfdB1BFe3b0D1F57300ec\",\"amount\":\"20000\"}, publicJwk: {\"key_ops\":[\"verify\"],\"ext\":true,\"alg\":\"Ed25519\",\"crv\":\"Ed25519\",\"x\":\"PzeeZ8d8Np85ix9ialbrLZz9ebY_Og72dScn1IAft6M\",\"kty\":\"OKP\"}, store: privateFileStore(privateDirectory), allowPayment, }); return buy('https://api.getacqpath.com/v1/rights/preflight', { method: 'POST', operationId, body: JSON.stringify(input), });\n}"
       },
       {
         "title": "Copy-paste Python integration",
         "paragraphs": [
           "Inject your existing buyer account; no seller secrets or AcqPath account required."
         ],
-        "code": "from acqpath_httpx import AcqPathClient, PrivateFileStore\n\n# Inject an existing buyer-controlled eth_account LocalAccount.\nasync def preflight(account, operation_id, input, private_directory, allow_payment=False):\n    buyer = AcqPathClient(\n        signer=account, expected={\"origin\":\"https://api.getacqpath.com\",\"network\":\"eip155:8453\",\"asset\":\"0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913\",\"payTo\":\"0xf69DBbd053fb0Fbc78ADfdB1BFe3b0D1F57300ec\",\"amount\":\"20000\"},\n        public_jwk={\"kty\":\"OKP\",\"crv\":\"Ed25519\",\"x\":\"PzeeZ8d8Np85ix9ialbrLZz9ebY_Og72dScn1IAft6M\"},\n        store=PrivateFileStore(private_directory), allow_payment=allow_payment,\n    )\n    try:\n        return await buyer.post('https://api.getacqpath.com/v1/rights/preflight',\n                                json=input, operation_id=operation_id)\n    finally:\n        await buyer.aclose()\n"
+        "code": "from acqpath_httpx import AcqPathClient, PrivateFileStore # Inject an existing buyer-controlled eth_account LocalAccount.\nasync def preflight(account, operation_id, input, private_directory, allow_payment=False): buyer = AcqPathClient( signer=account, expected={\"origin\":\"https://api.getacqpath.com\",\"network\":\"eip155:8453\",\"asset\":\"0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913\",\"payTo\":\"0xf69DBbd053fb0Fbc78ADfdB1BFe3b0D1F57300ec\",\"amount\":\"20000\"}, public_jwk={\"kty\":\"OKP\",\"crv\":\"Ed25519\",\"x\":\"PzeeZ8d8Np85ix9ialbrLZz9ebY_Og72dScn1IAft6M\"}, store=PrivateFileStore(private_directory), allow_payment=allow_payment, ) try: return await buyer.post('https://api.getacqpath.com/v1/rights/preflight', json=input, operation_id=operation_id) finally: await buyer.aclose()"
       },
       {
         "title": "Pinned dependencies, delivery verification and retry",
         "paragraphs": [
-          "Install the supplied pinned Node manifest or Python requirements with the source adapter. The complete guide includes installation, a call using your existing buyer account, response handling and exact same-operation recovery. No internal design document is needed.",
-          "External revenue remains 0 USDC in the verified baseline. A configured buyer is technically supported; the absence of a real external paid E2E is an evidence limitation, not a technical payment block."
+          "Install the supplied pinned Node manifest or Python requirements with the source adapter. The complete guide includes installation, a call using your existing buyer account, response handling and exact same-operation recovery.",
+          "Before payment, compare the live signed 402 terms with your expected network, asset, recipient and spending limit. After transport ambiguity, reuse the saved operation and authorization; verify report and delivery signatures before accepting the result."
         ],
         "links": [
           {
@@ -2053,7 +2012,7 @@
         "paragraphs": [
           "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
           "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven."
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract."
         ],
         "links": [
           {
@@ -2072,7 +2031,7 @@
           "POST /v1/rights/ingestion-gate takes resources, purpose, tier, freshness_seconds and max_total_micro. A single URL uses a one-element resources array. ai-input covers model input or summarization; ai-index covers indexing for RAG; ai-train covers training; search covers search. Choose the actual use. Crawl is not a paid RSL purpose or a robots access grant. Canonical URL duplicates count once; at most four entries are accepted.",
           "POST /v1/rights/revalidate takes the same scope with one resource and previous: the signed checkpoint from a delivered gateway resource item. It always reobserves conditionally (freshness_seconds: 0). Resource, purpose, user class, geography and tier must match. A new revalidation is a separately authorized purchase, never a retry of an earlier purchase."
         ],
-        "code": "{\n  \"resources\": [\n    \"https://rslstandard.org/\"\n  ],\n  \"purpose\": \"ai-input\",\n  \"tier\": \"fresh\",\n  \"freshness_seconds\": 300,\n  \"max_total_micro\": \"60000\"\n}",
+        "code": "{ \"resources\": [ \"https://rslstandard.org/\" ], \"purpose\": \"ai-input\", \"tier\": \"fresh\", \"freshness_seconds\": 300, \"max_total_micro\": \"60000\"\n}",
         "links": [
           {
             "label": "Live operation schemas",
@@ -2120,7 +2079,7 @@
       {
         "title": "Choose the right security contract",
         "paragraphs": [
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Generic zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies remain NOT CLAIMED. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven.",
+          "Secure route: official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. Stock route: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Payments MCP and generic paid proxy integrations are not supported; clients outside the documented secure and stock flows must verify compatibility against the endpoint contract.",
           "The secure SIWX route remains recommended for callers requiring payer-signed body binding. Stock mode is one authorization for one fixed fresh Preflight execution; deep, Gate and Revalidation remain on their existing secure integrations. No verifiable declaration after authorized observation means no settlement; that authorization stays bound to its attempted input."
         ],
         "links": [
@@ -2139,7 +2098,7 @@
         "paragraphs": [
           "POST https://api.getacqpath.com/v1/rights/preflight/x402 with Content-Type: application/json. This valid unpaid POST returns a 402 without source work or order creation. The fee is 20000 micro-USDC (0.02 USDC), Base mainnet eip155:8453, current Base USDC and the existing AcqPath recipient."
         ],
-        "code": "{\n  \"resource\": \"https://rslstandard.org/\",\n  \"purpose\": \"ai-input\",\n  \"max_total_micro\": \"20000\"\n}",
+        "code": "{ \"resource\": \"https://rslstandard.org/\", \"purpose\": \"ai-input\", \"max_total_micro\": \"20000\"\n}",
         "links": [
           {
             "label": "Live production schema",
@@ -2166,14 +2125,14 @@
         ]
       },
       {
-        "title": "Marketplace evidence",
+        "title": "Marketplace integration boundary",
         "paragraphs": [
-          "Official TypeScript/Python stock wire flow and Agent402 current 30-second signing behavior pass local cryptographic tests with simulated settlement. This does not prove a real marketplace settlement. Agent402 router eligibility can still require external settlement evidence. PayAPI completed one marketplace verification settlement on the stock endpoint; organic demand remains unproven.",
-          "Marketplace verification is not organic demand. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven; no owner wallet or payment is used."
+          "Use the stock route for the documented fixed-price marketplace flow. It supports the official TypeScript and Python x402 clients described in the stock guide, without AcqPath SIWX or a custom buyer hook.",
+          "Marketplace discovery or router behavior is outside the API contract. Treat the endpoint contract and the live signed payment terms as authoritative."
         ],
         "links": [
           {
-            "label": "Current Bazaar and release status",
+            "label": "Marketplace x402 compatibility",
             "href": "/bazaar-status"
           }
         ]
