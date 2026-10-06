@@ -2075,12 +2075,14 @@
     ],
     "guide": "https://developers.getacqpath.com/examples/OFFICIAL-CLIENTS.md",
     "paymentSigner": "Unchanged official signer and random nonce",
-    "notClaimed": [
-      "generic zero-config x402",
+    "unsupported": [
+      "generic zero-config x402 outside the documented stock route",
       "stock SIWX-only hook",
       "Payments MCP",
       "generic paid proxies"
     ],
-    "paidDelivery": "HTTP x402 outside MCP"
+    "statusSource": "https://status.getacqpath.com",
+    "capabilitiesSource": "https://api.getacqpath.com/v1/capabilities",
+    "metadataRole": "Distribution documentation overlay; production schema unchanged"
   }
 }

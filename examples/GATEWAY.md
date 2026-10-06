@@ -1,6 +1,6 @@
 # Rights gateway buyer integration
 
-Use the official TypeScript/Node x402 2.25.0 or Python x402 2.22.0 signer with the AcqPath SIWX adapter on secure routes. The normal EIP-3009 payment signature and random nonce are unchanged. The adapter handles the additional SIWX order signature, request binding, durable retry and verification. Payments MCP, automatic marketplace-router payment and generic paid proxy integrations are not supported.
+Use the tested official TypeScript/Node x402 2.25.0 or Python x402 2.22.0 signer with the AcqPath SIWX adapter. The normal EIP-3009 payment signature and random nonce are unchanged. The adapter handles the additional SIWX order signature, request binding, durable retry and verification. Generic zero-config x402, stock SIWX-only hooks, Agent402 automatic router payment, Payments MCP and generic proxies are not supported by this secure integration. Use the public status page, live capabilities and prepared signed 402 as the operational source of truth.
 
 ## Select an operation
 
@@ -103,4 +103,4 @@ Limits: request 24,576 bytes, checkpoint/item 12,000 bytes, report 52,000 bytes,
 
 After a signature exists, resume the same operation ID/body/private directory with the same approved pins. Do not sign a new payment after 402, 409 or 503. The adapter reuses the stored authorization, verifies the exact report input/fee, Ed25519 evidence, receipt and delivery proof, and checks checkpoint fingerprints. If source work was interrupted before a deliverable was durably saved, the service refuses repeat execution and settlement; retain the context. SETTLING/UNCONFIRMED uses operator reconciliation, not another charge. Report retention is 30 days; retirement returns 410 while replay protection remains.
 
-For production, validate the signed 402 terms before payment, use a buyer-controlled signer and preserve the recovery checkpoint. A service receipt is not independent chain finality.
+The examples use explicit buyer authorization, private durable state and cryptographic verification. Current production availability, coverage and payment requirements must be read from the public status page, live capabilities and prepared signed 402; example fixtures are not a substitute for the live contract.

@@ -18,3 +18,21 @@ test('ambiguous purchase resumes the same authorization even if coverage changes
 test('unknown, unsupported and license-required outcomes hold ingestion',()=>{for(const s of ['UNKNOWN','DENY_DECLARED','LICENSE_REQUIRED',undefined,'OUTSIDE_SUPPORTED_SCOPE'])assert.equal(requiresHold(s),true);});
 test('documentation rejects unsafe page paths and escapes publisher text',async()=>{assert.throws(()=>pagePath('../escape'));const cfg=JSON.parse(await readFile(join(ROOT,'config/distribution.json'),'utf8'));const c=JSON.parse(await readFile(join(ROOT,'metadata/public-contract.json'),'utf8'));const p={slug:'index',title:'<script>bad</script>',description:'" onload="bad',sections:[]};const html=renderPage(p,[p],cfg,c);assert.ok(!html.includes('<script>bad'));assert.ok(html.includes('&lt;script&gt;'));assert.ok(html.includes('rel="canonical"'));assert.throws(()=>renderPage({...p,sections:[{title:'Bad',paragraphs:[],links:[{label:'bad',href:'javascript:alert(1)'}]}]},[p],cfg,c),/UNSAFE_DOCUMENTATION_LINK/);});
 test('machine discovery assets match the real paid-purpose contract and exclude a paid crawl tool',async()=>{const d=await mkdtemp(join(tmpdir(),'acq-discovery-'));try{for(const p of ['config','metadata','packages','site','skills','examples'])await cp(join(ROOT,p),join(d,p),{recursive:true});await build(d);const read=async p=>JSON.parse(await readFile(join(d,'out/site',p),'utf8'));const spec=await read('openapi.json'),profile=await read('.well-known/acqpath-distribution.json'),tools=await read('mcp-tools.json');assert.deepEqual(profile.supportedPurposes,spec.components.schemas.RightsInput.properties.purpose.enum);assert.equal(profile.limitations.paidCrawl,false);assert.ok(!tools.tools.some(t=>t.name==='acqpath_quote'));assert.ok(spec.paths['/v1/rights/reports/{id}'].get.parameters.some(p=>p.name==='X-AcqPath-Claim'&&p.required));const sitemap=await readFile(join(d,'out/site/sitemap.xml'),'utf8');assert.ok(sitemap.includes('/rag-ingestion'));assert.ok(!sitemap.includes('/from-'));const full=await readFile(join(d,'out/site/llms-full.txt'),'utf8');assert.ok(full.includes('UNKNOWN'));assert.ok(full.includes('same checkpoint'));}finally{await rm(d,{recursive:true,force:true});}});
+
+test('public build excludes internal release and revenue telemetry artifacts',async()=>{
+ const d=await mkdtemp(join(tmpdir(),'acq-public-boundary-'));
+ try{
+  for(const p of ['config','metadata','packages','site','skills','examples'])await cp(join(ROOT,p),join(d,p),{recursive:true});
+  await build(d);
+  const forbidden=['revenue-release.json','stock-release.json','bazaar-status.json'];
+  const manifest=JSON.parse(await readFile(join(d,'out/site/discovery-assets.json'),'utf8'));
+  for(const name of forbidden){
+   assert.equal(manifest.files.includes(name),false,name+' leaked into public manifest');
+   await assert.rejects(readFile(join(d,'out/site',name),'utf8'),e=>e?.code==='ENOENT');
+  }
+  const publicFiles=['llms.txt','llms-full.txt','SKILL.md','examples/README.md','examples/GATEWAY.md','examples/OFFICIAL-CLIENTS.md','examples/PUBLIC-BUYER.md','examples/STOCK-X402.md'];
+  let publicText='';for(const name of publicFiles)publicText+='\n'+await readFile(join(d,'out/site',name),'utf8');
+  publicText+='\n'+await readFile(join(ROOT,'README.md'),'utf8');
+  assert.doesNotMatch(publicText,/organic demand|PayAPI|owner wallet|owner-funded|verified organic revenue|AWAITING FIRST EXTERNAL SETTLEMENT|MAINNET PAID E2E|SECURE SIWX PAID E2E/i);
+ }finally{await rm(d,{recursive:true,force:true});}
+});

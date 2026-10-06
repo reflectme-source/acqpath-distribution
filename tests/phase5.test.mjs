@@ -4,13 +4,19 @@ import {startBuyerDemo} from '../scripts/buyer-demo.mjs';
 import {readFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 
-test('current public buyer guidance keeps SIWX support distinct from unclaimed clients',async()=>{
+test('current public buyer guidance separates supported contracts from rollout state',async()=>{
  const pages=JSON.parse(await readFile(new URL('../metadata/site-pages.json',import.meta.url)));
- for(const slug of ['public-http','quickstart','http-x402','connect','recovery','bazaar-status']){
+ for(const slug of ['public-http','quickstart','http-x402','connect','recovery']){
   const page=JSON.stringify(pages.find(p=>p.slug===slug));
-  for(const text of ['TypeScript','Python','AcqPath SIWX adapter','/v1/rights/preflight/x402','Payments MCP'])assert.ok(page.includes(text),slug+' missing '+text);
-  assert.doesNotMatch(page,/PayAPI|organic demand|owner-funded|AWAITING FIRST|development freeze|verified organic revenue/i,slug+' exposes internal rollout state');
+  for(const text of ['TypeScript','Python','AcqPath SIWX adapter','Payments MCP'])assert.ok(page.includes(text),slug+' missing '+text);
+  assert.match(page,/zero-config/i,slug+' missing zero-config boundary');
+  assert.match(page,/not supported|unsupported/i,slug+' missing unsupported-client boundary');
+  assert.doesNotMatch(page,/organic demand|PayAPI|UNVERIFIED|owner wallet/i,slug+' leaks rollout state');
  }
+ const marketplace=JSON.stringify(pages.find(p=>p.slug==='bazaar-status'));
+ assert.match(marketplace,/status\.getacqpath\.com/,'marketplace page missing public status source');
+ assert.match(marketplace,/v1\/capabilities/,'marketplace page missing live capability source');
+ assert.doesNotMatch(marketplace,/organic demand|PayAPI|UNVERIFIED|owner wallet|verified organic revenue/i,'marketplace page leaks rollout state');
  for(const file of ['README.md','examples/README.md','examples/public-preflight.mjs','examples/read-only.py','docs/PHASE5-BUYER-JOURNEY.md','metadata/site-pages.json']){
   const text=await readFile(new URL('../'+file,import.meta.url),'utf8');
   assert.doesNotMatch(text,/use the binding nonce|Required custom nonce incompatible|Generic random-nonce payment wrappers are incompatible|generic paid client example remains blocked/i,file);

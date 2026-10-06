@@ -2,7 +2,7 @@
 
 Use `POST https://api.getacqpath.com/v1/rights/preflight/x402` for the fixed fresh marketplace SKU: **0.02 USDC (20000 micro-USDC), Base mainnet `eip155:8453`**. USDC asset: `0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913`; recipient: `0xf69DBbd053fb0Fbc78ADfdB1BFe3b0D1F57300ec`. Deep, Ingestion Gate and Revalidation are not offered through this endpoint.
 
-This endpoint uses the normal official EIP-3009 signer and random nonce. **No AcqPath SIWX, custom signer, custom nonce or custom buyer hook.** Supported examples target official TypeScript x402 **2.25.0** and Python x402 **2.22.0**.
+This endpoint uses the normal official EIP-3009 signer and random nonce. **No AcqPath SIWX, custom signer, custom nonce or custom buyer hook.** The documented contract is tested with official TypeScript x402 **2.25.0** and Python x402 **2.22.0**. Use the prepared 402 for exact payment terms and the public status page for current availability.
 
 ## Exact request and unpaid check
 
@@ -101,4 +101,4 @@ After a timeout, resend the **same saved body and same PAYMENT-SIGNATURE** direc
 
 A paid response must contain `version:"acqpath-stock-rights-v1"`, SKU `rights.preflight.stock.fresh.v1`, the normalized input SHA-256, expected resource/purpose, `billing.amount_micro:"20000"`, `evidence`, `payment_settlement`, and `delivery_proof`. Verify the Ed25519 evidence signatures using the published [AcqPath DID verification keys](https://api.getacqpath.com/.well-known/did.json). Compare the evidence payload to the report fields and the delivery proof's report hash, resource URL, recipient, asset, network, amount and transaction. Retain the settlement transaction and authenticate the `PAYMENT-RESPONSE` receipt. HTTP 200 alone is insufficient: first distinguish a no-charge unavailable response from a signed paid report. A service receipt is not independent on-chain finality.
 
-These reports describe observed declarations; they do not purchase a publisher license or establish legal clearance. `LICENSE_REQUIRED`, `DENY_DECLARED` and `UNKNOWN` do not grant ingestion permission.
+These reports describe observed declarations; they do not purchase a publisher license or establish legal clearance. `LICENSE_REQUIRED`, `DENY_DECLARED` and `UNKNOWN` do not grant ingestion permission. Operational and commercial rollout telemetry is not part of this buyer contract; use the documented route, status page, capabilities and prepared 402.

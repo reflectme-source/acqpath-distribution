@@ -1,6 +1,6 @@
 # Configured official x402 buyers
 
-The secure public endpoint supports official exact-EVM payment signers through the AcqPath SIWX adapter (TypeScript/Node and Python/httpx). The adapter reserves unsigned authorization fields, validates and signs the SIWX request/payment challenge, then submits the original payment. Existing acqpath-request-binding nonce clients remain supported. The separate stock endpoint `/v1/rights/preflight/x402` supports stock x402 v2 without SIWX or a custom signer for fresh 0.02 USDC Rights Preflight. Payments MCP and generic paid proxies are not supported.
+The secure public endpoint supports unchanged official exact-EVM payment signers through the AcqPath SIWX adapter (TypeScript/Node and Python/httpx). The adapter reserves unsigned authorization fields, validates and signs the official SIWX request/payment challenge, then submits the original payment. Existing acqpath-request-binding nonce clients remain supported. On the secure SIWX endpoint, generic zero-config x402 clients and stock SIWX-only hooks are not compatible. The separate stock endpoint `/v1/rights/preflight/x402` supports stock x402 v2 without SIWX or a custom signer for fresh 0.02 USDC Rights Preflight. Payments MCP and generic paid proxies are not supported by this integration. Use public status, live capabilities and the prepared signed 402 as the current source of truth.
 
 Node 22.16+; official @x402/core, evm, fetch and extensions 2.25.0, viem 2.56.3. Python 3.12/3.13, x402 2.22.0 and httpx 0.28.1. EOA only; no smart-wallet or Permit2 support. These source files are not an npm or PyPI publication.
 
@@ -26,7 +26,7 @@ curl --fail --silent --show-error --location https://developers.getacqpath.com/e
 python -m pip install -r official-requirements.txt
 ```
 
-The Node manifest pins @x402/core, @x402/evm, @x402/fetch and @x402/extensions to 2.25.0, plus viem 2.56.3. Python requirements pin the tested dependency set including x402 2.22.0, httpx 0.28.1, eth-account 0.13.7 and abnf 2.2.0. Keep the resulting lock/environment with the buyer application. Adapter provenance: core commit `b2a9273f7269f137af2336d7819bbd3a7595a0b3`, production version `0b952e13-d76c-4226-a117-521741d30769`; [source hashes](https://github.com/reflectme-source/acqpath-distribution/blob/main/metadata/official-client-provenance.json).
+The Node manifest pins @x402/core, @x402/evm, @x402/fetch and @x402/extensions to 2.25.0, plus viem 2.56.3. Python requirements pin the tested dependency set including x402 2.22.0, httpx 0.28.1, eth-account 0.13.7 and abnf 2.2.0. Keep the resulting lock/environment with the buyer application. The distribution repository verifies the adapter source files against reviewed provenance before publication.
 
 ## TypeScript / Node integration
 
@@ -140,16 +140,16 @@ The store writes no signer private key. It does retain bearer payment/SIWX autho
 
 ABNF 2.2.0 is intentionally pinned for official signinwithethereum 5.0.1 compatibility; no permissive parser fallback or library patch is used. Python rejects unsupported floats/non-ASCII object keys and noncanonical ASCII HTTPS publisher URLs. Both clients reject purchase redirects. SIWX enforces binding at AcqPath application entrypoints, not an on-chain POST-body witness.
 
-The integration contract covers signing, substitution resistance, concurrency and recovery behavior. Production buyers must verify the live signed terms and preserve their own checkpoints and chain-verification policy.
+The published adapters are covered by cryptographic, substitution, concurrency and recovery tests. Those tests define the supported client contract; they do not extend compatibility to generic zero-config clients, Payments MCP, generic proxies or undocumented marketplace flows.
 
 
 ## Live Rights Gateway release
 
 Preflight remains **0.02 USDC fresh / 0.05 deep**. **Ingestion Gate** checks 1–4 unique reviewed URLs: **0.04 + 0.02 per URL fresh**, **0.06 + 0.04 per URL deep**. **Revalidation** compares one resource with an authentic signed prior gateway checkpoint: **0.03 fresh / 0.06 deep**. All payments use Base USDC. Gateway fees cover bounded observation attempts, including UNKNOWN. No legal clearance, license purchase or whole-domain coverage.
 
-Use the official TS/Python signer with the AcqPath SIWX adapter on secure routes. [Complete gateway examples](https://developers.getacqpath.com/examples/GATEWAY.md) include private state, retry and delivery verification. [Gateway guide](https://developers.getacqpath.com/gateway). Payments MCP and generic paid proxy integrations are not supported.
+Use the tested official TS/Python signer + AcqPath SIWX adapter. [Complete gateway examples](https://developers.getacqpath.com/examples/GATEWAY.md) include private state, retry and delivery verification. [Live gateway guide](https://developers.getacqpath.com/gateway). Current availability, coverage and payment requirements are published by the [status page](https://status.getacqpath.com), live capabilities and prepared signed 402.
 
 
 ## Separate stock marketplace mode
 
-`POST /v1/rights/preflight/x402` accepts unmodified official TypeScript x402 2.25.0 and Python x402 2.22.0 buyers, with no AcqPath SIWX/custom signer/buyer hook. Fresh only, **0.02 USDC on Base**. The first valid payment atomically binds one request; it does not provide pre-signature cryptographic body binding. A leaked pre-use authorization can be raced. Keep exact signed requests private and recover with the same authorization; never sign again after uncertainty. SIWX remains recommended on the existing secure route. [Stock JSON, official clients and recovery](https://developers.getacqpath.com/examples/STOCK-X402.md).
+`POST /v1/rights/preflight/x402` accepts unmodified official TypeScript x402 2.25.0 and Python x402 2.22.0 buyers, with no AcqPath SIWX/custom signer/buyer hook. Fresh only, **0.02 USDC on Base**. The first valid payment atomically binds one request; it does not provide pre-signature cryptographic body binding. A leaked pre-use authorization can be raced. Keep exact signed requests private and recover with the same authorization; never sign again after uncertainty. SIWX remains recommended on the existing secure route. [Stock contract, official clients and recovery](https://developers.getacqpath.com/examples/STOCK-X402.md).

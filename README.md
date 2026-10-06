@@ -2,7 +2,7 @@
 
 Check observed content-use declarations **before AI input, RAG indexing, training or search**. AcqPath returns signed evidence of observed RSL declarations for supported URLs. It does not grant a license, establish ownership or provide legal clearance. UNKNOWN never authorizes ingestion.
 
-[Start integrating](https://developers.getacqpath.com/from-github) · [Supported scope](https://developers.getacqpath.com/scope) · [Examples](examples/README.md) · [MCP Registry](https://registry.modelcontextprotocol.io/v0.1/servers/com.getacqpath%2Facqpath/versions/3.1.0-rc.3) · [Smithery](https://smithery.ai/servers/reflectme-project/acqpath-rights-preflight) · [Glama](https://glama.ai/mcp/connectors/com.getacqpath/acqpath)
+[Partner integrations](https://developers.getacqpath.com/partners) · [100-event Proof Sprint](https://developers.getacqpath.com/partners/proof-sprint) · [Start integrating](https://developers.getacqpath.com/from-github) · [Supported scope](https://developers.getacqpath.com/scope) · [Examples](examples/README.md) · [MCP Registry](https://registry.modelcontextprotocol.io/v0.1/servers/com.getacqpath%2Facqpath/versions/3.1.0-rc.3)
 
 | Before this workflow | Report purpose | Boundary |
 |---|---|---|
@@ -12,15 +12,13 @@ Check observed content-use declarations **before AI input, RAG indexing, trainin
 | Search indexing | `search` | Search evidence does not authorize crawling |
 | Crawling | No paid crawl purpose | Check robots, terms and crawler policy separately before downstream preflight |
 
-Fresh **0.02 USDC**; deep **0.05 USDC**, observed 2026-09-10. Read live [capabilities](https://api.getacqpath.com/v1/capabilities) and verify the signed quote before authorizing payment. Current origin coverage is exactly `https://medium.com`, `https://theguardian.com`, `https://rslstandard.org`, and `https://rslcollective.org`. Coverage is not a promise that every URL returns a purchasable or permissive report.
+Fresh **0.02 USDC**; deep **0.05 USDC** under the current public contract. Read live [capabilities](https://api.getacqpath.com/v1/capabilities) for current coverage and verify the prepared signed quote before authorizing payment. Coverage is explicit and does not promise that every URL returns a purchasable or permissive report.
 
 ## Start with the stable public endpoint
 
 POST `https://api.getacqpath.com/v1/rights/preflight` with a resource URL and purpose. No AcqPath account, API key or private operator token. [Public buyer journey](https://developers.getacqpath.com/public-http) · [JavaScript/Python/TypeScript examples](examples/PUBLIC-BUYER.md).
 
-**Compatibility:** The secure endpoint supports unchanged official exact-EVM payment signers through the AcqPath SIWX adapter (TypeScript/Node and Python/httpx). The adapter reserves unsigned authorization fields, validates and signs the official SIWX request/payment challenge, then submits the original payment. Existing acqpath-request-binding nonce clients remain supported. On the secure SIWX endpoint, generic zero-config x402 clients and stock SIWX-only hooks are not compatible. The separate stock endpoint `/v1/rights/preflight/x402` supports stock x402 v2 without SIWX or a custom signer for fresh 0.02 USDC Rights Preflight. Payments MCP and generic paid proxies are not claimed. PayAPI completed one external marketplace verification settlement on the stock endpoint; organic demand remains unproven. [Configured TS/Python examples](examples/OFFICIAL-CLIENTS.md).
-
-Bazaar: **AWAITING FIRST EXTERNAL SETTLEMENT**. No owner-funded payments, wallet funding or indexing QA is requested.
+**Compatibility:** The secure endpoint supports unchanged official exact-EVM payment signers through the AcqPath SIWX adapter (TypeScript/Node and Python/httpx). Existing acqpath-request-binding nonce clients remain supported. Generic zero-config x402 and stock SIWX-only hooks are not supported on the secure route. The separate stock endpoint `/v1/rights/preflight/x402` supports stock x402 v2 without SIWX or a custom signer for fresh 0.02 USDC Rights Preflight. Payments MCP and generic paid proxies are not supported by this integration. Read [service status](https://status.getacqpath.com) and live [capabilities](https://api.getacqpath.com/v1/capabilities) as the current operational source of truth. [Configured TS/Python examples](examples/OFFICIAL-CLIENTS.md).
 
 ## Connect once
 
@@ -68,7 +66,7 @@ Daily [public discovery verification](.github/workflows/visibility.yml) checks p
 
 [Channel matrix](CHANNEL-MATRIX.md) · [Discovery tests](DISCOVERY-TESTS.md) · [Bazaar compatibility](BAZAAR-COMPATIBILITY.md) · [Revenue baseline](REVENUE-BASELINE.md) · [Revenue analysis](REVENUE-OPTIMIZATION.md) · [Acceptance](docs/ACCEPTANCE.md)
 
-The MIT licenses apply only to their respective source packages: [rights-client](packages/rights-client/LICENSE) and [evidence-bridge](packages/evidence-bridge/LICENSE). No blanket license is granted to the backend, service output or publishers' content. The distribution root remains UNLICENSED. No real payment, wallet signature, independent customer or organic revenue is claimed by this release.
+The MIT licenses apply only to their respective source packages: [rights-client](packages/rights-client/LICENSE) and [evidence-bridge](packages/evidence-bridge/LICENSE). No blanket license is granted to the backend, service output or publishers' content. The distribution root remains UNLICENSED. Public documentation describes supported contracts and limitations; internal rollout and revenue telemetry are not part of the buyer contract.
 
 ## Documentation for coding agents
 
@@ -85,9 +83,9 @@ The public [integration skill](skills/acqpath-rights-preflight/SKILL.md) and [fu
 
 Preflight remains **0.02 USDC fresh / 0.05 deep**. **Ingestion Gate** checks 1–4 unique reviewed URLs: **0.04 + 0.02 per URL fresh**, **0.06 + 0.04 per URL deep**. **Revalidation** compares one resource with an authentic signed prior gateway checkpoint: **0.03 fresh / 0.06 deep**. All payments use Base USDC. Gateway fees cover bounded observation attempts, including UNKNOWN. No legal clearance, license purchase or whole-domain coverage.
 
-Use the tested official TS/Python signer + AcqPath SIWX adapter. [Complete gateway examples](https://developers.getacqpath.com/examples/GATEWAY.md) include private state, retry and delivery verification. [Live gateway guide](https://developers.getacqpath.com/gateway). Secure SIWX paid E2E awaits a real external buyer; the stock endpoint has one PayAPI marketplace verification settlement. Verified organic revenue remains 0 USDC. Development freeze: only incidents, security, standards compatibility and monitoring.
+Use the tested official TS/Python signer + AcqPath SIWX adapter. [Complete gateway examples](https://developers.getacqpath.com/examples/GATEWAY.md) include private state, retry and delivery verification. [Live gateway guide](https://developers.getacqpath.com/gateway). Current availability, coverage and payment requirements are published by the [status page](https://status.getacqpath.com), live capabilities endpoint and prepared signed 402.
 
 
 ## Separate stock marketplace mode
 
-`POST /v1/rights/preflight/x402` accepts unmodified official TypeScript x402 2.25.0 and Python x402 2.22.0 buyers, with no AcqPath SIWX/custom signer/buyer hook. Fresh only, **0.02 USDC on Base**. The first valid payment atomically binds one request; it does not provide pre-signature cryptographic body binding. A leaked pre-use authorization can be raced. Keep exact signed requests private and recover with the same authorization; never sign again after uncertainty. SIWX remains recommended on the existing secure route. [Stock JSON, official clients and recovery](https://developers.getacqpath.com/examples/STOCK-X402.md). PayAPI completed one external marketplace verification settlement; this is not organic demand or retention.
+`POST /v1/rights/preflight/x402` accepts unmodified official TypeScript x402 2.25.0 and Python x402 2.22.0 buyers, with no AcqPath SIWX/custom signer/buyer hook. Fresh only, **0.02 USDC on Base**. The first valid payment atomically binds one request; it does not provide pre-signature cryptographic body binding. A leaked pre-use authorization can be raced. Keep exact signed requests private and recover with the same authorization; never sign again after uncertainty. SIWX remains recommended on the existing secure route. [Stock contract, official clients and recovery](https://developers.getacqpath.com/examples/STOCK-X402.md).

@@ -11,8 +11,8 @@ Use [configured official TS/Python integration](OFFICIAL-CLIENTS.md) for the dep
 
 Generic zero-config x402 clients, stock SIWX-only hooks, Payments MCP and paid proxies are not supported by these tests. EOA only. Store bearer authorizations outside prompts/logs/Git in private ACL-protected storage; see the guide for retention and canonical-input restrictions.
 
-Public Node, standard Python/httpx and urllib reachability PASS after the narrow BIC rule on 2026-09-11. Real rslstandard.org/ prepared LICENSE_REQUIRED at 20000 micro-USDC (0.02 USDC), Base eip155:8453. No publisher 403 or SSRF restriction was bypassed.
+Use the live capabilities endpoint to confirm current reviewed-origin eligibility, then validate the exact Base/USDC/recipient/amount from the prepared signed 402. Publisher access controls and SSRF restrictions are never bypassed.
 
 Fresh 0.02 USDC, deep 0.05 USDC; exact live signed terms control a buyer-authorized purchase. UNKNOWN is not permission. Reports do not provide a license or legal clearance.
 
-Use the secure SIWX route when payer-signed request binding is required, or the stock route for the fixed fresh marketplace SKU. Verify the live signed terms before payment.
+The secure SIWX and stock routes have different request-binding contracts; use the documented route-specific flow. Current service availability is published at https://status.getacqpath.com, and the prepared signed 402 controls the actual payment terms.

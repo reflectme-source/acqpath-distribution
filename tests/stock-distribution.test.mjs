@@ -5,13 +5,18 @@ test('stock marketplace verification is never organic revenue, and stock accepts
  assert.equal(validSkuPayment(e),true);for(const patch of [{amountMicro:'50000'},{tier:'deep'},{operationBindingVerified:false}])assert.equal(validSkuPayment({...e,...patch}),false);
  const r=externalBaseline(null,[e,e,{...e,classification:'EXTERNAL_VERIFIED'}]);assert.equal(r.marketplaceVerification.operations,1);assert.equal(r.marketplaceVerification.revenueMicro,'20000');assert.equal(r.verifiedExternalPaidReports,0);assert.equal(r.verifiedExternalRevenueMicro,'0');
 });
-test('dual-mode pages state separate stock scope and residual risk without altering SIWX adapter',async()=>{
+test('dual-mode pages state separate stock scope without exposing rollout telemetry',async()=>{
  const pages=JSON.parse(await readFile(new URL('../metadata/site-pages.json',import.meta.url)));
- for(const slug of ['stock-x402','index','quickstart','public-http','connect','recovery','bazaar-status']){
+ for(const slug of ['stock-x402','index','quickstart','public-http','connect','recovery']){
   const p=JSON.stringify(pages.find(p=>p.slug===slug));
   for(const word of ['/v1/rights/preflight/x402','0.02','SIWX'])assert.ok(p.includes(word),slug+' '+word);
-  assert.doesNotMatch(p,/PayAPI|organic demand|owner-funded|AWAITING FIRST|development freeze|verified organic revenue/i,slug+' exposes internal rollout state');
+  assert.match(p,/not supported|unsupported/i,slug+' missing compatibility boundary');
+  assert.doesNotMatch(p,/organic demand|PayAPI|UNVERIFIED|owner wallet/i,slug+' leaks rollout telemetry');
  }
+ const marketplace=JSON.stringify(pages.find(p=>p.slug==='bazaar-status'));
+ assert.match(marketplace,/status\.getacqpath\.com/,'marketplace page missing status source');
+ assert.match(marketplace,/v1\/capabilities/,'marketplace page missing live capability source');
+ assert.doesNotMatch(marketplace,/organic demand|PayAPI|UNVERIFIED|owner wallet|verified organic revenue/i,'marketplace page leaks rollout telemetry');
  const guide=await readFile(new URL('../examples/STOCK-X402.md',import.meta.url),'utf8');for(const word of ['2.25.0','2.22.0','20000','eip155:8453','before presentation','same saved body','does not','PAYMENT-SIGNATURE'])assert.ok(guide.includes(word),word);
  const api=JSON.parse(await readFile(new URL('../metadata/openapi.public.json',import.meta.url)));assert.equal(api.paths['/v1/rights/preflight/x402'].post['x-payment-info'].client.siwxRequired,false);assert.equal(api.paths['/v1/rights/preflight'].post['x-payment-info'].client.adapterRequired,true);
  assert.match(api.info.description,/\/v1\/rights\/preflight\/x402.*no SIWX or custom signer/);
