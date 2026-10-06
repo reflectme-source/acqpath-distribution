@@ -1,0 +1,17 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "type":"object",
+  "additionalProperties":false,
+  "required":["schema","resource","intended_use"],
+  "properties":{
+    "schema":{"const":"rights-evidence.request.v1"},
+    "resource":{"type":"string","format":"uri","maxLength":2048},
+    "intended_use":{
+      "type":"object",
+      "additionalProperties":false,
+      "required":["purpose"],
+      "properties":{"purpose":{"type":"string","pattern":"^[a-z][a-z0-9-]{1,63}$"}}
+    },
+    "context":{"type":"object"}
+  }
+}

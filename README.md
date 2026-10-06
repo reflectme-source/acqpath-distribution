@@ -48,6 +48,12 @@ For clients supporting remote HTTP MCP configuration:
 
 The public SIWX adapters are supplied in [examples](examples/OFFICIAL-CLIENTS.md). The separate [packages/rights-client](packages/rights-client) SDK is the retained legacy quote/claim integration. **npm publication is on owner hold**; do not attempt an npm install of this unpublished package. Examples use repository-relative imports. The configured Python/httpx adapter is supplied as source; no PyPI package is published.
 
+## Provider-neutral Evidence Bridge
+
+[Evidence Bridge source](packages/evidence-bridge/README.md) normalizes verified source-rights evidence into one provider-neutral contract for three integration shapes: generic decision webhooks, offline policy inputs such as OPA/Rego, and runtime extension/provider interfaces. Consumer policy still owns `allow` / `deny` / `warn` / `review`; the bridge never turns an AcqPath observation into legal clearance.
+
+The bridge is **source-only and not npm-published**. Partner-specific work should normally be field mapping or a thin serializer, not a new AcqPath-specific SDK.
+
 ## Machine-readable integration reference
 
 [llms.txt](https://developers.getacqpath.com/llms.txt) · [Full reference](https://developers.getacqpath.com/llms-full.txt) · [OpenAPI subset](https://developers.getacqpath.com/openapi.json) · [Discovery profile](https://developers.getacqpath.com/.well-known/acqpath-distribution.json) · [Pricing snapshot](https://developers.getacqpath.com/pricing.json) · [Agent skill](skills/acqpath-rights-preflight/SKILL.md)
@@ -62,7 +68,7 @@ Daily [public discovery verification](.github/workflows/visibility.yml) checks p
 
 [Channel matrix](CHANNEL-MATRIX.md) · [Discovery tests](DISCOVERY-TESTS.md) · [Bazaar compatibility](BAZAAR-COMPATIBILITY.md) · [Revenue baseline](REVENUE-BASELINE.md) · [Revenue analysis](REVENUE-OPTIMIZATION.md) · [Acceptance](docs/ACCEPTANCE.md)
 
-The SDK's MIT license applies only to its [client package](packages/rights-client/LICENSE). No blanket license is granted to the backend, service output or publishers' content. The distribution root remains UNLICENSED. No real payment, wallet signature, independent customer or organic revenue is claimed by this release.
+The MIT licenses apply only to their respective source packages: [rights-client](packages/rights-client/LICENSE) and [evidence-bridge](packages/evidence-bridge/LICENSE). No blanket license is granted to the backend, service output or publishers' content. The distribution root remains UNLICENSED. No real payment, wallet signature, independent customer or organic revenue is claimed by this release.
 
 ## Documentation for coding agents
 

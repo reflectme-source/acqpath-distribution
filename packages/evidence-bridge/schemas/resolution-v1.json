@@ -1,0 +1,13 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "type":"object",
+  "additionalProperties":false,
+  "required":["schema","status","request","evidence","error"],
+  "properties":{
+    "schema":{"const":"rights-evidence.resolution.v1"},
+    "status":{"enum":["resolved","unavailable","unsupported","invalid"]},
+    "request":{"$ref":"request-v1.json"},
+    "evidence":{"type":"array","items":{"$ref":"evidence-v1.json"}},
+    "error":{"type":["object","null"]}
+  }
+}

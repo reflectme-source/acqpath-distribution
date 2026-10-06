@@ -1,0 +1,12 @@
+{
+  "name": "@getacqpath/evidence-bridge",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Provider-neutral source-rights evidence contract with webhook, policy-input and extension profiles.",
+  "license": "MIT",
+  "private": true,
+  "engines": {"node": ">=22.16"},
+  "exports": {".": {"types": "./index.d.ts", "default": "./index.mjs"}},
+  "files": ["index.mjs", "index.d.ts", "schemas", "README.md", "LICENSE"],
+  "sideEffects": false
+}
