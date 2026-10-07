@@ -2,7 +2,7 @@
 
 Check observed content-use declarations **before AI input, RAG indexing, training or search**. AcqPath returns signed evidence of observed RSL declarations for supported URLs. It does not grant a license, establish ownership or provide legal clearance. UNKNOWN never authorizes ingestion.
 
-[Partner integrations](https://developers.getacqpath.com/partners) · [100-event Proof Sprint](https://developers.getacqpath.com/partners/proof-sprint) · [Start integrating](https://developers.getacqpath.com/from-github) · [Supported scope](https://developers.getacqpath.com/scope) · [Examples](examples/README.md) · [MCP Registry](https://registry.modelcontextprotocol.io/v0.1/servers/com.getacqpath%2Facqpath/versions/3.1.0-rc.3)
+[Partner integrations](https://developers.getacqpath.com/partners) · [25-event Proof Sprint](https://developers.getacqpath.com/partners/proof-sprint) · [Start integrating](https://developers.getacqpath.com/from-github) · [Supported scope](https://developers.getacqpath.com/scope) · [Examples](examples/README.md) · [MCP Registry](https://registry.modelcontextprotocol.io/v0.1/servers/com.getacqpath%2Facqpath/versions/3.1.0-rc.3)
 
 | Before this workflow | Report purpose | Boundary |
 |---|---|---|

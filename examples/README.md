@@ -16,7 +16,8 @@ Start with the [complete TypeScript / Python installation, call and delivery ver
 | [crawler-enrichment.mjs](crawler-enrichment.mjs) | Attach `rightsEvidence` to an existing crawler/search result |
 | [rag-ingestion.mjs](rag-ingestion.mjs) | Attach `source_rights` evidence to RAG/document metadata |
 | [policy-engine-input.mjs](policy-engine-input.mjs) | Convert verified evidence into consumer-owned policy input without making an AcqPath decision |
-| [shadow-report.mjs](shadow-report.mjs) + [shadow-events.ndjson](shadow-events.ndjson) | Local 100-event Proof Sprint report; logs stay in the partner environment |
+| [proof-sprint.mjs](proof-sprint.mjs) | Local watcher that monitors the NDJSON stream and stops on GO / REVIEW / STOP_OR_FIX |
+| [shadow-report.mjs](shadow-report.mjs) + [shadow-events.ndjson](shadow-events.ndjson) | Local Proof Sprint report; 3-event smoke test, 25-event/6h decision gate, 50-event/24h hard cap |
 
 Fresh 0.02 USDC; deep 0.05 USDC on Base. Verify live signed terms. The adapters verify the offer, report, receipt and delivery binding. Use a stable operation ID and private durable store; after ambiguity reuse the SAME ID, input and directory. Stored bearer authorizations are not application-level encrypted. Protect storage with private ACLs and preferably disk encryption; never share it or delete unresolved operations.
 

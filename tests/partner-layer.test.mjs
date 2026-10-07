@@ -6,7 +6,8 @@ import {runGatewayShadow} from '../examples/gateway-shadow.mjs';
 import {enrichCrawlerResult} from '../examples/crawler-enrichment.mjs';
 import {attachRagEvidence} from '../examples/rag-ingestion.mjs';
 import {policyInputFromResolution} from '../examples/policy-engine-input.mjs';
-import {parseShadowNdjson,summarizeShadowEvents} from '../examples/shadow-report.mjs';
+import {parseShadowNdjson,summarizeShadowEvents,PROOF_SPRINT} from '../examples/shadow-report.mjs';
+import {evaluateProofSprintFile} from '../examples/proof-sprint.mjs';
 import {pagePath} from '../scripts/site.mjs';
 
 const resource='https://example.com/article';
@@ -75,6 +76,20 @@ test('shadow report exposes evidence gaps and declaration changes',async()=>{
   assert.equal(report.evidence_gap_events,1);
   assert.equal(report.statement_changes,1);
   assert.equal(report.statements.license_required,2);
+  assert.equal(report.strong_signal_count,3);
+  assert.equal(report.commercial_verdict,'GO');
+  assert.equal(PROOF_SPRINT.targetEvents,25);
+  assert.equal(PROOF_SPRINT.hardCapEvents,50);
+  assert.equal((await evaluateProofSprintFile(new URL('../examples/shadow-events.ndjson',import.meta.url))).commercial_verdict,'GO');
+});
+
+test('proof sprint decision gates stop long pilots',()=>{
+  const permitted=Array.from({length:25},(_,i)=>({at:`2026-10-07T08:${String(i).padStart(2,'0')}:00Z`,resource, purpose:'ai-index',resolution:verifiedResolution()}));
+  assert.equal(summarizeShadowEvents(permitted).commercial_verdict,'REVIEW');
+  assert.equal(summarizeShadowEvents(permitted.slice(0,10),{runtimeHours:6}).commercial_verdict,'REVIEW');
+  const unavailable=n=>Array.from({length:n},(_,i)=>({at:`2026-10-07T08:${String(i%60).padStart(2,'0')}:00Z`,resource,purpose:'ai-index',resolution:{schema:'rights-evidence.resolution.v1',status:'unavailable',request:{schema:'rights-evidence.request.v1',resource,intended_use:{purpose:'ai-index'},context:{}},evidence:[],error:{code:'PROVIDER_UNAVAILABLE'}}}));
+  assert.equal(summarizeShadowEvents(unavailable(25)).commercial_verdict,'EXTEND');
+  assert.equal(summarizeShadowEvents(unavailable(50)).commercial_verdict,'STOP_OR_FIX');
 });
 
 test('partner docs use nested safe paths and contain no rollout-demand copy',async()=>{

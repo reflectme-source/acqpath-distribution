@@ -20,9 +20,9 @@
         ]
       },
       {
-        "title": "Partner integrations: prove value in 100 events",
+        "title": "Partner integrations: prove value in 25 events",
         "paragraphs": [
-          "Do not replace your policy engine on day one. Run AcqPath beside the existing workflow for the first 100 eligible events or up to 24 hours, whichever comes first.",
+          "Do not replace your policy engine on day one. Run AcqPath beside the existing workflow. Three eligible events prove the integration path; the normal commercial decision gate is 25 eligible events or 6 hours, with a hard cap of 50 events or 24 hours.",
           "The existing request still executes. AcqPath adds verified source-rights evidence to an audit stream. If the evidence gap is useful, increase paid attach rate immediately instead of waiting through a long pilot."
         ],
         "links": [
@@ -31,7 +31,7 @@
             "href": "/partners"
           },
           {
-            "label": "100-event Proof Sprint",
+            "label": "25-event Proof Sprint",
             "href": "/partners/proof-sprint"
           }
         ]
@@ -161,18 +161,18 @@
     "slug": "partners",
     "label": "Partners",
     "title": "Add source-rights evidence without replacing your policy engine",
-    "description": "Start with 100 real events. AcqPath supplies signed external source-rights evidence; your gateway, crawler, RAG pipeline or policy engine keeps control of the decision.",
+    "description": "Start with 25 real events. AcqPath supplies signed external source-rights evidence; your gateway, crawler, RAG pipeline or policy engine keeps control of the decision.",
     "sections": [
       {
         "title": "Start with evidence. Decide on enforcement later.",
         "paragraphs": [
           "The first integration mode is Observe: AcqPath runs beside the existing request path and writes evidence to your audit stream. Nothing is blocked and no existing policy is replaced.",
-          "The commercial gate is 100 eligible events or up to 24 hours, whichever comes first. If the evidence gap is useful, move immediately to higher paid attach volume instead of waiting through a multi-week pilot."
+          "Three eligible events prove the integration path. Any material rights/drift signal can end the sprint early. Otherwise use 25 eligible events or 6 hours as the normal commercial gate; never exceed 50 events or 24 hours."
         ],
-        "code": "existing request ───────────────→ existing execution\n       └─→ AcqPath Evidence → audit log\n\n100 events / max 24h → local report → scale paid usage",
+        "code": "existing request ───────────────→ existing execution\n       └─→ AcqPath Evidence → audit log\n\n3 events = integration smoke test\n25 events / 6h = normal decision gate\n50 events / 24h = hard stop",
         "links": [
           {
-            "label": "Run the 100-event Proof Sprint",
+            "label": "Run the 25-event Proof Sprint",
             "href": "/partners/proof-sprint"
           },
           {
@@ -265,8 +265,8 @@
     "slug": "partners/proof-sprint",
     "label": "Proof Sprint",
     "nav": false,
-    "title": "Prove the evidence gap in 100 events, not 30 days",
-    "description": "A 15–30 minute integration, then the first 100 eligible events or a maximum of 24 hours in shadow mode. No enforcement migration.",
+    "title": "Prove the evidence gap in 25 events, not 30 days",
+    "description": "A 15–30 minute integration. Three events prove the path; 25 eligible events or 6 hours is the normal decision gate, with a hard cap of 50 events or 24 hours.",
     "sections": [
       {
         "title": "1. Connect beside the existing workflow",
@@ -288,19 +288,23 @@
       {
         "title": "2. Stop at the first commercial gate",
         "paragraphs": [
-          "Collect 100 eligible events. If volume is low, stop after 24 hours. There is no reason to wait 14–30 days before deciding whether the evidence is useful.",
-          "At the current 0.02 USDC fresh single-resource Preflight price, 100 paid fresh reports correspond to 2.00 USDC and 500 to 10.00 USDC. The live prepared 402 is always authoritative, and Preflight events with no paid offer are not equivalent to paid reports."
+          "Do not wait for 100 events. After three eligible events the integration path is proven. A material rights/drift signal can produce GO immediately. Otherwise decide at 25 eligible events or 6 hours; extend only when inconclusive and never beyond 50 events or 24 hours.",
+          "At the current 0.02 USDC fresh single-resource Preflight price, 25 paid fresh reports correspond to 0.50 USDC and 50 to 1.00 USDC. The live prepared 402 is always authoritative, and Preflight events with no paid offer are not equivalent to paid reports."
         ]
       },
       {
         "title": "3. Generate the local report",
         "paragraphs": [
-          "Keep shadow events in your own environment as NDJSON. The report generator counts resolved evidence, evidence gaps, statement distribution, unique resources and declaration changes without sending the log back to AcqPath."
+          "Keep shadow events in your own environment as NDJSON. Start the local watcher once; it monitors the file, prints progress, and stops automatically on GO, REVIEW or STOP_OR_FIX. Raw URLs and evidence do not need to leave the partner environment."
         ],
-        "code": "node examples/shadow-report.mjs events.ndjson",
+        "code": "node examples/proof-sprint.mjs events.ndjson",
         "links": [
           {
-            "label": "Report generator",
+            "label": "Automatic Proof Sprint watcher",
+            "href": "/examples/proof-sprint.mjs"
+          },
+          {
+            "label": "One-shot report generator",
             "href": "/examples/shadow-report.mjs"
           },
           {
@@ -312,7 +316,7 @@
       {
         "title": "4. Convert immediately when value is visible",
         "paragraphs": [
-          "Continue paid usage if the first 100 events produce useful verified source evidence, surface a prohibited/license-required/unknown case, reveal a missing evidence field in the existing audit trail, or detect a meaningful declaration change.",
+          "The local report returns GO, REVIEW, EXTEND or STOP_OR_FIX. GO means a material rights/drift signal appeared. REVIEW means verified evidence exists but the buyer should compare it with its existing audit trail. EXTEND may run only to 50 events / 24 hours. STOP_OR_FIX means the yield is too weak or eligibility/integration needs correction.",
           "If none of those happen, stop. The sprint is designed to produce a fast yes/no decision, not to manufacture a long pilot."
         ]
       }
@@ -407,7 +411,7 @@
         "title": "30-minute technical path",
         "paragraphs": [
           "0–5 min: read live capabilities and choose intended purpose. 5–15 min: wire Evidence Bridge to the existing buyer flow. 15–25 min: write shadow events to the local audit stream. 25–30 min: send the first eligible event and confirm a verified evidence_ref or an explicit unsupported/unavailable state.",
-          "Then run the first 100 events and produce the local shadow report."
+          "Then start the local Proof Sprint watcher. It monitors the partner-owned NDJSON stream and automatically prints the commercial verdict; raw URLs do not need to leave the partner environment."
         ],
         "links": [
           {
@@ -485,7 +489,7 @@
         "title": "Start in Observe mode",
         "paragraphs": [
           "Extract the selected source URL and explicit intended purpose from the gateway context. Resolve evidence in parallel with the existing tool call and write the resolution to the gateway audit stream.",
-          "Do not make AcqPath the first enforcement point. Prove the evidence gap in 100 events, then move to Advise or partner-owned Enforce if useful."
+          "Do not make AcqPath the first enforcement point. Prove the evidence gap at the 25-event / 6-hour decision gate, or earlier if a material signal appears, then move to Advise or partner-owned Enforce if useful."
         ],
         "links": [
           {
