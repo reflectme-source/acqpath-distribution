@@ -27,4 +27,4 @@ Status: OUTREACH_READY concept/example.
 
 ## Outreach
 
-Use exact text in `WAVE1_APPROVAL.md`.
+Contact copy is maintained privately by the AcqPath operator.
