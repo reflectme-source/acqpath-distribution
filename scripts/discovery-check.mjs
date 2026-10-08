@@ -16,7 +16,7 @@ export function registryMatches(data,expected) {
  return isDeepStrictEqual(data?.server,expected)&&data?._meta?.['io.modelcontextprotocol.registry/official']?.status==='active';
 }
 export function publicExternalLinkOrigins(cfg) {
- return ['https://github.com','https://docs.cdp.coinbase.com','https://agent402.tools','https://acqpath-bazaar-sepolia.acqpath.workers.dev',cfg.apiOrigin];
+ return ['https://github.com','https://docs.cdp.coinbase.com','https://agent402.tools','https://acqpath-bazaar-sepolia.acqpath.workers.dev','https://status.getacqpath.com',cfg.apiOrigin];
 }
 export function failureDetail(e) {
  return {error:safeCode(e),url:e?.url,code:e?.code};
