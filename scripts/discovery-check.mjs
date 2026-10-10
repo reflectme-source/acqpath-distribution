@@ -37,6 +37,15 @@ export async function readRegistry(url,fetcher=globalThis.fetch) {
   }
  }
 }
+// Retry only idempotent, exact-origin public GETs on transient HTTP failures.
+// Persistent failure and every security/contract failure still fail closed.
+export async function readExternalLink(url,{fetcher=globalThis.fetch,allowedOrigins,maxBytes=2097152,sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms))}={}) {
+ for(let attempt=1;attempt<=3;attempt++) {
+  const r=await fetchPublicFile(url,{fetcher,allowedOrigins,maxBytes});
+  if(![429,502,503,504].includes(r.http)||attempt===3)return {...r,attempts:attempt};
+  await sleep(attempt===1?300:900);
+ }
+}
 export async function discoveryCheck(root=ROOT,{fetcher=globalThis.fetch}={}) {
  const cfg=await settings(root),contract=await load(join(root,'metadata/public-contract.json')),expected=await load(join(root,'out/registry/server.json'));
  const checks=[];
@@ -48,7 +57,7 @@ export async function discoveryCheck(root=ROOT,{fetcher=globalThis.fetch}={}) {
  await check('official_registry_brand_search',async()=>{const url=registry+'/v0.1/servers?search=AcqPath&limit=100';const r=await readRegistry(url,fetcher);return {pass:r.status===200&&r.data?.servers?.some(s=>s.server?.name===cfg.mcp.name&&s.server?.version===cfg.mcp.version),http:r.status,attempts:r.attempts,search:'server-name substring only; semantic discovery tested separately'};});
  const pages=await load(join(root,'metadata/site-pages.json'));
  const external=[...new Set(pages.flatMap(p=>p.sections.flatMap(s=>(s.links||[]).map(l=>l.href))).filter(h=>h.startsWith('https:')))];
- for(const url of external)await check('documentation_external_link',async()=>{try{const r=await fetchPublicFile(url,{fetcher,allowedOrigins:publicExternalLinkOrigins(cfg),maxBytes:2097152});return {pass:r.http===200,http:r.http,url};}catch(e){e.url=url;throw e;}});
+ for(const url of external)await check('documentation_external_link',async()=>{try{const r=await readExternalLink(url,{fetcher,allowedOrigins:publicExternalLinkOrigins(cfg),maxBytes:2097152});return {pass:r.http===200,http:r.http,attempts:r.attempts,url};}catch(e){e.url=url;throw e;}});
  for(const record of await load(join(root,'metadata/channel-readbacks.json'))) {
   if(!record.required)continue;
   await check(record.name,async()=>{const r=await fetchPublicFile(record.url,{fetcher,maxBytes:2097152});const body=r.data.toString('utf8');return {pass:r.http===200&&record.requiredText.every(t=>body.includes(t)),http:r.http,url:record.url,scope:'Public metadata readback only; no paid-flow claim'};});
