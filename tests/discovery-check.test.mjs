@@ -4,7 +4,7 @@ import {readFile} from 'node:fs/promises';
 import {join} from 'node:path';
 import {ROOT} from '../scripts/lib/io.mjs';
 import {normalizeAnalytics,fetchPublicFile,publicAssetPath,localLinks,securityHeadersMatch} from '../scripts/verify-docs.mjs';
-import {contractDrift,registryMatches,readRegistry,publicExternalLinkOrigins,failureDetail} from '../scripts/discovery-check.mjs';
+import {contractDrift,registryMatches,readRegistry,readExternalLink,publicExternalLinkOrigins,failureDetail} from '../scripts/discovery-check.mjs';
 test('edge normalization preserves unknown scripts and detects duplicate approved insertion',()=>{const snippet='<script src="https://static.cloudflareinsights.com/beacon.min.js"></script>';const original='<body>Expected</body>';assert.equal(normalizeAnalytics(Buffer.from(original+snippet),snippet).bytes.toString(),original);assert.equal(normalizeAnalytics(Buffer.from(original+'<script>unknown()</script>'),snippet).bytes.toString(),original+'<script>unknown()</script>');assert.throws(()=>normalizeAnalytics(Buffer.from(snippet+snippet),snippet),/DUPLICATE/);});
 test('public readback refuses cross-origin redirects and oversized streaming bodies',async()=>{await assert.rejects(fetchPublicFile('https://developers.getacqpath.com/',{fetcher:async()=>new Response('',{status:302,headers:{location:'https://untrusted.example/'}})}),/UNEXPECTED_PUBLIC_ORIGIN/);await assert.rejects(fetchPublicFile('https://developers.getacqpath.com/',{maxBytes:2,fetcher:async()=>new Response('large')}),/TOO_LARGE/);for(const path of ['../secret','/absolute','a//b','a?b'])assert.throws(()=>publicAssetPath(path));});
 test('broken local links cannot be hidden by extensionless canonical paths',()=>{assert.deepEqual(localLinks('<a href="/quickstart">Go</a><link href="/style.css"><a href="/missing#here">Missing</a>','https://developers.getacqpath.com'),['/quickstart','/style.css','/missing']);});
@@ -15,6 +15,27 @@ test('registry acceptance requires exact current metadata and active lifecycle',
 test('registry retries a transient public GET once and exposes the attempt count',async()=>{let n=0;const r=await readRegistry('https://registry.modelcontextprotocol.io/v0.1/servers?search=AcqPath',async()=>{if(++n===1)throw new DOMException('timeout','AbortError');return new Response(JSON.stringify({servers:[]}),{headers:{'content-type':'application/json'}});});assert.equal(n,2);assert.equal(r.attempts,2);assert.deepEqual(r.data,{servers:[]});});
 test('registry retries are bounded and never retry unsafe destinations or metadata rejection',async()=>{let n=0;await assert.rejects(readRegistry('https://registry.modelcontextprotocol.io/v0.1/servers',async()=>{n++;throw new DOMException('timeout','AbortError');}),{code:'REGISTRY_TIMEOUT'});assert.equal(n,2);n=0;await assert.rejects(readRegistry('https://untrusted.example/',async()=>{n++;return new Response('{}');}),/NETWORK_DESTINATION_REJECTED/);assert.equal(n,0);const r=await readRegistry('https://registry.modelcontextprotocol.io/v0.1/servers',async()=>{n++;return new Response('{}',{status:404});});assert.equal(r.status,404);assert.equal(n,1);});
 
+test('transient public GitHub link 503 is retried with the same strict origin policy',async()=>{
+ const url='https://github.com/reflectme-source/acqpath-distribution/blob/main/examples/README.md';
+ let n=0;const delays=[];
+ const r=await readExternalLink(url,{allowedOrigins:['https://github.com'],sleep:async ms=>delays.push(ms),fetcher:async()=>new Response(++n===1?'unavailable':'ok',{status:n===1?503:200})});
+ assert.equal(r.http,200);assert.equal(r.attempts,2);assert.equal(n,2);assert.deepEqual(delays,[300]);
+});
+test('external public link permanent 404 is never retried',async()=>{
+ let n=0;const r=await readExternalLink('https://github.com/reflectme-source/missing',{allowedOrigins:['https://github.com'],sleep:async()=>{},fetcher:async()=>{n++;return new Response('missing',{status:404});}});
+ assert.equal(r.http,404);assert.equal(r.attempts,1);assert.equal(n,1);
+});
+test('external public link persistent 503 fails after three bounded attempts',async()=>{
+ let n=0;const r=await readExternalLink('https://github.com/reflectme-source/unavailable',{allowedOrigins:['https://github.com'],sleep:async()=>{},fetcher:async()=>{n++;return new Response('unavailable',{status:503});}});
+ assert.equal(r.http,503);assert.equal(r.attempts,3);assert.equal(n,3);
+});
+test('external link retry never bypasses exact origin or follows cross-origin redirects',async()=>{
+ let n=0;const fetcher=async()=>{n++;return new Response('',{status:302,headers:{location:'https://untrusted.example'}});};
+ await assert.rejects(readExternalLink('https://github.com/reflectme-source/x',{allowedOrigins:['https://github.com'],fetcher,sleep:async()=>{}}),/UNEXPECTED_PUBLIC_ORIGIN/);
+ assert.equal(n,1);
+ await assert.rejects(readExternalLink('https://github.com.evil.example/x',{allowedOrigins:['https://github.com'],fetcher,sleep:async()=>{}}),/UNEXPECTED_PUBLIC_ORIGIN/);
+ assert.equal(n,1);
+});
 test('Agent402 marketplace links are allowed without widening similarly named hosts',async()=>{const origins=publicExternalLinkOrigins({apiOrigin:'https://api.getacqpath.com'});const ok=await fetchPublicFile('https://agent402.tools/api/index?seller=api.getacqpath.com',{allowedOrigins:origins,fetcher:async()=>new Response('ok')});assert.equal(ok.http,200);await assert.rejects(fetchPublicFile('https://agent402.tools.evil.example/api/index',{allowedOrigins:origins,fetcher:async()=>new Response('bad')}),/UNEXPECTED_PUBLIC_ORIGIN/);});
 test('status page readback allows only the exact HTTPS origin',async()=>{const origins=publicExternalLinkOrigins({apiOrigin:'https://api.getacqpath.com'});assert.ok(origins.includes('https://status.getacqpath.com'));const ok=await fetchPublicFile('https://status.getacqpath.com/',{allowedOrigins:origins,fetcher:async()=>new Response('healthy')});assert.equal(ok.http,200);for(const url of ['https://status.getacqpath.com.evil.example/','http://status.getacqpath.com/'])await assert.rejects(fetchPublicFile(url,{allowedOrigins:origins,fetcher:async()=>new Response('unexpected')}),/UNEXPECTED_PUBLIC_ORIGIN/);await assert.rejects(fetchPublicFile('https://status.getacqpath.com/',{allowedOrigins:origins,fetcher:async()=>new Response('',{status:302,headers:{location:'https://untrusted.example/'}})}),/UNEXPECTED_PUBLIC_ORIGIN/);});
 test('Agent402 link checks still reject cross-origin redirects',async()=>{const origins=publicExternalLinkOrigins({apiOrigin:'https://api.getacqpath.com'});await assert.rejects(fetchPublicFile('https://agent402.tools/api/index?seller=api.getacqpath.com',{allowedOrigins:origins,fetcher:async()=>new Response('',{status:302,headers:{location:'https://untrusted.example/'}})}),/UNEXPECTED_PUBLIC_ORIGIN/);});
