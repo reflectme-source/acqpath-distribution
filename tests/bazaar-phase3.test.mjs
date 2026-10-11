@@ -55,3 +55,5 @@ test('Public validation remains disabled until a reviewed nonprivate candidate e
  for(const url of ['https://api.getacqpath.com/v1/rights/reports/'+'a'.repeat(48),'https://api.getacqpath.com/api/admin/test','https://api.getacqpath.com/v1/rights/reports/:quote_id','https://attacker.example.org/report'])await assert.rejects(()=>validatePublicCandidate({status:'READY FOR TESTNET',canonicalPublicResourceUrl:url},{fetcher}),/NONPUBLIC_PROBE_REFUSED/);
  assert.equal(calls,0);
 });
+
+test('Source-only Partner Observe adapter is the only new script allowed as a static artifact',()=>{assert.equal(artifactPath('examples/partner-observe.mjs'),'examples/partner-observe.mjs');assert.equal(artifactPath('examples/PARTNER-OBSERVE.md'),'examples/PARTNER-OBSERVE.md');assert.throws(()=>artifactPath('examples/partner-observe-fake.mjs'),/NON_STATIC_DOCS_FILE/);assert.throws(()=>artifactPath('src/worker.mjs'),/NON_STATIC_DOCS_FILE/);});
