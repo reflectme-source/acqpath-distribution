@@ -7,6 +7,22 @@
     "hero": true,
     "sections": [
       {
+        "title": "Live source eligibility and trust boundary",
+        "paragraphs": [
+          "LIVE: Secure Preflight and Gateway accept eligible public HTTPS URLs through a signed, public-network-only relay. The four origins in reviewed coverage are independently reviewed sources, not the dynamic eligibility limit. Stock x402 remains reviewed-origins-only. Robots, access restrictions, per-origin quotas and UNKNOWN outcomes still apply."
+        ],
+        "links": [
+          {
+            "label": "Current production capabilities",
+            "href": "https://api.getacqpath.com/v1/capabilities"
+          },
+          {
+            "label": "Eligible URL and reviewed coverage",
+            "href": "/scope"
+          }
+        ]
+      },
+      {
         "title": "Separate stock marketplace endpoint",
         "paragraphs": [
           "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies are not supported by this integration.",
@@ -39,8 +55,8 @@
       {
         "title": "Rights Gateway: select the paid operation",
         "paragraphs": [
-          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
-          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "LIVE Base USDC pricing: Secure Preflight 0.02 fresh / 0.05 deep per prepared settled report; Ingestion Gate 0.04 + 0.02 per distinct URL fresh or 0.06 + 0.04 per URL deep (1–4 eligible public HTTPS URLs); Revalidation 0.03 fresh / 0.06 deep. Stock x402 stays fresh-only 0.02 and reviewed-only. No new subscription, prepaid, API-key billing or invoicing plan is active.",
+          "A Secure Preflight may offer a disclosed paid UNKNOWN or no-declaration diagnostic after meaningful public-source observation. An outage with no usable source observation, invalid URL or exhausted safety budget is not billable Preflight. Gateway pricing covers a bounded observation attempt after verified authorization. UNKNOWN never authorizes content use.",
           "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies are not supported by this integration."
         ],
         "links": [
@@ -125,8 +141,8 @@
       {
         "title": "Know the scope before buying",
         "paragraphs": [
-          "Current observed origins: medium.com, theguardian.com, rslstandard.org and rslcollective.org. An origin match does not guarantee usable declarations for its pages.",
-          "UNKNOWN, missing declarations, unsupported origins and LICENSE_REQUIRED do not authorize use. A report records observed RSL declarations; it is not a license or legal clearance."
+          "LIVE: Secure Preflight and Gateway accept eligible public HTTPS URLs through a signed, public-network-only relay. The four origins in reviewed coverage are independently reviewed sources, not the dynamic eligibility limit. Stock x402 remains reviewed-origins-only. Robots, access restrictions, per-origin quotas and UNKNOWN outcomes still apply.",
+          "A report may be UNKNOWN, unavailable or incomplete. No observation is a license or legal clearance. The caller policy remains authoritative."
         ],
         "links": [
           {
@@ -163,6 +179,22 @@
     "title": "Add source-rights evidence without replacing your policy engine",
     "description": "Start with 25 real events. AcqPath supplies signed external source-rights evidence; your gateway, crawler, RAG pipeline or policy engine keeps control of the decision.",
     "sections": [
+      {
+        "title": "Live source eligibility and trust boundary",
+        "paragraphs": [
+          "LIVE: Secure Preflight and Gateway accept eligible public HTTPS URLs through a signed, public-network-only relay. The four origins in reviewed coverage are independently reviewed sources, not the dynamic eligibility limit. Stock x402 remains reviewed-origins-only. Robots, access restrictions, per-origin quotas and UNKNOWN outcomes still apply."
+        ],
+        "links": [
+          {
+            "label": "Current production capabilities",
+            "href": "https://api.getacqpath.com/v1/capabilities"
+          },
+          {
+            "label": "Eligible URL and reviewed coverage",
+            "href": "/scope"
+          }
+        ]
+      },
       {
         "title": "Start with evidence. Decide on enforcement later.",
         "paragraphs": [
@@ -245,8 +277,8 @@
       {
         "title": "Current production boundary",
         "paragraphs": [
-          "The public Ingestion Gate is intentionally bounded to 1–4 reviewed URLs per operation and current reviewed-origin coverage. Unsupported origins remain unsupported; AcqPath is not an arbitrary-URL proxy.",
-          "The future high-volume partner path is a reviewed partner-origin eligibility layer plus asynchronous batch jobs with idempotency, partial-failure semantics, quotas and signed results. That is a planned scale path, not a capability claimed by the current public endpoint."
+          "Secure Preflight and Gateway accept eligible public HTTPS origins beyond the four independently reviewed publishers, with signed relay, robots/DNS/TLS controls and bounded per-origin budgets. Stock x402 is a separate reviewed-only route. Missing declarations can yield UNKNOWN.",
+          "A customer-owned Base USDC x402 buyer is still required for paid reports. Walletless API keys, prepaid credits, invoices and subscriptions are not live. A neutral adapter can map URLs and a configured shadow-mode purpose without replacing the partner policy engine."
         ],
         "links": [
           {
@@ -330,6 +362,22 @@
     "description": "Run AcqPath in parallel, preserve the existing result path, and collect signed evidence for a fast integration proof.",
     "sections": [
       {
+        "title": "Live source eligibility and trust boundary",
+        "paragraphs": [
+          "LIVE: Secure Preflight and Gateway accept eligible public HTTPS URLs through a signed, public-network-only relay. The four origins in reviewed coverage are independently reviewed sources, not the dynamic eligibility limit. Stock x402 remains reviewed-origins-only. Robots, access restrictions, per-origin quotas and UNKNOWN outcomes still apply."
+        ],
+        "links": [
+          {
+            "label": "Current production capabilities",
+            "href": "https://api.getacqpath.com/v1/capabilities"
+          },
+          {
+            "label": "Eligible URL and reviewed coverage",
+            "href": "/scope"
+          }
+        ]
+      },
+      {
         "title": "Execution contract",
         "paragraphs": [
           "The existing tool call, crawl or ingestion operation remains authoritative during shadow mode. Evidence resolution runs beside it and writes a separate audit event. Evidence failure must not change the existing result in Observe mode.",
@@ -356,6 +404,19 @@
           "resolved means verified evidence is available. unavailable means the provider or source could not produce a usable result. unsupported means the requested purpose or source is outside the supported contract. invalid means evidence failed validation.",
           "A semantic unknown is still resolved evidence with statement unknown. Do not collapse unknown and unavailable into the same state."
         ]
+      },
+      {
+        "title": "Deployment-configured purpose is explicit",
+        "paragraphs": [
+          "When a tool call has a public URL but no declared user intent, the owning customer may explicitly set ai-input or another supported purpose as a deployment default for Observe only. The audit record must label purpose_source=configured_default.",
+          "Do not replace an explicitly invalid purpose with a default. This is not authorization for new content use, autonomous purchasing or enforcement. Paid buyers use the separate x402 flow."
+        ],
+        "links": [
+          {
+            "label": "Observe adapter",
+            "href": "/examples/PARTNER-OBSERVE.md"
+          }
+        ]
       }
     ]
   },
@@ -366,6 +427,35 @@
     "title": "Partner Integration Kit",
     "description": "Architecture, evidence schema, shadow patterns and copy-paste adapters for a 30-minute AcqPath partner integration.",
     "sections": [
+      {
+        "title": "Live source eligibility and trust boundary",
+        "paragraphs": [
+          "LIVE: Secure Preflight and Gateway accept eligible public HTTPS URLs through a signed, public-network-only relay. The four origins in reviewed coverage are independently reviewed sources, not the dynamic eligibility limit. Stock x402 remains reviewed-origins-only. Robots, access restrictions, per-origin quotas and UNKNOWN outcomes still apply."
+        ],
+        "links": [
+          {
+            "label": "Current production capabilities",
+            "href": "https://api.getacqpath.com/v1/capabilities"
+          },
+          {
+            "label": "Eligible URL and reviewed coverage",
+            "href": "/scope"
+          }
+        ]
+      },
+      {
+        "title": "Purpose for URL-bearing tools without user intent",
+        "paragraphs": [
+          "A partner may explicitly configure ai-input as a deployment-level shadow default. Mark the resulting purpose_source as configured_default in the audit context. Never infer user intent from a tool name or override a malformed explicit purpose.",
+          "The tool continues unchanged in Observe mode. AcqPath provides evidence, not a policy verdict; real paid evidence requires customer-controlled x402 authorization and budget limits."
+        ],
+        "links": [
+          {
+            "label": "Partner Observe adapter reference",
+            "href": "/examples/PARTNER-OBSERVE.md"
+          }
+        ]
+      },
       {
         "title": "Architecture",
         "paragraphs": [
@@ -434,8 +524,14 @@
       {
         "title": "Production limits you should design around",
         "paragraphs": [
-          "Current public coverage is explicit and reviewed. The public Ingestion Gate accepts at most four unique reviewed URLs. Use current capabilities and OpenAPI as the source of truth.",
-          "Do not design a high-volume integration around arbitrary unreviewed URLs. The scale path requires partner-scoped origin eligibility and asynchronous batch semantics."
+          "Dynamic HTTPS eligibility is live on Secure Preflight and Gateway with bounded global/per-origin quotas. The four reviewed origin entries remain a separate set, and Stock x402 retains only those four. Do not promise universal crawl access or report availability.",
+          "Integrations require backpressure, a stable operation identity, private recovery checkpoints and customer-authorized payment budget. API-key billing, subscriptions and invoices are not active. See the portable Observe adapter."
+        ],
+        "links": [
+          {
+            "label": "Observe adapter and fixtures",
+            "href": "/examples/PARTNER-OBSERVE.md"
+          }
         ]
       }
     ]
@@ -524,6 +620,22 @@
     "description": "Attach verified rights evidence to each eligible URL result without turning AcqPath into the crawler or policy engine.",
     "sections": [
       {
+        "title": "Live source eligibility and trust boundary",
+        "paragraphs": [
+          "LIVE: Secure Preflight and Gateway accept eligible public HTTPS URLs through a signed, public-network-only relay. The four origins in reviewed coverage are independently reviewed sources, not the dynamic eligibility limit. Stock x402 remains reviewed-origins-only. Robots, access restrictions, per-origin quotas and UNKNOWN outcomes still apply."
+        ],
+        "links": [
+          {
+            "label": "Current production capabilities",
+            "href": "https://api.getacqpath.com/v1/capabilities"
+          },
+          {
+            "label": "Eligible URL and reviewed coverage",
+            "href": "/scope"
+          }
+        ]
+      },
+      {
         "title": "Attach one field",
         "paragraphs": [
           "Keep the existing URL, content and metadata response. Add rightsEvidence containing the provider-neutral resolution for the explicit machine-use purpose.",
@@ -604,6 +716,22 @@
     "description": "Start with a free capability read. A fresh report is 0.02 USDC and a deep report is 0.05 USDC as observed; the signed quote controls the exact purchase.",
     "sections": [
       {
+        "title": "Live source eligibility and trust boundary",
+        "paragraphs": [
+          "LIVE: Secure Preflight and Gateway accept eligible public HTTPS URLs through a signed, public-network-only relay. The four origins in reviewed coverage are independently reviewed sources, not the dynamic eligibility limit. Stock x402 remains reviewed-origins-only. Robots, access restrictions, per-origin quotas and UNKNOWN outcomes still apply."
+        ],
+        "links": [
+          {
+            "label": "Current production capabilities",
+            "href": "https://api.getacqpath.com/v1/capabilities"
+          },
+          {
+            "label": "Eligible URL and reviewed coverage",
+            "href": "/scope"
+          }
+        ]
+      },
+      {
         "title": "Separate stock marketplace endpoint",
         "paragraphs": [
           "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies are not supported by this integration.",
@@ -619,8 +747,8 @@
       {
         "title": "Rights Gateway: select the paid operation",
         "paragraphs": [
-          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
-          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "LIVE Base USDC pricing: Secure Preflight 0.02 fresh / 0.05 deep per prepared settled report; Ingestion Gate 0.04 + 0.02 per distinct URL fresh or 0.06 + 0.04 per URL deep (1–4 eligible public HTTPS URLs); Revalidation 0.03 fresh / 0.06 deep. Stock x402 stays fresh-only 0.02 and reviewed-only. No new subscription, prepaid, API-key billing or invoicing plan is active.",
+          "A Secure Preflight may offer a disclosed paid UNKNOWN or no-declaration diagnostic after meaningful public-source observation. An outage with no usable source observation, invalid URL or exhausted safety budget is not billable Preflight. Gateway pricing covers a bounded observation attempt after verified authorization. UNKNOWN never authorizes content use.",
           "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies are not supported by this integration."
         ],
         "links": [
@@ -686,10 +814,10 @@
         ]
       },
       {
-        "title": "1. Check origin coverage and purpose",
+        "title": "1. Check eligibility and declare purpose",
         "paragraphs": [
-          "GET the current capability list before any quote. Use rights.preflight.v1 only when enabled.",
-          "Pass canonical HTTPS URLs without credentials, query, fragment, nonstandard port or encoded slash. Exact origin membership matters."
+          "Read /v1/capabilities. coverage_mode=PUBLIC_HTTPS_DYNAMIC_WITH_SAFETY_GATE and dynamic_public_https=true distinguish eligible public HTTPS from reviewed origins. Stock x402 remains reviewed-only.",
+          "Supply the intended purpose explicitly (ai-input, ai-index, ai-train or search). Use deployment defaults only when configured by the owning partner for Observe. Query, credentials, fragments, private IPs and nonstandard ports are rejected."
         ],
         "code": "GET https://api.getacqpath.com/v1/capabilities",
         "links": [
@@ -777,8 +905,8 @@
       {
         "title": "Rights Gateway: select the paid operation",
         "paragraphs": [
-          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
-          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "LIVE Base USDC pricing: Secure Preflight 0.02 fresh / 0.05 deep per prepared settled report; Ingestion Gate 0.04 + 0.02 per distinct URL fresh or 0.06 + 0.04 per URL deep (1–4 eligible public HTTPS URLs); Revalidation 0.03 fresh / 0.06 deep. Stock x402 stays fresh-only 0.02 and reviewed-only. No new subscription, prepaid, API-key billing or invoicing plan is active.",
+          "A Secure Preflight may offer a disclosed paid UNKNOWN or no-declaration diagnostic after meaningful public-source observation. An outage with no usable source observation, invalid URL or exhausted safety budget is not billable Preflight. Gateway pricing covers a bounded observation attempt after verified authorization. UNKNOWN never authorizes content use.",
           "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies are not supported by this integration."
         ],
         "links": [
@@ -859,8 +987,8 @@
       {
         "title": "Rights Gateway: select the paid operation",
         "paragraphs": [
-          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
-          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "LIVE Base USDC pricing: Secure Preflight 0.02 fresh / 0.05 deep per prepared settled report; Ingestion Gate 0.04 + 0.02 per distinct URL fresh or 0.06 + 0.04 per URL deep (1–4 eligible public HTTPS URLs); Revalidation 0.03 fresh / 0.06 deep. Stock x402 stays fresh-only 0.02 and reviewed-only. No new subscription, prepaid, API-key billing or invoicing plan is active.",
+          "A Secure Preflight may offer a disclosed paid UNKNOWN or no-declaration diagnostic after meaningful public-source observation. An outage with no usable source observation, invalid URL or exhausted safety budget is not billable Preflight. Gateway pricing covers a bounded observation attempt after verified authorization. UNKNOWN never authorizes content use.",
           "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies are not supported by this integration."
         ],
         "links": [
@@ -961,10 +1089,26 @@
     "description": "Explicit origin coverage and conservative decisions. Missing or unsupported evidence never becomes permission.",
     "sections": [
       {
+        "title": "Live source eligibility and trust boundary",
+        "paragraphs": [
+          "LIVE: Secure Preflight and Gateway accept eligible public HTTPS URLs through a signed, public-network-only relay. The four origins in reviewed coverage are independently reviewed sources, not the dynamic eligibility limit. Stock x402 remains reviewed-origins-only. Robots, access restrictions, per-origin quotas and UNKNOWN outcomes still apply."
+        ],
+        "links": [
+          {
+            "label": "Current production capabilities",
+            "href": "https://api.getacqpath.com/v1/capabilities"
+          },
+          {
+            "label": "Eligible URL and reviewed coverage",
+            "href": "/scope"
+          }
+        ]
+      },
+      {
         "title": "Rights Gateway: select the paid operation",
         "paragraphs": [
-          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
-          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "LIVE Base USDC pricing: Secure Preflight 0.02 fresh / 0.05 deep per prepared settled report; Ingestion Gate 0.04 + 0.02 per distinct URL fresh or 0.06 + 0.04 per URL deep (1–4 eligible public HTTPS URLs); Revalidation 0.03 fresh / 0.06 deep. Stock x402 stays fresh-only 0.02 and reviewed-only. No new subscription, prepaid, API-key billing or invoicing plan is active.",
+          "A Secure Preflight may offer a disclosed paid UNKNOWN or no-declaration diagnostic after meaningful public-source observation. An outage with no usable source observation, invalid URL or exhausted safety budget is not billable Preflight. Gateway pricing covers a bounded observation attempt after verified authorization. UNKNOWN never authorizes content use.",
           "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies are not supported by this integration."
         ],
         "links": [
@@ -981,8 +1125,8 @@
       {
         "title": "Observed coverage",
         "paragraphs": [
-          "Observed 2026-09-10T13:40:17.531Z: medium.com, theguardian.com, rslstandard.org, rslcollective.org. Re-read live capabilities; this is a dated snapshot.",
-          "Coverage accepts an exact origin, not every subdomain. A page on an allowed origin may lack verifiable declarations."
+          "Reviewed exact origins: medium.com, theguardian.com, rslstandard.org and rslcollective.org. These four origin entries are not the total eligible HTTPS source universe. Read coverage_mode and dynamic_public_https in production capabilities.",
+          "Dynamic acceptance has public-network restrictions, robots controls and bounded global/per-origin budgets. Some sources expose no verifiable declaration. Stock x402 only supports reviewed origins."
         ],
         "links": [
           {
@@ -1005,8 +1149,8 @@
       {
         "title": "What is not offered",
         "paragraphs": [
-          "No universal crawl permission check, general web coverage, automatic license acquisition, batch endpoint, provider routing, paid MCP delivery or automatic refund is advertised.",
-          "A signature proves what AcqPath signed. Reconciliation was reported degraded; a successful public health check does not establish full purchase recovery or capacity."
+          "No unrestricted crawl, guaranteed source access, license acquisition, ownership verification, provider-routing purchase, paid MCP delivery, automatic refund or legal clearance is offered. Dynamic HTTPS is safety-gated evidence collection, not permission for all websites.",
+          "One analysis may require multiple public metadata fetches. Current quotas and the single Railway relay have not been load-certified for 100,000 URLs per month. A signed report is not independent on-chain reconciliation."
         ]
       }
     ]
@@ -1018,10 +1162,26 @@
     "description": "Pay per prepared rights report on Base. Current observed prices stay unchanged; verify the signed quote before authorizing a purchase.",
     "sections": [
       {
+        "title": "Live source eligibility and trust boundary",
+        "paragraphs": [
+          "LIVE: Secure Preflight and Gateway accept eligible public HTTPS URLs through a signed, public-network-only relay. The four origins in reviewed coverage are independently reviewed sources, not the dynamic eligibility limit. Stock x402 remains reviewed-origins-only. Robots, access restrictions, per-origin quotas and UNKNOWN outcomes still apply."
+        ],
+        "links": [
+          {
+            "label": "Current production capabilities",
+            "href": "https://api.getacqpath.com/v1/capabilities"
+          },
+          {
+            "label": "Eligible URL and reviewed coverage",
+            "href": "/scope"
+          }
+        ]
+      },
+      {
         "title": "Rights Gateway: select the paid operation",
         "paragraphs": [
-          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
-          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "LIVE Base USDC pricing: Secure Preflight 0.02 fresh / 0.05 deep per prepared settled report; Ingestion Gate 0.04 + 0.02 per distinct URL fresh or 0.06 + 0.04 per URL deep (1–4 eligible public HTTPS URLs); Revalidation 0.03 fresh / 0.06 deep. Stock x402 stays fresh-only 0.02 and reviewed-only. No new subscription, prepaid, API-key billing or invoicing plan is active.",
+          "A Secure Preflight may offer a disclosed paid UNKNOWN or no-declaration diagnostic after meaningful public-source observation. An outage with no usable source observation, invalid URL or exhausted safety budget is not billable Preflight. Gateway pricing covers a bounded observation attempt after verified authorization. UNKNOWN never authorizes content use.",
           "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies are not supported by this integration."
         ],
         "links": [
@@ -1038,8 +1198,8 @@
       {
         "title": "Explicit report prices",
         "paragraphs": [
-          "Fresh: 20,000 micro-USDC (0.02 USDC). Deep: 50,000 micro-USDC (0.05 USDC). Observed 2026-09-10T13:40:17.531Z.",
-          "The report is the product. You do not buy third-party content or a license to it. The signed quote fixes amount, recipient, network and expiry."
+          "LIVE Base USDC pricing: Secure Preflight 0.02 fresh / 0.05 deep per prepared settled report; Ingestion Gate 0.04 + 0.02 per distinct URL fresh or 0.06 + 0.04 per URL deep (1–4 eligible public HTTPS URLs); Revalidation 0.03 fresh / 0.06 deep. Stock x402 stays fresh-only 0.02 and reviewed-only. No new subscription, prepaid, API-key billing or invoicing plan is active.",
+          "The signed prepared quote controls the exact amount, network and recipient. AcqPath does not sell a license to publisher content."
         ],
         "links": [
           {
@@ -1055,8 +1215,8 @@
       {
         "title": "Unavailability and diagnostic value",
         "paragraphs": [
-          "No verifiable declaration: unavailable result with no report fee. A disclosed UNKNOWN report may still be available for purchase; buy only when diagnostic evidence has value for your task.",
-          "Set both per-report and per-task limits. Keep integer micro-USDC values; never let retrieved content raise the budget."
+          "A Secure Preflight may offer a disclosed paid UNKNOWN or no-declaration diagnostic after meaningful public-source observation. An outage with no usable source observation, invalid URL or exhausted safety budget is not billable Preflight. Gateway pricing covers a bounded observation attempt after verified authorization. UNKNOWN never authorizes content use.",
+          "No Stripe Checkout, API key, prepaid credits, subscription, walletless invoice or volume plan is live. Those are isolated design work pending certification."
         ]
       },
       {
@@ -1090,8 +1250,8 @@
       {
         "title": "Rights Gateway: select the paid operation",
         "paragraphs": [
-          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
-          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "LIVE Base USDC pricing: Secure Preflight 0.02 fresh / 0.05 deep per prepared settled report; Ingestion Gate 0.04 + 0.02 per distinct URL fresh or 0.06 + 0.04 per URL deep (1–4 eligible public HTTPS URLs); Revalidation 0.03 fresh / 0.06 deep. Stock x402 stays fresh-only 0.02 and reviewed-only. No new subscription, prepaid, API-key billing or invoicing plan is active.",
+          "A Secure Preflight may offer a disclosed paid UNKNOWN or no-declaration diagnostic after meaningful public-source observation. An outage with no usable source observation, invalid URL or exhausted safety budget is not billable Preflight. Gateway pricing covers a bounded observation attempt after verified authorization. UNKNOWN never authorizes content use.",
           "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies are not supported by this integration."
         ],
         "links": [
@@ -1179,8 +1339,8 @@
       {
         "title": "Rights Gateway: select the paid operation",
         "paragraphs": [
-          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
-          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "LIVE Base USDC pricing: Secure Preflight 0.02 fresh / 0.05 deep per prepared settled report; Ingestion Gate 0.04 + 0.02 per distinct URL fresh or 0.06 + 0.04 per URL deep (1–4 eligible public HTTPS URLs); Revalidation 0.03 fresh / 0.06 deep. Stock x402 stays fresh-only 0.02 and reviewed-only. No new subscription, prepaid, API-key billing or invoicing plan is active.",
+          "A Secure Preflight may offer a disclosed paid UNKNOWN or no-declaration diagnostic after meaningful public-source observation. An outage with no usable source observation, invalid URL or exhausted safety budget is not billable Preflight. Gateway pricing covers a bounded observation attempt after verified authorization. UNKNOWN never authorizes content use.",
           "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies are not supported by this integration."
         ],
         "links": [
@@ -1261,8 +1421,8 @@
       {
         "title": "Rights Gateway: select the paid operation",
         "paragraphs": [
-          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
-          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "LIVE Base USDC pricing: Secure Preflight 0.02 fresh / 0.05 deep per prepared settled report; Ingestion Gate 0.04 + 0.02 per distinct URL fresh or 0.06 + 0.04 per URL deep (1–4 eligible public HTTPS URLs); Revalidation 0.03 fresh / 0.06 deep. Stock x402 stays fresh-only 0.02 and reviewed-only. No new subscription, prepaid, API-key billing or invoicing plan is active.",
+          "A Secure Preflight may offer a disclosed paid UNKNOWN or no-declaration diagnostic after meaningful public-source observation. An outage with no usable source observation, invalid URL or exhausted safety budget is not billable Preflight. Gateway pricing covers a bounded observation attempt after verified authorization. UNKNOWN never authorizes content use.",
           "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies are not supported by this integration."
         ],
         "links": [
@@ -1323,8 +1483,8 @@
       {
         "title": "Rights Gateway: select the paid operation",
         "paragraphs": [
-          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
-          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "LIVE Base USDC pricing: Secure Preflight 0.02 fresh / 0.05 deep per prepared settled report; Ingestion Gate 0.04 + 0.02 per distinct URL fresh or 0.06 + 0.04 per URL deep (1–4 eligible public HTTPS URLs); Revalidation 0.03 fresh / 0.06 deep. Stock x402 stays fresh-only 0.02 and reviewed-only. No new subscription, prepaid, API-key billing or invoicing plan is active.",
+          "A Secure Preflight may offer a disclosed paid UNKNOWN or no-declaration diagnostic after meaningful public-source observation. An outage with no usable source observation, invalid URL or exhausted safety budget is not billable Preflight. Gateway pricing covers a bounded observation attempt after verified authorization. UNKNOWN never authorizes content use.",
           "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies are not supported by this integration."
         ],
         "links": [
@@ -1385,8 +1545,8 @@
       {
         "title": "Rights Gateway: select the paid operation",
         "paragraphs": [
-          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
-          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "LIVE Base USDC pricing: Secure Preflight 0.02 fresh / 0.05 deep per prepared settled report; Ingestion Gate 0.04 + 0.02 per distinct URL fresh or 0.06 + 0.04 per URL deep (1–4 eligible public HTTPS URLs); Revalidation 0.03 fresh / 0.06 deep. Stock x402 stays fresh-only 0.02 and reviewed-only. No new subscription, prepaid, API-key billing or invoicing plan is active.",
+          "A Secure Preflight may offer a disclosed paid UNKNOWN or no-declaration diagnostic after meaningful public-source observation. An outage with no usable source observation, invalid URL or exhausted safety budget is not billable Preflight. Gateway pricing covers a bounded observation attempt after verified authorization. UNKNOWN never authorizes content use.",
           "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies are not supported by this integration."
         ],
         "links": [
@@ -1447,8 +1607,8 @@
       {
         "title": "Rights Gateway: select the paid operation",
         "paragraphs": [
-          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
-          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "LIVE Base USDC pricing: Secure Preflight 0.02 fresh / 0.05 deep per prepared settled report; Ingestion Gate 0.04 + 0.02 per distinct URL fresh or 0.06 + 0.04 per URL deep (1–4 eligible public HTTPS URLs); Revalidation 0.03 fresh / 0.06 deep. Stock x402 stays fresh-only 0.02 and reviewed-only. No new subscription, prepaid, API-key billing or invoicing plan is active.",
+          "A Secure Preflight may offer a disclosed paid UNKNOWN or no-declaration diagnostic after meaningful public-source observation. An outage with no usable source observation, invalid URL or exhausted safety budget is not billable Preflight. Gateway pricing covers a bounded observation attempt after verified authorization. UNKNOWN never authorizes content use.",
           "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies are not supported by this integration."
         ],
         "links": [
@@ -1509,8 +1669,8 @@
       {
         "title": "Rights Gateway: select the paid operation",
         "paragraphs": [
-          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
-          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "LIVE Base USDC pricing: Secure Preflight 0.02 fresh / 0.05 deep per prepared settled report; Ingestion Gate 0.04 + 0.02 per distinct URL fresh or 0.06 + 0.04 per URL deep (1–4 eligible public HTTPS URLs); Revalidation 0.03 fresh / 0.06 deep. Stock x402 stays fresh-only 0.02 and reviewed-only. No new subscription, prepaid, API-key billing or invoicing plan is active.",
+          "A Secure Preflight may offer a disclosed paid UNKNOWN or no-declaration diagnostic after meaningful public-source observation. An outage with no usable source observation, invalid URL or exhausted safety budget is not billable Preflight. Gateway pricing covers a bounded observation attempt after verified authorization. UNKNOWN never authorizes content use.",
           "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies are not supported by this integration."
         ],
         "links": [
@@ -1571,8 +1731,8 @@
       {
         "title": "Rights Gateway: select the paid operation",
         "paragraphs": [
-          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
-          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "LIVE Base USDC pricing: Secure Preflight 0.02 fresh / 0.05 deep per prepared settled report; Ingestion Gate 0.04 + 0.02 per distinct URL fresh or 0.06 + 0.04 per URL deep (1–4 eligible public HTTPS URLs); Revalidation 0.03 fresh / 0.06 deep. Stock x402 stays fresh-only 0.02 and reviewed-only. No new subscription, prepaid, API-key billing or invoicing plan is active.",
+          "A Secure Preflight may offer a disclosed paid UNKNOWN or no-declaration diagnostic after meaningful public-source observation. An outage with no usable source observation, invalid URL or exhausted safety budget is not billable Preflight. Gateway pricing covers a bounded observation attempt after verified authorization. UNKNOWN never authorizes content use.",
           "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies are not supported by this integration."
         ],
         "links": [
@@ -1628,8 +1788,8 @@
       {
         "title": "Rights Gateway: select the paid operation",
         "paragraphs": [
-          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
-          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "LIVE Base USDC pricing: Secure Preflight 0.02 fresh / 0.05 deep per prepared settled report; Ingestion Gate 0.04 + 0.02 per distinct URL fresh or 0.06 + 0.04 per URL deep (1–4 eligible public HTTPS URLs); Revalidation 0.03 fresh / 0.06 deep. Stock x402 stays fresh-only 0.02 and reviewed-only. No new subscription, prepaid, API-key billing or invoicing plan is active.",
+          "A Secure Preflight may offer a disclosed paid UNKNOWN or no-declaration diagnostic after meaningful public-source observation. An outage with no usable source observation, invalid URL or exhausted safety budget is not billable Preflight. Gateway pricing covers a bounded observation attempt after verified authorization. UNKNOWN never authorizes content use.",
           "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies are not supported by this integration."
         ],
         "links": [
@@ -1685,8 +1845,8 @@
       {
         "title": "Rights Gateway: select the paid operation",
         "paragraphs": [
-          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
-          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "LIVE Base USDC pricing: Secure Preflight 0.02 fresh / 0.05 deep per prepared settled report; Ingestion Gate 0.04 + 0.02 per distinct URL fresh or 0.06 + 0.04 per URL deep (1–4 eligible public HTTPS URLs); Revalidation 0.03 fresh / 0.06 deep. Stock x402 stays fresh-only 0.02 and reviewed-only. No new subscription, prepaid, API-key billing or invoicing plan is active.",
+          "A Secure Preflight may offer a disclosed paid UNKNOWN or no-declaration diagnostic after meaningful public-source observation. An outage with no usable source observation, invalid URL or exhausted safety budget is not billable Preflight. Gateway pricing covers a bounded observation attempt after verified authorization. UNKNOWN never authorizes content use.",
           "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies are not supported by this integration."
         ],
         "links": [
@@ -1742,8 +1902,8 @@
       {
         "title": "Rights Gateway: select the paid operation",
         "paragraphs": [
-          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
-          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "LIVE Base USDC pricing: Secure Preflight 0.02 fresh / 0.05 deep per prepared settled report; Ingestion Gate 0.04 + 0.02 per distinct URL fresh or 0.06 + 0.04 per URL deep (1–4 eligible public HTTPS URLs); Revalidation 0.03 fresh / 0.06 deep. Stock x402 stays fresh-only 0.02 and reviewed-only. No new subscription, prepaid, API-key billing or invoicing plan is active.",
+          "A Secure Preflight may offer a disclosed paid UNKNOWN or no-declaration diagnostic after meaningful public-source observation. An outage with no usable source observation, invalid URL or exhausted safety budget is not billable Preflight. Gateway pricing covers a bounded observation attempt after verified authorization. UNKNOWN never authorizes content use.",
           "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies are not supported by this integration."
         ],
         "links": [
@@ -1799,8 +1959,8 @@
       {
         "title": "Rights Gateway: select the paid operation",
         "paragraphs": [
-          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
-          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "LIVE Base USDC pricing: Secure Preflight 0.02 fresh / 0.05 deep per prepared settled report; Ingestion Gate 0.04 + 0.02 per distinct URL fresh or 0.06 + 0.04 per URL deep (1–4 eligible public HTTPS URLs); Revalidation 0.03 fresh / 0.06 deep. Stock x402 stays fresh-only 0.02 and reviewed-only. No new subscription, prepaid, API-key billing or invoicing plan is active.",
+          "A Secure Preflight may offer a disclosed paid UNKNOWN or no-declaration diagnostic after meaningful public-source observation. An outage with no usable source observation, invalid URL or exhausted safety budget is not billable Preflight. Gateway pricing covers a bounded observation attempt after verified authorization. UNKNOWN never authorizes content use.",
           "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies are not supported by this integration."
         ],
         "links": [
@@ -1856,8 +2016,8 @@
       {
         "title": "Rights Gateway: select the paid operation",
         "paragraphs": [
-          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
-          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "LIVE Base USDC pricing: Secure Preflight 0.02 fresh / 0.05 deep per prepared settled report; Ingestion Gate 0.04 + 0.02 per distinct URL fresh or 0.06 + 0.04 per URL deep (1–4 eligible public HTTPS URLs); Revalidation 0.03 fresh / 0.06 deep. Stock x402 stays fresh-only 0.02 and reviewed-only. No new subscription, prepaid, API-key billing or invoicing plan is active.",
+          "A Secure Preflight may offer a disclosed paid UNKNOWN or no-declaration diagnostic after meaningful public-source observation. An outage with no usable source observation, invalid URL or exhausted safety budget is not billable Preflight. Gateway pricing covers a bounded observation attempt after verified authorization. UNKNOWN never authorizes content use.",
           "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies are not supported by this integration."
         ],
         "links": [
@@ -1958,8 +2118,8 @@
       {
         "title": "Rights Gateway: select the paid operation",
         "paragraphs": [
-          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
-          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "LIVE Base USDC pricing: Secure Preflight 0.02 fresh / 0.05 deep per prepared settled report; Ingestion Gate 0.04 + 0.02 per distinct URL fresh or 0.06 + 0.04 per URL deep (1–4 eligible public HTTPS URLs); Revalidation 0.03 fresh / 0.06 deep. Stock x402 stays fresh-only 0.02 and reviewed-only. No new subscription, prepaid, API-key billing or invoicing plan is active.",
+          "A Secure Preflight may offer a disclosed paid UNKNOWN or no-declaration diagnostic after meaningful public-source observation. An outage with no usable source observation, invalid URL or exhausted safety budget is not billable Preflight. Gateway pricing covers a bounded observation attempt after verified authorization. UNKNOWN never authorizes content use.",
           "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies are not supported by this integration."
         ],
         "links": [
@@ -2025,8 +2185,8 @@
       {
         "title": "Rights Gateway: select the paid operation",
         "paragraphs": [
-          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
-          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "LIVE Base USDC pricing: Secure Preflight 0.02 fresh / 0.05 deep per prepared settled report; Ingestion Gate 0.04 + 0.02 per distinct URL fresh or 0.06 + 0.04 per URL deep (1–4 eligible public HTTPS URLs); Revalidation 0.03 fresh / 0.06 deep. Stock x402 stays fresh-only 0.02 and reviewed-only. No new subscription, prepaid, API-key billing or invoicing plan is active.",
+          "A Secure Preflight may offer a disclosed paid UNKNOWN or no-declaration diagnostic after meaningful public-source observation. An outage with no usable source observation, invalid URL or exhausted safety budget is not billable Preflight. Gateway pricing covers a bounded observation attempt after verified authorization. UNKNOWN never authorizes content use.",
           "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies are not supported by this integration."
         ],
         "links": [
@@ -2092,8 +2252,8 @@
       {
         "title": "Rights Gateway: select the paid operation",
         "paragraphs": [
-          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
-          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "LIVE Base USDC pricing: Secure Preflight 0.02 fresh / 0.05 deep per prepared settled report; Ingestion Gate 0.04 + 0.02 per distinct URL fresh or 0.06 + 0.04 per URL deep (1–4 eligible public HTTPS URLs); Revalidation 0.03 fresh / 0.06 deep. Stock x402 stays fresh-only 0.02 and reviewed-only. No new subscription, prepaid, API-key billing or invoicing plan is active.",
+          "A Secure Preflight may offer a disclosed paid UNKNOWN or no-declaration diagnostic after meaningful public-source observation. An outage with no usable source observation, invalid URL or exhausted safety budget is not billable Preflight. Gateway pricing covers a bounded observation attempt after verified authorization. UNKNOWN never authorizes content use.",
           "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies are not supported by this integration."
         ],
         "links": [
@@ -2159,8 +2319,8 @@
       {
         "title": "Rights Gateway: select the paid operation",
         "paragraphs": [
-          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
-          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "LIVE Base USDC pricing: Secure Preflight 0.02 fresh / 0.05 deep per prepared settled report; Ingestion Gate 0.04 + 0.02 per distinct URL fresh or 0.06 + 0.04 per URL deep (1–4 eligible public HTTPS URLs); Revalidation 0.03 fresh / 0.06 deep. Stock x402 stays fresh-only 0.02 and reviewed-only. No new subscription, prepaid, API-key billing or invoicing plan is active.",
+          "A Secure Preflight may offer a disclosed paid UNKNOWN or no-declaration diagnostic after meaningful public-source observation. An outage with no usable source observation, invalid URL or exhausted safety budget is not billable Preflight. Gateway pricing covers a bounded observation attempt after verified authorization. UNKNOWN never authorizes content use.",
           "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies are not supported by this integration."
         ],
         "links": [
@@ -2226,8 +2386,8 @@
       {
         "title": "Rights Gateway: select the paid operation",
         "paragraphs": [
-          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
-          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "LIVE Base USDC pricing: Secure Preflight 0.02 fresh / 0.05 deep per prepared settled report; Ingestion Gate 0.04 + 0.02 per distinct URL fresh or 0.06 + 0.04 per URL deep (1–4 eligible public HTTPS URLs); Revalidation 0.03 fresh / 0.06 deep. Stock x402 stays fresh-only 0.02 and reviewed-only. No new subscription, prepaid, API-key billing or invoicing plan is active.",
+          "A Secure Preflight may offer a disclosed paid UNKNOWN or no-declaration diagnostic after meaningful public-source observation. An outage with no usable source observation, invalid URL or exhausted safety budget is not billable Preflight. Gateway pricing covers a bounded observation attempt after verified authorization. UNKNOWN never authorizes content use.",
           "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies are not supported by this integration."
         ],
         "links": [
@@ -2291,6 +2451,22 @@
     "description": "Account-free declared-rights evidence for autonomous content use. Start without payment and check client compatibility before spending.",
     "sections": [
       {
+        "title": "Live source eligibility and trust boundary",
+        "paragraphs": [
+          "LIVE: Secure Preflight and Gateway accept eligible public HTTPS URLs through a signed, public-network-only relay. The four origins in reviewed coverage are independently reviewed sources, not the dynamic eligibility limit. Stock x402 remains reviewed-origins-only. Robots, access restrictions, per-origin quotas and UNKNOWN outcomes still apply."
+        ],
+        "links": [
+          {
+            "label": "Current production capabilities",
+            "href": "https://api.getacqpath.com/v1/capabilities"
+          },
+          {
+            "label": "Eligible URL and reviewed coverage",
+            "href": "/scope"
+          }
+        ]
+      },
+      {
         "title": "Separate stock marketplace endpoint",
         "paragraphs": [
           "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies are not supported by this integration.",
@@ -2306,8 +2482,8 @@
       {
         "title": "Rights Gateway: select the paid operation",
         "paragraphs": [
-          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
-          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "LIVE Base USDC pricing: Secure Preflight 0.02 fresh / 0.05 deep per prepared settled report; Ingestion Gate 0.04 + 0.02 per distinct URL fresh or 0.06 + 0.04 per URL deep (1–4 eligible public HTTPS URLs); Revalidation 0.03 fresh / 0.06 deep. Stock x402 stays fresh-only 0.02 and reviewed-only. No new subscription, prepaid, API-key billing or invoicing plan is active.",
+          "A Secure Preflight may offer a disclosed paid UNKNOWN or no-declaration diagnostic after meaningful public-source observation. An outage with no usable source observation, invalid URL or exhausted safety budget is not billable Preflight. Gateway pricing covers a bounded observation attempt after verified authorization. UNKNOWN never authorizes content use.",
           "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies are not supported by this integration."
         ],
         "links": [
@@ -2456,10 +2632,26 @@
     "description": "Check up to four reviewed URLs before AI ingestion; detect observed policy changes on repeat use. Exact Base USDC pricing and verified TS/Python delivery.",
     "sections": [
       {
+        "title": "Live source eligibility and trust boundary",
+        "paragraphs": [
+          "LIVE: Secure Preflight and Gateway accept eligible public HTTPS URLs through a signed, public-network-only relay. The four origins in reviewed coverage are independently reviewed sources, not the dynamic eligibility limit. Stock x402 remains reviewed-origins-only. Robots, access restrictions, per-origin quotas and UNKNOWN outcomes still apply."
+        ],
+        "links": [
+          {
+            "label": "Current production capabilities",
+            "href": "https://api.getacqpath.com/v1/capabilities"
+          },
+          {
+            "label": "Eligible URL and reviewed coverage",
+            "href": "/scope"
+          }
+        ]
+      },
+      {
         "title": "Rights Gateway: select the paid operation",
         "paragraphs": [
-          "Preflight remains 0.02 USDC fresh / 0.05 deep for one resource. Ingestion Gate checks 1–4 unique reviewed URLs before RAG, AI input, training or indexing: fresh 0.04 + 0.02 per unique URL (0.06–0.12); deep 0.06 + 0.04 (0.10–0.22). Revalidation compares one resource with its authentic prior gateway checkpoint: 0.03 fresh / 0.06 deep. All prices are USDC on Base.",
-          "Gateway fees buy a bounded observation attempt, including UNKNOWN or unavailable sources. This differs from Preflight’s no-declaration/no-paid-offer behavior. Maximum four input entries, concurrency two, 24,576 request bytes; no domain-wide crawl. Missing evidence never grants permission.",
+          "LIVE Base USDC pricing: Secure Preflight 0.02 fresh / 0.05 deep per prepared settled report; Ingestion Gate 0.04 + 0.02 per distinct URL fresh or 0.06 + 0.04 per URL deep (1–4 eligible public HTTPS URLs); Revalidation 0.03 fresh / 0.06 deep. Stock x402 stays fresh-only 0.02 and reviewed-only. No new subscription, prepaid, API-key billing or invoicing plan is active.",
+          "A Secure Preflight may offer a disclosed paid UNKNOWN or no-declaration diagnostic after meaningful public-source observation. An outage with no usable source observation, invalid URL or exhausted safety budget is not billable Preflight. Gateway pricing covers a bounded observation attempt after verified authorization. UNKNOWN never authorizes content use.",
           "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies are not supported by this integration."
         ],
         "links": [
@@ -2501,7 +2693,7 @@
       {
         "title": "Work, freshness and recovery bounds",
         "paragraphs": [
-          "Four reviewed HTTPS origins: medium.com, theguardian.com, rslstandard.org and rslcollective.org. Fresh allows at most four upstream requests per resource; deep at most eight. Concurrent resource work is capped at two. Per-resource source deadline defaults to 12 seconds; four slow resources can take two waves. Resource work starts only after verified SIWX/payment authorization and durable reservations. No HTTP 403 bypass, private-IP access or unlimited crawl.",
+          "Secure Ingestion Gate accepts up to four eligible public HTTPS URLs per operation. Fresh allows at most four metadata fetches per resource; deep allows eight; concurrent resource work is capped at two. Dynamic origins use separate limits and a global Railway relay cap, and throughput at 100,000 URLs/month is not certified. No private-network access or unauthorized source bypass.",
           "Cache reuse exposes the original observation timestamp and age. Revalidation uses conditional requests and 304 when supported. Each item is bounded at 12,000 bytes and the gateway report at 52,000 bytes. A failed or oversized source produces UNKNOWN. A durable interrupted execution fails closed without automatic recomputation or settlement.",
           "Use the supplied TS/Python adapter and its private ACL-protected state directory. Files are not application-level encrypted. Keep original operation ID, normalized input and directory on retry. Never log signed artifacts, checkpoint state or private request context. The adapter verifies report, receipt and delivery binding; HTTP 200 alone is insufficient. Preserve pending state across rollback; an older server version may not understand new gateway journal records."
         ],

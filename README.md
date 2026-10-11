@@ -14,6 +14,14 @@ Check observed content-use declarations **before AI input, RAG indexing, trainin
 
 Fresh **0.02 USDC**; deep **0.05 USDC** under the current public contract. Read live [capabilities](https://api.getacqpath.com/v1/capabilities) for current coverage and verify the prepared signed quote before authorizing payment. Coverage is explicit and does not promise that every URL returns a purchasable or permissive report.
 
+## Live dynamic HTTPS and partner Observe mode
+
+Secure Preflight and Gateway now support eligible public HTTPS sources through a signed safety-gated relay. The four entries under reviewed coverage are distinct from this larger dynamic eligibility surface. Stock x402 is still reviewed-only. Observed UNKNOWN/no-declaration results can be billed when properly disclosed before payment; outages without meaningful observation cannot be charged as a completed Preflight. This is not a crawler, license or legal clearance. Current relay budgets do not certify 100k URLs/month.
+
+[Partner Observe adapter](examples/PARTNER-OBSERVE.md) | [Executable source](examples/partner-observe.mjs) | [Technical data handling](https://getacqpath.com/data-handling.html)
+
+A partner may explicitly configure ai-input as an Observe-only deployment purpose, labeled configured_default, without inferring user intent. The adapter never purchases anything by default and never changes the existing tool result. Walletless/API-key/Stripe billing and monthly plans remain SHADOW ONLY, not active. Public pricing remains Base USDC x402.
+
 ## Start with the stable public endpoint
 
 POST `https://api.getacqpath.com/v1/rights/preflight` with a resource URL and purpose. No AcqPath account, API key or private operator token. [Public buyer journey](https://developers.getacqpath.com/public-http) · [JavaScript/Python/TypeScript examples](examples/PUBLIC-BUYER.md).
