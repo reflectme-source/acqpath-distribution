@@ -1,8 +1,8 @@
 {
   "schema": "acqpath.distribution.public-contract.v1",
-  "observedAt": "2026-09-12T16:54:46.389Z",
+  "observedAt": "2026-10-11T19:13:05.531Z",
   "coreVersion": "3.1.0-rc.1",
-  "expectedSourceSha256": "e593d69795f9b3f841ec7352c30b7ae26c2aec2b0d181ab0559981dcbc7b17c8",
+  "expectedSourceSha256": "11acc9eefbc9e340e9b07f4ae0cfefce1516f290b1a97ad95ed2d18790ee317a",
   "apiOrigin": "https://api.getacqpath.com",
   "capabilities": {
     "version": "3.1.0-rc.1",
@@ -20,6 +20,9 @@
           "https://rslstandard.org",
           "https://rslcollective.org"
         ],
+        "coverage_mode": "PUBLIC_HTTPS_DYNAMIC_WITH_SAFETY_GATE",
+        "dynamic_public_https": true,
+        "paid_unknown_diagnostics": true,
         "fresh_fee_micro": "20000",
         "deep_fee_micro": "50000",
         "legal_clearance": false
@@ -31,7 +34,7 @@
         "url": "https://api.getacqpath.com/v1/rights/ingestion-gate",
         "mimeType": "application/json",
         "serviceName": "AcqPath",
-        "description": "Batch observed RSL rights evidence before RAG ingestion, AI input, training or indexing. One to four reviewed URLs; signed per-resource policy, provenance, conflicts and revalidation checkpoints. Fresh 0.04 + 0.02 per unique URL; deep 0.06 + 0.04. USDC on Base. AcqPath SIWX adapter required; not legal clearance.",
+        "description": "Batch observed RSL rights evidence before RAG ingestion, AI input, training or indexing. One to four eligible public HTTPS URLs; signed per-resource policy, provenance, conflicts and revalidation checkpoints. Fresh 0.04 + 0.02 per unique URL; deep 0.06 + 0.04. USDC on Base. Billing covers the bounded source observation attempt, including UNKNOWN. AcqPath SIWX adapter required; not legal clearance.",
         "enabled": true,
         "max_resources": 4,
         "concurrency": 2,
@@ -41,6 +44,9 @@
           "https://rslstandard.org",
           "https://rslcollective.org"
         ],
+        "coverage_mode": "PUBLIC_HTTPS_DYNAMIC_WITH_SAFETY_GATE",
+        "dynamic_public_https": true,
+        "paid_unknown_diagnostics": true,
         "legal_clearance": false
       },
       {
@@ -48,7 +54,7 @@
         "url": "https://api.getacqpath.com/v1/rights/revalidate",
         "mimeType": "application/json",
         "serviceName": "AcqPath",
-        "description": "Did this resource AI usage policy change? Revalidate one signed AcqPath checkpoint with conditional source requests; signed policy diff and license-path changes. Fresh 0.03 / deep 0.06 USDC on Base. Reviewed origins only; AcqPath SIWX adapter required. UNKNOWN is not permission.",
+        "description": "Did this resource AI usage policy change? Revalidate one signed AcqPath checkpoint with conditional source requests; signed policy diff and license-path changes. Fresh 0.03 / deep 0.06 USDC on Base. The bounded source observation attempt is paid including UNKNOWN; source access and license are not guaranteed. AcqPath SIWX adapter required.",
         "enabled": true,
         "max_resources": 1,
         "concurrency": 2,
@@ -58,11 +64,16 @@
           "https://rslstandard.org",
           "https://rslcollective.org"
         ],
+        "coverage_mode": "PUBLIC_HTTPS_DYNAMIC_WITH_SAFETY_GATE",
+        "dynamic_public_https": true,
+        "paid_unknown_diagnostics": true,
         "legal_clearance": false
       }
     ],
     "features": {
       "rights_preflight": true,
+      "dynamic_public_https": true,
+      "paid_unknown_diagnostics": true,
       "signed_rights_offers_receipts": true,
       "quote": false,
       "paid_planning": false,
