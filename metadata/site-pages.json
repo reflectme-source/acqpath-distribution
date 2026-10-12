@@ -2,10 +2,49 @@
   {
     "slug": "index",
     "label": "Overview",
-    "title": "Rights evidence before AI ingestion. Revalidate before reuse.",
-    "description": "A machine rights gateway: single-resource Preflight, bounded batch Ingestion Gate and signed policy revalidation. RSL declarations and evidence, not legal clearance.",
+    "title": "A source URL is not a source-rights record",
+    "description": "Your agents may log the URL without preserving observable rights/TDM declarations. AcqPath adds verifiable source-rights observations for reviews and AI workflows.",
     "hero": true,
     "sections": [
+      {
+        "title": "The URL is not the source-rights record",
+        "paragraphs": [
+          "Agents, crawlers and RAG pipelines often record which page they fetched. That log alone may not preserve machine-readable rights/TDM declarations visible when the source was checked.",
+          "If the record is missing, a later review cannot reliably reconstruct that earlier observation merely by reopening the page."
+        ]
+      },
+      {
+        "title": "Why the missing evidence matters",
+        "paragraphs": [
+          "A source may declare a restriction, require a licence or expose no usable declaration. Without a timestamped observation, reviewers have less context for evaluating how a source entered an AI workflow.",
+          "Declarations can change. AcqPath does not claim that every URL grants permission, and does not replace an application's own rights review."
+        ]
+      },
+      {
+        "title": "Illustrative example: before and after",
+        "paragraphs": [
+          "Without a source-rights observation: resource URL recorded, ingestion event recorded, source-rights declaration at check time not captured.",
+          "With an AcqPath observation: resource and declared purpose, observed decision such as LICENSE_REQUIRED, source hash, observation time and signed evidence for later review.",
+          "Illustrative only, not a live report about a real publisher. A meaningful source check may return UNKNOWN or unavailable; neither grants permission."
+        ]
+      },
+      {
+        "title": "Add the evidence layer; keep policy control",
+        "paragraphs": [
+          "AcqPath inspects available public source-rights signals for a declared purpose and preserves a verifiable observation. Your existing tools keep running, and your application's policy remains responsible for allow, deny or review.",
+          "Start with one eligible public HTTPS URL, inspect the prepared outcome and exact payment terms, then verify the signed report before attaching it to the audit or provenance record."
+        ],
+        "links": [
+          {
+            "label": "View the partner evidence contract",
+            "href": "/partners/evidence-contract"
+          },
+          {
+            "label": "Start integrating",
+            "href": "/quickstart"
+          }
+        ]
+      },
       {
         "title": "Live source eligibility and trust boundary",
         "paragraphs": [
@@ -23,19 +62,6 @@
         ]
       },
       {
-        "title": "Separate stock marketplace endpoint",
-        "paragraphs": [
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies are not supported by this integration.",
-          "Same signed authorization plus same normalized request recovers the existing stock result; changed input or another route is rejected after binding. A pre-use leaked stock authorization can be raced for another same-priced request. Keep signed HTTP requests private. Never create a replacement authorization after an uncertain payment."
-        ],
-        "links": [
-          {
-            "label": "Stock endpoint, JSON, official TypeScript/Python and recovery",
-            "href": "/stock-x402"
-          }
-        ]
-      },
-      {
         "title": "Partner integrations: prove value in 25 events",
         "paragraphs": [
           "Do not replace your policy engine on day one. Run AcqPath beside the existing workflow. Three eligible events prove the integration path; the normal commercial decision gate is 25 eligible events or 6 hours, with a hard cap of 50 events or 24 hours.",
@@ -49,24 +75,6 @@
           {
             "label": "25-event Proof Sprint",
             "href": "/partners/proof-sprint"
-          }
-        ]
-      },
-      {
-        "title": "Rights Gateway: select the paid operation",
-        "paragraphs": [
-          "LIVE Base USDC pricing: Secure Preflight 0.02 fresh / 0.05 deep per prepared settled report; Ingestion Gate 0.04 + 0.02 per distinct URL fresh or 0.06 + 0.04 per URL deep (1–4 eligible public HTTPS URLs); Revalidation 0.03 fresh / 0.06 deep. Stock x402 stays fresh-only 0.02 and reviewed-only. No new subscription, prepaid, API-key billing or invoicing plan is active.",
-          "A Secure Preflight may offer a disclosed paid UNKNOWN or no-declaration diagnostic after meaningful public-source observation. An outage with no usable source observation, invalid URL or exhausted safety budget is not billable Preflight. Gateway pricing covers a bounded observation attempt after verified authorization. UNKNOWN never authorizes content use.",
-          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies are not supported by this integration."
-        ],
-        "links": [
-          {
-            "label": "Gateway limits, prices and workflow",
-            "href": "/gateway"
-          },
-          {
-            "label": "Complete TypeScript and Python examples",
-            "href": "/examples/GATEWAY.md"
           }
         ]
       },
@@ -170,15 +178,59 @@
             "href": "https://api.getacqpath.com/v1/capabilities"
           }
         ]
+      },
+      {
+        "title": "Separate stock marketplace endpoint",
+        "paragraphs": [
+          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies are not supported by this integration.",
+          "Same signed authorization plus same normalized request recovers the existing stock result; changed input or another route is rejected after binding. A pre-use leaked stock authorization can be raced for another same-priced request. Keep signed HTTP requests private. Never create a replacement authorization after an uncertain payment."
+        ],
+        "links": [
+          {
+            "label": "Stock endpoint, JSON, official TypeScript/Python and recovery",
+            "href": "/stock-x402"
+          }
+        ]
+      },
+      {
+        "title": "Rights Gateway: select the paid operation",
+        "paragraphs": [
+          "LIVE Base USDC pricing: Secure Preflight 0.02 fresh / 0.05 deep per prepared settled report; Ingestion Gate 0.04 + 0.02 per distinct URL fresh or 0.06 + 0.04 per URL deep (1–4 eligible public HTTPS URLs); Revalidation 0.03 fresh / 0.06 deep. Stock x402 stays fresh-only 0.02 and reviewed-only. No new subscription, prepaid, API-key billing or invoicing plan is active.",
+          "A Secure Preflight may offer a disclosed paid UNKNOWN or no-declaration diagnostic after meaningful public-source observation. An outage with no usable source observation, invalid URL or exhausted safety budget is not billable Preflight. Gateway pricing covers a bounded observation attempt after verified authorization. UNKNOWN never authorizes content use.",
+          "SUPPORTED SECURE MODE: tested official TypeScript/Node x402 2.25.0 and Python x402 2.22.0 with the AcqPath SIWX adapter on /v1/rights/preflight; unchanged signer and random nonce, recommended when payer-signed request binding is required. SUPPORTED STOCK WIRE MODE: the same official stock clients without SIWX, custom nonce, signer or buyer hook on /v1/rights/preflight/x402, fresh only, 0.02 USDC. Stock binds one request atomically at first valid use; it does not sign the POST body in advance. Zero-config compatibility outside this fixed stock endpoint, stock SIWX-only hooks, Payments MCP and generic paid proxies are not supported by this integration."
+        ],
+        "links": [
+          {
+            "label": "Gateway limits, prices and workflow",
+            "href": "/gateway"
+          },
+          {
+            "label": "Complete TypeScript and Python examples",
+            "href": "/examples/GATEWAY.md"
+          }
+        ]
       }
     ]
   },
   {
     "slug": "partners",
     "label": "Partners",
-    "title": "Add source-rights evidence without replacing your policy engine",
-    "description": "Start with 25 real events. AcqPath supplies signed external source-rights evidence; your gateway, crawler, RAG pipeline or policy engine keeps control of the decision.",
+    "title": "Keep the source-rights record beside your AI workflow",
+    "description": "A source URL in a tool trace may not preserve what the page declared. Add verifiable evidence without replacing your crawler, MCP gateway or policy engine.",
     "sections": [
+      {
+        "title": "What will your team show during a later review?",
+        "paragraphs": [
+          "A tool trace usually identifies the URL and execution. It may not retain the machine-readable licence conditions or restrictions that were observable when the source was checked.",
+          "AcqPath adds a source-rights observation record to the existing workflow. Your customer policy remains responsible for enforcement; Observe mode does not change the original action."
+        ],
+        "links": [
+          {
+            "label": "See evidence contract",
+            "href": "/partners/evidence-contract"
+          }
+        ]
+      },
       {
         "title": "Live source eligibility and trust boundary",
         "paragraphs": [
@@ -424,9 +476,23 @@
     "slug": "partners/integration-kit",
     "label": "Integration Kit",
     "nav": false,
-    "title": "Partner Integration Kit",
-    "description": "Architecture, evidence schema, shadow patterns and copy-paste adapters for a 30-minute AcqPath partner integration.",
+    "title": "Integrate source-rights evidence without rebuilding your tools",
+    "description": "Preserve observable declarations and uncertainty alongside the URL your web agents, crawlers or RAG pipelines already process.",
     "sections": [
+      {
+        "title": "What changes after integration?",
+        "paragraphs": [
+          "Before: your tool returns a URL and content, while source-rights declarations at observation time may be missing from the record.",
+          "After: the same tool still runs; a separate provider-neutral record can identify the resource and intended use and retain verified rights evidence with a timestamp and source reference.",
+          "Example only. A missing declaration, UNKNOWN or provider outage does not mean content use is authorized."
+        ],
+        "links": [
+          {
+            "label": "Read the neutral resolution schema",
+            "href": "/partners/evidence-contract"
+          }
+        ]
+      },
       {
         "title": "Live source eligibility and trust boundary",
         "paragraphs": [
@@ -578,9 +644,16 @@
     "slug": "partners/gateway",
     "label": "Gateway",
     "nav": false,
-    "title": "AI / MCP gateway integration",
-    "description": "Add source-rights evidence beside tool calls, then feed the verified resolution into the gateway audit trail or existing policy engine.",
+    "title": "What did the source declare before the tool ran?",
+    "description": "Attach verified source-rights evidence to URL-bearing tool calls. Your gateway still owns the decision and enforcement.",
     "sections": [
+      {
+        "title": "Why this evidence matters",
+        "paragraphs": [
+          "Attach verified source-rights evidence to URL-bearing tool calls. Your gateway still owns the decision and enforcement.",
+          "A source URL and event time alone may not preserve what the site exposed at observation time. AcqPath records the result and uncertainty for review, not a licence or legal clearance."
+        ]
+      },
       {
         "title": "Start in Observe mode",
         "paragraphs": [
@@ -616,9 +689,16 @@
     "slug": "partners/crawler",
     "label": "Crawler",
     "nav": false,
-    "title": "Crawler / search API enrichment",
-    "description": "Attach verified rights evidence to each eligible URL result without turning AcqPath into the crawler or policy engine.",
+    "title": "A crawler result should carry more than a URL",
+    "description": "Attach an observation of machine-readable usage declarations to eligible public-web results without changing crawling behavior or bypassing access controls.",
     "sections": [
+      {
+        "title": "Why this evidence matters",
+        "paragraphs": [
+          "Attach an observation of machine-readable usage declarations to eligible public-web results without changing crawling behavior or bypassing access controls.",
+          "A source URL and event time alone may not preserve what the site exposed at observation time. AcqPath records the result and uncertainty for review, not a licence or legal clearance."
+        ]
+      },
       {
         "title": "Live source eligibility and trust boundary",
         "paragraphs": [
@@ -661,9 +741,16 @@
     "slug": "partners/rag",
     "label": "RAG",
     "nav": false,
-    "title": "RAG / ingestion evidence metadata",
-    "description": "Persist source-rights evidence with document provenance before or beside ingestion while keeping RAG policy ownership local.",
+    "title": "When content enters a corpus, preserve the source evidence",
+    "description": "A later audit needs more than the ingestion timestamp. Keep verifiable source-rights observations beside document provenance.",
     "sections": [
+      {
+        "title": "Why this evidence matters",
+        "paragraphs": [
+          "A later audit needs more than the ingestion timestamp. Keep verifiable source-rights observations beside document provenance.",
+          "A source URL and event time alone may not preserve what the site exposed at observation time. AcqPath records the result and uncertainty for review, not a licence or legal clearance."
+        ]
+      },
       {
         "title": "Attach evidence to provenance",
         "paragraphs": [
@@ -687,9 +774,16 @@
     "slug": "partners/policy-engine",
     "label": "Policy Engine",
     "nav": false,
-    "title": "Policy-engine evidence provider",
-    "description": "Feed verified external source-rights evidence into an existing policy engine without moving authorization logic into AcqPath.",
+    "title": "Give policy decisions an evidence input, not another verdict",
+    "description": "Use an independent observation of source declarations as one policy input. Your current engine retains allow, deny and review authority.",
     "sections": [
+      {
+        "title": "Why this evidence matters",
+        "paragraphs": [
+          "Use an independent observation of source declarations as one policy input. Your current engine retains allow, deny and review authority.",
+          "A source URL and event time alone may not preserve what the site exposed at observation time. AcqPath records the result and uncertainty for review, not a licence or legal clearance."
+        ]
+      },
       {
         "title": "Evidence in, partner decision out",
         "paragraphs": [
@@ -712,8 +806,8 @@
   {
     "slug": "quickstart",
     "label": "Quickstart",
-    "title": "From supported URL to verified rights evidence",
-    "description": "Start with a free capability read. A fresh report is 0.02 USDC and a deep report is 0.05 USDC as observed; the signed quote controls the exact purchase.",
+    "title": "From a source URL to a verifiable rights observation",
+    "description": "Record what an eligible public HTTPS source declares for the intended use, review the exact purchase terms, and verify the evidence before attaching it to your existing workflow.",
     "sections": [
       {
         "title": "Live source eligibility and trust boundary",
@@ -1086,7 +1180,7 @@
     "slug": "scope",
     "label": "Scope",
     "title": "Coverage, decisions and limitations",
-    "description": "Explicit origin coverage and conservative decisions. Missing or unsupported evidence never becomes permission.",
+    "description": "Dynamic public HTTPS eligibility on secure routes, a separate reviewed origin set and clear limits. UNKNOWN never becomes permission.",
     "sections": [
       {
         "title": "Live source eligibility and trust boundary",
@@ -1159,7 +1253,7 @@
     "slug": "pricing",
     "label": "Pricing",
     "title": "0.02 USDC fresh. 0.05 USDC deep.",
-    "description": "Pay per prepared rights report on Base. Current observed prices stay unchanged; verify the signed quote before authorizing a purchase.",
+    "description": "Get a verifiable source-rights observation with the existing per-report x402 price disclosed before payment. No subscription or walletless plan is live.",
     "sections": [
       {
         "title": "Live source eligibility and trust boundary",
@@ -1231,9 +1325,16 @@
   {
     "slug": "recovery",
     "label": "Recovery",
-    "title": "Resume evidence delivery without a new payment",
-    "description": "A network failure is not a reason to create another order or signature. Preserve the original private checkpoint.",
+    "title": "Uncertain delivery shouldn't mean a second payment",
+    "description": "Resume the same privately stored authorization and operation after a timeout. Preserve source, purpose and verified delivery binding.",
     "sections": [
+      {
+        "title": "Why this evidence matters",
+        "paragraphs": [
+          "Resume the same privately stored authorization and operation after a timeout. Preserve source, purpose and verified delivery binding.",
+          "A source URL and event time alone may not preserve what the site exposed at observation time. AcqPath records the result and uncertainty for review, not a licence or legal clearance."
+        ]
+      },
       {
         "title": "Separate stock marketplace endpoint",
         "paragraphs": [
@@ -1415,9 +1516,16 @@
     "slug": "ai-input",
     "label": "Check declarations before AI input",
     "nav": false,
-    "title": "Check declarations before AI input",
-    "description": "For summarization, research agents and model context: evaluate observed RSL declarations for the actual selected source.",
+    "title": "Your agent fetched the page. What did the source declare?",
+    "description": "A tool trace preserves where the page came from. Keep a signed observation of available rights/TDM signals for AI input beside it.",
     "sections": [
+      {
+        "title": "Why this evidence matters",
+        "paragraphs": [
+          "A tool trace preserves where the page came from. Keep a signed observation of available rights/TDM signals for AI input beside it.",
+          "A source URL and event time alone may not preserve what the site exposed at observation time. AcqPath records the result and uncertainty for review, not a licence or legal clearance."
+        ]
+      },
       {
         "title": "Rights Gateway: select the paid operation",
         "paragraphs": [
@@ -1477,9 +1585,16 @@
     "slug": "rag-ingestion",
     "label": "RSL evidence before RAG ingestion",
     "nav": false,
-    "title": "RSL evidence before RAG ingestion",
-    "description": "Preflight supported URLs before corpus ingestion and preserve signed rights evidence with your provenance.",
+    "title": "Don't lose source-rights context at ingestion",
+    "description": "Record what was observable when external content entered your RAG pipeline; preserve provenance, uncertainty and the declared purpose.",
     "sections": [
+      {
+        "title": "Why this evidence matters",
+        "paragraphs": [
+          "Record what was observable when external content entered your RAG pipeline; preserve provenance, uncertainty and the declared purpose.",
+          "A source URL and event time alone may not preserve what the site exposed at observation time. AcqPath records the result and uncertainty for review, not a licence or legal clearance."
+        ]
+      },
       {
         "title": "Rights Gateway: select the paid operation",
         "paragraphs": [
@@ -1539,9 +1654,16 @@
     "slug": "indexing-search",
     "label": "Check indexing and search declarations",
     "nav": false,
-    "title": "Check indexing and search declarations",
-    "description": "Evaluate declared restrictions before adding supported content to an index or search workflow.",
+    "title": "Indexing creates provenance. Preserve usage declarations too.",
+    "description": "Keep a timestamped source-rights observation beside the indexed URL and your search workflow.",
     "sections": [
+      {
+        "title": "Why this evidence matters",
+        "paragraphs": [
+          "Keep a timestamped source-rights observation beside the indexed URL and your search workflow.",
+          "A source URL and event time alone may not preserve what the site exposed at observation time. AcqPath records the result and uncertainty for review, not a licence or legal clearance."
+        ]
+      },
       {
         "title": "Rights Gateway: select the paid operation",
         "paragraphs": [
@@ -1601,9 +1723,16 @@
     "slug": "training",
     "label": "Check AI training declarations",
     "nav": false,
-    "title": "Check AI training declarations",
-    "description": "Get dated evidence of declared AI training restrictions for selected supported resources.",
+    "title": "A dataset URL is not a training-rights record",
+    "description": "Before training ingestion, document available machine-readable declarations for ai-train. Missing evidence never authorizes model training.",
     "sections": [
+      {
+        "title": "Why this evidence matters",
+        "paragraphs": [
+          "Before training ingestion, document available machine-readable declarations for ai-train. Missing evidence never authorizes model training.",
+          "A source URL and event time alone may not preserve what the site exposed at observation time. AcqPath records the result and uncertainty for review, not a licence or legal clearance."
+        ]
+      },
       {
         "title": "Rights Gateway: select the paid operation",
         "paragraphs": [
